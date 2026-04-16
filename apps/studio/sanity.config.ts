@@ -16,6 +16,7 @@ import { presentationConfig } from "./plugins/presentation";
 import { presentationTool } from "sanity/presentation";
 import { dashboardTool } from "@sanity/dashboard";
 import { vercelWidget } from "sanity-plugin-dashboard-widget-vercel";
+import { addTagTemplates } from "./plugins/tagTemplates";
 
 const parse = envSchema.safeParse(process.env);
 if (!parse.success) {
@@ -69,7 +70,7 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    templates: combineTemplates(filterSingletonTemplates, addLanguageTemplates),
+    templates: combineTemplates(filterSingletonTemplates, addLanguageTemplates, addTagTemplates),
   },
 
   document: {

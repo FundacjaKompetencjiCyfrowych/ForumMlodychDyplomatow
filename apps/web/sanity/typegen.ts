@@ -137,9 +137,145 @@ export type AuthorReference = {
   [internalGroqTypeReferenceTo]?: "author";
 };
 
+export type PublicationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publication";
+};
+
+export type TagReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tag";
+};
+
+export type TagCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tagCategory";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
-  value?: HomeReference | PostReference | AuthorReference;
+  value?:
+    | HomeReference
+    | PostReference
+    | AuthorReference
+    | PublicationReference
+    | TagReference
+    | TagCategoryReference;
+};
+
+export type Tag = {
+  _id: string;
+  _type: "tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  name?: string;
+  slug?: Slug;
+  category?: TagCategoryReference;
+};
+
+export type TagCategory = {
+  _id: string;
+  _type: "tagCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo?: Seo;
+  locale?: string;
+  title?: string;
+  description?: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Publication = {
+  _id: string;
+  _type: "publication";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  title?: string;
+  excerpt?: string;
+  slug?: Slug;
+  date?: string;
+  mainImage?: Img;
+  author?: AuthorReference;
+  pdfFile?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  text?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  >;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type CategoryReference = {
@@ -200,12 +336,6 @@ export type Author = {
   }>;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
 export type Home = {
   _id: string;
   _type: "home";
@@ -226,22 +356,6 @@ export type Home = {
         _key: string;
       } & PostsSection)
   >;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
 };
 
 export type MediaTag = {
@@ -366,14 +480,21 @@ export type AllSanitySchemaTypes =
   | HomeReference
   | PostReference
   | AuthorReference
+  | PublicationReference
+  | TagReference
+  | TagCategoryReference
   | InternationalizedArrayReferenceValue
+  | Tag
+  | TagCategory
+  | Slug
+  | SanityFileAssetReference
+  | Publication
+  | SanityImageCrop
+  | SanityImageHotspot
   | CategoryReference
   | Post
   | Author
-  | Slug
   | Home
-  | SanityImageCrop
-  | SanityImageHotspot
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
