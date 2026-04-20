@@ -4,7 +4,7 @@ import { SlugValidationContext } from "sanity";
 import { capitalize } from "../utils/utils";
 import { defineField } from "sanity";
 
-import { DOCUMENTS, LANGAUGE_FIELD, LANGUAGES } from "../config";
+import { DOCUMENTS, LANGUAGE_FIELD, LANGUAGES } from "../config";
 const TRANSLATIONS = DOCUMENTS.filter((d) => d.intl).map((d) => d._type);
 const API_VERSION = process.env.SANITY_STUDIO_API_VERSION;
 
@@ -12,7 +12,7 @@ const API_VERSION = process.env.SANITY_STUDIO_API_VERSION;
 export const intlConfig: PluginConfig = {
   supportedLanguages: LANGUAGES,
   schemaTypes: TRANSLATIONS,
-  languageField: LANGAUGE_FIELD,
+  languageField: LANGUAGE_FIELD,
 };
 
 /** Structure API helper to create a list item for documents only in the specified language */
@@ -28,7 +28,7 @@ export const SingleLanguageList = (
       S.documentTypeList(type)
         .title(title || capitalize(type))
         .apiVersion(API_VERSION)
-        .filter(`_type == $type && ${LANGAUGE_FIELD} == $lang`)
+        .filter(`_type == $type && ${LANGUAGE_FIELD} == $lang`)
         .params({ type, lang })
         .initialValueTemplates([S.initialValueTemplateItem(`${type}_${lang}`).parameters({ lang })])
     );
@@ -96,7 +96,7 @@ export const addLanguageTemplates = (templates: any[]) => {
         id: `${type}_${lang}`,
         title: `${title} ${capitalize(type)}`,
         schemaType: type,
-        value: { [LANGAUGE_FIELD]: lang },
+        value: { [LANGUAGE_FIELD]: lang },
       }))
     ),
   ];
@@ -104,7 +104,7 @@ export const addLanguageTemplates = (templates: any[]) => {
 
 /** A field that stores language id, required by the internationalization plugin */
 export const languageField = defineField({
-  name: LANGAUGE_FIELD,
+  name: LANGUAGE_FIELD,
   type: "string",
   hidden: true,
 });
@@ -116,7 +116,7 @@ export async function uniqueByLanguage(slug: string, context: SlugValidationCont
     console.warn(`Couldn't validate slug: ${slug} document not found`);
     return false;
   }
-  const langauge = document[LANGAUGE_FIELD];
+  const langauge = document[LANGUAGE_FIELD];
   if (!langauge) {
     console.warn(`Couldn't validate slug: ${slug} locale not found`);
     return false;
@@ -127,7 +127,7 @@ export async function uniqueByLanguage(slug: string, context: SlugValidationCont
     count(*[
       _type == $type &&
       slug.current == $slug &&
-      ${LANGAUGE_FIELD} == $langauge &&
+      ${LANGUAGE_FIELD} == $langauge &&
       !(_id in [$draftId, $publishedId])
     ])
   `;

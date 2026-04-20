@@ -1,5 +1,5 @@
 import { Template } from "sanity";
-import { LANGAUGE_FIELD } from "../config";
+import { LANGUAGE_FIELD } from "../config";
 
 export const addTagTemplates = (prev: Template[]) => {
   return [
@@ -14,7 +14,7 @@ export const addTagTemplates = (prev: Template[]) => {
       ],
       value: (params: any) => ({
         category: { _type: "reference", _ref: params?.categoryId },
-        [LANGAUGE_FIELD]: params?.lang,
+        [LANGUAGE_FIELD]: params?.lang,
       }),
     },
   ];

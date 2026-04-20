@@ -1,8 +1,16 @@
 import { StructureToolOptions } from "sanity/structure";
 import { SingleLanguageSingleton as Singleton, TranslationMetadata as Translations } from "./intl";
 import { SingleLanguageList as Collection } from "./intl";
-import { ComposeIcon, HomeIcon, UsersIcon, CogIcon, TranslateIcon, TagIcon } from "@sanity/icons";
-import { LANGAUGE_FIELD } from "../config";
+import {
+  ComposeIcon,
+  HomeIcon,
+  UsersIcon,
+  CogIcon,
+  TranslateIcon,
+  TagIcon,
+  EditIcon,
+} from "@sanity/icons";
+import { LANGUAGE_FIELD } from "../config";
 
 /**
  * Structure of the Sanity Studio
@@ -22,27 +30,57 @@ export const structure: StructureToolOptions = {
         Collection(S, { type: "publication", title: "Publikacje", icon: ComposeIcon }),
         S.listItem()
           .title("Tagi wg Kategorii")
+          .icon(TagIcon)
           .child(
-            S.documentList()
+            S.documentTypeList("tagCategory")
               .title("Wybierz Kategorię")
-              .filter(`_type == "tagCategory" && ${LANGAUGE_FIELD} == $lang`)
+              .filter(`_type == "tagCategory" && ${LANGUAGE_FIELD} == $lang`)
               .params({ lang: "pl" })
-              .child((categoryId) =>
-                S.documentList()
-                  .title("Tagi w tej kategorii")
-                  .filter(
-                    `_type == "tag" && category._ref == $categoryId && ${LANGAUGE_FIELD} == $lang`
-                  )
-                  .params({ categoryId, lang: "pl" })
-                  .initialValueTemplates([
-                    S.initialValueTemplateItem("tag-by-category", {
-                      categoryId,
-                      lang: "pl",
-                    }),
+              .initialValueTemplates([S.initialValueTemplateItem("tagCategory_pl", { lang: "pl" })])
+              .child((categoryId, options) => {
+                const isNewDocument = options?.params?.template;
+
+                const categoryDocument = S.document()
+                  .title("Kategoria")
+                  .initialValueTemplate(`tagCategory-pl`, { lang: "pl" })
+                  .schemaType("tagCategory")
+                  .documentId(categoryId);
+
+                if (isNewDocument) {
+                  return categoryDocument;
+                }
+
+                return S.list()
+                  .title("Kategoria")
+                  .items([
+                    S.listItem()
+                      .id(`category-edit-${categoryId}`)
+                      .title("Edytuj Kategorię")
+                      .icon(EditIcon)
+                      .child(categoryDocument),
+
+                    S.listItem()
+                      .id("category-tags")
+                      .title("Tagi w tej kategorii")
+                      .icon(TagIcon)
+                      .child(
+                        S.documentList()
+                          .title("Lista tagów")
+                          .filter(
+                            `_type == "tag" && category._ref == $categoryId && ${LANGUAGE_FIELD} == $lang`
+                          )
+                          .params({ categoryId, lang: "pl" })
+                          .initialValueTemplates([
+                            S.initialValueTemplateItem("tag-by-category", {
+                              categoryId,
+                              lang: "pl",
+                            }),
+                          ])
+                      ),
                   ])
-              )
+                  .canHandleIntent((name, params) => name === "edit" && params?.id === categoryId);
+              })
           ),
-        Collection(S, { type: "tagCategory", title: "Kategoria Tagów", icon: TagIcon }),
         S.divider().title("Ustawienia"),
         Singleton(S, { type: "settings", title: "Ustawienia", icon: CogIcon }),
         S.divider().title("Tłumaczenia"),
