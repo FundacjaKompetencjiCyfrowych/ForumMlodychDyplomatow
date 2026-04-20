@@ -4,7 +4,7 @@ import {
   PresentationPluginOptions,
   type DocumentLocation,
 } from "sanity/presentation";
-import { DOCUMENTS, LANGUAGES, LANGAUGE_FIELD } from "../config";
+import { DOCUMENTS, LANGUAGES, LANGUAGE_FIELD } from "../config";
 
 const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || "http://localhost:3000";
 
@@ -36,7 +36,7 @@ const mainDocumentRoutes = DOCUMENTS.flatMap((doc) => {
       return [
         {
           route: `/${lang}${doc.path}/:slug`,
-          filter: `_type == "${doc._type}" && slug.current == $slug && ${LANGAUGE_FIELD} == "${lang}"`,
+          filter: `_type == "${doc._type}" && slug.current == $slug && ${LANGUAGE_FIELD} == "${lang}"`,
         },
       ];
     }
@@ -62,7 +62,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
           [
             doc._type,
             defineLocations({
-              select: { title: "title", slug: "slug.current", lang: LANGAUGE_FIELD },
+              select: { title: "title", slug: "slug.current", lang: LANGUAGE_FIELD },
               resolve: (d) => {
                 const lang = d?.lang ?? LANGUAGES[0].id;
                 const href = d?.slug ? `/${lang}${doc.path}/${d.slug}` : undefined;
@@ -82,7 +82,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
           [
             doc._type,
             defineLocations({
-              select: { lang: LANGAUGE_FIELD },
+              select: { lang: LANGUAGE_FIELD },
               resolve: (d) => {
                 const lang = d?.lang ?? LANGUAGES[0].id;
                 return {
@@ -104,7 +104,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
         [
           doc._type,
           defineLocations({
-            select: { title: "title", lang: LANGAUGE_FIELD },
+            select: { title: "title", lang: LANGUAGE_FIELD },
             resolve: (d) => {
               const lang = d?.lang ?? LANGUAGES[0].id;
               return {

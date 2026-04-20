@@ -1,4 +1,4 @@
-export const LANGAUGE_FIELD = "locale";
+export const LANGUAGE_FIELD = "locale";
 
 type LanguageConfig = {
   id: string;
