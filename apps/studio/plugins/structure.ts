@@ -1,7 +1,15 @@
 import { StructureToolOptions } from "sanity/structure";
 import { SingleLanguageSingleton as Singleton, TranslationMetadata as Translations } from "./intl";
 import { SingleLanguageList as Collection } from "./intl";
-import { ComposeIcon, HomeIcon, UsersIcon, CogIcon, TranslateIcon, TagIcon, EditIcon } from "@sanity/icons";
+import {
+  ComposeIcon,
+  HomeIcon,
+  UsersIcon,
+  CogIcon,
+  TranslateIcon,
+  TagIcon,
+  EditIcon,
+} from "@sanity/icons";
 import { LANGUAGE_FIELD } from "../config";
 
 /**
@@ -28,9 +36,7 @@ export const structure: StructureToolOptions = {
               .title("Wybierz Kategorię")
               .filter(`_type == "tagCategory" && ${LANGUAGE_FIELD} == $lang`)
               .params({ lang: "pl" })
-              .initialValueTemplates([
-                S.initialValueTemplateItem("tagCategory_pl", { lang: "pl" }) 
-              ])
+              .initialValueTemplates([S.initialValueTemplateItem("tagCategory_pl", { lang: "pl" })])
               .child((categoryId, options) => {
                 const isNewDocument = options?.params?.template;
 
@@ -53,7 +59,6 @@ export const structure: StructureToolOptions = {
                       .icon(EditIcon)
                       .child(categoryDocument),
 
-
                     S.listItem()
                       .id("category-tags")
                       .title("Tagi w tej kategorii")
@@ -61,16 +66,21 @@ export const structure: StructureToolOptions = {
                       .child(
                         S.documentList()
                           .title("Lista tagów")
-                          .filter(`_type == "tag" && category._ref == $categoryId && ${LANGUAGE_FIELD} == $lang`)
+                          .filter(
+                            `_type == "tag" && category._ref == $categoryId && ${LANGUAGE_FIELD} == $lang`
+                          )
                           .params({ categoryId, lang: "pl" })
                           .initialValueTemplates([
-                            S.initialValueTemplateItem("tag-by-category", { categoryId, lang: "pl" }),
+                            S.initialValueTemplateItem("tag-by-category", {
+                              categoryId,
+                              lang: "pl",
+                            }),
                           ])
                       ),
                   ])
                   .canHandleIntent((name, params) => name === "edit" && params?.id === categoryId);
               })
-            ),
+          ),
         S.divider().title("Ustawienia"),
         Singleton(S, { type: "settings", title: "Ustawienia", icon: CogIcon }),
         S.divider().title("Tłumaczenia"),
