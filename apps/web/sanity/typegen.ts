@@ -18,6 +18,57 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type PageBuilder = Array<
+  | ({
+      _key: string;
+    } & LeadSection)
+  | ({
+      _key: string;
+    } & PostsSection)
+>;
+
+export type PageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "page";
+};
+
+export type PostReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "post";
+};
+
+export type Link = {
+  _type: "link";
+  linkType?: "page" | "post" | "href";
+  href?: string;
+  page?: PageReference;
+  post?: PostReference;
+  openInNewTab?: boolean;
+};
+
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  heading?: string;
+  subheading?: string;
+  pageBuilder?: PageBuilder;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type PostsSection = {
   _type: "postsSection";
   displayNumber?: number;
@@ -123,13 +174,6 @@ export type HomeReference = {
   [internalGroqTypeReferenceTo]?: "home";
 };
 
-export type PostReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "post";
-};
-
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
@@ -198,12 +242,6 @@ export type Author = {
     _type: "block";
     _key: string;
   }>;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type Home = {
@@ -352,6 +390,12 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | PageBuilder
+  | PageReference
+  | PostReference
+  | Link
+  | Page
+  | Slug
   | PostsSection
   | LeadSection
   | SanityImageAssetReference
@@ -364,13 +408,11 @@ export type AllSanitySchemaTypes =
   | TranslationMetadata
   | InternationalizedArrayReference
   | HomeReference
-  | PostReference
   | AuthorReference
   | InternationalizedArrayReferenceValue
   | CategoryReference
   | Post
   | Author
-  | Slug
   | Home
   | SanityImageCrop
   | SanityImageHotspot

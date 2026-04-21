@@ -8,6 +8,9 @@ import img from "./img";
 import richText from "./richText";
 import leadSection from "./sections/leadSection";
 import postsSection from "./sections/postsSection";
+import { link } from "./link";
+import { pageBuilder } from "./pageBuilderType";
+import { page } from "./pages/page";
 
 export const schemaTypes = [
   post,
@@ -20,4 +23,7 @@ export const schemaTypes = [
   img,
   leadSection,
   postsSection,
+  link,
+  pageBuilder,
+  page,
 ];
