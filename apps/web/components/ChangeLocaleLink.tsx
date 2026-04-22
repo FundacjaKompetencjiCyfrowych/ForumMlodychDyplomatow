@@ -14,7 +14,7 @@ const ChangeLocaleLink = ({ locale, children }: Props) => {
 
   return (
     <Button
-      variant="ghost"
+      variant="link"
       onClick={() => {
         router.replace(pathname, { locale });
       }}
