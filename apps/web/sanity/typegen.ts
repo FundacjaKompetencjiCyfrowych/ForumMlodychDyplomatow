@@ -18,19 +18,14 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type Navigation = {
-  _id: string;
-  _type: "navigation";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  links?: Array<{
-    title?: string;
-    link?: Link;
-    _key: string;
-  }>;
-  locale?: string;
-};
+export type PageBuilder = Array<
+  | ({
+      _key: string;
+    } & LeadSection)
+  | ({
+      _key: string;
+    } & PostsSection)
+>;
 
 export type PageReference = {
   _ref: string;
@@ -54,15 +49,6 @@ export type Link = {
   post?: PostReference;
   openInNewTab?: boolean;
 };
-
-export type PageBuilder = Array<
-  | ({
-      _key: string;
-    } & LeadSection)
-  | ({
-      _key: string;
-    } & PostsSection)
->;
 
 export type Page = {
   _id: string;
@@ -191,6 +177,20 @@ export type HomeReference = {
   [internalGroqTypeReferenceTo]?: "home";
 };
 
+export type EventReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "event";
+};
+
+export type RegionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "region";
+};
+
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
@@ -198,9 +198,69 @@ export type AuthorReference = {
   [internalGroqTypeReferenceTo]?: "author";
 };
 
+export type NavigationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "navigation";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
-  value?: HomeReference | PostReference | AuthorReference;
+  value?:
+    | HomeReference
+    | PostReference
+    | EventReference
+    | RegionReference
+    | AuthorReference
+    | NavigationReference;
+};
+
+export type Navigation = {
+  _id: string;
+  _type: "navigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  links?: Array<{
+    title?: string;
+    link?: Link;
+    _key: string;
+  }>;
+  locale?: string;
+};
+
+export type Event = {
+  _id: string;
+  _type: "event";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  name?: string;
+  slug?: Slug;
+  startDate?: string;
+  endDate?: string;
+  region?: RegionReference;
+  venue?: string;
+  address?: string;
+  excerpt?: string;
+  description?: RichText;
+  image?: Img;
+  registrationUrl?: string;
+};
+
+export type Region = {
+  _id: string;
+  _type: "region";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  name?: string;
+  slug?: Slug;
 };
 
 export type CategoryReference = {
@@ -407,11 +467,10 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | Navigation
+  | PageBuilder
   | PageReference
   | PostReference
   | Link
-  | PageBuilder
   | Page
   | Slug
   | PostsSection
@@ -426,8 +485,14 @@ export type AllSanitySchemaTypes =
   | TranslationMetadata
   | InternationalizedArrayReference
   | HomeReference
+  | EventReference
+  | RegionReference
   | AuthorReference
+  | NavigationReference
   | InternationalizedArrayReferenceValue
+  | Navigation
+  | Event
+  | Region
   | CategoryReference
   | Post
   | Author
