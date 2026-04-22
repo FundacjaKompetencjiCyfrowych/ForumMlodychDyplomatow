@@ -1,19 +1,11 @@
-import { defineType, defineField, ALL_FIELDS_GROUP, defineArrayMember } from "sanity";
+import { defineType, defineField, defineArrayMember } from "sanity";
+import { languageField } from "../../plugins/intl";
 
 export default defineType({
   name: "navigation",
   title: "Nawigacja",
   type: "document",
-  groups: [
-    {
-      name: "seo",
-      title: "SEO",
-    },
-    {
-      ...ALL_FIELDS_GROUP,
-      hidden: true,
-    },
-  ],
+
   fields: [
     defineField({
       name: "links",
@@ -38,6 +30,7 @@ export default defineType({
         }),
       ],
     }),
+    languageField,
   ],
   preview: {
     prepare() {

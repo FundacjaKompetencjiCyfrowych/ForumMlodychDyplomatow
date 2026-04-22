@@ -18,14 +18,19 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type PageBuilder = Array<
-  | ({
-      _key: string;
-    } & LeadSection)
-  | ({
-      _key: string;
-    } & PostsSection)
->;
+export type Navigation = {
+  _id: string;
+  _type: "navigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  links?: Array<{
+    title?: string;
+    link?: Link;
+    _key: string;
+  }>;
+  locale?: string;
+};
 
 export type PageReference = {
   _ref: string;
@@ -50,17 +55,29 @@ export type Link = {
   openInNewTab?: boolean;
 };
 
+export type PageBuilder = Array<
+  | ({
+      _key: string;
+    } & LeadSection)
+  | ({
+      _key: string;
+    } & PostsSection)
+>;
+
 export type Page = {
   _id: string;
   _type: "page";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  documentName?: string;
   name?: string;
   slug?: Slug;
   heading?: string;
   subheading?: string;
   pageBuilder?: PageBuilder;
+  locale?: string;
+  seo?: Seo;
 };
 
 export type Slug = {
@@ -390,10 +407,11 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | PageBuilder
+  | Navigation
   | PageReference
   | PostReference
   | Link
+  | PageBuilder
   | Page
   | Slug
   | PostsSection

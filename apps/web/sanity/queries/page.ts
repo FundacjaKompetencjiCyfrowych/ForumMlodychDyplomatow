@@ -1,6 +1,7 @@
 import { type InferResultType } from "groqd";
 import { q } from "../groqd";
 import { pageBuilderFragment } from "./pageBuilder";
+import { seoFragment } from "./seo";
 
 export const pageQuery = q
   .parameters<{ slug: string }>()
@@ -15,6 +16,7 @@ export const pageQuery = q
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
     pageBuilder: sub.field("pageBuilder[]").project(pageBuilderFragment),
+    seo: sub.field("seo").project(seoFragment),
   }));
 
 export type PageData = InferResultType<typeof pageQuery>;

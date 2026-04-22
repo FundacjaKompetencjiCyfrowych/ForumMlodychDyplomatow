@@ -12,6 +12,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { locales } from "@/i18n/locales";
+import Header from "../../components/Header";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
@@ -69,6 +70,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider>
+          <Header />
           <div className="flex justify-center gap-3 uppercase pt-5">
             {locales.map((l) => (
               <Link key={l} href="/" locale={l}>
