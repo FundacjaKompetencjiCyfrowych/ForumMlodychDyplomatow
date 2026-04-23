@@ -27,6 +27,12 @@ export type PageBuilder = Array<
     } & PostsSection)
 >;
 
+export type LinkButton = {
+  _type: "linkButton";
+  variant?: "primary" | "secondary" | "text" | "link";
+  link?: Link;
+};
+
 export type PageReference = {
   _ref: string;
   _type: "reference";
@@ -223,6 +229,11 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  button?: Array<
+    {
+      _key: string;
+    } & LinkButton
+  >;
   links?: Array<
     | {
         name?: string;
@@ -485,6 +496,7 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | Robots
   | PageBuilder
+  | LinkButton
   | PageReference
   | PostReference
   | Link

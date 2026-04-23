@@ -1,5 +1,5 @@
 import { q } from "../groqd";
-import { Link } from "../typegen";
+import { Link, type LinkButton } from "../typegen";
 export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) => ({
   _key: sub.field("_key"),
   linkType: sub.field("linkType"),
@@ -11,4 +11,10 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
   }),
   text: sub.field("text"),
   openInNewTab: sub.field("openInNewTab"),
+}));
+
+export const linkButtonFragment = q.fragment<LinkButton & { _key: string }>().project((sub) => ({
+  _key: sub.field("_key"),
+  variant: sub.field("variant"),
+  link: sub.field("link").project(linkFragment),
 }));

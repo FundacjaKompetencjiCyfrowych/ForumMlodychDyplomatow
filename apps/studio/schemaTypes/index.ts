@@ -10,7 +10,7 @@ import img from "./img";
 import richText from "./richText";
 import leadSection from "./sections/leadSection";
 import postsSection from "./sections/postsSection";
-import { link } from "./link";
+import { link, linkButton } from "./link";
 import { pageBuilder } from "./pageBuilderType";
 import { page } from "./pages/page";
 import navigation from "./singletons/navigation";
@@ -29,6 +29,7 @@ export const schemaTypes = [
   leadSection,
   postsSection,
   link,
+  linkButton,
   pageBuilder,
   page,
   navigation,

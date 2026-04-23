@@ -8,6 +8,16 @@ export default defineType({
 
   fields: [
     defineField({
+      name: "button",
+      title: "Przyciski",
+      type: "array",
+      of: [
+        {
+          type: "linkButton",
+        },
+      ],
+    }),
+    defineField({
       name: "links",
       title: "Linki",
       description: "Linki nawigacyjne",

@@ -1,7 +1,7 @@
 import type { InferFragmentType } from "groqd";
 import { getLocale } from "next-intl/server";
 import { q, runQuery } from "../../sanity/groqd";
-import { linkFragment } from "../../sanity/queries/linkFragment";
+import { linkButtonFragment, linkFragment } from "../../sanity/queries/linkFragment";
 import { Link } from "../ui/link";
 import {
   NavigationMenu,
@@ -10,6 +10,7 @@ import {
   NavigationMenuViewport,
 } from "../ui/navigation-menu";
 import { HeaderMenu } from "./HeaderDropdown";
+import { LocaleButtons } from "./LocaleButtons";
 
 export const navQuery = q.star
   .parameters<{ locale: string }>()
@@ -17,6 +18,7 @@ export const navQuery = q.star
   .filterBy("locale == $locale")
   .slice(0)
   .project((sub) => ({
+    button: sub.field("button[]").project(linkButtonFragment),
     links: sub.field("links[]").project((sub) => ({
       _key: true,
       ...sub.conditionalByType({
@@ -44,13 +46,14 @@ const Header = async () => {
   const navigation = await runQuery(navQuery, {
     parameters: { locale },
   });
+
   return (
     <NavigationMenu
       orientation="horizontal"
       viewport={false}
       className="sticky top-0 flex flex-col w-full max-w-full gap-0"
     >
-      <div className="max-w-full grid grid-cols-3 w-full bg-header px-12 py-5">
+      <div className="max-w-full grid grid-cols-3 w-full items-center bg-header px-12 py-5">
         <Link href="/" className="text-2xl font-bold justify-self-start">
           FKD Logo
         </Link>
@@ -66,9 +69,13 @@ const Header = async () => {
             )
           )}
         </NavigationMenuList>
-        <div className="flex gap-8 justify-self-end">
-          <button>something</button>
-          <button>something</button>
+        <div className="flex gap-8 justify-self-end items-center">
+          <LocaleButtons />
+
+          {navigation?.button?.map(
+            (button) =>
+              button.link && <Link key={button._key} variant={button.variant} link={button.link} />
+          )}
         </div>
       </div>
 

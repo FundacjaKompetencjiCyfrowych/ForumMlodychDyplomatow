@@ -1,18 +1,16 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { sanityFetch, SanityLive } from "@/sanity/live";
-import { Toaster } from "sonner";
-import { SanityPreview } from "@/sanity/preview/SanityPreview";
-import { mapMetadata } from "@/sanity/metadata/mapMetadata";
-import { q } from "@/sanity/groqd";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
-import { notFound } from "next/navigation";
+import { q } from "@/sanity/groqd";
+import { sanityFetch, SanityLive } from "@/sanity/live";
+import { mapMetadata } from "@/sanity/metadata/mapMetadata";
+import { SanityPreview } from "@/sanity/preview/SanityPreview";
+import type { Metadata } from "next";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { locales } from "@/i18n/locales";
+import { Geist, Geist_Mono } from "next/font/google";
+import { notFound } from "next/navigation";
+import { Toaster } from "sonner";
 import Header from "../../components/Header/Header";
-import ChangeLocaleLink from "../../components/ChangeLocaleLink";
+import "./globals.css";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
@@ -71,13 +69,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider>
           <Header />
-          <div className="flex justify-center gap-3 uppercase pt-5">
-            {locales.map((l) => (
-              <ChangeLocaleLink key={l} locale={l}>
-                {l.toLocaleUpperCase()}
-              </ChangeLocaleLink>
-            ))}
-          </div>
+
           {children}
           <Toaster />
           <SanityPreview />

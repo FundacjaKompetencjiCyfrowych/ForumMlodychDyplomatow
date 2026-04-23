@@ -10,7 +10,31 @@ import { LinkIcon } from "@sanity/icons";
 type Link = {
   linkType: "href" | "page" | "post" | "event" | "division";
 };
+const linkPreviewSelect = {
+  title: "text",
+  linkType: "linkType",
+  href: "href",
+  page: "page.title",
+  post: "post.title",
+  // event: "event.title",
+  // division: "division.name",
+} as const;
+const prepareLinkPreview = (
+  link: Partial<Record<Link["linkType"] | "linkType" | "title", any>>
+) => {
+  const { linkType, title, href, ...titles } = link;
 
+  let subtitle = "";
+  if (linkType === "href") {
+    subtitle = href || "Brak URL";
+  } else {
+    subtitle = `Link do: ${titles[linkType as keyof typeof titles]}`;
+  }
+  return {
+    title,
+    subtitle,
+  };
+};
 export const link = defineType({
   name: "link",
   title: "Link",
@@ -44,7 +68,7 @@ export const link = defineType({
       title: "URL",
       type: "url",
 
-      hidden: ({ parent }) => parent?.linkType !== "href" && parent?.linkType !== "page",
+      hidden: ({ parent }) => parent?.linkType !== "href",
       validation: (Rule) =>
         // Custom validation to ensure URL is provided if the link type is 'href'
         Rule.custom((value, context) => {
@@ -128,26 +152,42 @@ export const link = defineType({
     }),
   ],
   preview: {
-    select: {
-      title: "text",
-      linkType: "linkType",
-      href: "href",
-      page: "page.title",
-      post: "post.title",
-      // event: "event.title",
-      // division: "division.name",
-    },
-    prepare: ({ title, linkType, href, ...titles }) => {
-      let subtitle = "";
-      if (linkType === "href") {
-        subtitle = href || "Brak URL";
-      } else {
-        subtitle = `Link do: ${titles[linkType as keyof typeof titles]}`;
-      }
-      return {
-        title,
-        subtitle,
-      };
-    },
+    select: linkPreviewSelect,
+    prepare: (params) => prepareLinkPreview(params),
+  },
+});
+
+export const linkButton = defineType({
+  name: "linkButton",
+  type: "object",
+  title: "Przycisk linkujący",
+  fields: [
+    defineField({
+      name: "variant",
+      title: "Wariant",
+      type: "string",
+      initialValue: "primary",
+      options: {
+        list: [
+          { title: "Główny (niebieski)", value: "primary" },
+          { title: "Drugorzędny (biały z ramką)", value: "secondary" },
+          { title: "Tekst (bez tła)", value: "text" },
+          { title: "Link (bez tła i odstępu)", value: "link" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
+      name: "link",
+      title: "Link",
+      type: "link",
+      validation: (Rule) => Rule.required(),
+    }),
+  ],
+  preview: {
+    select: Object.fromEntries(
+      Object.entries(linkPreviewSelect).map(([key, value]) => [key, `link.${value}`])
+    ),
+    prepare: (params) => prepareLinkPreview(params),
   },
 });

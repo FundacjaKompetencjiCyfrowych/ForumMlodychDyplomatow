@@ -17,13 +17,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-blue-900 text-grey-50 hover:bg-blue-800",
+        primary: "bg-blue-900 text-gray-50 hover:bg-blue-800",
         secondary: "bg-transparent hover:bg-blue-50 text-blue-900 border-blue-900 border-2",
-        text: "bg-transparent border-transparent border-2 hover:border-grey-800 ",
+        text: "bg-transparent border-transparent border-2 hover:border-gray-800 ",
         link: [
-          "bg-transparent border-0 border-bottom-2 border-transparent text-grey-900",
-          "hover:text-red-800 active:text-red-900 active:border-bottom-2",
-          "active:border-red-800",
+          "bg-transparent border-0 border-bottom-2 border-transparent text-gray-900",
+          "hover:text-red-800 active:text-red-900 active:border-bottom-2 data-active:text-red-800",
+          "active:border-red-800 p-0!",
         ],
       },
       size: {
