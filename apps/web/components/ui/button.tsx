@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   [
-    "group/button inline-flex shrink-0 items-center justify-center border-r-2 text-[1rem]",
-    "border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap",
+    "group/button inline-flex gap-2 shrink-0 items-center justify-center border-r-2 ",
+    "border border-transparent bg-clip-padding text-[1rem] font-medium whitespace-nowrap",
     "transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
     "active:not-aria-[haspopup]:translate-y-px",
     "disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive",

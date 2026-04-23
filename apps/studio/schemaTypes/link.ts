@@ -34,6 +34,12 @@ export const link = defineType({
       },
     }),
     defineField({
+      name: "text",
+      title: "Tekst",
+      type: "string",
+      description: "Tekst linku, który będzie wyświetlany użytkownikowi",
+    }),
+    defineField({
       name: "href",
       title: "URL",
       type: "url",
@@ -121,4 +127,27 @@ export const link = defineType({
       initialValue: false,
     }),
   ],
+  preview: {
+    select: {
+      title: "text",
+      linkType: "linkType",
+      href: "href",
+      page: "page.title",
+      post: "post.title",
+      // event: "event.title",
+      // division: "division.name",
+    },
+    prepare: ({ title, linkType, href, ...titles }) => {
+      let subtitle = "";
+      if (linkType === "href") {
+        subtitle = href || "Brak URL";
+      } else {
+        subtitle = `Link do: ${titles[linkType as keyof typeof titles]}`;
+      }
+      return {
+        title,
+        subtitle,
+      };
+    },
+  },
 });

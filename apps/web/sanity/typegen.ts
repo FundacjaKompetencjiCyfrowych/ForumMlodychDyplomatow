@@ -44,6 +44,7 @@ export type PostReference = {
 export type Link = {
   _type: "link";
   linkType?: "page" | "post" | "href";
+  text?: string;
   href?: string;
   page?: PageReference;
   post?: PostReference;
@@ -222,11 +223,27 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  links?: Array<{
-    title?: string;
-    link?: Link;
-    _key: string;
-  }>;
+  links?: Array<
+    | {
+        name?: string;
+        header?: string;
+        description?: string;
+        columns?: Array<{
+          header?: string;
+          items?: Array<
+            {
+              _key: string;
+            } & Link
+          >;
+          _key: string;
+        }>;
+        _type: "dropdown";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Link)
+  >;
   locale?: string;
 };
 

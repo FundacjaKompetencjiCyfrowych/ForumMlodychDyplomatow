@@ -11,7 +11,7 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { locales } from "@/i18n/locales";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import ChangeLocaleLink from "../../components/ChangeLocaleLink";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
