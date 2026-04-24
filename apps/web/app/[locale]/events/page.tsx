@@ -19,7 +19,6 @@ export default async function EventsPage({
 }) {
   const { locale } = await params;
   const { region } = await searchParams;
-  console.log("locale", locale);
   const parameters = {
     locale,
     limit: 10,

@@ -153,7 +153,12 @@ export type AuthorReference = {
 
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
-  value?: HomeReference | PostReference | EventReference | RegionReference | AuthorReference;
+  value?:
+    | HomeReference
+    | PostReference
+    | EventReference
+    | RegionReference
+    | AuthorReference;
 };
 
 export type Event = {
