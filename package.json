@@ -9,6 +9,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev typegen schemagen",
     "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
     "licenses": "node scripts/check-licenses.mjs",

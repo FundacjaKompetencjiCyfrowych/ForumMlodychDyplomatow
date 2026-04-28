@@ -18,4 +18,10 @@ export const runQuery = makeSafeQueryRunner((query, options) =>
   sanityFetch({ query, params: options?.parameters }).then((res) => res.data)
 );
 
+export const runQueryNoStega = makeSafeQueryRunner((query, options) =>
+  sanityFetch({ query, params: options?.parameters, stega: false, perspective: "published" }).then(
+    (res) => res.data
+  )
+);
+
 export { q };

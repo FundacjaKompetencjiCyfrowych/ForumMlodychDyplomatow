@@ -7,35 +7,57 @@ import {
 import { DOCUMENTS, LANGUAGES, LANGAUGE_FIELD } from "../config";
 
 const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || "http://localhost:3000";
-
+/**
+ * Formats a path by joining the provided segments and ensuring there are no duplicate slashes.
+ * Automatically adds a leading slash to the path if necessary.
+ * Omits any undefined and empty string segments from the resulting path.
+ * @param args arguments to join into a path
+ * @returns a joined path
+ */
+const joinPath = (...args: (string | undefined)[]) =>
+  ["/", ...args.filter(Boolean)].join("/").replace(/\/+/g, "/");
 const mainDocumentRoutes = DOCUMENTS.flatMap((doc) => {
   if (!doc.intl) {
-    if (doc.root) {
-      return [{ route: "/", filter: `_type == "${doc._type}" && _id == "${doc.id || doc._type}"` }];
+    if (doc._type === "page") {
+      return [
+        {
+          route: joinPath(":slug"),
+          filter: `_type == "${doc._type}" && _id == "${doc.id || doc._type}"`,
+        },
+      ];
     }
     if (doc.slug && doc.path) {
       return [
-        { route: `${doc.path}/:slug`, filter: `_type == "${doc._type}" && slug.current == $slug` },
+        {
+          route: joinPath(doc.path, ":slug"),
+          filter: `_type == "${doc._type}" && slug.current == $slug`,
+        },
       ];
     }
     if (doc.path) {
       return [
-        { route: doc.path, filter: `_type == "${doc._type}" && _id == "${doc.id || doc._type}"` },
+        {
+          route: joinPath(doc.path),
+          filter: `_type == "${doc._type}" && _id == "${doc.id || doc._type}"`,
+        },
       ];
     }
     return [];
   }
 
   return LANGUAGES.flatMap(({ id: lang }) => {
-    if (doc.root) {
+    if (doc._type === "page") {
       return [
-        { route: `/${lang}`, filter: `_type == "${doc._type}" && _id == "${doc._type}-${lang}"` },
+        {
+          route: joinPath(lang, ":slug"),
+          filter: `_type == "${doc._type}" && _id == "${doc.id || doc._type}-${lang}"`,
+        },
       ];
     }
     if (doc.slug && doc.path) {
       return [
         {
-          route: `/${lang}${doc.path}/:slug`,
+          route: joinPath(lang, doc.path, ":slug"),
           filter: `_type == "${doc._type}" && slug.current == $slug && ${LANGAUGE_FIELD} == "${lang}"`,
         },
       ];
@@ -43,7 +65,7 @@ const mainDocumentRoutes = DOCUMENTS.flatMap((doc) => {
     if (doc.path) {
       return [
         {
-          route: `/${lang}${doc.path}`,
+          route: joinPath(lang, doc.path),
           filter: `_type == "${doc._type}" && _id == "${doc._type}-${lang}"`,
         },
       ];
@@ -54,8 +76,6 @@ const mainDocumentRoutes = DOCUMENTS.flatMap((doc) => {
 
 const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Object.fromEntries(
   DOCUMENTS.flatMap((doc): Array<[string, ReturnType<typeof defineLocations>]> => {
-    if (!doc.path && !doc.root) return [];
-
     if (doc.intl) {
       if (doc.slug && doc.path) {
         return [
@@ -65,7 +85,12 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
               select: { title: "title", slug: "slug.current", lang: LANGAUGE_FIELD },
               resolve: (d) => {
                 const lang = d?.lang ?? LANGUAGES[0].id;
-                const href = d?.slug ? `/${lang}${doc.path}/${d.slug}` : undefined;
+
+                const href = d?.slug
+                  ? d.slug.replace("/", "") === "home"
+                    ? joinPath(lang, doc.path)
+                    : joinPath(lang, doc.path, d.slug)
+                  : undefined;
                 return {
                   locations: href
                     ? [{ title: d?.title || "Untitled", href } satisfies DocumentLocation]
@@ -77,7 +102,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
         ];
       }
 
-      if (doc.root) {
+      /* if (doc.root) {
         return [
           [
             doc._type,
@@ -97,7 +122,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
             }),
           ],
         ];
-      }
+      } */
 
       // Translated singleton with path (non-root)
       return [
@@ -111,7 +136,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
                 locations: [
                   {
                     title: d?.title || doc._type,
-                    href: `/${lang}${doc.path}`,
+                    href: joinPath(lang, doc.path),
                   } satisfies DocumentLocation,
                 ],
               };
@@ -127,9 +152,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
         [
           doc._type,
           defineLocations({
-            locations: [
-              { title: doc._type, href: doc.root ? "/" : doc.path! } satisfies DocumentLocation,
-            ],
+            locations: [{ title: doc._type, href: joinPath(doc.path) } satisfies DocumentLocation],
             message: "This document is used globally",
             tone: "positive" as const,
           }),
@@ -149,7 +172,10 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
                 ? [
                     {
                       title: d?.title || "Untitled",
-                      href: `${doc.path}/${d.slug}`,
+                      href:
+                        d.slug.replace("/", "") === "home"
+                          ? joinPath(doc.path)
+                          : joinPath(doc.path, d.slug),
                     } satisfies DocumentLocation,
                   ]
                 : [],

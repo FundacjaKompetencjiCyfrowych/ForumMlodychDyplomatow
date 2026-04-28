@@ -15,15 +15,15 @@ type DocumentConfig = {
   id?: string;
   intl?: boolean;
   singleton?: boolean;
-  root?: boolean;
   path?: string;
   slug?: boolean;
 };
 
 // Please run `pnpm run singletons` to generate translation metadata pages when adding singleton types
 export const DOCUMENTS: DocumentConfig[] = [
-  { _type: "home", id: "home", intl: true, singleton: true, root: true },
+  // { _type: "home", id: "home", intl: true, singleton: true, root: true },
   { _type: "settings", id: "settings" },
+  { _type: "page", intl: true, path: "/", slug: true },
   { _type: "post", intl: true, path: "/post", slug: true },
   { _type: "event", intl: true },
   { _type: "region", intl: true },

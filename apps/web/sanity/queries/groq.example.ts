@@ -18,6 +18,3 @@ const postsQuery = defineQuery(`
 `);
 
 // Data is typed but not validated (you can use zod or query with groqd instead if you want validation)
-const { data } = await sanityFetch({ query: postsQuery });
-
-console.log(data);

@@ -57,28 +57,6 @@ export type Link = {
   openInNewTab?: boolean;
 };
 
-export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  documentName?: string;
-  name?: string;
-  slug?: Slug;
-  heading?: string;
-  subheading?: string;
-  pageBuilder?: PageBuilder;
-  locale?: string;
-  seo?: Seo;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
 export type PostsSection = {
   _type: "postsSection";
   displayNumber?: number;
@@ -134,6 +112,28 @@ export type Seo = {
   robots?: Robots;
 };
 
+export type Home = {
+  _id: string;
+  _type: "home";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  documentName?: string;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & Img)
+    | ({
+        _key: string;
+      } & LeadSection)
+    | ({
+        _key: string;
+      } & PostsSection)
+  >;
+};
+
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -177,13 +177,6 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
-export type HomeReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "home";
-};
-
 export type EventReference = {
   _ref: string;
   _type: "reference";
@@ -215,7 +208,7 @@ export type NavigationReference = {
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
-    | HomeReference
+    | PageReference
     | PostReference
     | EventReference
     | RegionReference
@@ -291,6 +284,12 @@ export type Region = {
   slug?: Slug;
 };
 
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type CategoryReference = {
   _ref: string;
   _type: "reference";
@@ -349,26 +348,19 @@ export type Author = {
   }>;
 };
 
-export type Home = {
+export type Page = {
   _id: string;
-  _type: "home";
+  _type: "page";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  name?: string;
+  slug?: Slug;
+  heading?: string;
+  subheading?: string;
+  pageBuilder?: PageBuilder;
   locale?: string;
   seo?: Seo;
-  documentName?: string;
-  sections?: Array<
-    | ({
-        _key: string;
-      } & Img)
-    | ({
-        _key: string;
-      } & LeadSection)
-    | ({
-        _key: string;
-      } & PostsSection)
-  >;
 };
 
 export type SanityImageCrop = {
@@ -500,20 +492,18 @@ export type AllSanitySchemaTypes =
   | PageReference
   | PostReference
   | Link
-  | Page
-  | Slug
   | PostsSection
   | LeadSection
   | SanityImageAssetReference
   | Img
   | RichText
   | Seo
+  | Home
   | Settings
   | Category
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
-  | HomeReference
   | EventReference
   | RegionReference
   | AuthorReference
@@ -522,10 +512,11 @@ export type AllSanitySchemaTypes =
   | Navigation
   | Event
   | Region
+  | Slug
   | CategoryReference
   | Post
   | Author
-  | Home
+  | Page
   | SanityImageCrop
   | SanityImageHotspot
   | MediaTag

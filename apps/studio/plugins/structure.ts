@@ -14,9 +14,8 @@ export const structure: StructureToolOptions = {
       .id("content")
       .title("Content")
       .items([
-        S.divider().title("Strony"),
-        Singleton(S, { type: "home", title: "Strona główna", icon: HomeIcon }),
         S.divider().title("Kolekcje"),
+        Collection(S, { type: "page", title: "Strony", icon: HomeIcon }),
         Collection(S, { type: "post", title: "Wpisy", icon: ComposeIcon }),
         Collection(S, { type: "author", title: "Autorzy", icon: UsersIcon }),
         Collection(S, { type: "event", title: "Wydarzenia", icon: CalendarIcon }),
