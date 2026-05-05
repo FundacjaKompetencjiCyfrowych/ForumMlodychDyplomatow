@@ -1,5 +1,4 @@
 import { defineQuery } from "next-sanity";
-import { sanityFetch } from "../live";
 
 // defineQuery enables automatic typing
 // if you have Sanity.io extension installed, you will also get syntax highlighting and `execute` button

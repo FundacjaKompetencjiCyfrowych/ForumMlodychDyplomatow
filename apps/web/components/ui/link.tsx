@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import type { InferFragmentType } from "groqd";
 import type { linkFragment } from "../../sanity/queries/linkFragment";
 type LinkType = InferFragmentType<typeof linkFragment>;
-type LinkOrHref = { link: LinkType } | { href: string };
+type LinkOrHref = { link: LinkType; href?: undefined } | { href: string; link?: undefined };
 const slugsByType = {
   page: "/",
   post: "/post/",
@@ -18,6 +18,8 @@ export const Link = ({
   size = "m",
   iconLeft = null,
   iconRight = null,
+  link,
+  href,
   ...props
 }: Omit<React.ComponentProps<typeof BaseLink>, "href"> &
   VariantProps<typeof buttonVariants> & {
@@ -25,34 +27,31 @@ export const Link = ({
     iconRight?: React.ReactNode;
   } & LinkOrHref) => {
   const getHref = (): string => {
-    if ("href" in props) {
-      return props.href;
+    if (href) {
+      return href;
     }
-    if (props.link.linkType == null) {
-      console.warn(
-        "Link component received a link object with null or undefined linkType",
-        props.link
-      );
+    if (!link?.linkType) {
+      console.warn("Link component received a link object with null or undefined linkType", link);
       return "#";
     }
-    if (props.link.linkType === "href") {
-      return props.link.href || "#";
+    if (link.linkType === "href") {
+      return link.href || "#";
     }
-    if (props.link.linkType === "page" && props.link.href == "home") {
+    if (link.linkType === "page" && link.href == "home") {
       return "/";
     }
 
-    return `${slugsByType[props.link.linkType]}${props.link.href}`;
+    return `${slugsByType[link.linkType]}${link.href}`;
   };
   return (
     <BaseLink
       href={getHref()}
-      target={"link" in props && props.link.openInNewTab ? "_blank" : undefined}
+      target={link?.openInNewTab ? "_blank" : undefined}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
       {iconLeft}
-      {children ?? ("link" in props ? props.link.text : null)}
+      {children ?? (link ? link.text : null)}
       {iconRight}
     </BaseLink>
   );

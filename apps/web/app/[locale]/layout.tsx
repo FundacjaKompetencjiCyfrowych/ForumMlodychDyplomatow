@@ -6,7 +6,7 @@ import { SanityPreview } from "@/sanity/preview/SanityPreview";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Libre_Baskerville, Inter, Open_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Toaster } from "sonner";
 import Header from "../../components/Header/Header";
@@ -40,13 +40,18 @@ export function generateStaticParams() {
 /** Setup font optimization
  * @see https://nextjs.org/docs/app/getting-started/fonts */
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const libreBaskerville = Libre_Baskerville({
+  variable: "--font-base-libre-baskerville",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-base-inter",
+  subsets: ["latin"],
+});
+
+const openSans = Open_Sans({
+  variable: "--font-base-open-sans",
   subsets: ["latin"],
 });
 
@@ -65,8 +70,10 @@ export default async function RootLayout({
   setRequestLocale(locale); // Enables static rendering, this should be done in every page/layout
 
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang={locale}>
+      <body
+        className={`${libreBaskerville.variable} ${inter.variable} ${openSans.variable} antialiased bg-gray-500 relative`}
+      >
         <NextIntlClientProvider>
           <Header />
 

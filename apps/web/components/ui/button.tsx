@@ -21,10 +21,12 @@ const buttonVariants = cva(
         secondary: "bg-transparent hover:bg-blue-50 text-blue-900 border-blue-900 border-2",
         text: "bg-transparent border-transparent border-2 hover:border-gray-800 ",
         link: [
+          "typography-p1",
           "bg-transparent border-0 border-bottom-2 border-transparent text-gray-900",
           "hover:text-red-800 active:text-red-900 active:border-bottom-2 data-active:text-red-800",
           "active:border-red-800 p-0!",
         ],
+        ghost: "typography-p1 bg-transparent border-0 text-gray-900 hover:bg-gray-100",
       },
       size: {
         m: "px-4 py-3",

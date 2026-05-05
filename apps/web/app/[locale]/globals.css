@@ -7,9 +7,12 @@
 @theme inline {
   --color-background: #ffffff;
   --color-foreground: #000000;
-  --font-sans: var(--font-geist-sans);
+  /* --font-sans: var(--font-geist-sans);
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-geist-mono); */
+  --font-baskerville: var(--font-base-libre-baskerville);
+  --font-inter: var(--font-base-inter);
+  --font-open-sans: var(--font-base-open-sans);
   --color-brand-500: #412bcc;
   --color-brand-400: #523cdf;
   --color-brand-300: #6852f5;
@@ -57,11 +60,30 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --breakpoint-desktop: 48rem /* Same as breakpoint-md */;
+
+  /* Component values */
+  --spacing-header-height-mobile: 4.5rem;
+  --spacing-header-height-desktop: 5.5rem;
 }
 
 @layer base {
   body {
-    @apply font-sans;
+    @apply font-open-sans;
+  }
+
+  .menu-bar {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.25s ease;
+  }
+
+  [data-state="open"] .menu-bar-top {
+    transform: translateY(5px) translateX(-2px) rotate(45deg);
+  }
+
+  [data-state="open"] .menu-bar-bottom {
+    transform: translateY(-5px) translateX(-2px) rotate(-45deg);
   }
   * {
     @apply border-border outline-ring/50;
@@ -72,18 +94,7 @@
 }
 
 @layer components {
-  .heading-1 {
-    @apply text-4xl font-bold leading-tight mb-4;
-  }
-  .heading-2 {
-    @apply text-3xl font-semibold leading-snug mb-3;
-  }
-  .heading-3 {
-    @apply text-2xl font-medium leading-snug mb-2.5;
-  }
-  .heading-4 {
-    @apply text-xl font-medium leading-snug mb-2;
-  }
+  /* Headings */
 
   .body-base {
     @apply text-base leading-relaxed mb-4;
