@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { pageGroups } from "../utils/groups";
-import { languageField } from "../plugins/intl";
+import { languageField, uniqueByLanguage } from "../plugins/intl";
 import { seoField } from "../utils/fields";
 
 export default defineType({
@@ -13,8 +13,25 @@ export default defineType({
     languageField,
     seoField,
     defineField({
+      name: "type",
+      title: "Rodzaj",
+      type: "string",
+      group: "content",
+      description: "Rodzaj publikacji jaki chcesz opublikować",
+      options: {
+        list: [
+          { title: "Krótkie opracowanie", value: "article" },
+          { title: "Analiza", value: "news" },
+          { title: "Magazyn", value: "guide" },
+          { title: "Publikacja", value: "review" },
+        ],
+        layout: "dropdown",
+      },
+      validation: (Rule) => Rule.required().error("Pole wymagane"),
+    }),
+    defineField({
       name: "title",
-      title: "Tyutł",
+      title: "Tytuł",
       type: "string",
       group: "content",
       description: "Tytuł publikacji",
@@ -34,10 +51,12 @@ export default defineType({
       title: "Slug",
       type: "slug",
       group: "content",
-      description: "Adres URL publikacji",
+      description:
+        'Unikalna końcówka adresu strony (np. moja-publikacja). Kliknij "Generate", aby utworzyć ją automatycznie na podstawie tytułu.',
       options: {
         source: "title",
         maxLength: 120,
+        isUnique: uniqueByLanguage,
       },
       validation: (Rule) => Rule.required().error("Pole wymagane"),
     }),
@@ -55,7 +74,8 @@ export default defineType({
       title: "Grafika główna",
       type: "img",
       group: "content",
-      description: "Obraz reprezentujący wydarzenie w listach i na stronie szczegółowej.",
+      description:
+        "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach",
     }),
     defineField({
       name: "author",
@@ -75,7 +95,6 @@ export default defineType({
       options: {
         accept: ".pdf",
       },
-      validation: (Rule) => Rule.required().error("Pole wymagane"),
     }),
     defineField({
       name: "text",
@@ -86,7 +105,19 @@ export default defineType({
         { type: "block" },
         {
           type: "image",
-          fields: [{ type: "string", name: "alt", title: "Alt" }],
+          options: { hotspot: true },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Tekst alternatywny (dla robotów i niepełnosprawnych)",
+            },
+            {
+              name: "caption",
+              type: "string",
+              title: "Podpis pod zdjęciem (widoczny dla czytelnika)",
+            },
+          ],
         },
       ],
     }),

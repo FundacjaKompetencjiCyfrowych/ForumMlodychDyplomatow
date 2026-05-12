@@ -215,6 +215,7 @@ export type Publication = {
   _rev: string;
   locale?: string;
   seo?: Seo;
+  type?: "article" | "news" | "guide" | "review";
   title?: string;
   excerpt?: string;
   slug?: Slug;
@@ -251,6 +252,7 @@ export type Publication = {
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         alt?: string;
+        caption?: string;
         _type: "image";
         _key: string;
       }
