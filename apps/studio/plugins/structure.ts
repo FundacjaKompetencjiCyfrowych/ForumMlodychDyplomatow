@@ -9,9 +9,11 @@ import {
   TranslateIcon,
   TagIcon,
   EditIcon,
+  CalendarIcon,
+  EarthGlobeIcon,
 } from "@sanity/icons";
-import { LANGUAGE_FIELD } from "../config";
 
+import { LANGUAGE_FIELD } from "../config";
 /**
  * Structure of the Sanity Studio
  * @see https://www.sanity.io/docs/studio/structure-tool
@@ -81,6 +83,8 @@ export const structure: StructureToolOptions = {
                   .canHandleIntent((name, params) => name === "edit" && params?.id === categoryId);
               })
           ),
+        Collection(S, { type: "event", title: "Wydarzenia", icon: CalendarIcon }),
+        Collection(S, { type: "region", title: "Przedstawicielstwa", icon: EarthGlobeIcon }),
         S.divider().title("Ustawienia"),
         Singleton(S, { type: "settings", title: "Ustawienia", icon: CogIcon }),
         S.divider().title("Tłumaczenia"),

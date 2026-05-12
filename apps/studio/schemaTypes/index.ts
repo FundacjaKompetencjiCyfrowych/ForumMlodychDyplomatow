@@ -1,5 +1,7 @@
 import category from "./category";
+import event from "./event";
 import post from "./pages/post";
+import region from "./region";
 import author from "./author";
 import home from "./pages/home";
 import settings from "./settings";
@@ -14,10 +16,12 @@ import tagCategory from "./tagCategory";
 
 export const schemaTypes = [
   post,
+  event,
   author,
   publications,
   tag,
   tagCategory,
+  region,
   category,
   settings,
   home,

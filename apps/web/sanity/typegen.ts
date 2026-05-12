@@ -130,6 +130,20 @@ export type PostReference = {
   [internalGroqTypeReferenceTo]?: "post";
 };
 
+export type EventReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "event";
+};
+
+export type RegionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "region";
+};
+
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
@@ -481,6 +495,8 @@ export type AllSanitySchemaTypes =
   | InternationalizedArrayReference
   | HomeReference
   | PostReference
+  | EventReference
+  | RegionReference
   | AuthorReference
   | PublicationReference
   | TagReference
@@ -493,6 +509,9 @@ export type AllSanitySchemaTypes =
   | Publication
   | SanityImageCrop
   | SanityImageHotspot
+  | Event
+  | Region
+  | Slug
   | CategoryReference
   | Post
   | Author

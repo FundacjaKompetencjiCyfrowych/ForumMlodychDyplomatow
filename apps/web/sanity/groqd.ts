@@ -14,6 +14,10 @@ type GroqdContext = {
  */
 const q = createGroqBuilder<GroqdContext>();
 
+export const runQuery = makeSafeQueryRunner((query, options) =>
+  sanityFetch({ query, params: options?.parameters }).then((res) => res.data)
+);
+
 export { q };
 
 export const runQuery = makeSafeQueryRunner((query, options) =>
