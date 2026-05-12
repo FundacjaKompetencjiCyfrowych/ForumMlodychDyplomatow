@@ -19,7 +19,3 @@ export const runQuery = makeSafeQueryRunner((query, options) =>
 );
 
 export { q };
-
-export const runQuery = makeSafeQueryRunner((query, options) =>
-  sanityFetch({ query, params: options?.parameters }).then((res) => res.data)
-);
