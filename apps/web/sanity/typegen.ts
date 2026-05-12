@@ -208,12 +208,6 @@ export type TagCategory = {
   description?: string;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -249,7 +243,15 @@ export type Publication = {
           _type: "span";
           _key: string;
         }>;
-        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -292,6 +294,45 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
+};
+
+export type Event = {
+  _id: string;
+  _type: "event";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  name?: string;
+  slug?: Slug;
+  startDate?: string;
+  endDate?: string;
+  region?: RegionReference;
+  venue?: string;
+  address?: string;
+  excerpt?: string;
+  description?: RichText;
+  image?: Img;
+  registrationUrl?: string;
+};
+
+export type Region = {
+  _id: string;
+  _type: "region";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  name?: string;
+  slug?: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type CategoryReference = {
@@ -504,7 +545,6 @@ export type AllSanitySchemaTypes =
   | InternationalizedArrayReferenceValue
   | Tag
   | TagCategory
-  | Slug
   | SanityFileAssetReference
   | Publication
   | SanityImageCrop

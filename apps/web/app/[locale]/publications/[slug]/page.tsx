@@ -69,7 +69,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       {publication.tags && publication.tags.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap mt-2">
           <span className="text-sm text-gray-500 font-medium mr-1">Tagi:</span>
-          {publication.tags.map((tag) => (
+          {publication.tags.map((tag: any) => (
             // Zabezpieczenie: korzystamy z tag.name (poprawka z poprzednich kroków)
             <span
               key={tag._id}
