@@ -7,7 +7,7 @@ export default defineType({
   name: "publication",
   title: "Publikacja",
   type: "document",
-  description: "Publikacja wykorzystywana do pisania różnego rodzaju publikacji takich jak ...",
+  description: "Uniwersalny typ treści dla analiz, krótkich opracowań oraz artykułów do magazynu",
   groups: pageGroups,
   fields: [
     languageField,
