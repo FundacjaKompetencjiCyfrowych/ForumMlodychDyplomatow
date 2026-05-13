@@ -34,7 +34,7 @@ export default async function EventsPage({
     <div className="flex flex-col">
       <h2 className="text-4xl">Wydarzenia</h2>
 
-      <Tabs defaultValue="upcoming" className="self-center w-sm md:w-lg lg:w-xl xl:w-3xl">
+      <Tabs defaultValue="upcoming" className="w-sm self-center md:w-lg lg:w-xl xl:w-3xl">
         <TabsList>
           <TabsTrigger value="upcoming">Nadchodzące</TabsTrigger>
           <TabsTrigger value="archived">Archiwum</TabsTrigger>

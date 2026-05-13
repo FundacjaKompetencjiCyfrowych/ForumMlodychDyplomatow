@@ -7,7 +7,7 @@ type Props = {
 };
 
 const MobileMenu = ({ children }: Props) => (
-  <div className="flex md:hidden justify-self-end">
+  <div className="flex justify-self-end md:hidden">
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost">
@@ -17,7 +17,7 @@ const MobileMenu = ({ children }: Props) => (
       <SheetContent
         showOverlay={false}
         side="right"
-        className="top-header-height-mobile! overflow-y-scroll min-h-[100%-var(--header-height-mobile)] pb-8 px-4 z-40"
+        className="top-header-height-mobile! z-40 min-h-[100%-var(--header-height-mobile)] overflow-y-scroll px-4 pb-8"
       >
         {children}
       </SheetContent>

@@ -6,7 +6,7 @@ import { SanityPreview } from "@/sanity/preview/SanityPreview";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Libre_Baskerville, Inter, Open_Sans } from "next/font/google";
+import { Libre_Baskerville, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Toaster } from "sonner";
 import Header from "../../components/Header/Header";
@@ -50,11 +50,6 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const openSans = Open_Sans({
-  variable: "--font-base-open-sans",
-  subsets: ["latin"],
-});
-
 export default async function RootLayout({
   children,
   params,
@@ -72,7 +67,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${libreBaskerville.variable} ${inter.variable} ${openSans.variable} antialiased bg-gray-500 relative`}
+        className={`${libreBaskerville.variable} ${inter.variable} relative bg-gray-500 font-inter antialiased`}
       >
         <NextIntlClientProvider>
           <Header />

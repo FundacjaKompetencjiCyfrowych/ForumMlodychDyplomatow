@@ -12,10 +12,10 @@ type Props = {
 };
 export const LocaleButtons = () => {
   return (
-    <div className="flex gap-2 items-center h-7">
+    <div className="flex h-7 items-center gap-2">
       <GlobeIcon className="text-red-900" />
       <ChangeLocaleLink locale="pl">PL</ChangeLocaleLink>
-      <Separator.Separator className="border-gray-300 border h-full" orientation="vertical" />
+      <Separator.Separator className="h-full border border-gray-300" orientation="vertical" />
       <ChangeLocaleLink locale="en">ENG</ChangeLocaleLink>
     </div>
   );

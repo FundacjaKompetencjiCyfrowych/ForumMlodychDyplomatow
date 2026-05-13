@@ -6,17 +6,19 @@ import { Slot } from "radix-ui";
 export const typographyVariants = cva("", {
   variants: {
     variant: {
-      hero: "desktop:text-[3.5rem] font-bold font-inter desktop:leading-[1.28] text-[34px] leading-[1.4]",
+      hero: "desktop:text-[3.5rem] font-bold desktop:leading-[1.28] text-[34px] leading-[1.4]",
       title: "desktop:text-[3rem] font-bold font-baskerville leading-[1.28] text-[30px]",
-      h1: "desktop:text-[3rem] font-bold font-open-sans leading-[1.28] text-[30px] mb-4",
-      h2: "desktop:text-[2.5rem] font-semibold font-inter leading-[1.44] text-[26px] mb-3.5",
-      h3: "desktop:text-[2rem] font-semibold font-inter leading-[1.52] text-[22px] mb-3",
-      h4: "desktop:text-[1.75rem] font-medium font-inter leading-[1.52] text-[20px] mb-2",
-      h5: "desktop:text-[1.5rem] font-medium font-inter leading-[1.52] text-[18px] mb-1",
+      h1: "desktop:text-[3rem] font-bold leading-[1.28] text-[30px] mb-4",
+      h2: "desktop:text-[2.5rem] font-semibold leading-[1.44] text-[26px] mb-3.5",
+      h3: "desktop:text-[2rem] font-semibold leading-[1.52] text-[22px] mb-3",
+      h4: "desktop:text-[1.75rem] font-medium leading-[1.52] text-[20px] mb-2",
+      h5: "desktop:text-[1.5rem] font-medium leading-[1.52] text-[18px] mb-1",
       h6: "text-[1rem] font-semibold font-open-sans leading-[1.28] mb-1",
-      p1: "text-[1rem] font-open-sans leading-[1.6]",
-      p2: "text-[0.875rem] font-open-sans leading-[1.44]",
-      caption: "text-[0.75rem] font-open-sans leading-[1.44]",
+      p1: "text-[1rem] leading-[1.6]",
+      p2: "text-[0.875rem] leading-[1.44]",
+      caption: "text-[0.75rem] leading-[1.44]",
+      eyebrow: "text-[0.875rem] font-semibold uppercase leading-[1.28]",
+      logo: "text-[1.25rem] font-normal ",
     },
   },
 });

@@ -18,8 +18,8 @@ import { getLocale } from "next-intl/server";
 export const components: { [key: string]: ComponentType<any> } = {
   sectionLead: ({ item }: { item: LeadSection }) => (
     <>
-      <h1 className="max-w-xs heading-1">{item.title}</h1>
-      <p className="max-w-md body-base">{item.subtitle}</p>
+      <h1 className="heading-1 max-w-xs">{item.title}</h1>
+      <p className="body-base max-w-md">{item.subtitle}</p>
     </>
   ),
   sectionPost: async ({ item }: { item: PostsSection }) => {

@@ -21,11 +21,11 @@ const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
       <AccordionTrigger className={cn(buttonVariants({ variant: "ghost" }), "w-full")}>
         {dropdown.name}
       </AccordionTrigger>
-      <AccordionContent className=" justify-start pl-3 flex flex-col gap-2">
+      <AccordionContent className="flex flex-col justify-start gap-2 pl-3">
         {dropdown.columns?.map((column, i) => (
           <Fragment key={i}>
             {column.header && (
-              <Typography variant="h6" as="h4" className="mb-0 pl-4 py-2  text-gray-500">
+              <Typography variant="h6" as="h4" className="mb-0 py-2 pl-4 text-gray-500">
                 {column.header}
               </Typography>
             )}
@@ -34,7 +34,7 @@ const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
                 key={item._key}
                 link={item}
                 variant="ghost"
-                className="text-start no-underline! justify-start"
+                className="justify-start text-start no-underline!"
               />
             ))}
           </Fragment>
@@ -45,7 +45,7 @@ const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
 };
 const MobileMenuContent: React.FC<Props> = (props) => {
   return (
-    <Accordion type="single" className="flex flex-col w-full" collapsible>
+    <Accordion type="single" className="flex w-full flex-col" collapsible>
       {props.navigation.links.map((link) => {
         if (link._type === "link") {
           return <MenuLinkItem key={link._key} link={link} />;

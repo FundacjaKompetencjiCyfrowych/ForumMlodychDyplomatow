@@ -63,15 +63,15 @@ const Header = async () => {
     <NavigationMenu
       orientation="horizontal"
       viewport={false}
-      className="sticky top-0 flex flex-row md:flex-col w-full max-w-full gap-0 bg-header"
+      className="sticky top-0 flex w-full max-w-full flex-row gap-0 bg-header md:flex-col"
     >
-      <div className="max-w-full relative h-header-height-mobile md:h-header-height-mobile grid grid-cols-2 md:grid-cols-3 w-full isolate z-50 items-center  px-6 md:px-12 ">
-        <Link href="/" className="text-2xl font-bold justify-self-start">
+      <div className="relative isolate z-50 grid h-header-height-mobile w-full max-w-full grid-cols-2 items-center px-6 md:h-header-height-mobile md:grid-cols-3 md:px-12">
+        <Link href="/" className="justify-self-start text-2xl font-bold">
           FKD Logo
         </Link>
 
-        <div className="hidden md:flex self-center items-center justify-center">
-          <NavigationMenuList className="flex self-center items-center gap-5">
+        <div className="hidden items-center justify-center self-center md:flex">
+          <NavigationMenuList className="flex items-center gap-5 self-center">
             {navigation?.links?.map((link) =>
               link._type == "dropdown" ? (
                 <HeaderMenu key={link._key} dropdown={link} />
@@ -83,7 +83,7 @@ const Header = async () => {
             )}
           </NavigationMenuList>
         </div>
-        <div className="hidden md:flex gap-8 justify-self-end items-center">
+        <div className="hidden items-center gap-8 justify-self-end md:flex">
           <LocaleButtons />
 
           {navigation?.button?.map(
@@ -96,8 +96,8 @@ const Header = async () => {
             <SheetTitle className="hidden">Menu</SheetTitle>
           </VisuallyHidden>
           {navigation && <MobileMenuContent navigation={navigation} />}
-          <div className="justify-self-end mt-auto flex flex-col gap-6 items-stretch">
-            <div className="flex flex-col gap-2 items-stretch">
+          <div className="mt-auto flex flex-col items-stretch gap-6 justify-self-end">
+            <div className="flex flex-col items-stretch gap-2">
               {navigation?.button?.map(
                 (button) =>
                   button.link && (
@@ -112,7 +112,7 @@ const Header = async () => {
         </MobileMenu>
       </div>
 
-      <NavigationMenuViewport wrapClassName="w-full" className=" w-full max-w-full" />
+      <NavigationMenuViewport wrapClassName="w-full" className="w-full max-w-full" />
     </NavigationMenu>
   );
 };
