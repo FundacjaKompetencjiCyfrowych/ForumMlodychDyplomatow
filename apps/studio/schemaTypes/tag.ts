@@ -25,7 +25,7 @@ export default defineType({
       title: "Slug",
       type: "slug",
       group: "content",
-      description: "Adres URL publikacji",
+      description: "Adres tagu używany w url przy filtrowaniu",
       options: {
         source: "name",
         maxLength: 120,
