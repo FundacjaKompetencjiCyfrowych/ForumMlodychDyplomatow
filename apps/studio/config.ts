@@ -26,7 +26,7 @@ export const DOCUMENTS: DocumentConfig[] = [
   { _type: "page", intl: true, path: "/", slug: true },
   { _type: "post", intl: true, path: "/post", slug: true },
   { _type: "event", intl: true },
-  { _type: "region", intl: true },
+  { _type: "division", intl: true },
   { _type: "author", intl: true },
   { _type: "navigation", intl: true },
 ];

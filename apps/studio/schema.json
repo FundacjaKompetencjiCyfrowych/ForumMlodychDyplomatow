@@ -174,6 +174,66 @@
     }
   },
   {
+    "type": "type",
+    "name": "event.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "event"
+    }
+  },
+  {
+    "type": "type",
+    "name": "division.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "division"
+    }
+  },
+  {
     "name": "link",
     "type": "type",
     "value": {
@@ -198,6 +258,10 @@
               {
                 "type": "string",
                 "value": "post"
+              },
+              {
+                "type": "string",
+                "value": "event"
               },
               {
                 "type": "string",
@@ -229,11 +293,34 @@
           },
           "optional": true
         },
+        "homepage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
         "post": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
             "name": "post.reference"
+          },
+          "optional": true
+        },
+        "event": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "event.reference"
+          },
+          "optional": true
+        },
+        "division": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "division.reference"
           },
           "optional": true
         },
@@ -940,66 +1027,6 @@
   },
   {
     "type": "type",
-    "name": "event.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "event"
-    }
-  },
-  {
-    "type": "type",
-    "name": "region.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "region"
-    }
-  },
-  {
-    "type": "type",
     "name": "author.reference",
     "value": {
       "type": "object",
@@ -1090,7 +1117,7 @@
               },
               {
                 "type": "inline",
-                "name": "region.reference"
+                "name": "division.reference"
               },
               {
                 "type": "inline",
@@ -1375,11 +1402,11 @@
         },
         "optional": true
       },
-      "region": {
+      "division": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "region.reference"
+          "name": "division.reference"
         },
         "optional": true
       },
@@ -1430,7 +1457,7 @@
     }
   },
   {
-    "name": "region",
+    "name": "division",
     "type": "document",
     "attributes": {
       "_id": {
@@ -1443,7 +1470,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "region"
+          "value": "division"
         }
       },
       "_createdAt": {

@@ -19,7 +19,7 @@ export const structure: StructureToolOptions = {
         Collection(S, { type: "post", title: "Wpisy", icon: ComposeIcon }),
         Collection(S, { type: "author", title: "Autorzy", icon: UsersIcon }),
         Collection(S, { type: "event", title: "Wydarzenia", icon: CalendarIcon }),
-        Collection(S, { type: "region", title: "Przedstawicielstwa", icon: EarthGlobeIcon }),
+        Collection(S, { type: "division", title: "Przedstawicielstwa", icon: EarthGlobeIcon }),
         S.divider().title("Ustawienia"),
         Singleton(S, { type: "settings", title: "Ustawienia", icon: CogIcon }),
         Singleton(S, { type: "navigation", title: "Nawigacja", icon: LinkIcon }),

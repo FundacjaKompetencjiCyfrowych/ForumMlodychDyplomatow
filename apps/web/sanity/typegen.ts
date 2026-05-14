@@ -47,13 +47,30 @@ export type PostReference = {
   [internalGroqTypeReferenceTo]?: "post";
 };
 
+export type EventReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "event";
+};
+
+export type DivisionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "division";
+};
+
 export type Link = {
   _type: "link";
-  linkType?: "page" | "post" | "href";
+  linkType?: "page" | "post" | "event" | "href";
   text?: string;
   href?: string;
   page?: PageReference;
+  homepage?: boolean;
   post?: PostReference;
+  event?: EventReference;
+  division?: DivisionReference;
   openInNewTab?: boolean;
 };
 
@@ -177,20 +194,6 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
-export type EventReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "event";
-};
-
-export type RegionReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "region";
-};
-
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
@@ -211,7 +214,7 @@ export type InternationalizedArrayReferenceValue = {
     | PageReference
     | PostReference
     | EventReference
-    | RegionReference
+    | DivisionReference
     | AuthorReference
     | NavigationReference;
 };
@@ -263,7 +266,7 @@ export type Event = {
   slug?: Slug;
   startDate?: string;
   endDate?: string;
-  region?: RegionReference;
+  division?: DivisionReference;
   venue?: string;
   address?: string;
   excerpt?: string;
@@ -272,9 +275,9 @@ export type Event = {
   registrationUrl?: string;
 };
 
-export type Region = {
+export type Division = {
   _id: string;
-  _type: "region";
+  _type: "division";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -491,6 +494,8 @@ export type AllSanitySchemaTypes =
   | LinkButton
   | PageReference
   | PostReference
+  | EventReference
+  | DivisionReference
   | Link
   | PostsSection
   | LeadSection
@@ -504,14 +509,12 @@ export type AllSanitySchemaTypes =
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
-  | EventReference
-  | RegionReference
   | AuthorReference
   | NavigationReference
   | InternationalizedArrayReferenceValue
   | Navigation
   | Event
-  | Region
+  | Division
   | Slug
   | CategoryReference
   | Post

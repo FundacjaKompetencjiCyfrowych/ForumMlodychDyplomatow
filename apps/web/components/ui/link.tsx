@@ -1,15 +1,16 @@
-import React from "react";
 import { Link as BaseLink } from "@/i18n/navigation";
-import { type VariantProps } from "class-variance-authority";
-import { buttonVariants } from "./button";
 import { cn } from "@/lib/utils";
+import { type VariantProps } from "class-variance-authority";
 import type { InferFragmentType } from "groqd";
+import React from "react";
 import type { linkFragment } from "../../sanity/queries/linkFragment";
+import { buttonVariants } from "./button";
 type LinkType = InferFragmentType<typeof linkFragment>;
 type LinkOrHref = { link: LinkType; href?: undefined } | { href: string; link?: undefined };
 const slugsByType = {
   page: "/",
   post: "/post/",
+  event: "/events/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;
 export const Link = ({
   children,
@@ -37,8 +38,8 @@ export const Link = ({
     if (link.linkType === "href") {
       return link.href || "#";
     }
-    if (link.linkType === "page" && link.href == "home") {
-      return "/";
+    if (link.homepage) {
+      return slugsByType[link.linkType];
     }
 
     return `${slugsByType[link.linkType]}${link.href}`;

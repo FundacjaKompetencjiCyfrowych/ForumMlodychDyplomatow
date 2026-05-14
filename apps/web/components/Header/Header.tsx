@@ -63,7 +63,7 @@ const Header = async () => {
     <NavigationMenu
       orientation="horizontal"
       viewport={false}
-      className="sticky top-0 flex w-full max-w-full flex-row gap-0 bg-header md:flex-col"
+      className="sticky top-0 z-50 flex w-full max-w-full flex-row gap-0 bg-header md:flex-col"
     >
       <div className="relative isolate z-50 grid h-header-height-mobile w-full max-w-full grid-cols-2 items-center px-6 md:h-header-height-mobile md:grid-cols-3 md:px-12">
         <Link href="/" className="justify-self-start text-2xl font-bold">

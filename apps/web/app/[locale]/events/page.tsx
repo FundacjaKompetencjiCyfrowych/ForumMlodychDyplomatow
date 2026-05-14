@@ -8,7 +8,7 @@ type Params = {
   locale: string;
 };
 type SearchParams = {
-  region?: string;
+  division?: string;
 };
 export default async function EventsPage({
   params,
@@ -18,13 +18,12 @@ export default async function EventsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const { locale } = await params;
-  const { region } = await searchParams;
-  console.log("locale", locale);
+  const { division } = await searchParams;
   const parameters = {
     locale,
     limit: 10,
     currentDate: new Date().toISOString(),
-    regionSlug: region || null,
+    divisionSlug: division || null,
   };
   const upcomingEvents = runQuery(upcomingEventsQuery, {
     parameters,
@@ -35,7 +34,7 @@ export default async function EventsPage({
       <h2 className="text-4xl">Wydarzenia</h2>
 
       <Tabs defaultValue="upcoming" className="w-sm self-center md:w-lg lg:w-xl xl:w-3xl">
-        <TabsList>
+        <TabsList variant="line">
           <TabsTrigger value="upcoming">Nadchodzące</TabsTrigger>
           <TabsTrigger value="archived">Archiwum</TabsTrigger>
         </TabsList>

@@ -3,14 +3,40 @@ import { Link, type LinkButton } from "../typegen";
 export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) => ({
   _key: sub.field("_key"),
   linkType: sub.field("linkType"),
-  href: sub.select({
-    'linkType == "href"': sub.field("href"),
-    'linkType == "post"': sub.field("post").deref().field("slug.current"),
-    // 'linkType == "event"': sub.field("event->slug.current"),
-    // 'linkType == "division"': sub.field("division->slug.current"),
-  }),
-  text: sub.field("text"),
+  ...sub.conditional(
+    {
+      'linkType == "href"': {
+        href: sub.field("href"),
+        text: sub.field("text"),
+      },
+      'linkType == "post"': {
+        href: sub.select({
+          "homepage==true": sub.value(""),
+          "homepage!=true": sub.field("post").deref().field("slug.current"),
+        }),
+        text: sub.coalesce(sub.field("text"), sub.field("post").deref().field("title")),
+      },
+      'linkType == "page"': {
+        href: sub.select({
+          "homepage==true": sub.value(""),
+          "homepage!=true": sub.field("page").deref().field("slug.current"),
+        }),
+        text: sub.coalesce(sub.field("text"), sub.field("page").deref().field("name")),
+      },
+      'linkType == "event"': {
+        href: sub.select({
+          "homepage==true": sub.value(""),
+          "homepage!=true": sub.field("event").deref().field("slug.current"),
+        }),
+        text: sub.coalesce(sub.field("text"), sub.field("event").deref().field("name")),
+      },
+    },
+    {
+      isExhaustive: true,
+    }
+  ),
   openInNewTab: sub.field("openInNewTab"),
+  homepage: sub.field("homepage"),
 }));
 
 export const linkButtonFragment = q.fragment<LinkButton & { _key: string }>().project((sub) => ({

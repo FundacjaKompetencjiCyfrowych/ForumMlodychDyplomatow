@@ -9,24 +9,28 @@ import { LinkIcon } from "@sanity/icons";
 
 type Link = {
   linkType: "href" | "page" | "post" | "event" | "division";
+  homepage?: boolean;
 };
 const linkPreviewSelect = {
-  title: "text",
+  text: "text",
   linkType: "linkType",
   href: "href",
-  page: "page.title",
+  page: "page.name",
   post: "post.title",
-  // event: "event.title",
+  event: "event.name",
+  homepage: "homepage",
   // division: "division.name",
 } as const;
 const prepareLinkPreview = (
-  link: Partial<Record<Link["linkType"] | "linkType" | "title", any>>
+  link: Partial<Record<Link["linkType"] | "linkType" | "text" | "homepage", any>>
 ) => {
-  const { linkType, title, href, ...titles } = link;
-
+  const { linkType, text, href, homepage, ...titles } = link;
+  let title = text || titles[linkType as keyof typeof titles] || "Bez tytułu";
   let subtitle = "";
   if (linkType === "href") {
     subtitle = href || "Brak URL";
+  } else if (homepage) {
+    subtitle = `Link do strony głównej typu: ${titles[linkType as keyof typeof titles] || "N/A"}`;
   } else {
     subtitle = `Link do: ${titles[linkType as keyof typeof titles]}`;
   }
@@ -50,7 +54,7 @@ export const link = defineType({
         list: [
           { title: "Strona", value: "page" },
           { title: "Post", value: "post" },
-          // { title: "Wydarzenie", value: "event" },
+          { title: "Wydarzenie", value: "event" },
           // { title: "Oddział", value: "division" },
           { title: "Zewnętrzny URL", value: "href" },
         ],
@@ -62,6 +66,16 @@ export const link = defineType({
       title: "Tekst",
       type: "string",
       description: "Tekst linku, który będzie wyświetlany użytkownikowi",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as Link;
+          if (parent.linkType === "href" && !value) {
+            return "Tekst jest wymagany dla linków URL";
+          } else if (parent.linkType !== "page" && parent.homepage && !value) {
+            return "Tekst jest wymagany dla linków do stron głównych";
+          }
+          return true;
+        }),
     }),
     defineField({
       name: "href",
@@ -95,55 +109,62 @@ export const link = defineType({
           return true;
         }),
     }),
-
+    defineField({
+      name: "homepage",
+      title: "Strona główna",
+      type: "boolean",
+      initialValue: false,
+      hidden: ({ parent }) => parent?.linkType === "page" || parent?.linkType === "href",
+    }),
     defineField({
       name: "post",
       title: "Post",
       type: "reference",
       to: [{ type: "post" }],
-      hidden: ({ parent }) => parent?.linkType !== "post",
+      hidden: ({ parent }) => parent?.linkType !== "post" || parent?.homepage,
       validation: (Rule) =>
         // Custom validation to ensure post reference is provided if the link type is 'post'
         Rule.custom((value, context) => {
           const parent = context.parent as Link;
-          if (parent?.linkType === "post" && !value) {
-            return "Post reference is required when Link Type is Post";
-          }
-          return true;
-        }),
-    }),
-    /* defineField({
-      name: "event",
-      title: "Wydarzenie",
-      type: "reference",
-      to: [{ type: "event" }],
-      hidden: ({ parent }) => parent?.linkType !== "event",
-      validation: (Rule) =>
-        // Custom validation to ensure event reference is provided if the link type is 'event'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "event" && !value) {
-            return "Event reference is required when Link Type is Event";
+          if (parent?.linkType === "post" && !parent?.homepage && !value) {
+            return "Odwołanie do posta jest wymagane";
           }
           return true;
         }),
     }),
     defineField({
+      name: "event",
+      title: "Wydarzenie",
+      type: "reference",
+      to: [{ type: "event" }],
+      hidden: ({ parent }) => parent?.linkType !== "event" || parent?.homepage,
+      validation: (Rule) =>
+        // Custom validation to ensure event reference is provided if the link type is 'event'
+        Rule.custom((value, context) => {
+          const parent = context.parent as Link;
+          if (parent?.linkType === "event" && !parent?.homepage && !value) {
+            return "Odwołanie do wydarzenia jest wymagane";
+          }
+          return true;
+        }),
+    }),
+
+    defineField({
       name: "division",
       title: "Oddział",
       type: "reference",
       to: [{ type: "division" }],
-      hidden: ({ parent }) => parent?.linkType !== "division",
+      hidden: ({ parent }) => parent?.linkType !== "division" || parent?.homepage,
       validation: (Rule) =>
         // Custom validation to ensure division reference is provided if the link type is 'division'
         Rule.custom((value, context) => {
           const parent = context.parent as Link;
-          if (parent?.linkType === "division" && !value) {
-            return "Division reference is required when Link Type is Division";
+          if (parent?.linkType === "division" && !parent?.homepage && !value) {
+            return "Odwołanie do oddziału jest wymagane";
           }
           return true;
         }),
-    }), */
+    }),
     defineField({
       name: "openInNewTab",
       title: "Open in new tab",
