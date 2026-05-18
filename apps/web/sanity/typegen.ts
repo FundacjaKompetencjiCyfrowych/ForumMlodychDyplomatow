@@ -63,7 +63,7 @@ export type DivisionReference = {
 
 export type Link = {
   _type: "link";
-  linkType?: "page" | "post" | "event" | "href";
+  linkType?: "page" | "post" | "event" | "division" | "href";
   text?: string;
   href?: string;
   page?: PageReference;

@@ -29,8 +29,8 @@ export const HeaderMenu = ({ dropdown }: Props) => {
             <h3 className="text-lg font-bold">{dropdown.header}</h3>
             <p className="text-sm">{dropdown.description}</p>
           </div>
-          {dropdown.columns?.map((column, index) => (
-            <div key={index} className="flex flex-col items-start gap-6">
+          {dropdown.columns?.map((column) => (
+            <div key={column._key} className="flex flex-col items-start gap-6">
               <h4 className="text-md font-semibold">{column.header}</h4>
               {column.items?.map((item) => (
                 <Link className="p-0" key={item._key} link={item} />

@@ -18,7 +18,8 @@ export const typographyVariants = cva("", {
       p2: "text-[0.875rem] leading-[1.44]",
       caption: "text-[0.75rem] leading-[1.44]",
       eyebrow: "text-[0.875rem] font-semibold uppercase leading-[1.28]",
-      logo: "text-[1.25rem] font-normal ",
+      "logo-s": "text-[1rem] text-brand-red font-normal font-oswald",
+      "logo-m": "text-[1.25rem] text-brand-red font-normal font-oswald",
     },
   },
 });

@@ -23,7 +23,7 @@ const buttonVariants = cva(
         link: [
           "typography-p1",
           "bg-transparent border-0 border-bottom-2 border-transparent text-gray-900",
-          "hover:text-red-800 active:text-red-900 active:border-bottom-2 data-active:text-red-800",
+          "hover:text-red-800 active:text-red-900 active:border-bottom-2 data-active:text-brand-red",
           "active:border-red-800 p-0!",
         ],
         ghost: "typography-p1 bg-transparent border-0 text-gray-900 hover:bg-gray-100",

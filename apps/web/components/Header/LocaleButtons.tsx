@@ -1,5 +1,5 @@
 "use client";
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Button } from "../ui/button";
 import { usePathname, useRouter } from "../../i18n/navigation";
 import { useParams } from "next/navigation";
@@ -13,7 +13,7 @@ type Props = {
 export const LocaleButtons = () => {
   return (
     <div className="flex h-7 items-center gap-2">
-      <GlobeIcon className="text-red-900" />
+      <GlobeIcon className="text-brand-red" />
       <ChangeLocaleLink locale="pl">PL</ChangeLocaleLink>
       <Separator.Separator className="h-full border border-gray-300" orientation="vertical" />
       <ChangeLocaleLink locale="en">ENG</ChangeLocaleLink>

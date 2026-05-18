@@ -30,6 +30,13 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
         }),
         text: sub.coalesce(sub.field("text"), sub.field("event").deref().field("name")),
       },
+      'linkType == "division"': {
+        href: sub.select({
+          "homepage==true": sub.value(""),
+          "homepage!=true": sub.field("division").deref().field("slug.current"),
+        }),
+        text: sub.coalesce(sub.field("text"), sub.field("division").deref().field("name")),
+      },
     },
     {
       isExhaustive: true,

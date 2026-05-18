@@ -11,11 +11,11 @@ import {
 } from "../ui/navigation-menu";
 import { HeaderMenu } from "./HeaderDropdown";
 import { LocaleButtons } from "./LocaleButtons";
-import { Button } from "../ui/button";
 import MobileMenu from "./MobileMenu";
 import { SheetTitle } from "../ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import MobileMenuContent from "./MobileMenuContent";
+import { FMDLogo } from "../Icons/FMDLogo";
 
 export const navQuery = q.star
   .parameters<{ locale: string }>()
@@ -40,6 +40,7 @@ export const navQuery = q.star
               description: true,
               columns: sub.field("columns[]").project((sub) => ({
                 header: true,
+                _key: true,
                 items: sub
                   .field("items[]")
                   .project(linkFragment)
@@ -67,17 +68,17 @@ const Header = async () => {
     >
       <div className="relative isolate z-50 grid h-header-height-mobile w-full max-w-full grid-cols-2 items-center px-6 md:h-header-height-mobile md:grid-cols-3 md:px-12">
         <Link href="/" className="justify-self-start text-2xl font-bold">
-          FKD Logo
+          <FMDLogo />
         </Link>
 
         <div className="hidden items-center justify-center self-center md:flex">
           <NavigationMenuList className="flex items-center gap-5 self-center">
             {navigation?.links?.map((link) =>
-              link._type == "dropdown" ? (
+              link._type === "dropdown" ? (
                 <HeaderMenu key={link._key} dropdown={link} />
               ) : (
                 <NavigationMenuItem key={link._key}>
-                  <Link href={link?.href || "/"}>{link.text}</Link>
+                  <Link link={link} />
                 </NavigationMenuItem>
               )
             )}

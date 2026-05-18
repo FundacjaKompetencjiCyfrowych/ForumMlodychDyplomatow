@@ -11,6 +11,7 @@ const slugsByType = {
   page: "/",
   post: "/post/",
   event: "/events/",
+  division: "/division/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;
 export const Link = ({
   children,

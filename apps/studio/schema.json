@@ -265,6 +265,10 @@
               },
               {
                 "type": "string",
+                "value": "division"
+              },
+              {
+                "type": "string",
                 "value": "href"
               }
             ]
