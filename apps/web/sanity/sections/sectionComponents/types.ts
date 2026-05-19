@@ -9,4 +9,4 @@ export type SectionBase = {
 
 export type PageBuilderSection<T extends PageBuilder[number]["_type"]> = {
   [K in T]: Extract<PageBuilder[number], { _type: K }>;
-};
+}[T];

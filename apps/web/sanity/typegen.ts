@@ -18,13 +18,139 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type Icon = {
+  asset?: SanityImageAssetReference;
+  media?: unknown; // Unable to locate the referenced type "media" in schema
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: "image";
+};
+
+export type SupportUsSection = {
+  _type: "supportUsSection";
+  heading?: string;
+  subheading?: string;
+  cta?: Link;
+  image?: Img;
+};
+
+export type PodcastSection = {
+  _type: "podcastSection";
+  heading?: string;
+  subheading?: string;
+};
+
+export type AuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type PeopleSection = {
+  _type: "peopleSection";
+  heading?: string;
+  people?: Array<{
+    groupName?: string;
+    members?: Array<
+      {
+        _key: string;
+      } & AuthorReference
+    >;
+    _type: "group";
+    _key: string;
+  }>;
+};
+
+export type NewPublicationsSection = {
+  _type: "newPublicationsSection";
+  heading?: string;
+};
+
+export type JoinUsSection = {
+  _type: "joinUsSection";
+  heading?: string;
+  subheading?: string;
+  benefits?: Array<{
+    title?: string;
+    description?: string;
+    icon?: Icon;
+    link?: Link;
+    _type: "benefit";
+    _key: string;
+  }>;
+};
+
+export type HeroSection = {
+  _type: "heroSection";
+  heading?: string;
+  subheading?: string;
+  backgroundImage?: Img;
+  cta?: Link;
+  secondaryCta?: Link;
+};
+
+export type EventsSection = {
+  _type: "eventsSection";
+  heading?: string;
+};
+
+export type DivisionsSection = {
+  _type: "divisionsSection";
+  heading?: string;
+  subheading?: string;
+};
+
+export type AboutUsSection = {
+  _type: "aboutUsSection";
+  heading?: string;
+  image?: Img;
+  content?: Array<{
+    text?: string;
+    icon?: Img;
+    _type: "column";
+    _key: string;
+  }>;
+};
+
 export type PageBuilder = Array<
   | ({
       _key: string;
-    } & LeadSection)
+    } & AboutUsSection)
+  | ({
+      _key: string;
+    } & DivisionsSection)
+  | ({
+      _key: string;
+    } & EventsSection)
+  | ({
+      _key: string;
+    } & HeroSection)
+  | ({
+      _key: string;
+    } & JoinUsSection)
+  | ({
+      _key: string;
+    } & NewPublicationsSection)
+  | ({
+      _key: string;
+    } & PeopleSection)
+  | ({
+      _key: string;
+    } & PodcastSection)
   | ({
       _key: string;
     } & PostsSection)
+  | ({
+      _key: string;
+    } & SupportUsSection)
 >;
 
 export type LinkButton = {
@@ -83,13 +209,6 @@ export type LeadSection = {
   _type: "leadSection";
   title?: string;
   subtitle?: string;
-};
-
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type Img = {
@@ -193,13 +312,6 @@ export type InternationalizedArrayReference = Array<
     _key: string;
   } & InternationalizedArrayReferenceValue
 >;
-
-export type AuthorReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
-};
 
 export type NavigationReference = {
   _ref: string;
@@ -490,6 +602,18 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | SanityImageAssetReference
+  | Icon
+  | SupportUsSection
+  | PodcastSection
+  | AuthorReference
+  | PeopleSection
+  | NewPublicationsSection
+  | JoinUsSection
+  | HeroSection
+  | EventsSection
+  | DivisionsSection
+  | AboutUsSection
   | PageBuilder
   | LinkButton
   | PageReference
@@ -499,7 +623,6 @@ export type AllSanitySchemaTypes =
   | Link
   | PostsSection
   | LeadSection
-  | SanityImageAssetReference
   | Img
   | RichText
   | Seo
@@ -509,7 +632,6 @@ export type AllSanitySchemaTypes =
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
-  | AuthorReference
   | NavigationReference
   | InternationalizedArrayReferenceValue
   | Navigation
