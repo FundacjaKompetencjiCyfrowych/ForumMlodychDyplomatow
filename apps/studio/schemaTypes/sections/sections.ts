@@ -17,7 +17,6 @@ export const sectionTypes = [
   "newPublicationsSection",
   "peopleSection",
   "podcastSection",
-  "postsSection",
   "supportUsSection",
 ] as const;
 

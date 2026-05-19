@@ -1,5 +1,4 @@
 import { render } from "@/sanity/sections/render";
-import { components } from "./components";
 
 /**
  * Dynamically renders an array of Sanity content blocks using a component registry.
@@ -18,5 +17,5 @@ import { components } from "./components";
  * */
 export function SanitySections({ value = [] }: { value: Array<any> | null | undefined }) {
   if (!Array.isArray(value)) return null;
-  return render(value, components);
+  return render(value);
 }

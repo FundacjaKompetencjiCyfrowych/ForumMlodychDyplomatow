@@ -147,9 +147,6 @@ export type PageBuilder = Array<
     } & PodcastSection)
   | ({
       _key: string;
-    } & PostsSection)
-  | ({
-      _key: string;
     } & SupportUsSection)
 >;
 

@@ -1,8 +1,8 @@
 import { q } from "@/sanity/groqd";
-import type { PageBuilderSection } from "@/sanity/sections/sectionComponents/types";
+import type { PageBuilderSection } from ".";
 
 export const newPublicationsSectionFragment = q
   .fragment<PageBuilderSection<"newPublicationsSection">>()
-  .project((_sub) => ({
-    heading: true,
+  .project((sub) => ({
+    heading: sub.field("heading"),
   }));

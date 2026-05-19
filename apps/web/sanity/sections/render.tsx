@@ -1,6 +1,19 @@
-import React from "react";
+import React, { ComponentType } from "react";
+import { components } from "./components";
+import type {
+  PageBuilderFragment,
+  PageBuilderSection,
+  PageBuilderSectionProps,
+  PageBuilderSectionType,
+} from "../queries/pageBuilder";
 
-type ComponentMap = Record<string, React.ComponentType<any>>;
+function renderSection<T extends PageBuilderSectionType>(
+  item: PageBuilderSection<T>,
+  index: number
+) {
+  const Component = components[item._type] as ComponentType<PageBuilderSectionProps<T>>;
+  return <Component key={item._key} index={index} data={item} />;
+}
 
 /**
  * Dynamically renders a list of React components based on a data array.
@@ -10,16 +23,16 @@ type ComponentMap = Record<string, React.ComponentType<any>>;
  * 2. Passes the entire object as the `item` prop to the corresponding component.
  * 3. Warns in the console and renders nothing if no matching component is found.
  */
-export function render<C extends ComponentMap>(
-  data: { _type: string; _key: string; [prop: string]: any }[],
-  components: C
-) {
-  return data.map((item) => {
-    const Component = components[item._type];
-    if (!Component) {
-      console.warn("No component found for type:", item._type);
-      return null; // avoid rendering undefined
+export function render(data: PageBuilderFragment[]) {
+  return data.map((item, index) => {
+    if (!item) {
+      console.warn("Item is undefined or null at index:", index);
+      return null;
     }
-    return <Component key={item._key} item={item} />;
+    if (!components[item._type]) {
+      console.warn("No component found for type:", item._type);
+      return null;
+    }
+    return renderSection(item as PageBuilderSection<PageBuilderSectionType>, index);
   });
 }

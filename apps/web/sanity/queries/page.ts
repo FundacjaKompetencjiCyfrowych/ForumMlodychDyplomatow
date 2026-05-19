@@ -1,6 +1,6 @@
 import { type InferResultType } from "groqd";
 import { q } from "../groqd";
-import { pageBuilderFragment } from "./pageBuilder";
+import { pageBuilderQueryFragment } from "./pageBuilder";
 import { seoFragment } from "./seo";
 import { LANGAUGE_FIELD } from "../../../studio/config";
 
@@ -17,7 +17,7 @@ export const pageQuery = q
     slug: sub.field("slug.current"),
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
-    pageBuilder: sub.field("pageBuilder[]").project(pageBuilderFragment),
+    pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment),
     seo: sub.field("seo").project(seoFragment),
   }));
 

@@ -1,21 +1,21 @@
 import { q } from "@/sanity/groqd";
-import type { PageBuilderSection } from "@/sanity/sections/sectionComponents/types";
+import type { PageBuilderSection } from ".";
 import { imgFragment } from "../groqd.example";
 
 export const peopleSectionFragment = q
   .fragment<PageBuilderSection<"peopleSection">>()
   .project((sub) => ({
-    heading: true,
+    heading: sub.field("heading"),
     people: sub.field("people[]").project((sub) => ({
-      _key: true,
-      groupName: true,
+      _key: sub.field("_key"),
+      groupName: sub.field("groupName"),
       members: sub
         .field("members[]")
         .deref()
         .project((sub) => ({
           // TODO perhaps a person card fragment
           _key: "_id",
-          name: true,
+          name: sub.field("name"),
           img: sub.field("img").project(imgFragment),
         })),
     })),

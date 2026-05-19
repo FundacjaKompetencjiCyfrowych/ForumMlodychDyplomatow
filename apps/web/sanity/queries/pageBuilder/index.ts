@@ -11,7 +11,7 @@ import { peopleSectionFragment } from "./peopleSectionFragment";
 import { podcastSectionFragment } from "./podcastSectionFragment";
 import { supportUsSectionFragment } from "./supportUsSectionFragment";
 
-export const pageBuilderFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
+export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
   _type: sub.field("_type"),
   ...sub.conditionalByType(
@@ -32,14 +32,16 @@ export const pageBuilderFragment = q.fragment<PageBuilder[number]>().project((su
   ),
 }));
 
-export type PageBuilderData = Array<InferFragmentType<typeof pageBuilderFragment>>;
+export type PageBuilderSectionType = PageBuilder[number]["_type"];
 
-export type PageBuilderSection<T extends PageBuilderData[number]["_type"] = any> = Extract<
-  PageBuilderData[number],
+export type PageBuilderFragment = InferFragmentType<typeof pageBuilderQueryFragment>;
+
+export type PageBuilderSection<T extends PageBuilderSectionType> = Extract<
+  PageBuilder[number],
   { _type: T }
 >;
-export type PageBuilderFragment = InferFragmentType<typeof pageBuilderFragment>;
-export type PageBuilderSectionProps<T extends PageBuilderData[number]["_type"] = any> = Extract<
-  PageBuilderFragment,
-  { _type: T }
->;
+
+export type PageBuilderSectionProps<T extends PageBuilderSectionType> = {
+  data: PageBuilderSection<T>;
+  index: number;
+};

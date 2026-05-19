@@ -1,10 +1,20 @@
-import type { Img, LeadSection, PostsSection } from "@/sanity/typegen";
-import { Link } from "@/i18n/navigation";
-import { SanityImage } from "@/sanity/image/SanityImage";
+import {
+  AboutUsSection,
+  EventsSection,
+  DivisionsSection,
+  HeroSection,
+  JoinUsSection,
+  NewPublicationsSection,
+  PeopleSection,
+  PodcastSection,
+  SupportUsSection,
+} from "@/components/sections";
 import { ComponentType } from "react";
-import { q } from "../groqd";
-import { sanityFetch } from "../live";
-import { getLocale } from "next-intl/server";
+import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
+
+export type ComponentsRegistry = {
+  [K in PageBuilderSectionType]: ComponentType<PageBuilderSectionProps<K>>;
+};
 
 /**
  * Example: A `section` registry mapping Sanity `_type` values to React components.
@@ -15,40 +25,14 @@ import { getLocale } from "next-intl/server";
  * - Remember that async components are server components (won't work on the client)
  * - Missing or null fields should be handled within each component
  */
-export const components: { [key: string]: ComponentType<any> } = {
-  sectionLead: ({ item }: { item: LeadSection }) => (
-    <>
-      <h1 className="heading-1 max-w-xs">{item.title}</h1>
-      <p className="body-base max-w-md">{item.subtitle}</p>
-    </>
-  ),
-  sectionPost: async ({ item }: { item: PostsSection }) => {
-    const locale = await getLocale();
-    const latestPosts = q
-      .parameters<{ locale: string }>()
-      .star.filterByType("post")
-      .filterBy("locale == $locale")
-      .slice(0, item.displayNumber ?? 3)
-      .order("publishedAt desc")
-      .project((sub) => ({
-        _id: sub.field("_id"),
-        title: sub.field("title"),
-        image: sub.field("image"),
-        slug: sub.field("slug"),
-      }));
-    const { data } = await sanityFetch({ query: latestPosts.query, params: { locale } });
-    const posts = latestPosts.parse(data);
-    if (!posts) return <h2>No posts found.</h2>;
-    return (
-      <>
-        {posts.map((post) => (
-          <Link key={post._id} href={`/post/${post.slug?.current}`}>
-            <h2>{post.title}</h2>
-            <SanityImage image={post.image} height={300} width={300} />
-          </Link>
-        ))}
-      </>
-    );
-  },
-  sectionImage: ({ item }: { item: Img }) => <SanityImage image={item} height={300} width={300} />,
+export const components: ComponentsRegistry = {
+  aboutUsSection: AboutUsSection,
+  eventsSection: EventsSection,
+  divisionsSection: DivisionsSection,
+  heroSection: HeroSection,
+  joinUsSection: JoinUsSection,
+  newPublicationsSection: NewPublicationsSection,
+  peopleSection: PeopleSection,
+  podcastSection: PodcastSection,
+  supportUsSection: SupportUsSection,
 };

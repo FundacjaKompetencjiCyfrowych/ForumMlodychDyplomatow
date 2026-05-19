@@ -1,15 +1,15 @@
 import { q } from "@/sanity/groqd";
-import type { PageBuilderSection } from "@/sanity/sections/sectionComponents/types";
 import { imgFragment } from "../groqd.example";
+import type { PageBuilderSection } from ".";
 
 export const aboutUsSectionFragment = q
   .fragment<PageBuilderSection<"aboutUsSection">>()
   .project((sub) => ({
-    heading: true,
+    heading: sub.field("heading"),
     image: sub.field("image").project(imgFragment).notNull(),
     content: sub.field("content[]").project((sub) => ({
-      _key: true,
-      text: true,
+      _key: sub.field("_key"),
+      text: sub.field("text"),
       icon: sub.field("icon").project(imgFragment),
     })),
   }));
