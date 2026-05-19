@@ -14,6 +14,7 @@ import { link, linkButton } from "./link";
 import { pageBuilder } from "./pageBuilderType";
 import { page } from "./pages/page";
 import navigation from "./singletons/navigation";
+import { sectionStructure } from "./sections/sections";
 
 export const schemaTypes = [
   post,
@@ -33,4 +34,6 @@ export const schemaTypes = [
   pageBuilder,
   page,
   navigation,
+  // sections defined separately
+  ...sectionStructure,
 ];
