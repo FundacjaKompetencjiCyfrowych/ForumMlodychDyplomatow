@@ -6,8 +6,6 @@ import { imgFragment } from "../groqd.example";
 export const supportUsSectionFragment = q
   .fragment<PageBuilderSection<"supportUsSection">>()
   .project((sub) => ({
-    _type: true,
-    _key: true,
     heading: true,
     subheading: true,
     cta: sub.field("cta").project(linkFragment),

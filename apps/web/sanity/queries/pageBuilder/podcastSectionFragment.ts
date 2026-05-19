@@ -4,8 +4,6 @@ import type { PageBuilderSection } from "@/sanity/sections/sectionComponents/typ
 export const podcastSectionFragment = q
   .fragment<PageBuilderSection<"podcastSection">>()
   .project((_sub) => ({
-    _type: true,
-    _key: true,
     heading: true,
     subheading: true,
   }));

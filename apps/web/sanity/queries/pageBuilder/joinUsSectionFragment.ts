@@ -6,8 +6,6 @@ import { linkFragment } from "../linkFragment";
 export const joinUsSectionFragment = q
   .fragment<PageBuilderSection<"joinUsSection">>()
   .project((sub) => ({
-    _type: true,
-    _key: true,
     heading: true,
     subheading: true,
     benefits: sub.field("benefits[]").project((sub) => ({

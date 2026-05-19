@@ -5,8 +5,6 @@ import { imgFragment } from "../groqd.example";
 export const peopleSectionFragment = q
   .fragment<PageBuilderSection<"peopleSection">>()
   .project((sub) => ({
-    _type: true,
-    _key: true,
     heading: true,
     people: sub.field("people[]").project((sub) => ({
       _key: true,
