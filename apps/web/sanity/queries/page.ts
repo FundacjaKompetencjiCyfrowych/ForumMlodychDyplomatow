@@ -24,8 +24,10 @@ export const pageQuery = q
 export type PageData = InferResultType<typeof pageQuery>;
 
 export const pagesSlugQuery = q.star
+  .parameters<{ locale: string }>()
   .filterByType("page")
   .filterRaw("defined(slug.current)")
+  .filterBy(`${LANGAUGE_FIELD} == $locale`)
   .project({
     slug: "slug.current",
   });

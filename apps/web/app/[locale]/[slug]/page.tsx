@@ -14,8 +14,8 @@ type Props = {
  * Generate the static params for the page.
  * Learn more: https://nextjs.org/docs/app/api-reference/functions/generate-static-params
  */
-export async function generateStaticParams() {
-  const data = await runQueryNoStega(pagesSlugQuery);
+export async function generateStaticParams({ params }: { params: { locale: string } }) {
+  const data = await runQueryNoStega(pagesSlugQuery, { parameters: { locale: params.locale } });
 
   return data.filter((item) => item.slug !== "home");
 }

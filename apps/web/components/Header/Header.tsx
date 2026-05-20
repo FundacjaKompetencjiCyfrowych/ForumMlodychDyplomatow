@@ -1,7 +1,10 @@
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import type { InferFragmentType, InferResultType } from "groqd";
 import { getLocale } from "next-intl/server";
+import { LANGAUGE_FIELD } from "../../../studio/config";
 import { q, runQuery } from "../../sanity/groqd";
 import { linkButtonFragment, linkFragment } from "../../sanity/queries/linkFragment";
+import { FMDLogo } from "../Icons/FMDLogo";
 import { Link } from "../ui/link";
 import {
   NavigationMenu,
@@ -9,48 +12,43 @@ import {
   NavigationMenuList,
   NavigationMenuViewport,
 } from "../ui/navigation-menu";
+import { SheetTitle } from "../ui/sheet";
 import { HeaderMenu } from "./HeaderDropdown";
 import { LocaleButtons } from "./LocaleButtons";
 import MobileMenu from "./MobileMenu";
-import { SheetTitle } from "../ui/sheet";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import MobileMenuContent from "./MobileMenuContent";
-import { FMDLogo } from "../Icons/FMDLogo";
 
 export const navQuery = q.star
   .parameters<{ locale: string }>()
   .filterByType("navigation")
-  .filterBy("locale == $locale")
+  .filterBy(`${LANGAUGE_FIELD} == $locale`)
   .slice(0)
   .project((sub) => ({
     button: sub
       .field("button[]")
       .project(linkButtonFragment)
       .transform((buttons) => buttons ?? []),
-    links: sub
-      .field("links[]")
-      .project((sub) => ({
-        _key: true,
-        ...sub.conditionalByType({
-          link: (sub) => sub.project(linkFragment),
-          dropdown: (sub) =>
-            sub.project({
-              name: true,
+    links: sub.field("links[]").project((sub) => ({
+      _key: true,
+      ...sub.conditionalByType({
+        link: (sub) => sub.project(linkFragment),
+        dropdown: (sub) =>
+          sub.project({
+            name: true,
+            header: true,
+            description: true,
+            columns: sub.field("columns[]").project((sub) => ({
               header: true,
-              description: true,
-              columns: sub.field("columns[]").project((sub) => ({
-                header: true,
-                _key: true,
-                items: sub
-                  .field("items[]")
-                  .project(linkFragment)
-                  // groqd got confused here a bit, so I'm giving it the type manually
-                  .as<InferFragmentType<typeof linkFragment>[]>(),
-              })),
-            }),
-        }),
-      }))
-      .notNull(),
+              _key: true,
+              items: sub
+                .field("items[]")
+                .project(linkFragment)
+                // groqd got confused here a bit, so I'm giving it the type manually
+                .as<InferFragmentType<typeof linkFragment>[]>(),
+            })),
+          }),
+      }),
+    })),
   }));
 
 export type NavQueryResult = Exclude<InferResultType<typeof navQuery>, null>;
