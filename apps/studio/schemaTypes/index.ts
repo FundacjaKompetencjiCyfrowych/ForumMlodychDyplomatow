@@ -1,7 +1,6 @@
 import category from "./category";
 import event from "./event";
 import post from "./pages/post";
-import division from "./division";
 import author from "./author";
 import home from "./pages/home";
 import settings from "./settings";
@@ -15,6 +14,7 @@ import { pageBuilder } from "./pageBuilderType";
 import { page } from "./pages/page";
 import navigation from "./singletons/navigation";
 import { sectionStructure } from "./sections/sections";
+import division from "./division";
 
 export const schemaTypes = [
   post,

@@ -26,7 +26,7 @@ export const page = defineType({
       type: "slug",
       group: "content",
       description:
-        'Używany do generowania URL strony. wpisanie "home" będzie interpretowane jako strona główna',
+        'Używany do generowania URL strony. Wpisanie "home" będzie interpretowane jako strona główna.',
       validation: (Rule) => Rule.required(),
       options: {
         source: "name",
