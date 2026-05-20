@@ -1,7 +1,7 @@
 import { q } from "@/sanity/groqd";
 import type { PageBuilderSection } from ".";
 import { linkFragment } from "../linkFragment";
-import { imgFragment } from "../groqd.example";
+import { imgFragment } from "../imgFragment";
 
 export const supportUsSectionFragment = q
   .fragment<PageBuilderSection<"supportUsSection">>()

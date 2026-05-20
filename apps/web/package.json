@@ -18,6 +18,7 @@
     "@sanity/client": "^7.16.0",
     "@types/negotiator": "^0.6.4",
     "class-variance-authority": "^0.7.1",
+    "embla-carousel-react": "^8.6.0",
     "groqd": "^1.7.1",
     "lucide-react": "^1.7.0",
     "negotiator": "^1.0.0",

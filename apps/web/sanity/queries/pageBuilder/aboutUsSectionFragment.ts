@@ -1,5 +1,5 @@
 import { q } from "@/sanity/groqd";
-import { imgFragment } from "../groqd.example";
+import { imgFragment } from "../imgFragment";
 import type { PageBuilderSection } from ".";
 
 export const aboutUsSectionFragment = q

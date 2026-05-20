@@ -1,6 +1,6 @@
 import { q } from "@/sanity/groqd";
 import type { PageBuilderSection } from ".";
-import { imgFragment } from "../groqd.example";
+import { imgFragment } from "../imgFragment";
 import { linkFragment } from "../linkFragment";
 
 export const heroSectionFragment = q

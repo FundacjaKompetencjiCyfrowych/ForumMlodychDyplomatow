@@ -1,11 +1,12 @@
-import { SanityRichText } from "@/sanity/richText/SanityRichText";
-import { SanityImage } from "@/sanity/image/SanityImage";
 import { q } from "@/sanity/groqd";
+import { SanityImage } from "@/sanity/image/SanityImage";
 import { sanityFetch } from "@/sanity/live";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
+import { SanityRichText } from "@/sanity/richText/SanityRichText";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { imgFragment } from "../../../../sanity/queries/imgFragment";
 
 // QROQD Query builders
 const postSlugs = q.star
@@ -16,7 +17,11 @@ const post = q
   .parameters<{ slug: string }>()
   .star.filterByType("post")
   .filterBy("slug.current == $slug")
-  .slice(0);
+  .slice(0)
+  .project((sub) => ({
+    "...": true,
+    image: sub.field("image").project(imgFragment),
+  }));
 
 /** Next doesn't know what slugs exist -> we can inform it so it can pre-generate all posts
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-static-params */

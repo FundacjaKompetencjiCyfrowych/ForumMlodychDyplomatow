@@ -72,7 +72,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative font-inter antialiased`}
+        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative font-inter text-gray-900 antialiased`}
       >
         <NextIntlClientProvider>
           <Header />

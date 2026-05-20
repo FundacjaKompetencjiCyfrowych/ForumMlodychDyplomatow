@@ -1,8 +1,29 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import React from "react";
+import React, { Suspense } from "react";
+import { Container } from "../ui/container";
+import { getHeading } from "../../lib/heading";
+import Typography from "../ui/typography";
+import { Skeleton } from "../ui/skeleton";
 
-const NewPublicationsSection = (_props: PageBuilderSectionProps<"newPublicationsSection">) => {
-  return <div>NewPublicationsSection</div>;
+const NewPublicationsList = () => {
+  // TODO implement after merge with publications structure
+  return <div>NewPublicationsList TODO</div>;
+};
+
+const NewPublicationsSection = async ({
+  data,
+  index,
+}: PageBuilderSectionProps<"newPublicationsSection">) => {
+  return (
+    <Container className="flex flex-col items-center">
+      <Typography as={getHeading(index)} variant="h2">
+        {data.heading}
+      </Typography>
+      <Suspense fallback={<Skeleton className="h-40" />}>
+        <NewPublicationsList />
+      </Suspense>
+    </Container>
+  );
 };
 
 export default NewPublicationsSection;

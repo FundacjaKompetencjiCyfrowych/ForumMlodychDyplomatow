@@ -1,6 +1,6 @@
 import type { InferFragmentType } from "groqd";
 import { q } from "../groqd";
-import { imgFragment } from "./groqd.example";
+import { imgFragment } from "./imgFragment";
 
 export type EventsListQueryParams = {
   locale: string;

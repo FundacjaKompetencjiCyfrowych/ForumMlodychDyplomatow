@@ -8,26 +8,28 @@ import { SanityImage } from "../../sanity/image/SanityImage";
 
 const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) => {
   return (
-    <Container className="flex flex-col">
-      <div className="flex flex-col items-stretch gap-14">
-        <div className="flex flex-col gap-8">
+    <Container className="flex flex-col items-center desktop:gap-20" size="stretch">
+      <div className="flex flex-col items-center gap-14">
+        <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
           <Typography as={getHeading(index)} variant="hero">
             {data.heading}
           </Typography>
-          <Typography as={getSubHeading(index)} variant="h5">
+          <Typography as={getSubHeading(index)} className="text-gray-600" variant="h5">
             {data.subheading}
           </Typography>
         </div>
-        <div className="flex flex-col gap-4">
-          {data.cta && <Link link={data.cta} variant="primaryRed" />}
-          {data.secondaryCta && <Link link={data.secondaryCta} variant="secondaryRed" />}
+        <div className="flex w-full max-w-3xl flex-col justify-stretch gap-4 desktop:flex-row desktop:gap-8">
+          {data.cta && <Link link={data.cta} variant="accent" className="grow" />}
+          {data.secondaryCta && (
+            <Link link={data.secondaryCta} variant="accentSecondary" className="grow" />
+          )}
         </div>
       </div>
       {data.backgroundImage && (
-        <div className="relative">
+        <div className="relative w-full">
           {/* Gradient fade */}
           <div className="absolute top-0 right-0 left-0 h-60 bg-linear-to-b from-white to-transparent"></div>
-          <SanityImage image={data.backgroundImage} />
+          <SanityImage className="w-full" image={data.backgroundImage} />
         </div>
       )}
     </Container>

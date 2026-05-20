@@ -1,3 +1,4 @@
+import type { InferFragmentType } from "groqd";
 import { q } from "../groqd";
 
 /**
@@ -23,3 +24,5 @@ export const imgFragment = q.fragmentForType<"img">().project((sub) => ({
   crop: sub.field("crop"),
   hotspot: sub.field("hotspot"),
 }));
+
+export type ImgFragment = InferFragmentType<typeof imgFragment>;
