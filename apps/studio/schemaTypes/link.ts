@@ -88,7 +88,7 @@ export const link = defineType({
         Rule.custom((value, context) => {
           const parent = context.parent as Link;
           if (parent?.linkType === "href" && !value) {
-            return "URL is required when Link Type is URL";
+            return "URL jest wymagany dla linków URL";
           }
           return true;
         }),
@@ -104,7 +104,7 @@ export const link = defineType({
         Rule.custom((value, context) => {
           const parent = context.parent as Link;
           if (parent?.linkType === "page" && !value) {
-            return "Page reference is required when Link Type is Page";
+            return "Odwołanie do strony jest wymagane";
           }
           return true;
         }),
@@ -167,7 +167,7 @@ export const link = defineType({
     }),
     defineField({
       name: "openInNewTab",
-      title: "Open in new tab",
+      title: "Otwórz w nowej karcie",
       type: "boolean",
       initialValue: false,
     }),
