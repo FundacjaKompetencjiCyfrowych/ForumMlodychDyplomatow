@@ -1,7 +1,6 @@
 import category from "./category";
 import event from "./event";
 import post from "./pages/post";
-import division from "./division";
 import author from "./author";
 import home from "./pages/home";
 import settings from "./settings";
@@ -14,6 +13,7 @@ import { link, linkButton } from "./link";
 import { pageBuilder } from "./pageBuilderType";
 import { page } from "./pages/page";
 import navigation from "./singletons/navigation";
+import division from "./division";
 
 export const schemaTypes = [
   post,

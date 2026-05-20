@@ -1,8 +1,16 @@
 import { StructureToolOptions } from "sanity/structure";
 import { SingleLanguageSingleton as Singleton, TranslationMetadata as Translations } from "./intl";
 import { SingleLanguageList as Collection } from "./intl";
-import { ComposeIcon, HomeIcon, UsersIcon, CogIcon, TranslateIcon, LinkIcon } from "@sanity/icons";
-import { CalendarIcon, EarthGlobeIcon } from "@sanity/icons";
+import {
+  CalendarIcon,
+  CogIcon,
+  ComposeIcon,
+  EarthGlobeIcon,
+  HomeIcon,
+  LinkIcon,
+  TranslateIcon,
+  UsersIcon,
+} from "@sanity/icons";
 
 /**
  * Structure of the Sanity Studio

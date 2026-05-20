@@ -75,7 +75,7 @@ export default defineType({
     }),
     defineField({
       name: "division",
-      title: "Oddział",
+      title: "Przedstawicielstwo",
       type: "reference",
       group: "content",
       description: "Powiązanie wydarzenia z lokalną reprezentacją organizacji.",

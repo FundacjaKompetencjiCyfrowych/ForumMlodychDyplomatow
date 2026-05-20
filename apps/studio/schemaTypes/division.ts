@@ -5,7 +5,7 @@ import { seoField } from "../utils/fields";
 
 export default defineType({
   name: "division",
-  title: "Oddział",
+  title: "Przedstawicielstwo",
   type: "document",
   description: "Podstawowy dokument przedstawicielstwa regionalnego.",
   groups: pageGroups,
@@ -14,7 +14,7 @@ export default defineType({
     seoField,
     defineField({
       name: "name",
-      title: "Lokalizacja przedstawicielstwa",
+      title: "Nazwa przedstawicielstwa",
       type: "string",
       group: "content",
       description: "Nazwa widoczna na listach, i przy wydarzeniach.",
