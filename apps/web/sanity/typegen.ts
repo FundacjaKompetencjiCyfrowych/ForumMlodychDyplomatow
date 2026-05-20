@@ -18,21 +18,6 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-};
-
-export type Icon = {
-  asset?: SanityImageAssetReference;
-  media?: unknown; // Unable to locate the referenced type "media" in schema
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  _type: "image";
-};
-
 export type SupportUsSection = {
   _type: "supportUsSection";
   heading?: string;
@@ -81,7 +66,7 @@ export type JoinUsSection = {
   benefits?: Array<{
     title?: string;
     description?: string;
-    icon?: Icon;
+    icon?: Img;
     link?: Link;
     _type: "benefit";
     _key: string;
@@ -206,6 +191,13 @@ export type LeadSection = {
   _type: "leadSection";
   title?: string;
   subtitle?: string;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type Img = {
@@ -599,8 +591,6 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | SanityImageAssetReference
-  | Icon
   | SupportUsSection
   | PodcastSection
   | AuthorReference
@@ -620,6 +610,7 @@ export type AllSanitySchemaTypes =
   | Link
   | PostsSection
   | LeadSection
+  | SanityImageAssetReference
   | Img
   | RichText
   | Seo

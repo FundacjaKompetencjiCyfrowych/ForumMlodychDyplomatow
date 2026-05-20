@@ -3,12 +3,12 @@ import type { EventPreview } from "../sanity/queries/events";
 import EventPreviewDisplay from "./EventPreview";
 
 type Props = {
-  events: Promise<Array<EventPreview>>;
+  events: Promise<{ data: Array<EventPreview> }>;
   locale: string;
 };
 
 async function EventList({ events, locale }: Props) {
-  const resolvedEvents = await events;
+  const { data: resolvedEvents } = await events;
   return (
     <div className="flex flex-col gap-4">
       {resolvedEvents.map((e) => (

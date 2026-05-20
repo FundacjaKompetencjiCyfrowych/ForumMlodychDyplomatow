@@ -57,7 +57,7 @@ export type NavQueryResult = Exclude<InferResultType<typeof navQuery>, null>;
 
 const Header = async () => {
   const locale = await getLocale();
-  const navigation = await runQuery(navQuery, {
+  const { data: navigation } = await runQuery(navQuery, {
     parameters: { locale },
   });
   return (

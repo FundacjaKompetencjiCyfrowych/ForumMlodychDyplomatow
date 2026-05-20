@@ -52,7 +52,7 @@ export const joinUsSection = defineType({
             }),
             defineField({
               name: "icon",
-              type: "image",
+              type: "img",
               title: "Ikona",
             }),
             // TODO separate link for each option???

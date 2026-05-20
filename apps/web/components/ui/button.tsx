@@ -17,8 +17,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-blue-900 text-gray-50 hover:bg-blue-800",
-        secondary: "bg-transparent hover:bg-blue-50 text-blue-900 border-blue-900 border-2",
+        primary: "bg-brand-blue text-gray-50 hover:bg-blue-800",
+        secondary: "bg-transparent hover:bg-blue-50 text-brand-blue border-brand-blue border-2",
         text: "bg-transparent border-transparent border-2 hover:border-gray-800 ",
         link: [
           "typography-p1",
@@ -27,6 +27,8 @@ const buttonVariants = cva(
           "active:border-red-800 p-0!",
         ],
         ghost: "typography-p1 bg-transparent border-0 text-gray-900 hover:bg-gray-100",
+        primaryRed: "bg-brand-red text-gray-50 hover:bg-red-800",
+        secondaryRed: "bg-transparent hover:bg-red-50 text-brand-red border-brand-red border-2",
       },
       size: {
         m: "px-4 py-3",
