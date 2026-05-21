@@ -18,7 +18,7 @@ import { getCliClient } from "sanity/cli";
  * 5. Update your desk structure to use the new documents
  */
 
-import { LANGUAGES, LANGAUGE_FIELD, DOCUMENTS } from "../config";
+import { LANGUAGES, LANGUAGE_FIELD, DOCUMENTS } from "../config";
 
 const SINGLETONS = DOCUMENTS.filter((d) => d.singleton);
 
@@ -30,14 +30,14 @@ async function createSingletons() {
     const translations = LANGUAGES.map((language) => ({
       _id: `${singleton.id}-${language.id}`,
       _type: singleton._type,
-      [LANGAUGE_FIELD]: language.id,
+      [LANGUAGE_FIELD]: language.id,
     }));
 
     const metadata = {
       _id: `${singleton.id}-translation-metadata`,
       _type: `translation.metadata`,
       translations: translations.map((translation) => ({
-        _key: translation[LANGAUGE_FIELD],
+        _key: translation[LANGUAGE_FIELD],
         value: {
           _type: "reference",
           _ref: translation._id,

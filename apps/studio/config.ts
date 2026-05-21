@@ -1,4 +1,4 @@
-export const LANGAUGE_FIELD = "locale";
+export const LANGUAGE_FIELD = "locale";
 
 type LanguageConfig = {
   id: string;
@@ -28,4 +28,7 @@ export const DOCUMENTS: DocumentConfig[] = [
   { _type: "event", intl: true },
   { _type: "region", intl: true },
   { _type: "author", intl: true },
+  { _type: "publication", intl: true },
+  { _type: "tag", intl: true },
+  { _type: "tagCategory", intl: true },
 ];
