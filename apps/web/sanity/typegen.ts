@@ -18,18 +18,6 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type Translations = {
-  _id: string;
-  _type: "translations";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  buttons?: {
-    support?: string;
-  };
-  locale?: string;
-};
-
 export type PageBuilder = Array<
   | ({
       _key: string;
@@ -241,6 +229,13 @@ export type TagCategoryReference = {
   [internalGroqTypeReferenceTo]?: "tagCategory";
 };
 
+export type TranslationsReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "translations";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
@@ -252,7 +247,20 @@ export type InternationalizedArrayReferenceValue = {
     | NavigationReference
     | PublicationReference
     | TagReference
-    | TagCategoryReference;
+    | TagCategoryReference
+    | TranslationsReference;
+};
+
+export type Translations = {
+  _id: string;
+  _type: "translations";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  buttons?: {
+    support?: string;
+  };
+  locale?: string;
 };
 
 export type Tag = {
@@ -623,7 +631,6 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | Translations
   | PageBuilder
   | LinkButton
   | PageReference
@@ -648,7 +655,9 @@ export type AllSanitySchemaTypes =
   | PublicationReference
   | TagReference
   | TagCategoryReference
+  | TranslationsReference
   | InternationalizedArrayReferenceValue
+  | Translations
   | Tag
   | TagCategory
   | Slug

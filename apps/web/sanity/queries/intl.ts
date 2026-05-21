@@ -20,10 +20,11 @@ And check if your dev server is running, as it needs to generate the schema to g
 
 // Deep removal of null is required, otherwise intl doesn't really recognize the type.
 // The values can still be null and will be replaced by a placeholder
-type Translations = DeepNonNullable<InferResultType<typeof intlQuery>>;
+export type Translations = DeepNonNullable<InferResultType<typeof intlQuery>>;
+export type Locale = "pl" | "en";
 declare module "next-intl" {
   interface AppConfig {
-    Locale: "pl" | "en";
+    Locale: Locale;
     Messages: Translations;
   }
 }

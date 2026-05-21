@@ -5,11 +5,13 @@ import { usePathname, useRouter } from "../../i18n/navigation";
 import { useParams } from "next/navigation";
 import { Separator } from "radix-ui";
 import { GlobeIcon } from "lucide-react";
+import type { Locale } from "next-intl";
 
 type Props = {
-  locale: string;
+  locale: Locale;
   children: ReactNode;
 };
+
 export const LocaleButtons = () => {
   return (
     <div className="flex h-7 items-center gap-2">
