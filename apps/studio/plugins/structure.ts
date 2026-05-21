@@ -31,7 +31,7 @@ export const structure: StructureToolOptions = {
         Collection(S, { type: "author", title: "Autorzy", icon: UsersIcon }),
         Collection(S, { type: "publication", title: "Publikacje", icon: ComposeIcon }),
         S.listItem()
-          .title("Tagi wg Kategorii")
+          .title("Tagi wg kategorii")
           .icon(TagIcon)
           .child(
             S.documentTypeList("tagCategory")
