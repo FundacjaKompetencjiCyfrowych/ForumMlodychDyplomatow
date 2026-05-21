@@ -43,7 +43,7 @@ export default defineType({
       title: "Krótki opis artykułu",
       type: "string",
       group: "content",
-      description: "Bardzo krótki opis publikacji wyświetlany w kafelkach z linkiem",
+      description: "Bardzo krótki opis wyświetlany w kafelkach z linkiem",
       validation: (Rule) => Rule.required().error("Pole wymagane").max(250).error("Max 250 znaków"),
     }),
     defineField({
