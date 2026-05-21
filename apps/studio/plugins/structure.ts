@@ -35,7 +35,7 @@ export const structure: StructureToolOptions = {
           .icon(TagIcon)
           .child(
             S.documentTypeList("tagCategory")
-              .title("Wybierz Kategorię")
+              .title("Wybierz kategorię")
               .filter(`_type == "tagCategory" && ${LANGUAGE_FIELD} == $lang`)
               .params({ lang: "pl" })
               .initialValueTemplates([S.initialValueTemplateItem("tagCategory_pl", { lang: "pl" })])
