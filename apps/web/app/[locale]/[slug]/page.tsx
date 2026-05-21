@@ -17,7 +17,7 @@ type Props = {
 export async function generateStaticParams({ params }: { params: { locale: string } }) {
   const data = await runQueryNoStega(pagesSlugQuery, { parameters: { locale: params.locale } });
 
-  return data.filter((item) => item.slug !== "home");
+  return data?.filter((item) => item.slug !== "home") ?? [];
 }
 
 /**

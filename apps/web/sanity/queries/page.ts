@@ -28,6 +28,7 @@ export const pagesSlugQuery = q.star
   .filterByType("page")
   .filterRaw("defined(slug.current)")
   .filterBy(`${LANGAUGE_FIELD} == $locale`)
-  .project({
-    slug: "slug.current",
-  });
+  .project((sub) => ({
+    slug: sub.field("slug.current"),
+  }))
+  .nullable();
