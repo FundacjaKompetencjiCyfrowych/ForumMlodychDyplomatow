@@ -57,7 +57,7 @@ export const structure: StructureToolOptions = {
                   .items([
                     S.listItem()
                       .id(`category-edit-${categoryId}`)
-                      .title("Edytuj Kategorię")
+                      .title("Edytuj kategorię")
                       .icon(EditIcon)
                       .child(categoryDocument),
 
