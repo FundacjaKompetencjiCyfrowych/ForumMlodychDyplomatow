@@ -4,7 +4,7 @@ import { imgFragment } from "./groqd.example";
 
 export type EventsListQueryParams = {
   locale: string;
-  regionSlug?: string | null;
+  divisionSlug?: string | null;
   currentDate?: string | null;
   limit?: number;
 };
@@ -13,12 +13,12 @@ export const DEFAULT_EVENTS_LIST_LIMIT = 6;
 
 export const getEventsListQueryParams = ({
   locale,
-  regionSlug = null,
+  divisionSlug = null,
   currentDate = new Date().toISOString(),
   limit = DEFAULT_EVENTS_LIST_LIMIT,
 }: EventsListQueryParams) => ({
   locale,
-  regionSlug,
+  divisionSlug,
   currentDate,
   limit,
 });
@@ -32,7 +32,7 @@ export const eventPreviewFragment = q.fragmentForType<"event">().project((sub) =
   venue: true,
   image: sub.field("image").project(imgFragment),
   slug: "slug.current",
-  region: sub.field("region").deref().project({
+  division: sub.field("division").deref().project({
     _id: true,
     name: true,
     slug: "slug.current",
@@ -50,7 +50,7 @@ const baseEventsListQuery = ({
     .parameters<EventsListQueryParams>()
     .star.filterByType("event")
     .filterBy("locale == $locale")
-    .filterRaw("!defined($regionSlug) || region->slug.current == $regionSlug")
+    .filterRaw("!defined($divisionSlug) || division->slug.current == $divisionSlug")
     .filterRaw(
       `dateTime(coalesce(endDate, startDate)) ${tenseFilterSign} dateTime(coalesce($currentDate, now()))`
     )

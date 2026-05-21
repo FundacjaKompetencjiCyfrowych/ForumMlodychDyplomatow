@@ -74,13 +74,13 @@ export default defineType({
         }),
     }),
     defineField({
-      name: "region",
-      title: "Region",
+      name: "division",
+      title: "Przedstawicielstwo",
       type: "reference",
       group: "content",
       description: "Powiązanie wydarzenia z lokalną reprezentacją organizacji.",
       to: {
-        type: "region",
+        type: "division",
       },
       validation: (Rule) => Rule.required(),
     }),
@@ -140,17 +140,17 @@ export default defineType({
       title: "name",
       startDate: "startDate",
       endDate: "endDate",
-      region: "region.name",
+      division: "division.name",
       media: "image",
     },
-    prepare({ title, startDate, endDate, region, media }) {
+    prepare({ title, startDate, endDate, division, media }) {
       const start = formatEventDate(startDate);
       const end = endDate ? formatEventDate(endDate) : undefined;
       const dateLabel = end ? `${start} – ${end}` : start;
 
       return {
         title,
-        subtitle: region ? `${dateLabel} • ${region}` : dateLabel,
+        subtitle: division ? `${dateLabel} • ${division}` : dateLabel,
         media,
       };
     },

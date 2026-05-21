@@ -18,6 +18,62 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type PageBuilder = Array<
+  | ({
+      _key: string;
+    } & LeadSection)
+  | ({
+      _key: string;
+    } & PostsSection)
+>;
+
+export type LinkButton = {
+  _type: "linkButton";
+  variant?: "primary" | "secondary" | "text" | "link";
+  link?: Link;
+};
+
+export type PageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "page";
+};
+
+export type PostReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "post";
+};
+
+export type EventReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "event";
+};
+
+export type DivisionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "division";
+};
+
+export type Link = {
+  _type: "link";
+  linkType?: "page" | "post" | "event" | "division" | "href";
+  text?: string;
+  href?: string;
+  page?: PageReference;
+  homepage?: boolean;
+  post?: PostReference;
+  event?: EventReference;
+  division?: DivisionReference;
+  openInNewTab?: boolean;
+};
+
 export type PostsSection = {
   _type: "postsSection";
   displayNumber?: number;
@@ -73,6 +129,28 @@ export type Seo = {
   robots?: Robots;
 };
 
+export type Home = {
+  _id: string;
+  _type: "home";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  documentName?: string;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & Img)
+    | ({
+        _key: string;
+      } & LeadSection)
+    | ({
+        _key: string;
+      } & PostsSection)
+  >;
+};
+
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -116,39 +194,18 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
-export type HomeReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "home";
-};
-
-export type PostReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "post";
-};
-
-export type EventReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "event";
-};
-
-export type RegionReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "region";
-};
-
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type NavigationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "navigation";
 };
 
 export type PublicationReference = {
@@ -175,9 +232,12 @@ export type TagCategoryReference = {
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
-    | HomeReference
+    | PageReference
     | PostReference
+    | EventReference
+    | DivisionReference
     | AuthorReference
+    | NavigationReference
     | PublicationReference
     | TagReference
     | TagCategoryReference;
@@ -206,6 +266,12 @@ export type TagCategory = {
   locale?: string;
   title?: string;
   description?: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type SanityFileAssetReference = {
@@ -296,6 +362,41 @@ export type SanityImageHotspot = {
   width?: number;
 };
 
+export type Navigation = {
+  _id: string;
+  _type: "navigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  button?: Array<
+    {
+      _key: string;
+    } & LinkButton
+  >;
+  links?: Array<
+    | {
+        name?: string;
+        header?: string;
+        description?: string;
+        columns?: Array<{
+          header?: string;
+          items?: Array<
+            {
+              _key: string;
+            } & Link
+          >;
+          _key: string;
+        }>;
+        _type: "dropdown";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & Link)
+  >;
+  locale?: string;
+};
+
 export type Event = {
   _id: string;
   _type: "event";
@@ -308,7 +409,7 @@ export type Event = {
   slug?: Slug;
   startDate?: string;
   endDate?: string;
-  region?: RegionReference;
+  division?: DivisionReference;
   venue?: string;
   address?: string;
   excerpt?: string;
@@ -317,9 +418,9 @@ export type Event = {
   registrationUrl?: string;
 };
 
-export type Region = {
+export type Division = {
   _id: string;
-  _type: "region";
+  _type: "division";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -327,12 +428,6 @@ export type Region = {
   seo?: Seo;
   name?: string;
   slug?: Slug;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type CategoryReference = {
@@ -393,26 +488,19 @@ export type Author = {
   }>;
 };
 
-export type Home = {
+export type Page = {
   _id: string;
-  _type: "home";
+  _type: "page";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  name?: string;
+  slug?: Slug;
+  heading?: string;
+  subheading?: string;
+  pageBuilder?: PageBuilder;
   locale?: string;
   seo?: Seo;
-  documentName?: string;
-  sections?: Array<
-    | ({
-        _key: string;
-      } & Img)
-    | ({
-        _key: string;
-      } & LeadSection)
-    | ({
-        _key: string;
-      } & PostsSection)
-  >;
 };
 
 export type MediaTag = {
@@ -523,39 +611,45 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | PageBuilder
+  | LinkButton
+  | PageReference
+  | PostReference
+  | EventReference
+  | DivisionReference
+  | Link
   | PostsSection
   | LeadSection
   | SanityImageAssetReference
   | Img
   | RichText
   | Seo
+  | Home
   | Settings
   | Category
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
-  | HomeReference
-  | PostReference
-  | EventReference
-  | RegionReference
   | AuthorReference
+  | NavigationReference
   | PublicationReference
   | TagReference
   | TagCategoryReference
   | InternationalizedArrayReferenceValue
   | Tag
   | TagCategory
+  | Slug
   | SanityFileAssetReference
   | Publication
   | SanityImageCrop
   | SanityImageHotspot
+  | Navigation
   | Event
-  | Region
-  | Slug
+  | Division
   | CategoryReference
   | Post
   | Author
-  | Home
+  | Page
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette

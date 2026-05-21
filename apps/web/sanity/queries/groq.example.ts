@@ -1,5 +1,4 @@
 import { defineQuery } from "next-sanity";
-import { sanityFetch } from "../live";
 
 // defineQuery enables automatic typing
 // if you have Sanity.io extension installed, you will also get syntax highlighting and `execute` button
@@ -18,6 +17,3 @@ const postsQuery = defineQuery(`
 `);
 
 // Data is typed but not validated (you can use zod or query with groqd instead if you want validation)
-const { data } = await sanityFetch({ query: postsQuery });
-
-console.log(data);

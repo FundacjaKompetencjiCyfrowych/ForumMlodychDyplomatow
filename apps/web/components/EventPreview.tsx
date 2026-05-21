@@ -9,9 +9,9 @@ type Props = {
 const EventPreviewDisplay = ({ event, locale }: Props) => {
   const startDate = event.startDate ? new Date(event.startDate) : null;
   return (
-    <div className="px-12 py-8 border border-gray-500">
+    <div className="border border-gray-500 px-12 py-8">
       <div className="flex flex-row gap-8">
-        <div className="flex flex-col gap">
+        <div className="gap flex flex-col">
           <h3 className="heading-3">{event.name}</h3>
           {startDate && (
             <>

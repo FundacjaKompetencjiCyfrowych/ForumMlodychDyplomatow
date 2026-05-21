@@ -20,17 +20,17 @@ export default async function PublicationDetailPage({ params }: { params: Promis
   }
 
   return (
-    <article className="max-w-4xl mx-auto p-10 flex flex-col gap-6">
+    <article className="mx-auto flex max-w-4xl flex-col gap-6 p-10">
       <Link
         href={`/${locale}/publications`}
-        className="text-sm text-blue-600 hover:text-blue-800 hover:underline mb-4 inline-block font-medium w-fit"
+        className="mb-4 inline-block w-fit text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
       >
         &larr; Wróć do listy publikacji
       </Link>
 
       <header className="border-b pb-6">
-        <div className="flex items-center gap-3 mb-6 text-sm text-gray-500">
-          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">
+        <div className="mb-6 flex items-center gap-3 text-sm text-gray-500">
+          <span className="rounded-full bg-blue-100 px-3 py-1 font-medium text-blue-800">
             {publication.type === "article" && "Krótkie opracowanie"}
             {publication.type === "news" && "Analiza"}
             {publication.type === "guide" && "Magazyn"}
@@ -47,12 +47,12 @@ export default async function PublicationDetailPage({ params }: { params: Promis
           )}
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+        <h1 className="mb-6 text-4xl leading-tight font-bold text-gray-900 md:text-5xl">
           {publication.title}
         </h1>
 
         {publication.author?.name && (
-          <p className="text-gray-700 font-medium">
+          <p className="font-medium text-gray-700">
             Autor: <span className="font-semibold text-gray-900">{publication.author.name}</span>
           </p>
         )}
@@ -60,20 +60,20 @@ export default async function PublicationDetailPage({ params }: { params: Promis
 
       {/* Zajawka (Excerpt) */}
       {publication.excerpt && (
-        <section className="text-xl text-gray-600 font-medium leading-relaxed italic border-l-4 border-blue-500 pl-4 my-2">
+        <section className="my-2 border-l-4 border-blue-500 pl-4 text-xl leading-relaxed font-medium text-gray-600 italic">
           {publication.excerpt}
         </section>
       )}
 
       {/* Tagi */}
       {publication.tags && publication.tags.length > 0 && (
-        <div className="flex items-center gap-2 flex-wrap mt-2">
-          <span className="text-sm text-gray-500 font-medium mr-1">Tagi:</span>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-sm font-medium text-gray-500">Tagi:</span>
           {publication.tags.map((tag: any) => (
             // Zabezpieczenie: korzystamy z tag.name (poprawka z poprzednich kroków)
             <span
               key={tag._id}
-              className="text-xs bg-gray-100 border border-gray-200 text-gray-600 px-2 py-1 rounded"
+              className="rounded border border-gray-200 bg-gray-100 px-2 py-1 text-xs text-gray-600"
             >
               {tag.name}
             </span>
@@ -82,11 +82,11 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       )}
 
       {/* Placeholder na pełną treść (Portable Text) */}
-      <section className="mt-12 p-10 border-2 border-dashed border-gray-300 rounded-xl text-center bg-gray-50">
-        <h3 className="text-xl text-gray-500 font-semibold mb-2">
+      <section className="mt-12 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-10 text-center">
+        <h3 className="mb-2 text-xl font-semibold text-gray-500">
           Miejsce na treść główną artykułu
         </h3>
-        <p className="text-gray-400 text-sm max-w-md mx-auto">
+        <p className="mx-auto max-w-md text-sm text-gray-400">
           Tutaj w przyszłości zamontujemy komponent z paczki <code>@portabletext/react</code>, który
           zamieni tablicę bloków z Sanity na piękne nagłówki, paragrafy i obrazki.
         </p>
@@ -98,7 +98,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
             href={publication.pdfFile.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-red-50 text-red-700 border border-red-200 px-6 py-3 rounded-lg hover:bg-red-100 transition-colors inline-flex items-center gap-2 font-medium"
+            className="inline-flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-6 py-3 font-medium text-red-700 transition-colors hover:bg-red-100"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

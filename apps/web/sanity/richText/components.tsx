@@ -27,7 +27,7 @@ export const components: PortableTextComponents = {
     },
   },
   list: {
-    bullet: ({ children }) => <ul className="list-disc ml-6">{children}</ul>,
+    bullet: ({ children }) => <ul className="ml-6 list-disc">{children}</ul>,
   },
   listItem: {
     bullet: ({ children }) => <li className="mb-1">{children}</li>,

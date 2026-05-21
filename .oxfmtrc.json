@@ -8,6 +8,9 @@
   "trailingComma": "es5",
   "endOfLine": "lf",
   "sortPackageJson": false,
+  "sortTailwindcss": {
+    "stylesheet": "apps/web/app/[locale]/globals.css"
+  },
   "ignorePatterns": [
     "**/node_modules/**",
     "**/build/**",

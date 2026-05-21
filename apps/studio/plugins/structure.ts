@@ -4,9 +4,10 @@ import { SingleLanguageList as Collection } from "./intl";
 import {
   ComposeIcon,
   HomeIcon,
+  LinkIcon,
+  TranslateIcon,
   UsersIcon,
   CogIcon,
-  TranslateIcon,
   TagIcon,
   EditIcon,
   CalendarIcon,
@@ -24,9 +25,8 @@ export const structure: StructureToolOptions = {
       .id("content")
       .title("Content")
       .items([
-        S.divider().title("Strony"),
-        Singleton(S, { type: "home", title: "Strona główna", icon: HomeIcon }),
         S.divider().title("Kolekcje"),
+        Collection(S, { type: "page", title: "Strony", icon: HomeIcon }),
         Collection(S, { type: "post", title: "Wpisy", icon: ComposeIcon }),
         Collection(S, { type: "author", title: "Autorzy", icon: UsersIcon }),
         Collection(S, { type: "publication", title: "Publikacje", icon: ComposeIcon }),
@@ -84,9 +84,10 @@ export const structure: StructureToolOptions = {
               })
           ),
         Collection(S, { type: "event", title: "Wydarzenia", icon: CalendarIcon }),
-        Collection(S, { type: "region", title: "Przedstawicielstwa", icon: EarthGlobeIcon }),
+        Collection(S, { type: "division", title: "Przedstawicielstwa", icon: EarthGlobeIcon }),
         S.divider().title("Ustawienia"),
         Singleton(S, { type: "settings", title: "Ustawienia", icon: CogIcon }),
+        Singleton(S, { type: "navigation", title: "Nawigacja", icon: LinkIcon }),
         S.divider().title("Tłumaczenia"),
         Translations(S, { title: "Metadane", icon: TranslateIcon }),
       ]),
