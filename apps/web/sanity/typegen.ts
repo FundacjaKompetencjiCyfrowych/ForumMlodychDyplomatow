@@ -309,6 +309,27 @@ export type NavigationReference = {
   [internalGroqTypeReferenceTo]?: "navigation";
 };
 
+export type PublicationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publication";
+};
+
+export type TagReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tag";
+};
+
+export type TagCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tagCategory";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
@@ -317,7 +338,129 @@ export type InternationalizedArrayReferenceValue = {
     | EventReference
     | DivisionReference
     | AuthorReference
-    | NavigationReference;
+    | NavigationReference
+    | PublicationReference
+    | TagReference
+    | TagCategoryReference;
+};
+
+export type Tag = {
+  _id: string;
+  _type: "tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  name?: string;
+  slug?: Slug;
+  category?: TagCategoryReference;
+};
+
+export type TagCategory = {
+  _id: string;
+  _type: "tagCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo?: Seo;
+  locale?: string;
+  title?: string;
+  description?: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Publication = {
+  _id: string;
+  _type: "publication";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  type?: "article" | "news" | "guide" | "review";
+  title?: string;
+  excerpt?: string;
+  slug?: Slug;
+  date?: string;
+  mainImage?: Img;
+  author?: AuthorReference;
+  pdfFile?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  text?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        caption?: string;
+        _type: "image";
+        _key: string;
+      }
+  >;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type Navigation = {
@@ -386,12 +529,6 @@ export type Division = {
   seo?: Seo;
   name?: string;
   slug?: Slug;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type CategoryReference = {
@@ -465,22 +602,6 @@ export type Page = {
   pageBuilder?: PageBuilder;
   locale?: string;
   seo?: Seo;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
 };
 
 export type MediaTag = {
@@ -621,17 +742,24 @@ export type AllSanitySchemaTypes =
   | TranslationMetadata
   | InternationalizedArrayReference
   | NavigationReference
+  | PublicationReference
+  | TagReference
+  | TagCategoryReference
   | InternationalizedArrayReferenceValue
+  | Tag
+  | TagCategory
+  | Slug
+  | SanityFileAssetReference
+  | Publication
+  | SanityImageCrop
+  | SanityImageHotspot
   | Navigation
   | Event
   | Division
-  | Slug
   | CategoryReference
   | Post
   | Author
   | Page
-  | SanityImageCrop
-  | SanityImageHotspot
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette

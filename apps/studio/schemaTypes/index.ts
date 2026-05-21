@@ -15,12 +15,18 @@ import { page } from "./pages/page";
 import navigation from "./singletons/navigation";
 import { sectionStructure } from "./sections/sections";
 import division from "./division";
+import publications from "./publications";
+import tag from "./tag";
+import tagCategory from "./tagCategory";
 
 export const schemaTypes = [
   post,
   event,
   author,
   division,
+  publications,
+  tag,
+  tagCategory,
   category,
   settings,
   home,

@@ -4,7 +4,7 @@ import {
   PresentationPluginOptions,
   type DocumentLocation,
 } from "sanity/presentation";
-import { DOCUMENTS, LANGUAGES, LANGAUGE_FIELD } from "../config";
+import { DOCUMENTS, LANGUAGES, LANGUAGE_FIELD } from "../config";
 
 const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || "http://localhost:3000";
 /**
@@ -58,15 +58,15 @@ const mainDocumentRoutes = DOCUMENTS.flatMap((doc) => {
       return [
         {
           route: joinPath(lang, doc.path, ":slug"),
-          filter: `_type == "${doc._type}" && slug.current == $slug && ${LANGAUGE_FIELD} == "${lang}"`,
+          filter: `_type == "${doc._type}" && slug.current == $slug && ${LANGUAGE_FIELD} == "${lang}"`,
         },
       ];
     }
     if (doc.path) {
       return [
         {
-          route: joinPath(lang, doc.path),
-          filter: `_type == "${doc._type}" && _id == "${doc._type}-${lang}"`,
+          route: joinPath(doc.path),
+          filter: `_type == "${doc._type}" && _id == "${doc.id || doc._type}"`,
         },
       ];
     }
@@ -82,7 +82,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
           [
             doc._type,
             defineLocations({
-              select: { title: "title", slug: "slug.current", lang: LANGAUGE_FIELD },
+              select: { title: "title", slug: "slug.current", lang: LANGUAGE_FIELD },
               resolve: (d) => {
                 const lang = d?.lang ?? LANGUAGES[0].id;
 
@@ -107,7 +107,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
           [
             doc._type,
             defineLocations({
-              select: { lang: LANGAUGE_FIELD },
+              select: { lang: LANGUAGE_FIELD },
               resolve: (d) => {
                 const lang = d?.lang ?? LANGUAGES[0].id;
                 return {
@@ -129,7 +129,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
         [
           doc._type,
           defineLocations({
-            select: { title: "title", lang: LANGAUGE_FIELD },
+            select: { title: "title", lang: LANGUAGE_FIELD },
             resolve: (d) => {
               const lang = d?.lang ?? LANGUAGES[0].id;
               return {

@@ -34,7 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Since we are using a dynamic route segment for the [locale] param, we need to
  *  instruct Next.js what params exist so that it may pre-generate pages */
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return routing.locales
+    .map((locale) => (locale === "pl" ? undefined : { locale }))
+    .filter(Boolean);
 }
 
 /** Setup font optimization
@@ -67,12 +69,12 @@ export default async function RootLayout({
   // Validating locale at root layout ensures it is valid everywhere
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  setRequestLocale(locale); // Enables static rendering, this should be done in every page/layout
+  setRequestLocale(locale ?? "pl"); // Enables static rendering, this should be done in every page/layout
 
   return (
     <html lang={locale}>
       <body
-        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative font-inter text-gray-900 antialiased`}
+        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
         <NextIntlClientProvider>
           <Header />

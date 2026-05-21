@@ -16,41 +16,39 @@ import { SheetTitle } from "../ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import MobileMenuContent from "./MobileMenuContent";
 import { FMDLogo } from "../Icons/FMDLogo";
+import { LANGUAGE_FIELD } from "../../../studio/config";
 
 export const navQuery = q.star
   .parameters<{ locale: string }>()
   .filterByType("navigation")
-  .filterBy("locale == $locale")
+  .filterBy(`${LANGUAGE_FIELD} == $locale`)
   .slice(0)
   .project((sub) => ({
     button: sub
       .field("button[]")
       .project(linkButtonFragment)
       .transform((buttons) => buttons ?? []),
-    links: sub
-      .field("links[]")
-      .project((sub) => ({
-        _key: true,
-        ...sub.conditionalByType({
-          link: (sub) => sub.project(linkFragment),
-          dropdown: (sub) =>
-            sub.project({
-              name: true,
+    links: sub.field("links[]").project((sub) => ({
+      _key: true,
+      ...sub.conditionalByType({
+        link: (sub) => sub.project(linkFragment),
+        dropdown: (sub) =>
+          sub.project({
+            name: true,
+            header: true,
+            description: true,
+            columns: sub.field("columns[]").project((sub) => ({
               header: true,
-              description: true,
-              columns: sub.field("columns[]").project((sub) => ({
-                header: true,
-                _key: true,
-                items: sub
-                  .field("items[]")
-                  .project(linkFragment)
-                  // groqd got confused here a bit, so I'm giving it the type manually
-                  .as<InferFragmentType<typeof linkFragment>[]>(),
-              })),
-            }),
-        }),
-      }))
-      .notNull(),
+              _key: true,
+              items: sub
+                .field("items[]")
+                .project(linkFragment)
+                // groqd got confused here a bit, so I'm giving it the type manually
+                .as<InferFragmentType<typeof linkFragment>[]>(),
+            })),
+          }),
+      }),
+    })),
   }));
 
 export type NavQueryResult = Exclude<InferResultType<typeof navQuery>, null>;

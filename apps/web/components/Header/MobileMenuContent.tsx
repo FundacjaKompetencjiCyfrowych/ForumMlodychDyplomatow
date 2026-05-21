@@ -9,8 +9,9 @@ import Typography from "../ui/typography";
 type Props = {
   navigation: NavQueryResult;
 };
-type NavLink = Extract<NavQueryResult["links"][number], { _type: "link" }>;
-type NavDropdown = Extract<NavQueryResult["links"][number], { _type: "dropdown" }>;
+type NavItem = Exclude<NavQueryResult["links"], null>[number];
+type NavLink = Extract<NavItem, { _type: "link" }>;
+type NavDropdown = Extract<NavItem, { _type: "dropdown" }>;
 
 const MenuLinkItem = ({ link }: { link: NavLink }) => {
   return <Link link={link} variant="ghost" className="justify-start" />;
@@ -46,7 +47,7 @@ const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
 const MobileMenuContent: React.FC<Props> = (props) => {
   return (
     <Accordion type="single" className="flex w-full flex-col" collapsible>
-      {props.navigation.links.map((link) => {
+      {props.navigation.links?.map((link) => {
         if (link._type === "link") {
           return <MenuLinkItem key={link._key} link={link} />;
         }

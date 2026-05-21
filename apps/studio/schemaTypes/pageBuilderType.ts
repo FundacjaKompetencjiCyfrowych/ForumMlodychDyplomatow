@@ -18,6 +18,8 @@ export const pageBuilder = defineType({
         // Add a list view if desired
         { name: "list" },
         /* {
+        // {name: "list"},
+        {
           name: "grid",
 
           // Preview image is not required, it will display an icon defined in the section instead
