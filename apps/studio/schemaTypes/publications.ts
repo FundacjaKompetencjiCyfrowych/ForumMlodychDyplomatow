@@ -110,7 +110,7 @@ export default defineType({
             {
               name: "alt",
               type: "string",
-              title: "Tekst alternatywny (dla robotów i niepełnosprawnych)",
+              title: "Tekst alternatywny (dla czytników ekranu i wyszukiwarek)",
             },
             {
               name: "caption",
