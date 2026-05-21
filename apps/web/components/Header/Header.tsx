@@ -1,7 +1,7 @@
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import type { InferFragmentType, InferResultType } from "groqd";
 import { getLocale } from "next-intl/server";
-import { LANGAUGE_FIELD } from "../../../studio/config";
+import { LANGUAGE_FIELD } from "../../../studio/config";
 import { q, runQuery } from "../../sanity/groqd";
 import { linkButtonFragment, linkFragment } from "../../sanity/queries/linkFragment";
 import { FMDLogo } from "../Icons/FMDLogo";
@@ -21,7 +21,7 @@ import MobileMenuContent from "./MobileMenuContent";
 export const navQuery = q.star
   .parameters<{ locale: string }>()
   .filterByType("navigation")
-  .filterBy(`${LANGAUGE_FIELD} == $locale`)
+  .filterBy(`${LANGUAGE_FIELD} == $locale`)
   .slice(0)
   .project((sub) => ({
     button: sub

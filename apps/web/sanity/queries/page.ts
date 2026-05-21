@@ -2,13 +2,13 @@ import { type InferResultType } from "groqd";
 import { q } from "../groqd";
 import { pageBuilderFragment } from "./pageBuilder";
 import { seoFragment } from "./seo";
-import { LANGAUGE_FIELD } from "../../../studio/config";
+import { LANGUAGE_FIELD } from "../../../studio/config";
 
 export const pageQuery = q
   .parameters<{ slug: string; locale: string }>()
   .star.filterByType("page")
   .filterBy("slug.current == $slug")
-  .filterBy(`${LANGAUGE_FIELD} == $locale`)
+  .filterBy(`${LANGUAGE_FIELD} == $locale`)
   .slice(0)
   .project((sub) => ({
     _id: sub.field("_id"),
@@ -27,7 +27,7 @@ export const pagesSlugQuery = q.star
   .parameters<{ locale: string }>()
   .filterByType("page")
   .filterRaw("defined(slug.current)")
-  .filterBy(`${LANGAUGE_FIELD} == $locale`)
+  .filterBy(`${LANGUAGE_FIELD} == $locale`)
   .project((sub) => ({
     slug: sub.field("slug.current"),
   }))
