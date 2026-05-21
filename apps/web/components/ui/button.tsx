@@ -29,7 +29,7 @@ const buttonVariants = cva(
         ghost: "typography-p1 bg-transparent border-0 text-gray-900 hover:bg-gray-100",
         accent: "bg-brand-red text-gray-50 hover:bg-red-800",
         accentSecondary: "bg-transparent hover:bg-red-50 text-brand-red border-brand-red border-2",
-        dot: "bg-slate-300 hover:bg-slate-400 data-active:bg-grey-800 data-active:hover:bg-gray-800 rounded-full w-2 h-2 p-0! border-0",
+        dot: "bg-slate-300 hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800 rounded-full w-2 h-2 p-0! border-0",
       },
       size: {
         m: "px-4 py-3",

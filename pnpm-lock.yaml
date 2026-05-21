@@ -54,6 +54,9 @@ importers:
       react-dom:
         specifier: ^19.1
         version: 19.2.3(react@19.2.3)
+      react-inlinesvg:
+        specifier: ^4.4.1
+        version: 4.4.1(react@19.2.3)
       sanity:
         specifier: 5.13.0
         version: 5.13.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.0.1)(@types/node@25.4.0)(@types/react@19.2.14)(babel-plugin-react-compiler@1.0.0)(immer@11.1.4)(jiti@2.6.1)(lightningcss@1.31.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(styled-components@6.3.11(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.2)
@@ -127,6 +130,9 @@ importers:
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
+      react-inlinesvg:
+        specifier: ^4.4.1
+        version: 4.4.1(react@19.2.3)
       sanity-image:
         specifier: ^1.1.0
         version: 1.1.0(react@19.2.3)
@@ -7704,6 +7710,11 @@ packages:
       '@types/react':
         optional: true
 
+  react-from-dom@0.7.5:
+    resolution: {integrity: sha512-CO92PmMKo/23uYPm6OFvh5CtZbMgHs/Xn+o095Lz/TZj9t8DSDhGdSOMLxBxwWI4sr0MF17KUn9yJWc5Q00R/w==}
+    peerDependencies:
+      react: 16.8 - 19
+
   react-hook-form@7.71.2:
     resolution: {integrity: sha512-1CHvcDYzuRUNOflt4MOq3ZM46AronNJtQ1S7tnX6YN4y72qhgiUItpacZUAQ0TyWYci3yz1X+rXaSxiuEm86PA==}
     engines: {node: '>=18.0.0'}
@@ -7730,6 +7741,11 @@ packages:
     resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
     peerDependencies:
       react: '*'
+
+  react-inlinesvg@4.4.1:
+    resolution: {integrity: sha512-3acGn5o0xyWYpJrBm8qES/lBErVpqH3vhNywpw0frztdOmiAUdDMjvcsx9hrZ5wBaL7bRdsgexQ907urbvsARg==}
+    peerDependencies:
+      react: 16.8 - 19
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -17830,6 +17846,10 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.14
 
+  react-from-dom@0.7.5(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+
   react-hook-form@7.71.2(react@19.2.3):
     dependencies:
       react: 19.2.3
@@ -17857,6 +17877,11 @@ snapshots:
   react-icons@4.12.0(react@19.2.3):
     dependencies:
       react: 19.2.3
+
+  react-inlinesvg@4.4.1(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+      react-from-dom: 0.7.5(react@19.2.3)
 
   react-is@16.13.1: {}
 

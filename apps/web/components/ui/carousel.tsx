@@ -26,6 +26,7 @@ type CarouselContextProps = {
   scrollNext: () => void;
   canScrollPrev: boolean;
   canScrollNext: boolean;
+  currentIndex: number;
 } & CarouselProps;
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
@@ -58,11 +59,12 @@ function Carousel({
   );
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
-
+  const [currentIndex, setCurrentIndex] = React.useState(0);
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) return;
     setCanScrollPrev(api.canScrollPrev());
     setCanScrollNext(api.canScrollNext());
+    setCurrentIndex(api.selectedScrollSnap());
   }, []);
 
   const scrollPrev = React.useCallback(() => {
@@ -113,11 +115,12 @@ function Carousel({
         scrollNext,
         canScrollPrev,
         canScrollNext,
+        currentIndex,
       }}
     >
       <div
         onKeyDownCapture={handleKeyDown}
-        className={cn("relative", className)}
+        className={cn("relative max-w-full", className)}
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
@@ -130,19 +133,20 @@ function Carousel({
 }
 
 function CarouselControls({ className }: React.ComponentProps<"div">) {
-  const { api } = useCarousel();
+  const { api, currentIndex } = useCarousel();
   const items = api?.slideNodes().length || 0;
   const handleClick = (index: number) => {
     if (!api) return;
     api.scrollTo(index);
   };
+  console.log(currentIndex);
   return (
-    <div className={cn("flex flex-row gap-2", className)}>
+    <div className={cn("flex flex-row gap-2 w-full items-center justify-center mt-4", className)}>
       {Array.from({ length: items }).map((_, index) => (
         <Button
           key={index}
           onClick={() => handleClick(index)}
-          data-active={api?.selectedScrollSnap() === index}
+          data-active={currentIndex === index}
           variant="dot"
           className="rounded-full bg-[currentColor]"
         />
@@ -157,7 +161,11 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div ref={carouselRef} className="overflow-hidden" data-slot="carousel-content">
       <div
-        className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)}
+        className={cn(
+          "flex max-w-full",
+          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+          className
+        )}
         {...props}
       />
     </div>

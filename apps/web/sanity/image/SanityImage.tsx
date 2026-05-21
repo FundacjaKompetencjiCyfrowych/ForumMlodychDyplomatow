@@ -1,7 +1,7 @@
 import { ComponentProps, ElementType } from "react";
 import { SanityImage as Image, type CropData } from "sanity-image";
 import type { ImgFragment } from "../queries/imgFragment";
-
+import SVG from "react-inlinesvg";
 type SanityImageProps = {
   image?: ImgFragment | null;
   preview?: boolean;
@@ -28,6 +28,9 @@ export function SanityImage({ image, preview, ...props }: SanityImageProps) {
 
   if (preview && typeof window === "undefined") {
     throw new Error("Image preview can only be used in client components");
+  }
+  if (image.asset.extension === "svg" && typeof image.asset.url === "string") {
+    return <SVG id={id} src={image.asset.url} className={props.className}></SVG>;
   }
   if (image.asset.metadata?.lqip)
     if (image.asset)

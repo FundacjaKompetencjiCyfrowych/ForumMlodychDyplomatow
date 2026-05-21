@@ -38,6 +38,7 @@ export const peopleSection = defineType({
               name: "groupName",
               type: "string",
               title: "Nazwa grupy",
+              validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: "members",

@@ -16,6 +16,7 @@ export const peopleSectionFragment = q
           // TODO perhaps a person card fragment
           _key: "_id",
           name: sub.field("name"),
+
           img: sub.field("img").project(imgFragment),
         })),
     })),
