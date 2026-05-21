@@ -32,4 +32,5 @@ export const DOCUMENTS: DocumentConfig[] = [
   { _type: "publication", intl: true },
   { _type: "tag", intl: true },
   { _type: "tagCategory", intl: true },
+  { _type: "translations", intl: true },
 ];

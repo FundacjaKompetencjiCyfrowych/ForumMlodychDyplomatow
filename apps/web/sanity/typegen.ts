@@ -18,6 +18,18 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type Translations = {
+  _id: string;
+  _type: "translations";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  buttons?: {
+    support?: string;
+  };
+  locale?: string;
+};
+
 export type PageBuilder = Array<
   | ({
       _key: string;
@@ -611,6 +623,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | Translations
   | PageBuilder
   | LinkButton
   | PageReference
