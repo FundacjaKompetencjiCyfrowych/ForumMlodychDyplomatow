@@ -4,7 +4,7 @@ import { Container } from "../ui/container";
 import { getHeading } from "../../lib/heading";
 import Typography from "../ui/typography";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Carousel, CarouselContent, CarouselControls } from "../ui/carousel";
+import { ResponsiveCarousel } from "../ui/responsive-carousel";
 import { SanityImage } from "../../sanity/image/SanityImage";
 import type { DeepGet } from "../../lib/types";
 import { Button } from "../ui/button";
@@ -29,8 +29,8 @@ const PeopleSection = ({ index, data }: PageBuilderSectionProps<"peopleSection">
       <Typography variant="h2" as={getHeading(index)}>
         {data.heading}
       </Typography>
-      <Tabs defaultValue={groups[0]?.groupName ?? ""} className="w-full">
-        <TabsList variant="line" className="w-fit min-w-full overflow-x-auto">
+      <Tabs defaultValue={groups[0]?.groupName ?? ""} className="w-full max-w-full">
+        <TabsList variant="line" className="">
           {groups.map((group, index) => (
             <TabsTrigger key={`${group._key}-${index}`} value={group.groupName ?? ""}>
               {group.groupName}
@@ -39,21 +39,11 @@ const PeopleSection = ({ index, data }: PageBuilderSectionProps<"peopleSection">
         </TabsList>
         {groups.map((group, index) => (
           <TabsContent key={`${group._key}-${index}`} value={group.groupName ?? ""}>
-            <div className="desktop:hidden">
-              <Carousel>
-                <CarouselContent>
-                  {group.members?.map((member, index) => (
-                    <PersonCard key={`${member._key}-${index}`} person={member} />
-                  ))}
-                </CarouselContent>
-                <CarouselControls />
-              </Carousel>
-            </div>
-            <div className="hidden desktop:flex">
+            <ResponsiveCarousel>
               {group.members?.map((member, index) => (
                 <PersonCard key={`${member._key}-${index}`} person={member} />
               ))}
-            </div>
+            </ResponsiveCarousel>
           </TabsContent>
         ))}
       </Tabs>

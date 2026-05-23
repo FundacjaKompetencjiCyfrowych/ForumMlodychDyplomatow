@@ -30,6 +30,7 @@ export type PodcastSection = {
   _type: "podcastSection";
   heading?: string;
   subheading?: string;
+  embed?: string;
 };
 
 export type AuthorReference = {
@@ -85,6 +86,7 @@ export type HeroSection = {
 export type EventsSection = {
   _type: "eventsSection";
   heading?: string;
+  link?: Link;
 };
 
 export type DivisionsSection = {

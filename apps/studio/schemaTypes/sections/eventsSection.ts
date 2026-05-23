@@ -22,5 +22,11 @@ export const eventsSection = defineType({
       title: "Nagłówek",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "link",
+      type: "link",
+      title: "Link",
+      description: 'Link pod listą wydarzeń, np "zobacz więcej"',
+    }),
   ],
 });

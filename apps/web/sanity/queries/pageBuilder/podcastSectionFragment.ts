@@ -6,4 +6,5 @@ export const podcastSectionFragment = q
   .project((sub) => ({
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
+    embed: sub.field("embed"),
   }));

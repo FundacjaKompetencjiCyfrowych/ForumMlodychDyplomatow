@@ -1,8 +1,6 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../components/ui/tabs";
+import { EventTabs } from "../../../components/Events/event-tabs";
 import { runQuery } from "../../../sanity/groqd";
-import EventList from "../../../components/EventList";
-import { Suspense } from "react";
-import { archivedEventsQuery, upcomingEventsQuery } from "../../../sanity/queries/events";
+import { combinedEventsQuery } from "../../../sanity/queries/events";
 
 type Params = {
   locale: string;
@@ -19,34 +17,18 @@ export default async function EventsPage({
 }) {
   const { locale } = await params;
   const { division } = await searchParams;
-  const parameters = {
-    locale,
-    limit: 10,
-    currentDate: new Date().toISOString(),
-    divisionSlug: division || null,
-  };
-  const upcomingEvents = runQuery(upcomingEventsQuery, {
-    parameters,
+  const query = runQuery(combinedEventsQuery, {
+    parameters: {
+      locale,
+      limit: 10,
+      divisionSlug: division ?? null,
+      currentDate: new Date().toISOString(),
+    },
   });
-  const archivedEvents = runQuery(archivedEventsQuery, { parameters });
   return (
     <div className="flex flex-col">
       <h2 className="text-4xl">Wydarzenia</h2>
-
-      <Tabs defaultValue="upcoming" className="w-sm self-center md:w-lg lg:w-xl xl:w-3xl">
-        <TabsList variant="line">
-          <TabsTrigger value="upcoming">Nadchodzące</TabsTrigger>
-          <TabsTrigger value="archived">Archiwum</TabsTrigger>
-        </TabsList>
-        <TabsContent value="upcoming">
-          <Suspense fallback={<div>Loading...</div>}>
-            <EventList events={upcomingEvents} locale={locale} />
-          </Suspense>
-        </TabsContent>
-        <TabsContent value="archived">
-          <EventList events={archivedEvents} locale={locale} />
-        </TabsContent>
-      </Tabs>
+      <EventTabs query={query} locale={locale} />
     </div>
   );
 }

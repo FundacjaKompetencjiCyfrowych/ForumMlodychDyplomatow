@@ -9,7 +9,8 @@
   "endOfLine": "lf",
   "sortPackageJson": false,
   "sortTailwindcss": {
-    "stylesheet": "apps/web/app/[locale]/globals.css"
+    "stylesheet": "apps/web/app/[locale]/globals.css",
+    "functions": ["clsx", "cn", "cva"]
   },
   "ignorePatterns": [
     "**/node_modules/**",

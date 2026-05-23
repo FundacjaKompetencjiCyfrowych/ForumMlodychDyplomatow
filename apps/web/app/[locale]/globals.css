@@ -63,10 +63,6 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
   --breakpoint-desktop: 48rem /* Same as breakpoint-md */;
-
-  /* Component values */
-  --spacing-header-height-mobile: 4.5rem;
-  --spacing-header-height-desktop: 5.5rem;
 }
 
 @layer base {
@@ -122,6 +118,8 @@
 :root {
   --brand-red: oklch(0.3291 0.108 22.11);
   --brand-blue: oklch(0.3136 0.0675 258.82);
+  --header-height-mobile: 4.5rem;
+  --header-height-desktop: 5.5rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);

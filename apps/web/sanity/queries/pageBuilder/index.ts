@@ -10,6 +10,7 @@ import { newPublicationsSectionFragment } from "./newPublicationsSectionFragment
 import { peopleSectionFragment } from "./peopleSectionFragment";
 import { podcastSectionFragment } from "./podcastSectionFragment";
 import { supportUsSectionFragment } from "./supportUsSectionFragment";
+import type { Locale } from "next-intl";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -48,4 +49,5 @@ export type PageBuilderFragmentData<T extends PageBuilderSectionType> = Extract<
 export type PageBuilderSectionProps<T extends PageBuilderSectionType> = {
   data: PageBuilderFragmentData<T>;
   index: number;
+  locale: Locale;
 };

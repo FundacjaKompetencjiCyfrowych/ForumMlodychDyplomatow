@@ -17,7 +17,7 @@ const MobileMenu = ({ children }: Props) => (
       <SheetContent
         showOverlay={false}
         side="right"
-        className="top-header-height-mobile! z-40 min-h-[100%-var(--header-height-mobile)] overflow-y-scroll px-4 pb-8"
+        className="top-[--header-height-mobile]! z-40 min-h-[100%-var(--header-height-mobile)] overflow-y-scroll px-4 pb-8"
       >
         {children}
       </SheetContent>

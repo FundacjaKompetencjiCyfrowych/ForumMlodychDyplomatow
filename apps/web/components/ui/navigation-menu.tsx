@@ -90,7 +90,7 @@ function NavigationMenuContent({
       data-motion="from-start"
       className={cn(
         [
-          "top-0 left-0 w-full p-1 ease-[cubic-bezier(0.22,1,0.36,1)] z-50",
+          "top-0 left-0 z-50 w-full p-1 ease-[cubic-bezier(0.22,1,0.36,1)]",
           "group-data-[viewport=false]/navigation-menu:overflow-hidden",
           "group-data-[viewport=false]/navigation-menu:duration-300",
           "data-[motion=from-end]:slide-in-from-bottom-14",
@@ -122,7 +122,7 @@ function NavigationMenuViewport({
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport> & { wrapClassName?: string }) {
   return (
-    <div className={cn("absolute top-full left-0 z-50 isolate flex justify-center", wrapClassName)}>
+    <div className={cn("absolute top-full left-0 isolate z-50 flex justify-center", wrapClassName)}>
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-viewport"
         className={cn(
@@ -130,7 +130,7 @@ function NavigationMenuViewport({
             "origin-top-center relative z-50",
             "h-(--radix-navigation-menu-viewport-height) w-full",
             "overflow-hidden bg-popover text-popover-foreground",
-            " duration-100",
+            "duration-100",
             "data-open:animate-in data-open:slide-in-from-top",
             "data-closed:animate-out",
           ],

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   [
-    "group/button inline-flex gap-2 shrink-0 items-center justify-center border-r-2 ",
+    "group/button inline-flex shrink-0 items-center justify-center gap-2 border-r-2",
     "border border-transparent bg-clip-padding text-[1rem] font-medium whitespace-nowrap",
     "transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
     "active:not-aria-[haspopup]:translate-y-px",
@@ -18,18 +18,18 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-brand-blue text-gray-50 hover:bg-blue-800",
-        secondary: "bg-transparent hover:bg-blue-50 text-brand-blue border-brand-blue border-2",
-        text: "bg-transparent border-transparent border-2 hover:border-gray-800 ",
+        secondary: "border-2 border-brand-blue bg-transparent text-brand-blue hover:bg-blue-50",
+        text: "border-2 border-transparent bg-transparent hover:border-gray-800",
         link: [
           "typography-p1",
-          "bg-transparent border-0 border-bottom-2 border-transparent text-gray-900",
-          "hover:text-red-800 active:text-red-900 active:border-bottom-2 data-active:text-brand-red",
-          "active:border-red-800 p-0!",
+          "border-bottom-2 border-0 border-transparent bg-transparent text-gray-900",
+          "active:border-bottom-2 hover:text-red-800 active:text-red-900 data-active:text-brand-red",
+          "p-0! active:border-red-800",
         ],
-        ghost: "typography-p1 bg-transparent border-0 text-gray-900 hover:bg-gray-100",
+        ghost: "typography-p1 border-0 bg-transparent text-gray-900 hover:bg-gray-100",
         accent: "bg-brand-red text-gray-50 hover:bg-red-800",
-        accentSecondary: "bg-transparent hover:bg-red-50 text-brand-red border-brand-red border-2",
-        dot: "bg-slate-300 hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800 rounded-full w-2 h-2 p-0! border-0",
+        accentSecondary: "border-2 border-brand-red bg-transparent text-brand-red hover:bg-red-50",
+        dot: "h-2 w-2 rounded-full border-0 bg-slate-300 p-0! hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800",
       },
       size: {
         m: "px-4 py-3",

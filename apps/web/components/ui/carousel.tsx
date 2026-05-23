@@ -141,7 +141,7 @@ function CarouselControls({ className }: React.ComponentProps<"div">) {
   };
   console.log(currentIndex);
   return (
-    <div className={cn("flex flex-row gap-2 w-full items-center justify-center mt-4", className)}>
+    <div className={cn("mt-4 flex w-full flex-row items-center justify-center gap-2", className)}>
       {Array.from({ length: items }).map((_, index) => (
         <Button
           key={index}

@@ -5,9 +5,9 @@ import { getHeading } from "../../lib/heading";
 import Typography from "../ui/typography";
 import { Skeleton } from "../ui/skeleton";
 
-const NewPublicationsList = () => {
+const NewPublicationsList = async () => {
   // TODO implement after merge with publications structure
-  return <div>NewPublicationsList TODO</div>;
+  return <div>NewPublicationsList TODO, waiting for publications component</div>;
 };
 
 const NewPublicationsSection = async ({

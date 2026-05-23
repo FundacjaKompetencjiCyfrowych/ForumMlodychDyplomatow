@@ -64,7 +64,7 @@ const Header = async () => {
       viewport={false}
       className="sticky top-0 z-50 flex w-full max-w-full flex-row gap-0 bg-header md:flex-col"
     >
-      <div className="relative isolate z-50 grid h-header-height-mobile w-full max-w-full grid-cols-2 items-center px-6 md:h-header-height-mobile md:grid-cols-3 md:px-12">
+      <div className="relative isolate z-50 grid h-(--header-height-mobile) w-full max-w-full grid-cols-2 items-center px-6 md:grid-cols-3 md:px-12 desktop:h-(--header-height-desktop)">
         <Link href="/" className="justify-self-start text-2xl font-bold">
           <FMDLogo />
         </Link>

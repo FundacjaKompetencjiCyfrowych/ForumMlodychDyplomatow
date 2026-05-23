@@ -57,10 +57,10 @@ export default async function Page(props: Props) {
       </div>
     );
   }
-
+  const locale = params.locale;
   return (
     <div className="">
-      <SanitySections value={page?.pageBuilder} />
+      <SanitySections value={page?.pageBuilder} locale={locale} />
     </div>
   );
 }

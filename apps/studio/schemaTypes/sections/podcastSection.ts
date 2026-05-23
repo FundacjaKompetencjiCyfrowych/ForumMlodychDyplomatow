@@ -27,5 +27,12 @@ export const podcastSection = defineType({
       type: "string",
       title: "Podtytuł",
     }),
+    defineField({
+      name: "embed",
+      type: "string",
+      title: "Kod osadzenia",
+      description: "Kod osadzenia z platformy podcastowej, np. Spotify.",
+      validation: (Rule) => Rule.required(),
+    }),
   ],
 });
