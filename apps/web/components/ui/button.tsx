@@ -30,11 +30,12 @@ const buttonVariants = cva(
         accent: "bg-brand-red text-gray-50 hover:bg-red-800",
         accentSecondary: "border-2 border-brand-red bg-transparent text-brand-red hover:bg-red-50",
         dot: "h-2 w-2 rounded-full border-0 bg-slate-300 p-0! hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800",
+        icon: "rounded-[3px] bg-white text-gray-900 hover:bg-slate-200 active:bg-brand-blue active:text-slate-50 disabled:text-gray-500",
       },
       size: {
         m: "px-4 py-3",
         l: "px-4 py-4",
-        "icon-sm": "p-2",
+        "icon-sm": "p-1.5",
       },
     },
     defaultVariants: {

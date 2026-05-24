@@ -148,7 +148,6 @@ function CarouselControls({ className }: React.ComponentProps<"div">) {
           onClick={() => handleClick(index)}
           data-active={currentIndex === index}
           variant="dot"
-          className="rounded-full bg-[currentColor]"
         />
       ))}
     </div>
@@ -159,13 +158,9 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
 
   return (
-    <div ref={carouselRef} className="overflow-hidden" data-slot="carousel-content">
+    <div ref={carouselRef} className="h-full overflow-hidden" data-slot="carousel-content">
       <div
-        className={cn(
-          "flex max-w-full",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-          className
-        )}
+        className={cn("flex max-w-full", orientation === "horizontal" ? "" : "flex-col", className)}
         {...props}
       />
     </div>
@@ -192,7 +187,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 
 function CarouselPrevious({
   className,
-  variant = "secondary",
+  variant = "icon",
   size = "icon-sm",
   ...props
 }: React.ComponentProps<typeof Button>) {
@@ -204,10 +199,8 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full",
-        orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        "aspect-square touch-manipulation",
+        orientation === "horizontal" ? "" : "rotate-90",
         className
       )}
       disabled={!canScrollPrev}
@@ -222,7 +215,7 @@ function CarouselPrevious({
 
 function CarouselNext({
   className,
-  variant = "secondary",
+  variant = "icon",
   size = "icon-sm",
   ...props
 }: React.ComponentProps<typeof Button>) {
@@ -234,10 +227,8 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full",
-        orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        "aspect-square touch-manipulation",
+        orientation === "horizontal" ? "" : "rotate-90",
         className
       )}
       disabled={!canScrollNext}
