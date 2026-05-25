@@ -18,6 +18,7 @@ import division from "./division";
 import publications from "./publications";
 import tag from "./tag";
 import tagCategory from "./tagCategory";
+import { footer } from "./singletons/footer";
 
 export const schemaTypes = [
   post,
@@ -40,6 +41,7 @@ export const schemaTypes = [
   pageBuilder,
   page,
   navigation,
+  footer,
   // sections defined separately
   ...sectionStructure,
 ];

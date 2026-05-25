@@ -1,8 +1,7 @@
-import React from "react";
-import type { DivisionPreview } from "../../sanity/queries/division";
-import { cn } from "../../lib/utils";
 import { Link } from "../../i18n/navigation";
+import { cn } from "../../lib/utils";
 import { SanityImage } from "../../sanity/image/SanityImage";
+import type { DivisionPreview } from "../../sanity/queries/division";
 import Typography from "./typography";
 
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
   index: number;
 };
 
-const DivisionCard = ({ division, index }: Props) => {
+const DivisionCard = ({ division }: Props) => {
   return (
     <Link
       href={`/divisions/${division.slug}`}

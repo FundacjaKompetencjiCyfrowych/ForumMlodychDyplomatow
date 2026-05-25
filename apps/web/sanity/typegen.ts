@@ -337,6 +337,13 @@ export type TagCategoryReference = {
   [internalGroqTypeReferenceTo]?: "tagCategory";
 };
 
+export type FooterReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "footer";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
@@ -348,7 +355,47 @@ export type InternationalizedArrayReferenceValue = {
     | NavigationReference
     | PublicationReference
     | TagReference
-    | TagCategoryReference;
+    | TagCategoryReference
+    | FooterReference;
+};
+
+export type Footer = {
+  _id: string;
+  _type: "footer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  description?: string;
+  cta?: LinkButton;
+  columns?: Array<{
+    title?: string;
+    links?: Array<
+      {
+        _key: string;
+      } & Link
+    >;
+    _type: "footerColumn";
+    _key: string;
+  }>;
+  contactColumn?: {
+    title?: string;
+    email?: string;
+    phone?: string;
+    socials?: Array<{
+      platform?: string;
+      link?: Link;
+      icon?: Img;
+      _type: "socialLink";
+      _key: string;
+    }>;
+  };
+  copyright?: string;
+  links?: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 };
 
 export type Tag = {
@@ -753,7 +800,9 @@ export type AllSanitySchemaTypes =
   | PublicationReference
   | TagReference
   | TagCategoryReference
+  | FooterReference
   | InternationalizedArrayReferenceValue
+  | Footer
   | Tag
   | TagCategory
   | Slug
