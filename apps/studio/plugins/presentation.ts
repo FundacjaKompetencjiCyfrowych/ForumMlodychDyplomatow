@@ -65,8 +65,8 @@ const mainDocumentRoutes = DOCUMENTS.flatMap((doc) => {
     if (doc.path) {
       return [
         {
-          route: joinPath(lang, doc.path),
-          filter: `_type == "${doc._type}" && _id == "${doc._type}-${lang}"`,
+          route: joinPath(doc.path),
+          filter: `_type == "${doc._type}" && _id == "${doc.id || doc._type}"`,
         },
       ];
     }

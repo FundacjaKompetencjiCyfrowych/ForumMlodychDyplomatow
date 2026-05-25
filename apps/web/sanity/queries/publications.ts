@@ -1,6 +1,6 @@
 import type { InferFragmentType } from "groqd";
 import { q } from "../groqd";
-import { imgFragment } from "./groqd.example";
+import { imgFragment } from "./imgFragment";
 
 export type PublicationsListQueryParams = {
   locale: string;
@@ -64,7 +64,7 @@ export type PublicationDetail = InferFragmentType<typeof publicationDetailFragme
 export const latestPublicationsQuery = q
   .parameters<PublicationsListQueryParams>()
   .star.filterByType("publication")
-  .filterRaw(`language == $locale`)
+  .filterRaw(`locale == $locale`)
   .order("date desc")
   .raw("[0...$limit]", "passthrough")
   .project(publicationPreviewFragment);

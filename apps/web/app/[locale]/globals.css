@@ -3,7 +3,9 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
-
+@theme {
+  --breakpoint-desktop: 48rem /* Same as breakpoint-md */;
+}
 @theme inline {
   --color-background: #ffffff;
   --color-foreground: #000000;
@@ -13,11 +15,6 @@
   --font-baskerville: var(--font-base-libre-baskerville);
   --font-inter: var(--font-base-inter);
   --font-oswald: var(--font-base-oswald);
-  --color-brand-500: #412bcc;
-  --color-brand-400: #523cdf;
-  --color-brand-300: #6852f5;
-  --color-brand-200: #7f6bfe;
-  --color-brand-100: #9584ff;
   --color-muted: #a4a4a4;
   --color-header: #ffffff;
   /* Test value */
@@ -62,11 +59,6 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --breakpoint-desktop: 48rem /* Same as breakpoint-md */;
-
-  /* Component values */
-  --spacing-header-height-mobile: 4.5rem;
-  --spacing-header-height-desktop: 5.5rem;
 }
 
 @layer base {
@@ -109,10 +101,10 @@
   }
 
   .lead {
-    @apply text-lg text-brand-100 leading-relaxed mb-5;
+    @apply text-lg  leading-relaxed mb-5;
   }
   .link {
-    @apply text-brand-300 hover:text-brand-500 underline cursor-pointer;
+    @apply underline cursor-pointer;
   }
   .caption {
     @apply text-sm text-muted leading-snug;
@@ -122,6 +114,8 @@
 :root {
   --brand-red: oklch(0.3291 0.108 22.11);
   --brand-blue: oklch(0.3136 0.0675 258.82);
+  --header-height-mobile: 4.5rem;
+  --header-height-desktop: 5.5rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);

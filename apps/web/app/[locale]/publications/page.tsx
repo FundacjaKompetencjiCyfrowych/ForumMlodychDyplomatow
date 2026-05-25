@@ -31,7 +31,7 @@ export default async function PublicationsPage({
     authorId: sParams.author || null,
   };
 
-  const publications = await runQuery(advancedPublicationsQuery, { parameters });
+  const { data: publications } = await runQuery(advancedPublicationsQuery, { parameters });
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-8 p-10">

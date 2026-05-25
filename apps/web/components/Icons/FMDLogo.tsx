@@ -11,9 +11,9 @@ type LogoIconProps = {
 const iconStyles = cva("", {
   variants: {
     size: {
-      s: "w-2.75! h-4!",
-      m: "w-4.25! h-6!",
-      l: `w-5.75! h-8!`,
+      s: "h-4! w-2.75!",
+      m: "h-6! w-4.25!",
+      l: `h-8! w-5.75!`,
     },
   },
 });

@@ -16,6 +16,8 @@ export const pageBuilder = defineType({
       // Configure the "Add Item" menu to display a thumbnail preview of the content type. https://www.sanity.io/docs/studio/array-type#efb1fe03459d
       views: [
         // Add a list view if desired
+        { name: "list" },
+        /* {
         // {name: "list"},
         {
           name: "grid",
@@ -23,7 +25,7 @@ export const pageBuilder = defineType({
           // Preview image is not required, it will display an icon defined in the section instead
           previewImageUrl: (schemaTypeName) =>
             `/static/page-builder-thumbnails/${schemaTypeName}.webp`,
-        },
+        }, */
       ],
     },
   },

@@ -19,6 +19,7 @@ export const Link = ({
   variant = "link",
   size = "m",
   iconLeft = null,
+  openInNewTab = false,
   iconRight = null,
   link,
   href,
@@ -27,6 +28,7 @@ export const Link = ({
   VariantProps<typeof buttonVariants> & {
     iconLeft?: React.ReactNode;
     iconRight?: React.ReactNode;
+    openInNewTab?: boolean;
   } & LinkOrHref) => {
   const getHref = (): string => {
     if (href) {
@@ -48,7 +50,7 @@ export const Link = ({
   return (
     <BaseLink
       href={getHref()}
-      target={link?.openInNewTab ? "_blank" : undefined}
+      target={link?.openInNewTab || openInNewTab ? "_blank" : undefined}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >

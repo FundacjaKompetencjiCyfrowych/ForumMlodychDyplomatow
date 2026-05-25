@@ -18,13 +18,135 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type SupportUsSection = {
+  _type: "supportUsSection";
+  heading?: string;
+  subheading?: string;
+  cta?: Link;
+  image?: Img;
+};
+
+export type PodcastSection = {
+  _type: "podcastSection";
+  heading?: string;
+  subheading?: string;
+  embed?: string;
+};
+
+export type AuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type PeopleSection = {
+  _type: "peopleSection";
+  heading?: string;
+  people?: Array<{
+    groupName?: string;
+    members?: Array<
+      {
+        _key: string;
+      } & AuthorReference
+    >;
+    _type: "group";
+    _key: string;
+  }>;
+};
+
+export type NewPublicationsSection = {
+  _type: "newPublicationsSection";
+  heading?: string;
+};
+
+export type JoinUsSection = {
+  _type: "joinUsSection";
+  heading?: string;
+  subheading?: string;
+  benefits?: Array<{
+    title?: string;
+    description?: string;
+    icon?: Img;
+    link?: Link;
+    _type: "benefit";
+    _key: string;
+  }>;
+};
+
+export type HeroSection = {
+  _type: "heroSection";
+  heading?: string;
+  subheading?: string;
+  backgroundImage?: Img;
+  cta?: Link;
+  secondaryCta?: Link;
+};
+
+export type EventsSection = {
+  _type: "eventsSection";
+  heading?: string;
+  link?: Link;
+};
+
+export type DivisionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "division";
+};
+
+export type DivisionsSection = {
+  _type: "divisionsSection";
+  heading?: string;
+  subheading?: string;
+  divisions?: Array<
+    {
+      _key: string;
+    } & DivisionReference
+  >;
+};
+
+export type AboutUsSection = {
+  _type: "aboutUsSection";
+  heading?: string;
+  image?: Img;
+  content?: Array<{
+    text?: string;
+    icon?: Img;
+    _type: "column";
+    _key: string;
+  }>;
+};
+
 export type PageBuilder = Array<
   | ({
       _key: string;
-    } & LeadSection)
+    } & AboutUsSection)
   | ({
       _key: string;
-    } & PostsSection)
+    } & DivisionsSection)
+  | ({
+      _key: string;
+    } & EventsSection)
+  | ({
+      _key: string;
+    } & HeroSection)
+  | ({
+      _key: string;
+    } & JoinUsSection)
+  | ({
+      _key: string;
+    } & NewPublicationsSection)
+  | ({
+      _key: string;
+    } & PeopleSection)
+  | ({
+      _key: string;
+    } & PodcastSection)
+  | ({
+      _key: string;
+    } & SupportUsSection)
 >;
 
 export type LinkButton = {
@@ -52,13 +174,6 @@ export type EventReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "event";
-};
-
-export type DivisionReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "division";
 };
 
 export type Link = {
@@ -194,13 +309,6 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
-export type AuthorReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
-};
-
 export type NavigationReference = {
   _ref: string;
   _type: "reference";
@@ -229,6 +337,13 @@ export type TagCategoryReference = {
   [internalGroqTypeReferenceTo]?: "tagCategory";
 };
 
+export type FooterReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "footer";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
@@ -240,7 +355,47 @@ export type InternationalizedArrayReferenceValue = {
     | NavigationReference
     | PublicationReference
     | TagReference
-    | TagCategoryReference;
+    | TagCategoryReference
+    | FooterReference;
+};
+
+export type Footer = {
+  _id: string;
+  _type: "footer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  description?: string;
+  cta?: LinkButton;
+  columns?: Array<{
+    title?: string;
+    links?: Array<
+      {
+        _key: string;
+      } & Link
+    >;
+    _type: "footerColumn";
+    _key: string;
+  }>;
+  contactColumn?: {
+    title?: string;
+    email?: string;
+    phone?: string;
+    socials?: Array<{
+      platform?: string;
+      link?: Link;
+      icon?: Img;
+      _type: "socialLink";
+      _key: string;
+    }>;
+  };
+  copyright?: string;
+  links?: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 };
 
 export type Tag = {
@@ -428,6 +583,7 @@ export type Division = {
   seo?: Seo;
   name?: string;
   slug?: Slug;
+  coverImage?: Img;
 };
 
 export type CategoryReference = {
@@ -611,12 +767,22 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | SupportUsSection
+  | PodcastSection
+  | AuthorReference
+  | PeopleSection
+  | NewPublicationsSection
+  | JoinUsSection
+  | HeroSection
+  | EventsSection
+  | DivisionReference
+  | DivisionsSection
+  | AboutUsSection
   | PageBuilder
   | LinkButton
   | PageReference
   | PostReference
   | EventReference
-  | DivisionReference
   | Link
   | PostsSection
   | LeadSection
@@ -630,12 +796,13 @@ export type AllSanitySchemaTypes =
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
-  | AuthorReference
   | NavigationReference
   | PublicationReference
   | TagReference
   | TagCategoryReference
+  | FooterReference
   | InternationalizedArrayReferenceValue
+  | Footer
   | Tag
   | TagCategory
   | Slug

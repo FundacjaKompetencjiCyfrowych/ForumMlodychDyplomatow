@@ -1,5 +1,10 @@
 {
   "welcome": {
     "title": "Hello world!"
+  },
+  "events": {
+    "upcoming": "Upcoming",
+    "archived": "Archived",
+    "signUp": "Sign Up"
   }
 }

@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { languageField } from "../plugins/intl";
-import { pageGroups } from "../utils/groups";
 import { seoField } from "../utils/fields";
+import { pageGroups } from "../utils/groups";
 
 export default defineType({
   name: "division",
@@ -33,16 +33,25 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "coverImage",
+      title: "Zdjęcie przedstawicielstwa",
+      type: "img",
+      group: "content",
+      description: "Małe zdjęcie prezentujące przedstwicielstwo, używane na listach",
+    }),
   ],
   preview: {
     select: {
       title: "name",
       slug: "slug.current",
+      media: "coverImage",
     },
-    prepare({ title, slug }) {
+    prepare({ title, slug, media }) {
       return {
         title,
         subtitle: slug ? `/${slug}` : "Brak slugu",
+        media: media,
       };
     },
   },

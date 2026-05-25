@@ -1,10 +1,7 @@
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import type { InferFragmentType, InferResultType } from "groqd";
 import { getLocale } from "next-intl/server";
-import { LANGUAGE_FIELD } from "../../../studio/config";
 import { q, runQuery } from "../../sanity/groqd";
 import { linkButtonFragment, linkFragment } from "../../sanity/queries/linkFragment";
-import { FMDLogo } from "../Icons/FMDLogo";
 import { Link } from "../ui/link";
 import {
   NavigationMenu,
@@ -12,11 +9,14 @@ import {
   NavigationMenuList,
   NavigationMenuViewport,
 } from "../ui/navigation-menu";
-import { SheetTitle } from "../ui/sheet";
 import { HeaderMenu } from "./HeaderDropdown";
 import { LocaleButtons } from "./LocaleButtons";
 import MobileMenu from "./MobileMenu";
+import { SheetTitle } from "../ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import MobileMenuContent from "./MobileMenuContent";
+import { FMDLogo } from "../Icons/FMDLogo";
+import { LANGUAGE_FIELD } from "../../../studio/config";
 
 export const navQuery = q.star
   .parameters<{ locale: string }>()
@@ -55,7 +55,7 @@ export type NavQueryResult = Exclude<InferResultType<typeof navQuery>, null>;
 
 const Header = async () => {
   const locale = await getLocale();
-  const navigation = await runQuery(navQuery, {
+  const { data: navigation } = await runQuery(navQuery, {
     parameters: { locale },
   });
   return (
@@ -64,7 +64,7 @@ const Header = async () => {
       viewport={false}
       className="sticky top-0 z-50 flex w-full max-w-full flex-row gap-0 bg-header md:flex-col"
     >
-      <div className="relative isolate z-50 grid h-header-height-mobile w-full max-w-full grid-cols-2 items-center px-6 md:h-header-height-mobile md:grid-cols-3 md:px-12">
+      <div className="relative isolate z-50 grid h-(--header-height-mobile) w-full max-w-full grid-cols-2 items-center px-6 md:grid-cols-3 md:px-12 desktop:h-(--header-height-desktop)">
         <Link href="/" className="justify-self-start text-2xl font-bold">
           <FMDLogo />
         </Link>

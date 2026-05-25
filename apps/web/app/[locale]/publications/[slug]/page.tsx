@@ -11,7 +11,7 @@ type Params = {
 export default async function PublicationDetailPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
 
-  const publication = await runQuery(singlePublicationQuery, {
+  const { data: publication } = await runQuery(singlePublicationQuery, {
     parameters: { locale, slug },
   });
 

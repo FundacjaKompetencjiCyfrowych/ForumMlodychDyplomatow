@@ -1,3 +1,4 @@
+import type { InferFragmentType } from "groqd";
 import { q } from "../groqd";
 
 /**
@@ -15,6 +16,7 @@ export const imgFragment = q.fragmentForType<"img">().project((sub) => ({
         lqip: sub.field("lqip"),
         dimensions: sub.field("dimensions"),
       })),
+      extension: sub.field("extension"),
       // Values added by Sanity media plugin (can be set in asset dashboard):
       altText: sub.field("altText"),
       title: sub.field("title"),
@@ -23,3 +25,5 @@ export const imgFragment = q.fragmentForType<"img">().project((sub) => ({
   crop: sub.field("crop"),
   hotspot: sub.field("hotspot"),
 }));
+
+export type ImgFragment = InferFragmentType<typeof imgFragment>;
