@@ -44,7 +44,7 @@ export default defineType({
       type: "string",
       group: "content",
       description: "Bardzo krótki opis wyświetlany w kafelkach z linkiem",
-      validation: (Rule) => Rule.required().error("Pole wymagane").max(250).error("Max 250 znaków"),
+      validation: (Rule) => Rule.required().error("Pole wymagane").max(500).error("Max 500 znaków"),
     }),
     defineField({
       name: "slug",
