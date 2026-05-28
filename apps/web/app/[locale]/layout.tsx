@@ -74,7 +74,7 @@ export default async function RootLayout({
   const translations = await runQuery(intlQuery, {
     parameters: { locale },
   });
-  console.log({ translations, locale });
+
   return (
     <html lang={locale}>
       <body

@@ -42,6 +42,7 @@
     "no-nonoctal-decimal-escape": "warn",
     "no-obj-calls": "error",
     "no-redeclare": "warn",
+    "eslint/no-console": ["error", { "allow": ["warn", "error"] }],
     "no-restricted-globals": [
       "warn",
       "addEventListener",
