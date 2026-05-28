@@ -229,6 +229,13 @@ export type TagCategoryReference = {
   [internalGroqTypeReferenceTo]?: "tagCategory";
 };
 
+export type TranslationsReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "translations";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
@@ -240,7 +247,20 @@ export type InternationalizedArrayReferenceValue = {
     | NavigationReference
     | PublicationReference
     | TagReference
-    | TagCategoryReference;
+    | TagCategoryReference
+    | TranslationsReference;
+};
+
+export type Translations = {
+  _id: string;
+  _type: "translations";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  buttons?: {
+    support?: string;
+  };
+  locale?: string;
 };
 
 export type Tag = {
@@ -635,7 +655,9 @@ export type AllSanitySchemaTypes =
   | PublicationReference
   | TagReference
   | TagCategoryReference
+  | TranslationsReference
   | InternationalizedArrayReferenceValue
+  | Translations
   | Tag
   | TagCategory
   | Slug
@@ -661,26 +683,3 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
-
-// Source: ../web/sanity/queries/groq.example.ts
-// Variable: postsQuery
-// Query: *[_type == "post"] | order(_createdAt desc) {    _id,    _createdAt,    title,    "slug": slug.current,    "author": author->name,    "image": mainImage.asset->url,    description,    "categories": categories[]->title,    body  }
-export type PostsQueryResult = Array<{
-  _id: string;
-  _createdAt: string;
-  title: string | null;
-  slug: string | null;
-  author: string | null;
-  image: null;
-  description: null;
-  categories: Array<string | null> | null;
-  body: RichText | null;
-}>;
-
-// Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
-  interface SanityQueries {
-    '\n  *[_type == "post"] | order(_createdAt desc) {\n    _id,\n    _createdAt,\n    title,\n    "slug": slug.current,\n    "author": author->name,\n    "image": mainImage.asset->url,\n    description,\n    "categories": categories[]->title,\n    body\n  }\n': PostsQueryResult;
-  }
-}

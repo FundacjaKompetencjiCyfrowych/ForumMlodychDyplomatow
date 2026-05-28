@@ -17,6 +17,7 @@ import division from "./division";
 import publications from "./publications";
 import tag from "./tag";
 import tagCategory from "./tagCategory";
+import { translations } from "./singletons/translations";
 
 export const schemaTypes = [
   post,
@@ -39,4 +40,5 @@ export const schemaTypes = [
   pageBuilder,
   page,
   navigation,
+  translations,
 ];
