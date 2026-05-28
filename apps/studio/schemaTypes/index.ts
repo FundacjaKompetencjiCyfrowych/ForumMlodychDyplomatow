@@ -19,6 +19,7 @@ import publications from "./publications";
 import tag from "./tag";
 import tagCategory from "./tagCategory";
 import { footer } from "./singletons/footer";
+import { translations } from "./singletons/translations";
 
 export const schemaTypes = [
   post,
@@ -44,4 +45,5 @@ export const schemaTypes = [
   footer,
   // sections defined separately
   ...sectionStructure,
+  translations,
 ];

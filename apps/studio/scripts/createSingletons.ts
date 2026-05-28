@@ -58,6 +58,7 @@ async function createSingletons() {
   await transaction
     .commit()
     .then((res) => {
+      // oxlint-disable-next-line no-console
       console.log(res);
     })
     .catch((err) => {

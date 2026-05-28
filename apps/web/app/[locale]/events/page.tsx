@@ -1,9 +1,10 @@
+import type { Locale } from "next-intl";
 import { EventTabs } from "../../../components/Events/event-tabs";
 import { runQuery } from "../../../sanity/groqd";
 import { combinedEventsQuery } from "../../../sanity/queries/events";
 
 type Params = {
-  locale: string;
+  locale: Locale;
 };
 type SearchParams = {
   division?: string;

@@ -139,7 +139,6 @@ function CarouselControls({ className }: React.ComponentProps<"div">) {
     if (!api) return;
     api.scrollTo(index);
   };
-  console.log(currentIndex);
   return (
     <div className={cn("mt-4 flex w-full flex-row items-center justify-center gap-2", className)}>
       {Array.from({ length: items }).map((_, index) => (

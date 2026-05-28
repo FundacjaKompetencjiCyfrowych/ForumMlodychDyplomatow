@@ -4,9 +4,10 @@ import type { Metadata } from "next";
 import { pageQuery, pagesMetadataQuery, pagesSlugQuery } from "@/sanity/queries/page";
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import { runQuery } from "@/sanity/groqd";
+import type { Locale } from "next-intl";
 
 type Props = {
-  params: Promise<{ slug: string; locale: string }>;
+  params: Promise<{ slug: string; locale: Locale }>;
 };
 
 /**

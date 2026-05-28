@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { imgFragment } from "../../../../sanity/queries/imgFragment";
+import type { Locale } from "next-intl";
 
 // QROQD Query builders
 const postSlugs = q.star
@@ -55,7 +56,7 @@ export async function generateMetadata({
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ slug: string; locale: string }>;
+  params: Promise<{ slug: string; locale: Locale }>;
 }) {
   const { slug, locale } = await params;
 

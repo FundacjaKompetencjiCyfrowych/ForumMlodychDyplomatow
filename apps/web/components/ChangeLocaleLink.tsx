@@ -2,9 +2,10 @@
 import React, { type ReactNode } from "react";
 import { Button } from "./ui/button";
 import { usePathname, useRouter } from "../i18n/navigation";
+import type { Locale } from "next-intl";
 
 type Props = {
-  locale: string;
+  locale: Locale;
   children: ReactNode;
 };
 

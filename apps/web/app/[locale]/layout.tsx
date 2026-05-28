@@ -1,5 +1,5 @@
 import { routing } from "@/i18n/routing";
-import { q } from "@/sanity/groqd";
+import { q, runQuery } from "@/sanity/groqd";
 import { sanityFetch, SanityLive } from "@/sanity/live";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { SanityPreview } from "@/sanity/preview/SanityPreview";
@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 import Header from "../../components/Header/Header";
 import "./globals.css";
 import Footer from "../../components/Footer/Footer";
+import { intlQuery } from "../../sanity/queries/intl";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
@@ -71,13 +72,16 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
 
   setRequestLocale(locale ?? "pl"); // Enables static rendering, this should be done in every page/layout
+  const { data: translations } = await runQuery(intlQuery, {
+    parameters: { locale },
+  });
 
   return (
     <html lang={locale}>
       <body
         className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={translations as any}>
           <Header />
 
           {children}

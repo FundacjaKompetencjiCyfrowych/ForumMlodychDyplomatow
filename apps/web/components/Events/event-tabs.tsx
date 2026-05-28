@@ -20,7 +20,7 @@ export const EventTabs = async ({ query, ...rest }: EventTabsProps) => {
           {t("upcoming")}
         </TabsTrigger>
         <TabsTrigger value="archived" className="grow-0">
-          {t("archived")}
+          {t("archive")}
         </TabsTrigger>
       </TabsList>
       <Suspense fallback={<Skeleton className="h-40" />}>

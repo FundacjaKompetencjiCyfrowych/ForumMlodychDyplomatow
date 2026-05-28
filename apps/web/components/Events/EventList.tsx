@@ -1,3 +1,4 @@
+import type { Locale } from "next-intl";
 import { cn } from "../../lib/utils";
 import type { EventPreview as EventPreviewType } from "../../sanity/queries/events";
 import EventPreview from "./event-preview";
@@ -8,7 +9,7 @@ export type EventListLimits = {
 };
 type Props = {
   events: Array<EventPreviewType>;
-  locale: string;
+  locale: Locale;
   isArchive?: boolean;
 } & EventListLimits;
 

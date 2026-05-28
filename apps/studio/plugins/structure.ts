@@ -91,5 +91,11 @@ export const structure: StructureToolOptions = {
         Singleton(S, { type: "footer", title: "Stopka", icon: LinkIcon }),
         S.divider().title("Tłumaczenia"),
         Translations(S, { title: "Metadane", icon: TranslateIcon }),
+        Singleton(S, {
+          type: "translations",
+          id: "translations",
+          title: "Tłumaczenia",
+          icon: TranslateIcon,
+        }),
       ]),
 };
