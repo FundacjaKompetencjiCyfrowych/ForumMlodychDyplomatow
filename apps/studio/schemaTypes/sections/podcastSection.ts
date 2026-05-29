@@ -1,20 +1,14 @@
 import { defineField, defineType } from "sanity";
+import { createSectionPreview } from "./sectionPreview";
 
 export const podcastSection = defineType({
   name: "podcastSection",
   title: "Sekcja Podcast",
   type: "object",
-  preview: {
-    select: {
-      subtitle: "heading",
-    },
-    prepare: ({ subtitle }) => {
-      return {
-        title: "Sekcja Podcast",
-        subtitle,
-      };
-    },
-  },
+  preview: createSectionPreview("podcastSection", {
+    title: "Sekcja Podcast",
+    subtitle: "heading",
+  }),
   fields: [
     defineField({
       name: "heading",

@@ -10,6 +10,7 @@ export const intlQuery = q
   .project((_sub) => ({
     buttons: true,
     events: true,
+    people: true,
   }));
 /*
 Use

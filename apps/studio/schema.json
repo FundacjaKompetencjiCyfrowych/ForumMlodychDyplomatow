@@ -1985,6 +1985,22 @@
         },
         "optional": true
       },
+      "people": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "seeAll": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "locale": {
         "type": "objectAttribute",
         "value": {
@@ -3549,6 +3565,13 @@
         "value": {
           "type": "inline",
           "name": "img"
+        },
+        "optional": true
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },

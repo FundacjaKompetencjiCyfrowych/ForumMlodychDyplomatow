@@ -1,20 +1,14 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { createSectionPreview } from "./sectionPreview";
 
 export const joinUsSection = defineType({
   name: "joinUsSection",
   title: "Sekcja Dołącz do nas",
   type: "object",
-  preview: {
-    select: {
-      subtitle: "heading",
-    },
-    prepare: ({ subtitle }) => {
-      return {
-        title: "Sekcja Dołącz do nas",
-        subtitle,
-      };
-    },
-  },
+  preview: createSectionPreview("joinUsSection", {
+    title: "Sekcja Dołącz do nas",
+    subtitle: "heading",
+  }),
   fields: [
     defineField({
       name: "heading",
@@ -37,6 +31,12 @@ export const joinUsSection = defineType({
           name: "benefit",
           type: "object",
           title: "Benefit",
+          preview: {
+            select: {
+              title: "title",
+              media: "icon",
+            },
+          },
           fields: [
             defineField({
               name: "title",

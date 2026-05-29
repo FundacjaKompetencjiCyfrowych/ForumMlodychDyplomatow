@@ -1,10 +1,9 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import React from "react";
-import { Container } from "../ui/container";
-import { SanityImage } from "../../sanity/image/SanityImage";
-import Typography from "../ui/typography";
 import { getHeading, getSubHeading } from "../../lib/heading";
+import GradientImage from "../../sanity/image/GradientImage";
+import { Container } from "../ui/container";
 import { Link } from "../ui/link";
+import Typography from "../ui/typography";
 
 const SupportUsSection = ({ data, index }: PageBuilderSectionProps<"supportUsSection">) => {
   return (
@@ -13,10 +12,20 @@ const SupportUsSection = ({ data, index }: PageBuilderSectionProps<"supportUsSec
       size="stretch"
       className="flex flex-col pt-0 pb-8 desktop:flex-row desktop:py-0"
     >
-      <div className="relative desktop:w-6/11">
-        <SanityImage image={data.image} />
-        <div className="absolute right-0 bottom-0 left-0 block h-20 bg-linear-to-t from-brand-blue to-transparent desktop:top-0 desktop:left-auto desktop:h-auto desktop:w-30 desktop:bg-linear-to-l" />
-      </div>
+      <GradientImage
+        image={data.image}
+        sizes={{
+          default: "100vw",
+          desktop: "60vw",
+        }}
+        className="h-full object-cover"
+        wrapperClassName="desktop:w-6/11"
+        direction="bottom"
+        desktopDirection="right"
+        color="blue"
+        size="sm"
+        desktopSize="md"
+      />
       <div className="flex w-full flex-col items-stretch gap-10 px-2 pt-8 text-center desktop:w-5/11 desktop:justify-center desktop:gap-8 desktop:px-10">
         <div className="flex flex-col">
           <Typography variant="h1" as={getHeading(index)}>

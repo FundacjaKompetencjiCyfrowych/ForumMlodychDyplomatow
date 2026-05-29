@@ -13,10 +13,9 @@ export const peopleSectionFragment = q
         .field("members[]")
         .deref()
         .project((sub) => ({
-          // TODO perhaps a person card fragment
           _key: "_id",
           name: sub.field("name"),
-
+          title: sub.field("title"),
           img: sub.field("img").project(imgFragment),
         })),
     })),

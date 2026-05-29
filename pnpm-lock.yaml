@@ -11249,6 +11249,16 @@ snapshots:
       '@types/react': 19.2.14
       '@types/react-dom': 19.2.3(@types/react@19.2.14)
 
+  '@mux/mux-player-react@3.11.5(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@mux/mux-player': 3.11.5(react@19.2.3)
+      '@mux/playback-core': 0.33.2
+      prop-types: 15.8.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+    optionalDependencies:
+      '@types/react': 19.2.14
+
   '@mux/mux-player@3.11.5(react@19.2.3)':
     dependencies:
       '@mux/mux-video': 0.30.3
@@ -18424,7 +18434,7 @@ snapshots:
       '@dnd-kit/utilities': 3.2.2(react@19.2.3)
       '@isaacs/ttlcache': 1.4.1
       '@juggle/resize-observer': 3.4.0
-      '@mux/mux-player-react': 3.11.5(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@mux/mux-player-react': 3.11.5(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@portabletext/block-tools': 5.1.0(@types/react@19.2.14)(debug@4.4.3)
       '@portabletext/editor': 6.3.2(@types/react@19.2.14)(react@19.2.3)
       '@portabletext/patches': 2.0.4

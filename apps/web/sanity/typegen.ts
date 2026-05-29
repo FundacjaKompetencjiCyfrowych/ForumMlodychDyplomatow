@@ -381,6 +381,9 @@ export type Translations = {
     archive?: string;
     signUp?: string;
   };
+  people?: {
+    seeAll?: string;
+  };
   locale?: string;
 };
 
@@ -649,6 +652,7 @@ export type Author = {
   name?: string;
   slug?: Slug;
   img?: Img;
+  title?: string;
   bio?: Array<{
     children?: Array<{
       marks?: Array<string>;

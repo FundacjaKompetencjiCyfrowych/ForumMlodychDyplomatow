@@ -1,20 +1,14 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { createSectionPreview } from "./sectionPreview";
 
 export const peopleSection = defineType({
   name: "peopleSection",
   title: "Sekcja Ludzie",
   type: "object",
-  preview: {
-    select: {
-      subtitle: "heading",
-    },
-    prepare: ({ subtitle }) => {
-      return {
-        title: "Sekcja Ludzie",
-        subtitle,
-      };
-    },
-  },
+  preview: createSectionPreview("peopleSection", {
+    title: "Sekcja Ludzie",
+    subtitle: "heading",
+  }),
   fields: [
     defineField({
       name: "heading",
@@ -27,7 +21,7 @@ export const peopleSection = defineType({
       name: "people",
       type: "array",
       title: "Ludzie",
-      validation: (Rule) => Rule.required().min(1),
+      validation: (Rule) => Rule.required().min(1).max(3),
       of: [
         defineArrayMember({
           name: "group",
@@ -45,7 +39,7 @@ export const peopleSection = defineType({
               type: "array",
               title: "Członkowie grupy",
               of: [{ type: "reference", to: { type: "author" } }],
-              validation: (Rule) => Rule.required().min(4).max(4),
+              validation: (Rule) => Rule.required().max(4),
             }),
           ],
         }),

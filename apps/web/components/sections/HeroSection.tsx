@@ -1,10 +1,9 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import React from "react";
-import { Container } from "../ui/container";
-import Typography from "../ui/typography";
 import { getHeading, getSubHeading } from "../../lib/heading";
+import GradientImage from "../../sanity/image/GradientImage";
+import { Container } from "../ui/container";
 import { Link } from "../ui/link";
-import { SanityImage } from "../../sanity/image/SanityImage";
+import Typography from "../ui/typography";
 
 const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) => {
   return (
@@ -26,11 +25,14 @@ const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) =>
         </div>
       </div>
       {data.backgroundImage && (
-        <div className="relative w-full">
-          {/* Gradient fade */}
-          <div className="absolute top-0 right-0 left-0 h-30 bg-linear-to-b from-white to-transparent desktop:h-60"></div>
-          <SanityImage className="w-full" image={data.backgroundImage} />
-        </div>
+        <GradientImage
+          image={data.backgroundImage}
+          className="w-full"
+          sizes="100vw"
+          direction="top"
+          size="md"
+          desktopSize="xl"
+        />
       )}
     </Container>
   );

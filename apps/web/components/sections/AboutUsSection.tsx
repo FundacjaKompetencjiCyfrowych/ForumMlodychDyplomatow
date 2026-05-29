@@ -24,7 +24,7 @@ const AboutUsSection = ({ index, data }: PageBuilderSectionProps<"aboutUsSection
           ))}
         </ResponsiveCarousel>
       </div>
-      <SanityImage image={data.image} className="w-full" />
+      <SanityImage image={data.image} className="w-full" sizes="100vw" />
     </Container>
   );
 };

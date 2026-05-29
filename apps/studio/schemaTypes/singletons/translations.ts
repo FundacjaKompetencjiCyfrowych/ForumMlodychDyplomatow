@@ -51,6 +51,19 @@ export const translations = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "people",
+      title: "Ludzie",
+      type: "object",
+      fields: [
+        defineField({
+          name: "seeAll",
+          title: "Zobacz wszystkich",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
+    }),
     languageField,
   ],
 });
