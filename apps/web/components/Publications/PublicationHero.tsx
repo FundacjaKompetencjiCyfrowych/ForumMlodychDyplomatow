@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Typography } from "@/components/ui/typography";
+import { Link } from "@/components/ui/link"; // Upewnij się, że ścieżka jest prawidłowa
 
 export interface PublicationHeroProps {
   breadcrumbs: { label: string; href?: string }[];
@@ -26,7 +27,22 @@ export interface PublicationHeroProps {
     blurDataURL?: string;
   } | null;
   pdfUrl?: string | null;
+  locale?: string; // Dodana właściwość języka
 }
+
+// Słownik tłumaczeń
+const translations = {
+  pl: {
+    share: "Udostępnij",
+    downloadPdf: "Pobierz PDF",
+    noImage: "Brak zdjęcia głównego",
+  },
+  en: {
+    share: "Share",
+    downloadPdf: "Download PDF",
+    noImage: "No main image",
+  },
+};
 
 export const PublicationHero = ({
   breadcrumbs,
@@ -38,21 +54,27 @@ export const PublicationHero = ({
   date,
   image,
   pdfUrl,
+  locale = "pl",
 }: PublicationHeroProps) => {
+  // Wybór odpowiedniego zestawu tłumaczeń
+  const t = translations[locale as keyof typeof translations] || translations.pl;
+
   return (
-    <section className="mx-auto w-full px-4 py-8 md:px-6">
+    <section className="mx-auto w-full max-w-400 px-4 py-8 md:px-6">
       {/* Breadcrumbs */}
       <nav className="mb-6 flex flex-wrap items-center gap-2 lg:mb-8">
         {breadcrumbs.map((item, index) => (
           <React.Fragment key={index}>
             {item.href ? (
-              <Typography
-                variant="p2"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-                asChild
+              <Link
+                href={item.href}
+                variant="link"
+                className="h-auto border-none p-0! text-muted-foreground no-underline transition-colors hover:border-transparent hover:text-foreground active:border-transparent"
               >
-                <a href={item.href}>{item.label}</a>
-              </Typography>
+                <Typography as="span" variant="p2">
+                  {item.label}
+                </Typography>
+              </Link>
             ) : (
               <Typography as="span" variant="p2" className="text-foreground">
                 {item.label}
@@ -69,7 +91,7 @@ export const PublicationHero = ({
 
       <div className="flex flex-col items-center gap-8 lg:grid lg:grid-cols-12 lg:gap-16">
         {/* Lewa kolumna: Treść */}
-        <div className="order-2 flex flex-col gap-6 lg:order-1 lg:col-span-7 xl:col-span-6">
+        <div className="order-2 flex w-full flex-col gap-6 lg:order-1 lg:col-span-7 xl:col-span-6">
           <div className="flex items-center gap-3">
             <div className="h-0.5 w-6 bg-brand-red"></div>
             <Typography as="span" variant="eyebrow" className="tracking-widest text-brand-red">
@@ -134,7 +156,9 @@ export const PublicationHero = ({
               <div />
             )}
 
-            <Separator orientation="vertical" className="mx-2 hidden sm:block" />
+            {author && date && (
+              <Separator orientation="vertical" className="mx-2 hidden h-8 sm:block" />
+            )}
 
             {date && (
               <Typography variant="p2" className="whitespace-nowrap text-muted-foreground" asChild>
@@ -147,7 +171,7 @@ export const PublicationHero = ({
           <div className="mt-2 flex flex-wrap items-center gap-4">
             <Button className="gap-2 rounded-md bg-brand-blue px-5 text-white hover:bg-brand-blue/90">
               <Share2 className="h-4 w-4" />
-              Udostępnij
+              {t.share}
             </Button>
 
             {pdfUrl && (
@@ -156,9 +180,10 @@ export const PublicationHero = ({
                 variant="ghost"
                 className="gap-2 rounded-md border-border px-5 text-foreground hover:bg-muted"
               >
+                {/* W przypadku bezpośrednich plików do pobrania bezpieczniej zostawić natywny tag <a> z target="_blank" zamiast routerowego Linku */}
                 <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
                   <Download className="h-4 w-4" />
-                  Pobierz PDF
+                  {t.downloadPdf}
                 </a>
               </Button>
             )}
@@ -183,7 +208,7 @@ export const PublicationHero = ({
               <div className="flex flex-col items-center gap-2 text-muted-foreground/50">
                 <ImageIcon className="h-12 w-12" />
                 <Typography as="span" variant="p2" className="font-medium">
-                  Brak zdjęcia głównego
+                  {t.noImage}
                 </Typography>
               </div>
             )}

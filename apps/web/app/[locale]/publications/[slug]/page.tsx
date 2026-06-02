@@ -1,24 +1,48 @@
 import { notFound } from "next/navigation";
-import { singlePublicationQuery } from "@/sanity/queries/publications";
+import { singlePublicationQuery, relatedPublicationsQuery } from "@/sanity/queries/publications";
 import { runQuery } from "../../../../sanity/groqd";
 import { PublicationHero } from "@/components/Publications/PublicationHero";
 import { PublicationBody } from "@/components/Publications/PublicationBody";
+import { RelatedPublications } from "@/components/Publications/RelatedPublications";
+import { PublicationPdf } from "@/components/Publications/PublicationPdf";
+import { PublicationAuthor } from "@/components/Publications/PublicationAuthor";
 
 type Params = {
   locale: string;
   slug: string;
 };
 
-// Słownik mapujący typy z Sanity na etykiety
-const typeLabels: Record<string, string> = {
-  article: "Krótkie opracowanie",
-  news: "Analiza",
-  guide: "Magazyn",
-  review: "Publikacja",
+// Słownik tłumaczeń dla elementów strony
+const pageTranslations = {
+  pl: {
+    home: "Strona główna",
+    publications: "Publikacje",
+    noTitle: "Brak tytułu",
+    defaultCategory: "Publikacja",
+    types: {
+      article: "Krótkie opracowanie",
+      news: "Analiza",
+      guide: "Magazyn",
+      review: "Publikacja",
+    } as Record<string, string>,
+  },
+  en: {
+    home: "Home",
+    publications: "Publications",
+    noTitle: "No title",
+    defaultCategory: "Publication",
+    types: {
+      article: "Brief",
+      news: "Analysis",
+      guide: "Magazine",
+      review: "Publication",
+    } as Record<string, string>,
+  },
 };
 
 // Helper do generowania inicjałów
 const getInitials = (name: string) => {
+  if (!name) return "";
   return name
     .split(" ")
     .map((n) => n[0])
@@ -30,6 +54,7 @@ const getInitials = (name: string) => {
 export default async function PublicationDetailPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
 
+  // 1. Pobieramy główny artykuł
   const publication = await runQuery(singlePublicationQuery, {
     parameters: { locale, slug },
   });
@@ -37,12 +62,30 @@ export default async function PublicationDetailPage({ params }: { params: Promis
   if (!publication) {
     notFound();
   }
-  // 1. Formatowanie kategorii - zabezpieczenie przed null
-  const categoryLabel = publication.type
-    ? typeLabels[publication.type] || publication.type
-    : "Publikacja";
 
-  // 2. Formatowanie daty
+  // Wyciągamy ID tagów, żeby przekazać je do drugiego zapytania
+  const currentTagIds = publication.tags?.map((tag: any) => tag._id).filter(Boolean) || [];
+
+  // 2. Pobieramy powiązane artykuły (wymaga danych z pierwszego zapytania)
+  const rawRelatedPublications = await runQuery(relatedPublicationsQuery, {
+    parameters: {
+      locale,
+      currentId: publication._id,
+      tagIds: currentTagIds,
+      pubType: publication.type || null,
+      limit: 3, // Pobieramy od razu tylko 3, żeby nie obciążać złącza
+    },
+  });
+
+  // Wybór odpowiedniego zestawu tłumaczeń
+  const t = pageTranslations[locale as keyof typeof pageTranslations] || pageTranslations.pl;
+
+  // Formatowanie kategorii głównego artykułu
+  const categoryLabel = publication.type
+    ? t.types[publication.type] || publication.type
+    : t.defaultCategory;
+
+  // Formatowanie daty głównego artykułu
   const formattedDate = publication.date
     ? new Date(publication.date).toLocaleDateString(locale, {
         day: "numeric",
@@ -51,10 +94,10 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       })
     : undefined;
 
-  // 3. Formatowanie tagów
+  // Formatowanie tagów głównego artykułu
   const tagNames = publication.tags?.map((tag: any) => tag.name).filter(Boolean) || [];
 
-  // 4. Formatowanie autora - zabezpieczenie dla null
+  // Formatowanie autora głównego artykułu
   const authorData = publication.author?.name
     ? {
         name: publication.author.name,
@@ -63,19 +106,45 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       }
     : undefined;
 
-  // 5. Breadcrumbs - zabezpieczenie przed nullem w tytule
   const breadcrumbs = [
-    { label: "Strona główna", href: `/${locale}` },
-    { label: "Publikacje", href: `/${locale}/publications` },
-    { label: publication.title || "Brak tytułu" },
+    { label: t.home, href: `/${locale}` },
+    { label: t.publications, href: `/${locale}/publications` },
+    { label: publication.title || t.noTitle },
   ];
+
+  const formattedRelatedPublications = rawRelatedPublications.map((pub: any) => ({
+    title: pub.title || t.noTitle,
+    excerpt: pub.excerpt ?? undefined,
+    href: `/${locale}/publications/${pub.slug}`,
+    date: pub.date
+      ? new Date(pub.date).toLocaleDateString(locale, {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
+      : undefined,
+    tags: pub.tags?.map((tag: any) => tag.name).filter(Boolean) || [],
+    author: pub.author?.name
+      ? {
+          name: pub.author.name,
+          initials: getInitials(pub.author.name),
+        }
+      : undefined,
+    image: pub.mainImage?.asset?.url
+      ? {
+          src: pub.mainImage.asset.url,
+          alt: pub.mainImage.asset.altText || pub.title || "Zdjęcie powiązanej publikacji",
+          blurDataURL: pub.mainImage.asset.metadata?.lqip ?? undefined,
+        }
+      : null,
+  }));
 
   return (
     <main className="min-h-screen">
       <PublicationHero
         breadcrumbs={breadcrumbs}
         category={categoryLabel}
-        title={publication.title || "Brak tytułu"}
+        title={publication.title || t.noTitle}
         excerpt={publication.excerpt ?? undefined}
         tags={tagNames}
         author={authorData}
@@ -91,8 +160,15 @@ export default async function PublicationDetailPage({ params }: { params: Promis
               }
             : null
         }
+        locale={locale}
       />
-      <PublicationBody content={publication.text || []} author={authorData} date={formattedDate} />
+      <PublicationBody content={publication.text || []} locale={locale} />
+
+      <PublicationPdf pdfUrl={publication.pdfFile?.url} locale={locale} />
+
+      <PublicationAuthor author={authorData} date={formattedDate} />
+
+      <RelatedPublications publications={formattedRelatedPublications} locale={locale} />
     </main>
   );
 }

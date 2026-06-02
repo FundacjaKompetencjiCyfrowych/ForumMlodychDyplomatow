@@ -23,7 +23,19 @@ export const typographyVariants = cva("", {
     },
   },
 });
-type Components = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
+type Components =
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "p"
+  | "span"
+  | "time"
+  | "div"
+  | "label"
+  | "a";
 type Props<T extends Components> = {
   as?: T;
   children: React.ReactNode;
