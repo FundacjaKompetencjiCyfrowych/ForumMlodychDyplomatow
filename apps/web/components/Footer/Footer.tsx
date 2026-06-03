@@ -92,14 +92,20 @@ const Footer = async () => {
                   {footerData.contactColumn.phone}
                 </Link>
               )}
-              <div className="flex flex-row gap-8 py-4 text-black">
+              <div className="flex flex-row gap-8 pb-4 text-black desktop:gap-4">
                 {footerData.contactColumn.socials?.map((social) => (
-                  <Link key={social._key} href={social.link?.href ?? "#"} variant="link">
+                  <Link
+                    key={social._key}
+                    href={social.link?.href ?? "#"}
+                    variant="link"
+                    noExternalIcon
+                    className="block h-8 w-8 desktop:h-6 desktop:w-6"
+                  >
                     {social.icon && (
                       <SanityImage
                         image={social.icon}
                         alt={social.platform ?? ""}
-                        className="h-6 w-6 object-contain"
+                        className="size-full"
                       />
                     )}
                   </Link>

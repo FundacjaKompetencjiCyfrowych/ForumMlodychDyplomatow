@@ -187,6 +187,7 @@ export type Link = {
   event?: EventReference;
   division?: DivisionReference;
   openInNewTab?: boolean;
+  isExternal?: boolean;
 };
 
 export type PostsSection = {
@@ -380,6 +381,7 @@ export type Translations = {
     upcoming?: string;
     archive?: string;
     signUp?: string;
+    noEvents?: string;
   };
   people?: {
     seeAll?: string;

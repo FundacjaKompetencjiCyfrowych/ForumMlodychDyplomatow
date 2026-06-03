@@ -171,6 +171,13 @@ export const link = defineType({
       type: "boolean",
       initialValue: false,
     }),
+    defineField({
+      name: "isExternal",
+      title: "Link zewnętrzny",
+      type: "boolean",
+      initialValue: false,
+      hidden: ({ parent }) => parent?.linkType !== "href",
+    }),
   ],
   preview: {
     select: linkPreviewSelect,

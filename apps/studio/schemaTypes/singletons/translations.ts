@@ -49,6 +49,12 @@ export const translations = defineType({
           type: "string",
           validation: (Rule) => Rule.required(),
         }),
+        defineField({
+          name: "noEvents",
+          title: "Brak wydarzeń",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
       ],
     }),
     defineField({

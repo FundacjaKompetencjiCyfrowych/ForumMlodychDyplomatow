@@ -960,6 +960,13 @@
             "type": "boolean"
           },
           "optional": true
+        },
+        "isExternal": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
         }
       }
     }
@@ -1975,6 +1982,13 @@
               "optional": true
             },
             "signUp": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "noEvents": {
               "type": "objectAttribute",
               "value": {
                 "type": "string"

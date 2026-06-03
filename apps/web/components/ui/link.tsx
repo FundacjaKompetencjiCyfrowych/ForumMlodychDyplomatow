@@ -5,6 +5,7 @@ import type { InferFragmentType } from "groqd";
 import React from "react";
 import type { linkFragment } from "../../sanity/queries/linkFragment";
 import { buttonVariants } from "./button";
+import SVG from "react-inlinesvg";
 type LinkType = InferFragmentType<typeof linkFragment>;
 type LinkOrHref = { link: LinkType; href?: undefined } | { href: string; link?: undefined };
 const slugsByType = {
@@ -13,6 +14,11 @@ const slugsByType = {
   event: "/events/",
   division: "/division/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;
+
+const ExternalLinkIcon = () => {
+  return <SVG src="/static/icons/external-link.svg" className="size-[0.875em] self-center" />;
+};
+
 export const Link = ({
   children,
   className,
@@ -23,12 +29,14 @@ export const Link = ({
   iconRight = null,
   link,
   href,
+  noExternalIcon = false,
   ...props
 }: Omit<React.ComponentProps<typeof BaseLink>, "href"> &
   VariantProps<typeof buttonVariants> & {
     iconLeft?: React.ReactNode;
     iconRight?: React.ReactNode;
     openInNewTab?: boolean;
+    noExternalIcon?: boolean;
   } & LinkOrHref) => {
   const getHref = (): string => {
     if (href) {
@@ -47,6 +55,8 @@ export const Link = ({
 
     return `${slugsByType[link.linkType]}${link.href}`;
   };
+  const isExternal = link?.linkType === "href" || href?.startsWith("http");
+  const rightIcon = isExternal && !noExternalIcon ? <ExternalLinkIcon /> : iconRight;
   return (
     <BaseLink
       href={getHref()}
@@ -56,7 +66,7 @@ export const Link = ({
     >
       {iconLeft}
       {children ?? (link ? link.text : null)}
-      {iconRight}
+      {rightIcon}
     </BaseLink>
   );
 };

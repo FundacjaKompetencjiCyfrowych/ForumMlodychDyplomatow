@@ -79,7 +79,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
         "group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5",
         "group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
         //local changes
-        "w-fit group-data-[variant=line]/tabs-list:px-4",
+        "w-fit group-data-[variant=line]/tabs-list:px-2 desktop:group-data-[variant=line]/tabs-list:px-4",
         "text-[18px] font-medium desktop:text-[1.5rem]",
         className
       )}
