@@ -31,7 +31,7 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
 
   return (
     <section className="mx-auto w-full bg-background-50 px-6 pt-10 pb-16 md:px-6">
-      <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="mx-auto mb-8 flex max-w-7xl flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <Typography as="h2" variant="h3" className="text-foreground">
           {t.title}
         </Typography>
@@ -48,7 +48,7 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {publications.slice(0, 3).map((pub, index) => (
           <PublicationCard
             key={index}

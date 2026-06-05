@@ -2,17 +2,26 @@ import React from "react";
 import Image from "next/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Typography } from "@/components/ui/typography";
-import { Link } from "@/components/ui/link"; // Upewnij się, że ścieżka do Twojego Linku jest poprawna
+import { Link } from "@/components/ui/link";
 import imageUrlBuilder from "@sanity/image-url";
 
-// 1. Konfiguracja buildera URL
-const builder = imageUrlBuilder({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "twoj_project_id",
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-});
-const urlFor = (source: any) => builder.image(source);
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 
-// Dodano właściwość locale
+if (!projectId) {
+  throw new Error("Missing required environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID");
+}
+
+if (!dataset) {
+  throw new Error("Missing required environment variable: NEXT_PUBLIC_SANITY_DATASET");
+}
+
+const builder = imageUrlBuilder({
+  projectId,
+  dataset,
+});
+
+const urlFor = (source: any) => builder.image(source);
 export interface PublicationBodyProps {
   content: any[];
   author?: {
@@ -22,10 +31,9 @@ export interface PublicationBodyProps {
     imageUrl?: string;
   };
   date?: string;
-  locale?: string; // np. "pl" lub "en"
+  locale?: string;
 }
 
-// 2. Funkcje pomocnicze
 const slugify = (text: string) => {
   return text
     .toString()
@@ -49,7 +57,6 @@ const getBlockText = (block: any) => {
   return block.children?.map((child: any) => child.text).join("") || "";
 };
 
-// 3. Prosty słownik tłumaczeń
 const translations = {
   pl: {
     inThisArticle: "W tym artykule",
@@ -61,7 +68,6 @@ const translations = {
   },
 };
 
-// 4. Konfiguracja Portable Text
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
@@ -168,7 +174,6 @@ const portableTextComponents: PortableTextComponents = {
 };
 
 export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps) => {
-  // Wybór tekstów na podstawie locale (domyślnie "pl")
   const t = translations[locale as keyof typeof translations] || translations.pl;
 
   const toc = Array.isArray(content)
@@ -218,7 +223,6 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
                       {number}
                     </Typography>
 
-                    {/* Zastosowanie własnego komponentu <Link> */}
                     <Link
                       href={`#${item.id}`}
                       variant="link"

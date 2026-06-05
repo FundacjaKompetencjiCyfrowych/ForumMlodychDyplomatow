@@ -35,7 +35,6 @@ export const PublicationCard = ({
   layout = "vertical",
   className,
 }: PublicationCardProps) => {
-  // Logika wyświetlania tagów (max 2 widoczne + reszta jako liczba)
   const visibleTags = tags.slice(0, 2);
   const hiddenTagsCount = tags.length > 2 ? tags.length - 2 : 0;
 

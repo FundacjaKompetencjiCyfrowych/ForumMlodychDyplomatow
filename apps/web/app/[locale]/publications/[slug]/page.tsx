@@ -12,7 +12,6 @@ type Params = {
   slug: string;
 };
 
-// Słownik tłumaczeń dla elementów strony
 const pageTranslations = {
   pl: {
     home: "Strona główna",
@@ -54,7 +53,6 @@ const getInitials = (name: string) => {
 export default async function PublicationDetailPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
 
-  // 1. Pobieramy główny artykuł
   const publication = await runQuery(singlePublicationQuery, {
     parameters: { locale, slug },
   });
@@ -63,24 +61,20 @@ export default async function PublicationDetailPage({ params }: { params: Promis
     notFound();
   }
 
-  // Wyciągamy ID tagów, żeby przekazać je do drugiego zapytania
   const currentTagIds = publication.tags?.map((tag: any) => tag._id).filter(Boolean) || [];
 
-  // 2. Pobieramy powiązane artykuły (wymaga danych z pierwszego zapytania)
   const rawRelatedPublications = await runQuery(relatedPublicationsQuery, {
     parameters: {
       locale,
       currentId: publication._id,
       tagIds: currentTagIds,
       pubType: publication.type || null,
-      limit: 3, // Pobieramy od razu tylko 3, żeby nie obciążać złącza
+      limit: 3,
     },
   });
 
-  // Wybór odpowiedniego zestawu tłumaczeń
   const t = pageTranslations[locale as keyof typeof pageTranslations] || pageTranslations.pl;
 
-  // Formatowanie kategorii głównego artykułu
   const categoryLabel = publication.type
     ? t.types[publication.type] || publication.type
     : t.defaultCategory;
@@ -94,10 +88,8 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       })
     : undefined;
 
-  // Formatowanie tagów głównego artykułu
   const tagNames = publication.tags?.map((tag: any) => tag.name).filter(Boolean) || [];
 
-  // Formatowanie autora głównego artykułu
   const authorData = publication.author?.name
     ? {
         name: publication.author.name,

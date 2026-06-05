@@ -16,8 +16,8 @@ export const PublicationAuthor = ({ author, date }: PublicationAuthorProps) => {
   if (!author) return null;
 
   return (
-    <div className="w-full max-w-170 lg:col-span-7 xl:col-span-6">
-      <div className="mx-auto mt-4 flex w-fit items-center gap-4 border-t border-border/40 pt-4">
+    <div className="mx-auto w-full max-w-170 pb-12 lg:col-span-7 xl:col-span-6">
+      <div className="mx-auto mt-4 flex w-fit items-center gap-4 pt-4">
         <div className="relative flex h-13 w-13 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-200/60">
           {author.imageUrl ? (
             <Image src={author.imageUrl} alt={author.name} fill className="object-cover" />
