@@ -13,6 +13,7 @@ export interface PublicationCardProps {
     imageUrl?: string;
   };
   date?: string;
+  isoDate?: string;
   tags?: string[];
   image?: {
     src: string;
@@ -29,6 +30,7 @@ export const PublicationCard = ({
   excerpt,
   author,
   date,
+  isoDate,
   tags = [],
   image,
   href,
@@ -129,8 +131,8 @@ export const PublicationCard = ({
                 </Typography>
               )}
               {date && (
-                <Typography as="time" variant="caption" className="text-muted-foreground">
-                  {date}
+                <Typography variant="caption" className="text-muted-foreground" asChild>
+                  <time dateTime={isoDate}>{date}</time>
                 </Typography>
               )}
             </div>

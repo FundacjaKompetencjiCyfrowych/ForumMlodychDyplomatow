@@ -88,6 +88,8 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       })
     : undefined;
 
+  const isoDate = publication.date ?? undefined;
+
   const tagNames = publication.tags?.map((tag: any) => tag.name).filter(Boolean) || [];
 
   const authorData = publication.author?.name
@@ -115,6 +117,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
           year: "numeric",
         })
       : undefined,
+    isoDate: pub.date,
     tags: pub.tags?.map((tag: any) => tag.name).filter(Boolean) || [],
     author: pub.author?.name
       ? {
@@ -141,6 +144,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
         tags={tagNames}
         author={authorData}
         date={formattedDate}
+        isoDate={isoDate}
         pdfUrl={publication.pdfFile?.url}
         image={
           publication.mainImage?.asset?.url
@@ -158,7 +162,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
 
       <PublicationPdf pdfUrl={publication.pdfFile?.url} locale={locale} />
 
-      <PublicationAuthor author={authorData} date={formattedDate} />
+      <PublicationAuthor author={authorData} date={formattedDate} isoDate={isoDate} />
 
       <RelatedPublications publications={formattedRelatedPublications} locale={locale} />
     </main>

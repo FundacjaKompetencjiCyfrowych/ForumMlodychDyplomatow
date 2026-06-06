@@ -20,6 +20,7 @@ export interface PublicationHeroProps {
     imageUrl?: string;
   };
   date?: string;
+  isoDate?: string;
   image?: {
     src: string;
     alt: string;
@@ -52,6 +53,7 @@ export const PublicationHero = ({
   tags = [],
   author,
   date,
+  isoDate,
   image,
   pdfUrl,
   locale = "pl",
@@ -162,7 +164,7 @@ export const PublicationHero = ({
 
             {date && (
               <Typography variant="p2" className="whitespace-nowrap text-muted-foreground" asChild>
-                <time dateTime={date}>{date}</time>
+                <time dateTime={isoDate}>{date}</time>
               </Typography>
             )}
           </div>

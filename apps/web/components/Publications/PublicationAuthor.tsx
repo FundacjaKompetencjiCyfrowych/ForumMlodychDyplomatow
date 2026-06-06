@@ -10,9 +10,10 @@ export interface PublicationAuthorProps {
     imageUrl?: string;
   };
   date?: string;
+  isoDate?: string;
 }
 
-export const PublicationAuthor = ({ author, date }: PublicationAuthorProps) => {
+export const PublicationAuthor = ({ author, date, isoDate }: PublicationAuthorProps) => {
   if (!author) return null;
 
   return (
@@ -37,7 +38,7 @@ export const PublicationAuthor = ({ author, date }: PublicationAuthorProps) => {
           )}
           {date && (
             <Typography variant="p2" className="mt-0.5 text-muted-foreground" asChild>
-              <time dateTime={date}>{date}</time>
+              <time dateTime={isoDate}>{date}</time>
             </Typography>
           )}
         </div>
