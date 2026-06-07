@@ -29,6 +29,12 @@ export default defineType({
       type: "img",
     }),
     defineField({
+      name: "title",
+      title: "Tytuł",
+      type: "string",
+      description: "Krótkie określenie roli autora, np. 'Przewodniczący FMD'",
+    }),
+    defineField({
       name: "bio",
       title: "Bio",
       type: "array",

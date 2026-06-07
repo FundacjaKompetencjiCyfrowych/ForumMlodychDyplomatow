@@ -54,6 +54,7 @@ export const link = defineType({
         list: [
           { title: "Strona", value: "page" },
           { title: "Post", value: "post" },
+          { title: "Publikacja", value: "publication" },
           { title: "Wydarzenie", value: "event" },
           { title: "Oddział", value: "division" },
           { title: "Zewnętrzny URL", value: "href" },
@@ -170,6 +171,13 @@ export const link = defineType({
       title: "Otwórz w nowej karcie",
       type: "boolean",
       initialValue: false,
+    }),
+    defineField({
+      name: "isExternal",
+      title: "Link zewnętrzny",
+      type: "boolean",
+      initialValue: false,
+      hidden: ({ parent }) => parent?.linkType !== "href",
     }),
   ],
   preview: {

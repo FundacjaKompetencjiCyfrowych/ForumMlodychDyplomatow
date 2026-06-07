@@ -26,6 +26,50 @@ export const translations = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "events",
+      title: "Wydarzenia",
+      type: "object",
+      fields: [
+        defineField({
+          name: "upcoming",
+          title: "Nadchodzące",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "archive",
+          title: "Archiwum",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "signUp",
+          title: "Zapisz się",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "noEvents",
+          title: "Brak wydarzeń",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
+    }),
+    defineField({
+      name: "people",
+      title: "Ludzie",
+      type: "object",
+      fields: [
+        defineField({
+          name: "seeAll",
+          title: "Zobacz wszystkich",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
+    }),
     languageField,
   ],
 });

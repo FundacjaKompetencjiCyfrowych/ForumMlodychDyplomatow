@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import DefaultPage from "./[slug]/page";
-import { runQueryNoStega } from "../../sanity/groqd";
+import { runQuery } from "../../sanity/groqd";
 import { pageQuery } from "../../sanity/queries/page";
+import type { Locale } from "next-intl";
 
-type Props = { params: Promise<{ locale: string }> };
+type Props = { params: Promise<{ locale: Locale }> };
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const parameters = await props.params;
 
-  const page = await runQueryNoStega(pageQuery, {
+  const { data: page } = await runQuery(pageQuery, {
     parameters: {
       slug: "home",
       locale: parameters.locale,
     },
+    stega: false,
+    perspective: "published",
   });
 
   return {

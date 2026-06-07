@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   [
-    "group/button inline-flex gap-2 shrink-0 items-center justify-center border-r-2 ",
+    "group/button inline-flex shrink-0 items-center justify-center gap-2 border-r-2",
     "border border-transparent bg-clip-padding text-[1rem] font-medium whitespace-nowrap",
     "transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
     "active:not-aria-[haspopup]:translate-y-px",
@@ -35,6 +35,7 @@ const buttonVariants = cva(
       size: {
         m: "px-4 py-3",
         l: "px-4 py-4",
+        "icon-sm": "p-1.5",
       },
     },
     defaultVariants: {

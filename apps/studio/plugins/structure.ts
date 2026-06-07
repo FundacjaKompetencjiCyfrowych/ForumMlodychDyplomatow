@@ -88,6 +88,7 @@ export const structure: StructureToolOptions = {
         S.divider().title("Ustawienia"),
         Singleton(S, { type: "settings", title: "Ustawienia", icon: CogIcon }),
         Singleton(S, { type: "navigation", title: "Nawigacja", icon: LinkIcon }),
+        Singleton(S, { type: "footer", title: "Stopka", icon: LinkIcon }),
         S.divider().title("Tłumaczenia"),
         Translations(S, { title: "Metadane", icon: TranslateIcon }),
         Singleton(S, {

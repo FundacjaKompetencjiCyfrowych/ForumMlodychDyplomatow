@@ -164,7 +164,7 @@ const portableTextComponents: PortableTextComponents = {
           href={value?.href || "#"}
           target={target}
           variant="link"
-          className="border-none text-brand-blue no-underline underline-offset-4 transition-colors hover:border-transparent hover:text-brand-400"
+          className="hover:text-brand-400 border-none text-brand-blue no-underline underline-offset-4 transition-colors hover:border-transparent"
         >
           {children}
         </Link>

@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import Head from "next/head";
 
 // import { sanityFetch } from "../../sanity/live";
-import { pageQuery, pagesSlugQuery } from "@/sanity/queries/page";
+import { pageQuery, pagesMetadataQuery, pagesSlugQuery } from "@/sanity/queries/page";
 import { SanitySections } from "@/sanity/sections/SanitySections";
-import { runQuery, runQueryNoStega } from "@/sanity/groqd";
+import { runQuery } from "@/sanity/groqd";
+import type { Locale } from "next-intl";
 
 type Props = {
-  params: Promise<{ slug: string; locale: string }>;
+  params: Promise<{ slug: string; locale: Locale }>;
 };
 
 /**
  * Generate the static params for the page.
  * Learn more: https://nextjs.org/docs/app/api-reference/functions/generate-static-params
  */
-export async function generateStaticParams({ params }: { params: { locale: string } }) {
-  const data = await runQueryNoStega(pagesSlugQuery, { parameters: { locale: params.locale } });
+export async function generateStaticParams() {
+  const { data } = await runQuery(pagesSlugQuery, { stega: false, perspective: "published" });
 
-  return data?.filter((item) => item.slug !== "home") ?? [];
+  return data.filter((item) => item.slug !== "home");
 }
 
 /**
@@ -27,8 +27,10 @@ export async function generateStaticParams({ params }: { params: { locale: strin
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const parameters = await props.params;
 
-  const page = await runQueryNoStega(pageQuery, {
+  const { data: page } = await runQuery(pagesMetadataQuery, {
     parameters,
+    stega: false,
+    perspective: "published",
   });
 
   return {
@@ -39,12 +41,13 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function Page(props: Props) {
   const params = await props.params;
-  const page = await runQuery(pageQuery, {
+  const { data: page } = await runQuery(pageQuery, {
     parameters: {
       slug: params.slug,
       locale: params.locale,
     },
   });
+
   if (!page?._id) {
     // Alternatively, Redirect to 404 page
     return (
@@ -55,26 +58,10 @@ export default async function Page(props: Props) {
       </div>
     );
   }
-
+  const locale = params.locale;
   return (
-    <div className="my-12 lg:my-24">
-      <Head>
-        <title className="text-grey-200">{page.heading}</title>
-      </Head>
-      <div className="">
-        <div className="container">
-          <div className="border-b border-gray-100 pb-6">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl text-gray-200 sm:text-5xl lg:text-7xl">{page.heading}</h1>
-              <p>{page.slug}</p>
-              <p className="mt-4 text-base leading-relaxed font-light text-gray-600 uppercase lg:text-lg">
-                {page.subheading}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <SanitySections value={page?.pageBuilder} />
+    <div className="">
+      <SanitySections value={page?.pageBuilder} locale={locale} />
     </div>
   );
 }

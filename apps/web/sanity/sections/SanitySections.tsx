@@ -1,5 +1,5 @@
 import { render } from "@/sanity/sections/render";
-import { components } from "./components";
+import type { Locale } from "next-intl";
 
 /**
  * Dynamically renders an array of Sanity content blocks using a component registry.
@@ -16,7 +16,13 @@ import { components } from "./components";
  * - The `value` prop can be `undefined` or `null`, in which case nothing is rendered.
  * - Feel free to modify or create variants of this logic for your specific use case.
  * */
-export function SanitySections({ value = [] }: { value: Array<any> | null | undefined }) {
+export function SanitySections({
+  value = [],
+  locale,
+}: {
+  value: Array<any> | null | undefined;
+  locale: Locale;
+}) {
   if (!Array.isArray(value)) return null;
-  return render(value, components);
+  return render(value, locale);
 }

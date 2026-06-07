@@ -1,6 +1,6 @@
 import { type InferResultType } from "groqd";
 import { q } from "../groqd";
-import { pageBuilderFragment } from "./pageBuilder";
+import { pageBuilderQueryFragment } from "./pageBuilder";
 import { seoFragment } from "./seo";
 import { LANGUAGE_FIELD } from "../../../studio/config";
 
@@ -17,18 +17,29 @@ export const pageQuery = q
     slug: sub.field("slug.current"),
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
-    pageBuilder: sub.field("pageBuilder[]").project(pageBuilderFragment),
+    pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment),
     seo: sub.field("seo").project(seoFragment),
   }));
 
 export type PageData = InferResultType<typeof pageQuery>;
 
+// TODO check if this needs language support to add "en" to some pages
 export const pagesSlugQuery = q.star
-  .parameters<{ locale: string }>()
   .filterByType("page")
   .filterRaw("defined(slug.current)")
+  .project({
+    slug: "slug.current",
+  });
+
+export const pagesMetadataQuery = q
+  .parameters<{ slug: string; locale: string }>()
+  .star.filterByType("page")
+  .filterBy("slug.current == $slug")
   .filterBy(`${LANGUAGE_FIELD} == $locale`)
+  .slice(0)
   .project((sub) => ({
+    name: sub.field("name"),
     slug: sub.field("slug.current"),
-  }))
-  .nullable();
+    heading: sub.field("heading"),
+    seo: sub.field("seo").project(seoFragment),
+  }));

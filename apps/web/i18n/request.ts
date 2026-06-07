@@ -7,7 +7,7 @@ import { intlQuery } from "../sanity/queries/intl";
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
   const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
-  const messages = await runQuery(intlQuery, {
+  const { data: messages } = await runQuery(intlQuery, {
     parameters: { locale },
   });
   return {

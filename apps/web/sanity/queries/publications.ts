@@ -1,6 +1,6 @@
 import type { InferFragmentType } from "groqd";
 import { q } from "../groqd";
-import { imgFragment } from "./groqd.example";
+import { imgFragment } from "./imgFragment";
 
 export type PublicationsListQueryParams = {
   locale: string;
@@ -31,9 +31,17 @@ export const publicationPreviewFragment = q.fragmentForType<"publication">().pro
   type: true,
   date: true,
   excerpt: true,
-  slug: "slug.current",
+  slug: sub.field("slug.current").notNull(),
   mainImage: sub.field("mainImage").project(imgFragment),
-  author: sub.field("author").deref().project({
+  author: sub
+    .field("author")
+    .deref()
+    .project({
+      name: true,
+      img: sub.field("mainImage").project(imgFragment),
+    }),
+  tags: sub.field("tags[]").deref().project({
+    _id: true,
     name: true,
   }),
 }));
@@ -72,7 +80,7 @@ export type PublicationDetail = InferFragmentType<typeof publicationDetailFragme
 export const latestPublicationsQuery = q
   .parameters<PublicationsListQueryParams>()
   .star.filterByType("publication")
-  .filterRaw(`language == $locale`)
+  .filterRaw(`locale == $locale`)
   .order("date desc")
   .raw("[0...$limit]", "passthrough")
   .project(publicationPreviewFragment);

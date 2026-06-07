@@ -6,21 +6,28 @@ import { Slot } from "radix-ui";
 export const typographyVariants = cva("", {
   variants: {
     variant: {
-      hero: "desktop:text-[3.5rem] font-bold desktop:leading-[1.28] text-[34px] leading-[1.4]",
-      title: "desktop:text-[3rem] font-bold font-baskerville leading-[1.28] text-[30px]",
-      h1: "desktop:text-[3rem] font-bold leading-[1.28] text-[30px] mb-4",
-      h2: "desktop:text-[2.5rem] font-semibold leading-[1.44] text-[26px] mb-3.5",
-      h3: "desktop:text-[2rem] font-semibold leading-[1.52] text-[22px] mb-3",
-      h4: "desktop:text-[1.75rem] font-medium leading-[1.52] text-[20px] mb-2",
-      h5: "desktop:text-[1.5rem] font-medium leading-[1.52] text-[18px] mb-1",
-      h6: "text-[1rem] font-semibold font-open-sans leading-[1.28] mb-1",
+      hero: "text-[34px] leading-[1.4] font-bold desktop:text-[3.5rem] desktop:leading-[1.28]",
+      title: "font-baskerville text-[30px] leading-[1.28] font-bold desktop:text-[3rem]",
+      h1: "mb-4 text-[30px] leading-[1.28] font-bold desktop:text-[3rem]",
+      h2: "mb-3.5 text-[26px] leading-[1.44] font-semibold desktop:text-[2.5rem]",
+      h3: "mb-3 text-[22px] leading-[1.52] font-semibold desktop:text-[2rem]",
+      h4: "mb-2 text-[20px] leading-[1.52] font-medium desktop:text-[1.75rem]",
+      h5: "mb-1 text-[18px] leading-[1.52] font-medium desktop:text-[1.5rem]",
+      h6: "font-open-sans mb-1 text-[1rem] leading-[1.28] font-semibold",
       p1: "text-[1rem] leading-[1.6]",
       p2: "text-[0.875rem] leading-[1.44]",
       caption: "text-[0.75rem] leading-[1.44]",
-      eyebrow: "text-[0.875rem] font-semibold uppercase leading-[1.28]",
-      "logo-s": "text-[1rem] text-brand-red font-normal font-oswald",
-      "logo-m": "text-[1.25rem] text-brand-red font-normal font-oswald",
+      eyebrow: "text-[0.875rem] leading-[1.28] font-semibold uppercase",
+      "logo-s": "font-oswald text-[1rem] font-normal text-brand-red",
+      "logo-m": "font-oswald text-[1.25rem] font-normal text-brand-red",
     },
+    lineHeight: {
+      default: "",
+      none: "leading-none",
+    },
+  },
+  defaultVariants: {
+    lineHeight: "default",
   },
 });
 type Components =
@@ -49,11 +56,12 @@ export const Typography = <T extends Components>({
   children,
   className,
   variant,
+  lineHeight,
   asChild = false,
 }: Props<T>) => {
   const Comp = asChild ? Slot.Root : (Component ?? "p");
   return (
-    <Comp className={cn(typographyVariants({ variant, className }))}>
+    <Comp className={cn(typographyVariants({ variant, lineHeight, className }))}>
       <Slot.Slottable>{children}</Slot.Slottable>
     </Comp>
   );

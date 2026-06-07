@@ -1,5 +1,5 @@
 import { q } from "../groqd";
-import { imgFragment } from "./groqd.example";
+import { imgFragment } from "./imgFragment";
 
 export const seoFragment = q.fragmentForType<"seo">().project((sub) => ({
   title: true,

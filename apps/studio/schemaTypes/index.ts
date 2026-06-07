@@ -13,10 +13,12 @@ import { link, linkButton } from "./link";
 import { pageBuilder } from "./pageBuilderType";
 import { page } from "./pages/page";
 import navigation from "./singletons/navigation";
+import { sectionStructure } from "./sections/sections";
 import division from "./division";
 import publications from "./publications";
 import tag from "./tag";
 import tagCategory from "./tagCategory";
+import { footer } from "./singletons/footer";
 import { translations } from "./singletons/translations";
 
 export const schemaTypes = [
@@ -40,5 +42,8 @@ export const schemaTypes = [
   pageBuilder,
   page,
   navigation,
+  footer,
+  // sections defined separately
+  ...sectionStructure,
   translations,
 ];

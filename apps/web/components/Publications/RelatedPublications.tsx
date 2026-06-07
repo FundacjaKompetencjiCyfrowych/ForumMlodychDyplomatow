@@ -1,10 +1,12 @@
 import React from "react";
 import { Typography } from "@/components/ui/typography";
 import { Link } from "@/components/ui/link";
-import { PublicationCard, type PublicationCardProps } from "./PublicationCard";
+import { PublicationCard } from "./PublicationCard";
+import type { publicationPreviewFragment } from "../../sanity/queries/publications";
+import type { InferFragmentType } from "groqd";
 
 export interface RelatedPublicationsProps {
-  publications: Omit<PublicationCardProps, "layout" | "className">[];
+  publications: InferFragmentType<typeof publicationPreviewFragment>[];
   locale?: string;
 }
 
@@ -39,7 +41,7 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
         <Link
           href={`/${locale}${t.baseHref}`}
           variant="link"
-          className="h-auto border-none p-0! text-brand-blue no-underline transition-colors hover:border-transparent hover:text-brand-400 active:border-transparent"
+          className="hover:text-brand-400 h-auto border-none p-0! text-brand-blue no-underline transition-colors hover:border-transparent active:border-transparent"
           iconRight={<span className="text-lg leading-none">›</span>}
         >
           <Typography as="span" variant="p2" className="font-medium">
@@ -49,19 +51,8 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
       </div>
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {publications.slice(0, 3).map((pub, index) => (
-          <PublicationCard
-            key={index}
-            href={pub.href}
-            title={pub.title}
-            excerpt={pub.excerpt}
-            tags={pub.tags}
-            author={pub.author}
-            date={pub.date}
-            image={pub.image}
-            layout="vertical"
-            className="h-full"
-          />
+        {publications.slice(0, 3).map((pub) => (
+          <PublicationCard key={pub._id} publication={pub} layout="vertical" className="h-full" />
         ))}
       </div>
     </section>

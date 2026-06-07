@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 import { Toaster } from "sonner";
 import Header from "../../components/Header/Header";
 import "./globals.css";
+import Footer from "../../components/Footer/Footer";
 import { intlQuery } from "../../sanity/queries/intl";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
@@ -71,14 +72,14 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
 
   setRequestLocale(locale ?? "pl"); // Enables static rendering, this should be done in every page/layout
-  const translations = await runQuery(intlQuery, {
+  const { data: translations } = await runQuery(intlQuery, {
     parameters: { locale },
   });
 
   return (
     <html lang={locale}>
       <body
-        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative bg-white font-inter antialiased`}
+        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
         <NextIntlClientProvider messages={translations as any}>
           <Header />
@@ -86,6 +87,7 @@ export default async function RootLayout({
           {children}
           <Toaster />
           <SanityPreview />
+          <Footer />
         </NextIntlClientProvider>
       </body>
       <SanityLive />
