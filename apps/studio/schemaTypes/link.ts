@@ -54,6 +54,7 @@ export const link = defineType({
         list: [
           { title: "Strona", value: "page" },
           { title: "Post", value: "post" },
+          { title: "Publikacja", value: "publication" },
           { title: "Wydarzenie", value: "event" },
           { title: "Oddział", value: "division" },
           { title: "Zewnętrzny URL", value: "href" },

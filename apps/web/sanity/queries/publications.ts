@@ -31,9 +31,17 @@ export const publicationPreviewFragment = q.fragmentForType<"publication">().pro
   type: true,
   date: true,
   excerpt: true,
-  slug: "slug.current",
+  slug: sub.field("slug.current").notNull(),
   mainImage: sub.field("mainImage").project(imgFragment),
-  author: sub.field("author").deref().project({
+  author: sub
+    .field("author")
+    .deref()
+    .project({
+      name: true,
+      img: sub.field("mainImage").project(imgFragment),
+    }),
+  tags: sub.field("tags[]").deref().project({
+    _id: true,
     name: true,
   }),
 }));

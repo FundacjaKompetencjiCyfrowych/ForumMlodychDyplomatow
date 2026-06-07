@@ -13,6 +13,7 @@ const slugsByType = {
   post: "/post/",
   event: "/events/",
   division: "/division/",
+  publication: "/publication/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;
 
 const ExternalLinkIcon = () => {

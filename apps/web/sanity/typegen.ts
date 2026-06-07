@@ -178,7 +178,7 @@ export type EventReference = {
 
 export type Link = {
   _type: "link";
-  linkType?: "page" | "post" | "event" | "division" | "href";
+  linkType?: "page" | "post" | "publication" | "event" | "division" | "href";
   text?: string;
   href?: string;
   page?: PageReference;

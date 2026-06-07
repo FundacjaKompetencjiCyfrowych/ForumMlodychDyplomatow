@@ -6,9 +6,11 @@ import { PublicationBody } from "@/components/Publications/PublicationBody";
 import { RelatedPublications } from "@/components/Publications/RelatedPublications";
 import { PublicationPdf } from "@/components/Publications/PublicationPdf";
 import { PublicationAuthor } from "@/components/Publications/PublicationAuthor";
+import type { Locale } from "next-intl";
+import { getInitials } from "./helpers";
 
 type Params = {
-  locale: string;
+  locale: Locale;
   slug: string;
 };
 
@@ -37,17 +39,6 @@ const pageTranslations = {
       review: "Publication",
     } as Record<string, string>,
   },
-};
-
-// Helper do generowania inicjałów
-const getInitials = (name: string) => {
-  if (!name) return "";
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .substring(0, 2)
-    .toUpperCase();
 };
 
 // TODO static params
@@ -108,34 +99,6 @@ export default async function PublicationDetailPage({ params }: { params: Promis
     { label: publication.title || t.noTitle },
   ];
 
-  const formattedRelatedPublications = rawRelatedPublications.map((pub: any) => ({
-    title: pub.title || t.noTitle,
-    excerpt: pub.excerpt ?? undefined,
-    href: `/${locale}/publications/${pub.slug}`,
-    date: pub.date
-      ? new Date(pub.date).toLocaleDateString(locale, {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        })
-      : undefined,
-    isoDate: pub.date,
-    tags: pub.tags?.map((tag: any) => tag.name).filter(Boolean) || [],
-    author: pub.author?.name
-      ? {
-          name: pub.author.name,
-          initials: getInitials(pub.author.name),
-        }
-      : undefined,
-    image: pub.mainImage?.asset?.url
-      ? {
-          src: pub.mainImage.asset.url,
-          alt: pub.mainImage.asset.altText || pub.title || "Zdjęcie powiązanej publikacji",
-          blurDataURL: pub.mainImage.asset.metadata?.lqip ?? undefined,
-        }
-      : null,
-  }));
-
   return (
     <main className="min-h-screen">
       <PublicationHero
@@ -166,7 +129,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
 
       <PublicationAuthor author={authorData} date={formattedDate} isoDate={isoDate} />
 
-      <RelatedPublications publications={formattedRelatedPublications} locale={locale} />
+      <RelatedPublications publications={rawRelatedPublications} locale={locale} />
     </main>
   );
 }
