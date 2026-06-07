@@ -1,12 +1,56 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { singlePublicationQuery } from "@/sanity/queries/publications";
-import { runQuery } from "../../../../sanity/groqd"; // Dostosuj ścieżkę do swojego projektu
+import { singlePublicationQuery, relatedPublicationsQuery } from "@/sanity/queries/publications";
+import { runQuery } from "../../../../sanity/groqd";
+import { PublicationHero } from "@/components/Publications/PublicationHero";
+import { PublicationBody } from "@/components/Publications/PublicationBody";
+import { RelatedPublications } from "@/components/Publications/RelatedPublications";
+import { PublicationPdf } from "@/components/Publications/PublicationPdf";
+import { PublicationAuthor } from "@/components/Publications/PublicationAuthor";
 
 type Params = {
   locale: string;
   slug: string;
 };
+
+const pageTranslations = {
+  pl: {
+    home: "Strona główna",
+    publications: "Publikacje",
+    noTitle: "Brak tytułu",
+    defaultCategory: "Publikacja",
+    types: {
+      article: "Krótkie opracowanie",
+      news: "Analiza",
+      guide: "Magazyn",
+      review: "Publikacja",
+    } as Record<string, string>,
+  },
+  en: {
+    home: "Home",
+    publications: "Publications",
+    noTitle: "No title",
+    defaultCategory: "Publication",
+    types: {
+      article: "Brief",
+      news: "Analysis",
+      guide: "Magazine",
+      review: "Publication",
+    } as Record<string, string>,
+  },
+};
+
+// Helper do generowania inicjałów
+const getInitials = (name: string) => {
+  if (!name) return "";
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .substring(0, 2)
+    .toUpperCase();
+};
+
+// TODO static params
 
 export default async function PublicationDetailPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
@@ -19,105 +63,110 @@ export default async function PublicationDetailPage({ params }: { params: Promis
     notFound();
   }
 
+  const currentTagIds = publication.tags?.map((tag: any) => tag._id).filter(Boolean) || [];
+
+  const { data: rawRelatedPublications } = await runQuery(relatedPublicationsQuery, {
+    parameters: {
+      locale,
+      currentId: publication._id,
+      tagIds: currentTagIds,
+      pubType: publication.type || null,
+      limit: 3,
+    },
+  });
+
+  const t = pageTranslations[locale as keyof typeof pageTranslations] || pageTranslations.pl;
+
+  const categoryLabel = publication.type
+    ? t.types[publication.type] || publication.type
+    : t.defaultCategory;
+
+  // Formatowanie daty głównego artykułu
+  const formattedDate = publication.date
+    ? new Date(publication.date).toLocaleDateString(locale, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : undefined;
+
+  const isoDate = publication.date ?? undefined;
+
+  const tagNames = publication.tags?.map((tag: any) => tag.name).filter(Boolean) || [];
+
+  const authorData = publication.author?.name
+    ? {
+        name: publication.author.name,
+        initials: getInitials(publication.author.name),
+        role: "Ekspert FMD",
+      }
+    : undefined;
+
+  const breadcrumbs = [
+    { label: t.home, href: `/${locale}` },
+    { label: t.publications, href: `/${locale}/publications` },
+    { label: publication.title || t.noTitle },
+  ];
+
+  const formattedRelatedPublications = rawRelatedPublications.map((pub: any) => ({
+    title: pub.title || t.noTitle,
+    excerpt: pub.excerpt ?? undefined,
+    href: `/${locale}/publications/${pub.slug}`,
+    date: pub.date
+      ? new Date(pub.date).toLocaleDateString(locale, {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
+      : undefined,
+    isoDate: pub.date,
+    tags: pub.tags?.map((tag: any) => tag.name).filter(Boolean) || [],
+    author: pub.author?.name
+      ? {
+          name: pub.author.name,
+          initials: getInitials(pub.author.name),
+        }
+      : undefined,
+    image: pub.mainImage?.asset?.url
+      ? {
+          src: pub.mainImage.asset.url,
+          alt: pub.mainImage.asset.altText || pub.title || "Zdjęcie powiązanej publikacji",
+          blurDataURL: pub.mainImage.asset.metadata?.lqip ?? undefined,
+        }
+      : null,
+  }));
+
   return (
-    <article className="mx-auto flex max-w-4xl flex-col gap-6 p-10">
-      <Link
-        href={`/${locale}/publications`}
-        className="mb-4 inline-block w-fit text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
-      >
-        &larr; Wróć do listy publikacji
-      </Link>
+    <main className="min-h-screen">
+      <PublicationHero
+        breadcrumbs={breadcrumbs}
+        category={categoryLabel}
+        title={publication.title || t.noTitle}
+        excerpt={publication.excerpt ?? undefined}
+        tags={tagNames}
+        author={authorData}
+        date={formattedDate}
+        isoDate={isoDate}
+        pdfUrl={publication.pdfFile?.url}
+        image={
+          publication.mainImage?.asset?.url
+            ? {
+                src: publication.mainImage.asset.url,
+                alt: publication.mainImage.asset.altText || publication.title || "Zdjęcie główne",
+                caption: publication.mainImage.asset.description ?? undefined,
+                blurDataURL: publication.mainImage.asset.metadata?.lqip ?? undefined,
+              }
+            : null
+        }
+        locale={locale}
+      />
+      <PublicationBody content={publication.text || []} locale={locale} />
 
-      <header className="border-b pb-6">
-        <div className="mb-6 flex items-center gap-3 text-sm text-gray-500">
-          <span className="rounded-full bg-blue-100 px-3 py-1 font-medium text-blue-800">
-            {publication.type === "article" && "Krótkie opracowanie"}
-            {publication.type === "news" && "Analiza"}
-            {publication.type === "guide" && "Magazyn"}
-            {publication.type === "review" && "Publikacja"}
-            {publication.type &&
-              !["article", "news", "guide", "review"].includes(publication.type) &&
-              publication.type}
-          </span>
+      <PublicationPdf pdfUrl={publication.pdfFile?.url} locale={locale} />
 
-          {publication.date && (
-            <time dateTime={publication.date}>
-              {new Date(publication.date).toLocaleDateString(locale)}
-            </time>
-          )}
-        </div>
+      <PublicationAuthor author={authorData} date={formattedDate} isoDate={isoDate} />
 
-        <h1 className="mb-6 text-4xl leading-tight font-bold text-gray-900 md:text-5xl">
-          {publication.title}
-        </h1>
-
-        {publication.author?.name && (
-          <p className="font-medium text-gray-700">
-            Autor: <span className="font-semibold text-gray-900">{publication.author.name}</span>
-          </p>
-        )}
-      </header>
-
-      {/* Zajawka (Excerpt) */}
-      {publication.excerpt && (
-        <section className="my-2 border-l-4 border-blue-500 pl-4 text-xl leading-relaxed font-medium text-gray-600 italic">
-          {publication.excerpt}
-        </section>
-      )}
-
-      {/* Tagi */}
-      {publication.tags && publication.tags.length > 0 && (
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-sm font-medium text-gray-500">Tagi:</span>
-          {publication.tags.map((tag: any) => (
-            // Zabezpieczenie: korzystamy z tag.name (poprawka z poprzednich kroków)
-            <span
-              key={tag._id}
-              className="rounded border border-gray-200 bg-gray-100 px-2 py-1 text-xs text-gray-600"
-            >
-              {tag.name}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Placeholder na pełną treść (Portable Text) */}
-      <section className="mt-12 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-10 text-center">
-        <h3 className="mb-2 text-xl font-semibold text-gray-500">
-          Miejsce na treść główną artykułu
-        </h3>
-        <p className="mx-auto max-w-md text-sm text-gray-400">
-          Tutaj w przyszłości zamontujemy komponent z paczki <code>@portabletext/react</code>, który
-          zamieni tablicę bloków z Sanity na piękne nagłówki, paragrafy i obrazki.
-        </p>
-      </section>
-
-      {publication.pdfFile?.url && (
-        <div className="mt-10">
-          <a
-            href={publication.pdfFile.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-6 py-3 font-medium text-red-700 transition-colors hover:bg-red-100"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-            Otwórz dokument PDF
-          </a>
-        </div>
-      )}
-    </article>
+      <RelatedPublications publications={formattedRelatedPublications} locale={locale} />
+    </main>
   );
 }

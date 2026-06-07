@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.2",
+    "@portabletext/react": "^6.2.0",
     "@radix-ui/react-visually-hidden": "^1.2.4",
     "@sanity/client": "^7.16.0",
+    "@sanity/image-url": "^2.1.1",
     "@types/negotiator": "^0.6.4",
     "class-variance-authority": "^0.7.1",
     "embla-carousel-react": "^8.6.0",

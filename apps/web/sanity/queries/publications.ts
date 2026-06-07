@@ -16,6 +16,14 @@ export type PublicationsSearchQueryParams = {
   authorId?: string | null;
 };
 
+export type RelatedPublicationsQueryParams = {
+  locale: string;
+  currentId: string;
+  tagIds: string[];
+  pubType: string | null;
+  limit: number;
+};
+
 export const publicationPreviewFragment = q.fragmentForType<"publication">().project((sub) => ({
   _id: true,
   _type: true,
@@ -88,3 +96,12 @@ export const singlePublicationQuery = q
   .filterRaw(`locale == $locale && slug.current == $slug`)
   .slice(0)
   .project(publicationDetailFragment);
+
+export const relatedPublicationsQuery = q
+  .parameters<RelatedPublicationsQueryParams>()
+  .star.filterByType("publication")
+  .filterRaw(`locale == $locale && _id != $currentId`)
+  .filterRaw(`(count((tags[]._ref)[@ in $tagIds]) > 0 || type == $pubType)`)
+  .order("date desc")
+  .raw("[0...$limit]", "passthrough")
+  .project(publicationPreviewFragment);

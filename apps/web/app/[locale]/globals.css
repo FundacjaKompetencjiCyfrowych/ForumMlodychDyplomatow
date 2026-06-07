@@ -17,12 +17,24 @@
   --font-oswald: var(--font-base-oswald);
   --color-muted: #a4a4a4;
   --color-header: #ffffff;
+  --color-accent-700: #36699c;
+  --color-background-50: #f8fafc;
+  --color-brand-red-50: #fef2f2;
+  --color-brand-red-100: #ffe2e2;
+  --color-brand-red-200: #ffc9c9;
+  --color-brand-red-300: #ffa2a2;
+  --color-brand-red-400: #ff6467;
+  --color-brand-red-500: #fb2c36;
+  --color-brand-red-600: #e7000b;
+  --color-brand-red-700: #962f30;
+  --color-brand-red-800: #8f1c1e;
+  --color-brand-red-900: #651415;
   /* Test value */
   /* --color-header: #c5c5c5; */
   --font-heading: var(--font-inter);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --color-brand-red: var(--brand-red);
+  --color-brand-red: var(--color-brand-red-800);
   --color-brand-blue: var(--brand-blue);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
