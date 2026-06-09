@@ -5,7 +5,7 @@ import type { InferFragmentType } from "groqd";
 import React from "react";
 import type { linkFragment } from "../../sanity/queries/linkFragment";
 import { buttonVariants } from "./button";
-import SVG from "react-inlinesvg";
+import ClientSvg from "../../sanity/image/ClientSvg";
 type LinkType = InferFragmentType<typeof linkFragment>;
 type LinkOrHref =
   | {
@@ -25,14 +25,15 @@ type LinkOrHref =
     };
 const slugsByType = {
   page: "/",
-  post: "/post/",
   event: "/events/",
   division: "/division/",
-  publication: "/publication/",
+  publication: "/publications/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;
 
 const ExternalLinkIcon = () => {
-  return <SVG src="/static/icons/external-link.svg" className="size-[0.875em] self-center" />;
+  return <ClientSvg src="/static/icons/external-link.svg" className="size-[0.875em] self-center" />;
+  // todo hydration errors with svg lib?
+  // return null;
 };
 
 export const Link = ({

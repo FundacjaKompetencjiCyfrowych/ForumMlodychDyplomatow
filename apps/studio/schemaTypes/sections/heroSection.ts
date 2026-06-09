@@ -33,6 +33,10 @@ export const heroSection = defineType({
       type: "link",
       title: "Call to action",
       description: "Główny wyróżniony link w sekcji.",
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -40,6 +44,10 @@ export const heroSection = defineType({
       type: "link",
       title: "Drugorzędny call to action",
       description: "Dodatkowy link, który może być użyty do wsparcia głównego CTA.",
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
     }),
   ],
 });

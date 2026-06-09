@@ -1,11 +1,10 @@
 "use client";
-import React from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Checkbox } from "../ui/checkbox";
-import Typography from "../ui/typography";
-import { Field, FieldContent, FieldGroup, FieldLabel } from "../ui/field";
-import { useTransitionProvider } from "./FilterListTransition";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
+import React from "react";
+import { Checkbox } from "../ui/checkbox";
+import { Field, FieldContent, FieldGroup, FieldLabel } from "../ui/field";
+import Typography from "../ui/typography";
+import { useTransitionProvider } from "./FilterListTransition";
 type Props = {
   label: string;
   slug: string;

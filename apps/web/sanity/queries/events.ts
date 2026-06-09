@@ -1,6 +1,5 @@
 import { type InferFragmentType, type InferResultType } from "groqd";
 import { q } from "../groqd";
-import { imgFragment } from "./imgFragment";
 
 export type EventsListQueryParams = {
   locale: string;
@@ -19,10 +18,16 @@ export const eventPreviewFragment = q.fragmentForType<"event">().project((sub) =
     .transform((date) => (date ? new Date(date).toISOString() : null)),
   endDate: sub.field("endDate").transform((date) => (date ? new Date(date).toISOString() : null)),
   excerpt: sub.field("excerpt"),
-  venue: sub.field("venue"),
-  image: sub.field("image").project(imgFragment),
+  venue: sub.select(
+    {
+      isOnline: sub.value("Online"),
+      "!isOnline": sub.field("venue"),
+    },
+    sub.field("venue")
+  ),
   slug: sub.field("slug.current"),
   registrationUrl: sub.field("registrationUrl"),
+  isOnline: sub.field("isOnline"),
   division: sub
     .field("division")
     .deref()
@@ -45,7 +50,9 @@ const baseEventsListQuery = ({
     .parameters<EventsListQueryParams>()
     .star.filterByType("event")
     .filterBy("locale == $locale")
-    .filterRaw("!defined($divisionSlug) || division->slug.current == $divisionSlug")
+    .filterRaw(
+      `!defined($divisionSlug) || ($divisionSlug == "online" && isOnline) || division->slug.current == $divisionSlug`
+    )
     .filterRaw(
       `dateTime(coalesce(endDate, startDate)) ${timeFilterSign} dateTime(coalesce($currentDate, now()))`
     )

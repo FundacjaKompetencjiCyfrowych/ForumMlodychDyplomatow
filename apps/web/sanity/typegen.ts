@@ -180,13 +180,6 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
-export type PostReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "post";
-};
-
 export type EventReference = {
   _ref: string;
   _type: "reference";
@@ -194,16 +187,23 @@ export type EventReference = {
   [internalGroqTypeReferenceTo]?: "event";
 };
 
+export type PublicationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publication";
+};
+
 export type Link = {
   _type: "link";
-  linkType?: "page" | "post" | "publication" | "event" | "division" | "href";
+  linkType?: "page" | "publication" | "event" | "division" | "href";
   text?: string;
   href?: string;
   page?: PageReference;
   homepage?: boolean;
-  post?: PostReference;
   event?: EventReference;
   division?: DivisionReference;
+  publication?: PublicationReference;
   openInNewTab?: boolean;
   isExternal?: boolean;
 };
@@ -328,18 +328,18 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
+export type PostReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "post";
+};
+
 export type NavigationReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "navigation";
-};
-
-export type PublicationReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "publication";
 };
 
 export type TagReference = {
@@ -631,12 +631,11 @@ export type Event = {
   slug?: Slug;
   startDate?: string;
   endDate?: string;
+  isOnline?: boolean;
   division?: DivisionReference;
   venue?: string;
   address?: string;
   excerpt?: string;
-  description?: RichText;
-  image?: Img;
   registrationUrl?: string;
 };
 
@@ -842,8 +841,8 @@ export type AllSanitySchemaTypes =
   | PageBuilder
   | LinkButton
   | PageReference
-  | PostReference
   | EventReference
+  | PublicationReference
   | Link
   | PostsSection
   | LeadSection
@@ -857,8 +856,8 @@ export type AllSanitySchemaTypes =
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
+  | PostReference
   | NavigationReference
-  | PublicationReference
   | TagReference
   | TagCategoryReference
   | FooterReference
