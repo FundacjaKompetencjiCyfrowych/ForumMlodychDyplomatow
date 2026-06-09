@@ -11,6 +11,8 @@ import { peopleSectionFragment } from "./peopleSectionFragment";
 import { podcastSectionFragment } from "./podcastSectionFragment";
 import { supportUsSectionFragment } from "./supportUsSectionFragment";
 import type { Locale } from "next-intl";
+import { headingSectionFragment } from "./headingSection";
+import { expertsListSectionFragment } from "./expertsListSection";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -26,6 +28,8 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       peopleSection: sub.project(peopleSectionFragment),
       podcastSection: sub.project(podcastSectionFragment),
       supportUsSection: sub.project(supportUsSectionFragment),
+      headingSection: sub.project(headingSectionFragment),
+      expertsListSection: sub.project(expertsListSectionFragment),
     },
     {
       isExhaustive: true,
@@ -50,4 +54,5 @@ export type PageBuilderSectionProps<T extends PageBuilderSectionType> = {
   data: PageBuilderFragmentData<T>;
   index: number;
   locale: Locale;
+  searchParams: Record<string, string | string[] | undefined>;
 };

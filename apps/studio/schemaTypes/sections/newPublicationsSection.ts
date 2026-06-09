@@ -6,7 +6,7 @@ export const newPublicationsSection = defineType({
   title: "Sekcja Nowe Publikacje",
   type: "object",
   preview: createSectionPreview("newPublicationsSection", {
-    title: "Sekcja Nowe Publikacje",
+    title: "Nowe Publikacje",
     subtitle: "heading",
   }),
   fields: [

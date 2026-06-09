@@ -81,7 +81,7 @@ export default defineType({
       name: "author",
       title: "Autor",
       type: "reference",
-      to: [{ type: "author" }],
+      to: [{ type: "person" }],
       group: "content",
       description: "Wybierz autora publikacji z listy",
       validation: (Rule) => Rule.required().error("Pole wymagane"),

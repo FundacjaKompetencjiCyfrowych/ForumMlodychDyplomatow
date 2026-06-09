@@ -15,8 +15,6 @@ export const pageQuery = q
     _type: sub.field("_type"),
     name: sub.field("name"),
     slug: sub.field("slug.current"),
-    heading: sub.field("heading"),
-    subheading: sub.field("subheading"),
     pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment),
     seo: sub.field("seo").project(seoFragment),
   }));
@@ -40,6 +38,5 @@ export const pagesMetadataQuery = q
   .project((sub) => ({
     name: sub.field("name"),
     slug: sub.field("slug.current"),
-    heading: sub.field("heading"),
     seo: sub.field("seo").project(seoFragment),
   }));

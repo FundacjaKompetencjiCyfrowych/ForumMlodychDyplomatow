@@ -11,6 +11,8 @@ export const intlQuery = q
     buttons: true,
     events: true,
     people: true,
+    navigation: true,
+    global: true,
   }));
 /*
 Use

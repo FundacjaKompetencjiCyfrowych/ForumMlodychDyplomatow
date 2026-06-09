@@ -18,6 +18,18 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type ExpertsListSection = {
+  _type: "expertsListSection";
+  dummy?: string;
+};
+
+export type HeadingSection = {
+  _type: "headingSection";
+  heading?: string;
+  subheading?: string;
+  image?: Img;
+};
+
 export type SupportUsSection = {
   _type: "supportUsSection";
   heading?: string;
@@ -33,11 +45,11 @@ export type PodcastSection = {
   embed?: string;
 };
 
-export type AuthorReference = {
+export type PersonReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
+  [internalGroqTypeReferenceTo]?: "person";
 };
 
 export type PeopleSection = {
@@ -48,7 +60,7 @@ export type PeopleSection = {
     members?: Array<
       {
         _key: string;
-      } & AuthorReference
+      } & PersonReference
     >;
     _type: "group";
     _key: string;
@@ -131,6 +143,9 @@ export type PageBuilder = Array<
     } & EventsSection)
   | ({
       _key: string;
+    } & HeadingSection)
+  | ({
+      _key: string;
     } & HeroSection)
   | ({
       _key: string;
@@ -147,6 +162,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & SupportUsSection)
+  | ({
+      _key: string;
+    } & ExpertsListSection)
 >;
 
 export type LinkButton = {
@@ -359,7 +377,7 @@ export type InternationalizedArrayReferenceValue = {
     | PostReference
     | EventReference
     | DivisionReference
-    | AuthorReference
+    | PersonReference
     | NavigationReference
     | PublicationReference
     | TagReference
@@ -374,6 +392,16 @@ export type Translations = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  global?: {
+    results?: string;
+    search?: string;
+  };
+  navigation?: {
+    home?: string;
+    skipToContent?: string;
+    aboutUs?: string;
+    experts?: string;
+  };
   buttons?: {
     support?: string;
   };
@@ -385,6 +413,15 @@ export type Translations = {
   };
   people?: {
     seeAll?: string;
+    groupName?: string;
+    groups?: {
+      everything?: string;
+      board?: string;
+      regionalAuthority?: string;
+      groupCoordinator?: string;
+      author?: string;
+      reviewer?: string;
+    };
   };
   locale?: string;
 };
@@ -480,7 +517,7 @@ export type Publication = {
   slug?: Slug;
   date?: string;
   mainImage?: Img;
-  author?: AuthorReference;
+  author?: PersonReference;
   pdfFile?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
@@ -633,7 +670,7 @@ export type Post = {
   seo?: Seo;
   title?: string;
   slug?: Slug;
-  author?: AuthorReference;
+  author?: PersonReference;
   image?: Img;
   categories?: Array<
     {
@@ -644,33 +681,26 @@ export type Post = {
   body?: RichText;
 };
 
-export type Author = {
+export type Person = {
   _id: string;
-  _type: "author";
+  _type: "person";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   locale?: string;
   name?: string;
-  slug?: Slug;
+  group?:
+    | "board"
+    | "regionalAuthority"
+    | "groupCoordinator"
+    | "author"
+    | "reviewer";
   img?: Img;
   title?: string;
-  bio?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
+  socials?: Array<{
+    platform?: "linkedin" | "instagram" | "facebook";
+    url?: string;
+    _type: "social";
     _key: string;
   }>;
 };
@@ -683,8 +713,6 @@ export type Page = {
   _rev: string;
   name?: string;
   slug?: Slug;
-  heading?: string;
-  subheading?: string;
   pageBuilder?: PageBuilder;
   locale?: string;
   seo?: Seo;
@@ -798,9 +826,11 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | ExpertsListSection
+  | HeadingSection
   | SupportUsSection
   | PodcastSection
-  | AuthorReference
+  | PersonReference
   | PeopleSection
   | NewPublicationsSection
   | JoinUsSection
@@ -848,7 +878,7 @@ export type AllSanitySchemaTypes =
   | Division
   | CategoryReference
   | Post
-  | Author
+  | Person
   | Page
   | MediaTag
   | SanityImagePaletteSwatch

@@ -7,7 +7,22 @@ import type { linkFragment } from "../../sanity/queries/linkFragment";
 import { buttonVariants } from "./button";
 import SVG from "react-inlinesvg";
 type LinkType = InferFragmentType<typeof linkFragment>;
-type LinkOrHref = { link: LinkType; href?: undefined } | { href: string; link?: undefined };
+type LinkOrHref =
+  | {
+      link: LinkType;
+      href?: undefined;
+      searchParams?: undefined;
+    }
+  | {
+      href: string;
+      link?: undefined;
+      searchParams?: undefined;
+    }
+  | {
+      href?: string;
+      link?: undefined;
+      searchParams?: Record<string, string | string[] | undefined>;
+    };
 const slugsByType = {
   page: "/",
   post: "/post/",
@@ -30,6 +45,7 @@ export const Link = ({
   iconRight = null,
   link,
   href,
+  searchParams,
   noExternalIcon = false,
   ...props
 }: Omit<React.ComponentProps<typeof BaseLink>, "href"> &
@@ -39,7 +55,15 @@ export const Link = ({
     openInNewTab?: boolean;
     noExternalIcon?: boolean;
   } & LinkOrHref) => {
-  const getHref = (): string => {
+  const getHref = ():
+    | string
+    | { pathname?: string; query: Record<string, string | string[] | undefined> } => {
+    if (searchParams) {
+      return {
+        pathname: href,
+        query: searchParams,
+      };
+    }
     if (href) {
       return href;
     }

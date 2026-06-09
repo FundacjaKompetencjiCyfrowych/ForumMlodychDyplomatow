@@ -6,7 +6,7 @@ export const joinUsSection = defineType({
   title: "Sekcja Dołącz do nas",
   type: "object",
   preview: createSectionPreview("joinUsSection", {
-    title: "Sekcja Dołącz do nas",
+    title: "Dołącz do nas",
     subtitle: "heading",
   }),
   fields: [

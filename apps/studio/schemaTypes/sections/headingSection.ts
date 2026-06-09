@@ -1,37 +1,32 @@
 import { defineField, defineType } from "sanity";
 import { createSectionPreview } from "./sectionPreview";
 
-export const supportUsSection = defineType({
-  name: "supportUsSection",
-  title: "Sekcja Wspieraj nas",
+export const headingSection = defineType({
+  name: "headingSection",
+  title: "Sekcja Nagłówek",
   type: "object",
-  preview: createSectionPreview("supportUsSection", {
-    title: "Wspieraj nas",
+  preview: createSectionPreview("headingSection", {
+    title: "Nagłówek",
     subtitle: "heading",
+    media: "image",
   }),
   fields: [
     defineField({
       name: "heading",
-      type: "string",
       title: "Nagłówek",
+      type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "subheading",
-      type: "string",
-      title: "Podtytuł",
-    }),
-    defineField({
-      name: "cta",
-      type: "link",
-      title: "Call to action",
-      description: "Główny wyróżniony link w sekcji.",
+      title: "Podnagłówek",
+      type: "text",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "image",
-      type: "img",
       title: "Obraz",
+      type: "img",
       validation: (Rule) => Rule.required(),
     }),
   ],

@@ -13,7 +13,7 @@ import Header from "../../components/Header/Header";
 import "./globals.css";
 import Footer from "../../components/Footer/Footer";
 import { intlQuery } from "../../sanity/queries/intl";
-
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
 
@@ -81,14 +81,17 @@ export default async function RootLayout({
       <body
         className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
-        <NextIntlClientProvider messages={translations as any}>
-          <Header />
-
-          {children}
-          <Toaster />
-          <SanityPreview />
-          <Footer />
-        </NextIntlClientProvider>
+        <NuqsAdapter>
+          <NextIntlClientProvider messages={translations as any}>
+            <Header />
+            <main id="main-content" className="w-full" tabIndex={-1}>
+              {children}
+            </main>
+            <Toaster />
+            <SanityPreview />
+            <Footer />
+          </NextIntlClientProvider>
+        </NuqsAdapter>
       </body>
       <SanityLive />
     </html>

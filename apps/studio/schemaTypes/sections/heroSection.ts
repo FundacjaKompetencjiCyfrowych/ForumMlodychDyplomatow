@@ -6,7 +6,7 @@ export const heroSection = defineType({
   title: "Sekcja Hero",
   type: "object",
   preview: createSectionPreview("heroSection", {
-    title: "Sekcja Hero",
+    title: "Hero",
     subtitle: "heading",
   }),
   fields: [

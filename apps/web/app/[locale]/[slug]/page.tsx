@@ -8,6 +8,7 @@ import type { Locale } from "next-intl";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 /**
@@ -34,8 +35,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   });
 
   return {
-    title: page?.name,
-    description: page?.heading,
+    title: page?.seo?.title,
+    description: page?.seo?.description,
   } satisfies Metadata;
 }
 
@@ -51,17 +52,18 @@ export default async function Page(props: Props) {
   if (!page?._id) {
     // Alternatively, Redirect to 404 page
     return (
-      <div className="py-40">
+      <main id="main-content" className="py-40">
         <div className="container">
           <h1 className="text-4xl text-gray-200 sm:text-5xl lg:text-7xl">Strona nie znaleziona</h1>
         </div>
-      </div>
+      </main>
     );
   }
   const locale = params.locale;
+  const searchParams = await props.searchParams;
   return (
-    <div className="">
-      <SanitySections value={page?.pageBuilder} locale={locale} />
+    <div id="main-content" className="">
+      <SanitySections value={page?.pageBuilder} locale={locale} searchParams={searchParams} />
     </div>
   );
 }

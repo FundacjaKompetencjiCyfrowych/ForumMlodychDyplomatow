@@ -100,7 +100,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
   ];
 
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <PublicationHero
         breadcrumbs={breadcrumbs}
         category={categoryLabel}
@@ -130,6 +130,6 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       <PublicationAuthor author={authorData} date={formattedDate} isoDate={isoDate} />
 
       <RelatedPublications publications={rawRelatedPublications} locale={locale} />
-    </main>
+    </div>
   );
 }
