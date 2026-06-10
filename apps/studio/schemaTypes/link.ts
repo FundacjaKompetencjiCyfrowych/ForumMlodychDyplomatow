@@ -8,7 +8,7 @@ import { LinkIcon } from "@sanity/icons";
  */
 
 type Link = {
-  linkType: "href" | "page" | "post" | "event" | "division";
+  linkType: "href" | "page" | "event" | "division" | "publication";
   homepage?: boolean;
 };
 const linkPreviewSelect = {
@@ -16,11 +16,18 @@ const linkPreviewSelect = {
   linkType: "linkType",
   href: "href",
   page: "page.name",
-  post: "post.title",
   event: "event.name",
   homepage: "homepage",
-  // division: "division.name",
+  publication: "publication.title",
+  division: "division.name",
 } as const;
+const linkTypeTitles = {
+  division: "PR",
+  event: "Wydarzenie",
+  page: "Strona",
+  publication: "Publikacja",
+  href: "Zewnętrzny URL",
+} satisfies Record<Link["linkType"], string>;
 const prepareLinkPreview = (
   link: Partial<Record<Link["linkType"] | "linkType" | "text" | "homepage", any>>
 ) => {
@@ -30,7 +37,7 @@ const prepareLinkPreview = (
   if (linkType === "href") {
     subtitle = href || "Brak URL";
   } else if (homepage) {
-    subtitle = `Link do strony głównej typu: ${titles[linkType as keyof typeof titles] || "N/A"}`;
+    subtitle = `Link do strony głównej typu: ${linkTypeTitles[linkType as keyof typeof linkTypeTitles] || "N/A"}`;
   } else {
     subtitle = `Link do: ${titles[linkType as keyof typeof titles]}`;
   }
@@ -53,7 +60,6 @@ export const link = defineType({
       options: {
         list: [
           { title: "Strona", value: "page" },
-          { title: "Post", value: "post" },
           { title: "Publikacja", value: "publication" },
           { title: "Wydarzenie", value: "event" },
           { title: "Oddział", value: "division" },
@@ -118,22 +124,6 @@ export const link = defineType({
       hidden: ({ parent }) => parent?.linkType === "page" || parent?.linkType === "href",
     }),
     defineField({
-      name: "post",
-      title: "Post",
-      type: "reference",
-      to: [{ type: "post" }],
-      hidden: ({ parent }) => parent?.linkType !== "post" || parent?.homepage,
-      validation: (Rule) =>
-        // Custom validation to ensure post reference is provided if the link type is 'post'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "post" && !parent?.homepage && !value) {
-            return "Odwołanie do posta jest wymagane";
-          }
-          return true;
-        }),
-    }),
-    defineField({
       name: "event",
       title: "Wydarzenie",
       type: "reference",
@@ -162,6 +152,22 @@ export const link = defineType({
           const parent = context.parent as Link;
           if (parent?.linkType === "division" && !parent?.homepage && !value) {
             return "Odwołanie do oddziału jest wymagane";
+          }
+          return true;
+        }),
+    }),
+    defineField({
+      name: "publication",
+      title: "Publikacja",
+      type: "reference",
+      to: [{ type: "publication" }],
+      hidden: ({ parent }) => parent?.linkType !== "publication" || parent?.homepage,
+      validation: (Rule) =>
+        // Custom validation to ensure publication reference is provided if the link type is 'publication'
+        Rule.custom((value, context) => {
+          const parent = context.parent as Link;
+          if (parent?.linkType === "publication" && !parent?.homepage && !value) {
+            return "Odwołanie do publikacji jest wymagane";
           }
           return true;
         }),

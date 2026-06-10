@@ -3,6 +3,7 @@ import { defineField, defineType } from "sanity";
 import { languageField, uniqueByLanguage } from "../../plugins/intl";
 import { seoField } from "../../utils/fields";
 import { pageGroups } from "../../utils/groups";
+import { Card, Text } from "@sanity/ui";
 
 export const page = defineType({
   name: "page",
@@ -25,8 +26,18 @@ export const page = defineType({
       title: "Slug",
       type: "slug",
       group: "content",
-      description:
-        'Używany do generowania URL strony. Wpisanie "home" będzie interpretowane jako strona główna.',
+      description: (
+        <Card tone="primary" padding={4} radius={2} border>
+          <Text size={1} muted style={{ marginTop: "0.5rem" }}>
+            Dostępne specjalne podstrony:
+            <ul>
+              <li>
+                Strona główna: <code>home</code>
+              </li>
+            </ul>
+          </Text>
+        </Card>
+      ),
       validation: (Rule) => Rule.required(),
       options: {
         source: "name",
@@ -34,19 +45,7 @@ export const page = defineType({
         isUnique: uniqueByLanguage,
       },
     }),
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      group: "content",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "subheading",
-      title: "Subheading",
-      type: "string",
-      group: "content",
-    }),
+    // TODO breadcrumbs
     defineField({
       name: "pageBuilder",
       title: "Page builder",

@@ -5,7 +5,7 @@ export const aboutUsSection = defineType({
   name: "aboutUsSection",
   title: "Sekcja O Nas",
   type: "object",
-  preview: createSectionPreview("aboutUsSection", { title: "Sekcja O Nas", subtitle: "heading" }),
+  preview: createSectionPreview("aboutUsSection", { title: "O Nas", subtitle: "heading" }),
   fields: [
     defineField({
       name: "heading",

@@ -36,7 +36,7 @@ export default defineType({
       group: "content",
       validation: (Rule) => Rule.required(),
       to: {
-        type: "author",
+        type: "person",
       },
     }),
     defineField({

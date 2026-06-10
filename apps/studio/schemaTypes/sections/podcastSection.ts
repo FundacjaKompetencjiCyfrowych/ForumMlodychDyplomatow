@@ -6,7 +6,7 @@ export const podcastSection = defineType({
   title: "Sekcja Podcast",
   type: "object",
   preview: createSectionPreview("podcastSection", {
-    title: "Sekcja Podcast",
+    title: "Podcast",
     subtitle: "heading",
   }),
   fields: [

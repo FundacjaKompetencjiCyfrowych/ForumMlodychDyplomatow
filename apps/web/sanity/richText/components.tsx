@@ -1,5 +1,5 @@
 import { PortableTextComponents } from "next-sanity";
-import { Link } from "@/i18n/navigation";
+import { Link } from "../../components/ui/link";
 
 /**
  * Configures components rendered from Portable Text blocks in Sanity
@@ -18,9 +18,8 @@ export const components: PortableTextComponents = {
     strong: ({ children }) => <strong className="font-bold">{children}</strong>,
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ children, value }) => {
-      const target = value.href.startsWith("http") ? "_blank" : undefined;
       return (
-        <Link href={value.href} target={target} rel="noopener noreferrer" className="underline">
+        <Link link={value} rel="noopener noreferrer" className="underline">
           {children}
         </Link>
       );

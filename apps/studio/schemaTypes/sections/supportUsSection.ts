@@ -6,7 +6,7 @@ export const supportUsSection = defineType({
   title: "Sekcja Wspieraj nas",
   type: "object",
   preview: createSectionPreview("supportUsSection", {
-    title: "Sekcja Wspieraj nas",
+    title: "Wspieraj nas",
     subtitle: "heading",
   }),
   fields: [

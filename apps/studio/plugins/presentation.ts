@@ -82,7 +82,7 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
           [
             doc._type,
             defineLocations({
-              select: { title: "title", slug: "slug.current", lang: LANGUAGE_FIELD },
+              select: { title: "title", name: "name", slug: "slug.current", lang: LANGUAGE_FIELD },
               resolve: (d) => {
                 const lang = d?.lang ?? LANGUAGES[0].id;
 
@@ -93,7 +93,12 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
                   : undefined;
                 return {
                   locations: href
-                    ? [{ title: d?.title || "Untitled", href } satisfies DocumentLocation]
+                    ? [
+                        {
+                          title: d?.title || d?.name || "Untitled",
+                          href,
+                        } satisfies DocumentLocation,
+                      ]
                     : [],
                 };
               },
@@ -129,13 +134,13 @@ const locationResolvers: Record<string, ReturnType<typeof defineLocations>> = Ob
         [
           doc._type,
           defineLocations({
-            select: { title: "title", lang: LANGUAGE_FIELD },
+            select: { title: "title", name: "name", lang: LANGUAGE_FIELD },
             resolve: (d) => {
               const lang = d?.lang ?? LANGUAGES[0].id;
               return {
                 locations: [
                   {
-                    title: d?.title || doc._type,
+                    title: d?.title || d?.name || doc._type,
                     href: joinPath(lang, doc.path),
                   } satisfies DocumentLocation,
                 ],

@@ -1,5 +1,7 @@
 import { render } from "@/sanity/sections/render";
 import type { Locale } from "next-intl";
+import { Suspense } from "react";
+import { Skeleton } from "../../components/ui/skeleton";
 
 /**
  * Dynamically renders an array of Sanity content blocks using a component registry.
@@ -19,10 +21,12 @@ import type { Locale } from "next-intl";
 export function SanitySections({
   value = [],
   locale,
+  searchParams,
 }: {
   value: Array<any> | null | undefined;
   locale: Locale;
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   if (!Array.isArray(value)) return null;
-  return render(value, locale);
+  return render(value, locale, searchParams);
 }

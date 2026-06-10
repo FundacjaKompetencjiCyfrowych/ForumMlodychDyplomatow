@@ -74,6 +74,13 @@ export default defineType({
         }),
     }),
     defineField({
+      name: "isOnline",
+      title: "Wydarzenie online",
+      type: "boolean",
+      group: "content",
+      description: "Zaznacz, jeśli wydarzenie odbywa się online. Ukryje to pole adresu.",
+    }),
+    defineField({
       name: "division",
       title: "Przedstawicielstwo",
       type: "reference",
@@ -82,7 +89,8 @@ export default defineType({
       to: {
         type: "division",
       },
-      validation: (Rule) => Rule.required(),
+      hidden: ({ parent }) => parent?.isOnline,
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "venue",
@@ -91,7 +99,8 @@ export default defineType({
       group: "content",
       description:
         "Nazwa obiektu, instytucji lub platformy online, na której odbywa się wydarzenie.",
-      validation: (Rule) => Rule.required().max(120),
+      hidden: ({ parent }) => parent?.isOnline,
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required().max(120)),
     }),
     defineField({
       name: "address",
@@ -100,7 +109,8 @@ export default defineType({
       rows: 3,
       group: "content",
       description: "Adres wydarzenia lub informacja organizacyjna dla wydarzeń online.",
-      validation: (Rule) => Rule.required().max(300),
+      hidden: ({ parent }) => parent?.isOnline,
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required().max(300)),
     }),
     defineField({
       name: "excerpt",
@@ -108,30 +118,22 @@ export default defineType({
       type: "text",
       rows: 3,
       group: "content",
-      description: "Zwięzły opis do listingów, kart i zajawki SEO.",
+      description: "Zwięzły opis do listingów",
       validation: (Rule) => Rule.required().max(220),
     }),
-    defineField({
-      name: "description",
-      title: "Opis wydarzenia",
-      type: "richText",
-      group: "content",
-      description: "Pełny opis wydarzenia widoczny na stronie szczegółowej.",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "image",
-      title: "Grafika główna",
-      type: "img",
-      group: "content",
-      description: "Obraz reprezentujący wydarzenie w listach i na stronie szczegółowej.",
-    }),
+    // defineField({
+    //   name: "image",
+    //   title: "Grafika główna",
+    //   type: "img",
+    //   group: "content",
+    //   description: "Obraz reprezentujący wydarzenie w listach i na stronie szczegółowej.",
+    // }),
     defineField({
       name: "registrationUrl",
       title: "Link do rejestracji",
       type: "url",
       group: "content",
-      description: "Opcjonalny link do formularza zapisów lub strony z dodatkowymi informacjami.",
+      description: "Link do formularza zapisów lub strony z dodatkowymi informacjami.",
       validation: (Rule) => Rule.uri({ allowRelative: false, scheme: ["http", "https"] }),
     }),
   ],
