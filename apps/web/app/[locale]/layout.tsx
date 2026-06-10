@@ -82,7 +82,13 @@ export default async function RootLayout({
       <body
         className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
-        <NuqsAdapter>
+        <NuqsAdapter
+          defaultOptions={{
+            scroll: false,
+            clearOnDefault: true,
+            shallow: false,
+          }}
+        >
           <SvgCacheProvider>
             <NextIntlClientProvider messages={translations as any}>
               <Header />

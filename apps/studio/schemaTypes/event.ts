@@ -78,7 +78,7 @@ export default defineType({
       title: "Wydarzenie online",
       type: "boolean",
       group: "content",
-      description: "Zaznacz, jeśli wydarzenie odbywa się online. Ukryje pole adresu.",
+      description: "Zaznacz, jeśli wydarzenie odbywa się online. Ukryje to pole adresu.",
     }),
     defineField({
       name: "division",

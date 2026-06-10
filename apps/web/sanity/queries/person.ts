@@ -26,8 +26,8 @@ export type PeoplePaginatedParameters = {
 };
 
 export const peoplePaginatedQuery = ({
-  page,
-  perPage,
+  page = 1,
+  perPage = 10,
   orderBy = "name",
   order = "asc",
 }: PaginationParameters<OrderBy>) =>

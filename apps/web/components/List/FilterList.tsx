@@ -1,5 +1,13 @@
+import { ChevronDown } from "lucide-react";
 import type { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import {
+  createLoader,
+  parseAsArrayOf,
+  parseAsInteger,
+  parseAsString,
+  parseAsStringLiteral,
+} from "nuqs/server";
 import React from "react";
 import type { PaginationQueryFunction } from "../../sanity/queries/pagination";
 import { Button } from "../ui/button";
@@ -7,11 +15,10 @@ import Typography from "../ui/typography";
 import { FilterListInput } from "./FilterListInput";
 import { FilterListItem } from "./FilterListItem";
 import { TransitionContainer, TransitionProvider } from "./FilterListTransition";
-import { ChevronDown } from "lucide-react";
 
 export type FilterParams = {
   q?: string;
-  filters?: Record<string, string[]>;
+  filters?: Record<string, string | number | string[]>;
   locale: Locale;
 };
 
@@ -21,26 +28,53 @@ type Props<T> = {
   query: PaginationQueryFunction<T, FilterParams>;
   searchParams: Record<string, string | string[] | undefined>;
   locale: Locale;
+  defaultOrderBy?: string;
 };
 
 export type Filter = {
   slug: string;
   label: string;
+  defaultValue?: string;
+  multiple?: boolean;
+
   options: Array<
     | {
         label: string;
         value: string;
-        everything?: undefined;
+        default?: undefined;
       }
-    | { label: string; value?: undefined; everything: true }
+    | { label: string; value?: undefined; default: true }
   >;
 };
 
-const getParamsAsArray = (param: string | string[] | undefined): string[] => {
-  if (!param) return [];
-  if (Array.isArray(param)) return param;
-  if (param.includes(",")) return param.split(",");
-  return [param];
+const baseFilterListParams = (defaultOrderBy?: string) => ({
+  page: parseAsInteger.withDefault(1),
+  perPage: parseAsInteger.withDefault(10),
+  q: parseAsString,
+  orderBy: defaultOrderBy ? parseAsString.withDefault(defaultOrderBy) : parseAsString,
+  order: parseAsStringLiteral(["asc", "desc"]),
+});
+
+type FilterResultType = typeof parseAsString | ReturnType<typeof parseAsArrayOf<string>>;
+
+/**
+ * Create a params parser nuqs object, based on the default filter list params and the filters provided.
+ */
+const createFilterListParams = (filters: Filter[], defaultOrderBy?: string) => {
+  return {
+    ...baseFilterListParams(defaultOrderBy),
+    ...(Object.fromEntries(
+      filters.map((filter) => {
+        const singleParser = filter.defaultValue
+          ? parseAsString.withDefault(filter.defaultValue)
+          : parseAsString;
+        if (filter.multiple) {
+          return [filter.slug, parseAsArrayOf(singleParser)];
+        }
+        return [filter.slug, singleParser];
+      })
+    ) as Record<string, FilterResultType>),
+  };
 };
 
 export const FilterList = async <T extends { _id: string }>({
@@ -48,26 +82,28 @@ export const FilterList = async <T extends { _id: string }>({
   query,
   Component,
   searchParams,
+  defaultOrderBy,
   locale,
 }: Props<T>) => {
   const t = await getTranslations();
+  // we have to make this inline instead of outside as we're depending on the filters
+  const paramsParser = createFilterListParams(filters, defaultOrderBy);
+  const params = createLoader(paramsParser)(searchParams);
   const data = await query({
-    page: searchParams.page ? getParamsAsArray(searchParams.page).map((p) => parseInt(p))[0] : 1,
-    perPage: searchParams.perPage
-      ? getParamsAsArray(searchParams.perPage).map((p) => parseInt(p))[0]
-      : 10,
-    orderBy: searchParams.orderBy ? getParamsAsArray(searchParams.orderBy)[0] : "name",
-    order: searchParams.order ? (getParamsAsArray(searchParams.order)[0] as "asc" | "desc") : "asc",
-    q: searchParams.q ? getParamsAsArray(searchParams.q)[0] : undefined,
+    page: params.page,
+    perPage: params.perPage,
+    orderBy: params.orderBy ?? undefined,
+    order: params.order ?? undefined,
+    q: params.q ?? undefined,
     filters: filters.reduce(
       (acc, filter) => {
-        const value = searchParams[filter.slug];
+        const value = params[filter.slug as keyof typeof params] ?? undefined;
         if (value) {
-          acc[filter.slug] = Array.isArray(value) ? value : [value];
+          acc[filter.slug] = value;
         }
         return acc;
       },
-      {} as Record<string, string[]>
+      {} as Record<string, number | string | string[]>
     ),
     locale,
   });
@@ -80,11 +116,11 @@ export const FilterList = async <T extends { _id: string }>({
               <Typography>{filter.label}</Typography>
               {filter.options.map((option) => (
                 <FilterListItem
-                  key={option.value ?? "everything"}
+                  key={option.value ?? "default"}
                   label={option.label}
                   slug={filter.slug}
                   value={option.value}
-                  everything={option.everything}
+                  isDefault={option.default}
                 />
               ))}
             </div>
@@ -94,7 +130,7 @@ export const FilterList = async <T extends { _id: string }>({
           <div className="flex flex-row items-center gap-4">
             <FilterListInput />
             <Button variant="ghost" iconRight={<ChevronDown />} disabled>
-              Sort (not implemented)
+              Sort
             </Button>
           </div>
           <Typography>

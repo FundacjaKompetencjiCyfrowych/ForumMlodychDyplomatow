@@ -1,8 +1,8 @@
 export type PaginationParameters<T extends string> = {
-  page: number;
-  perPage: number;
-  orderBy: T;
-  order: "asc" | "desc";
+  page?: number;
+  perPage?: number;
+  orderBy?: T;
+  order?: "asc" | "desc";
 };
 
 export type PaginationResult<T> = {

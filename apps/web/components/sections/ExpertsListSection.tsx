@@ -13,17 +13,13 @@ const queryPeople: PaginationQueryFunction<PersonFull, FilterParams> = async (pa
     peoplePaginatedQuery({
       page: params.page ?? 1,
       perPage: params.perPage ?? 10,
-      orderBy: params.orderBy as Parameters<typeof peoplePaginatedQuery>[0]["orderBy"],
-      order: params.order as Parameters<typeof peoplePaginatedQuery>[0]["order"],
+      orderBy: (params.orderBy as Parameters<typeof peoplePaginatedQuery>[0]["orderBy"]) ?? "name",
+      order: (params.order as Parameters<typeof peoplePaginatedQuery>[0]["order"]) ?? "asc",
     }),
     {
       parameters: {
         locale: params.locale,
-        groups: params.filters?.groups
-          ? Array.isArray(params.filters.groups)
-            ? params.filters.groups
-            : [params.filters.groups]
-          : null,
+        groups: (params.filters?.groups as string[]) ?? null,
         name: params.q ? `*${params.q}*` : null,
       },
     }
@@ -53,11 +49,12 @@ const ExpertsListSection = async ({
     {
       slug: "groups",
       label: t("people.groupName"),
+      multiple: true,
       options: expertsFilterGroupIds.map((id) =>
         id === "everything"
           ? {
               label: t("people.groups.everything"),
-              everything: true,
+              default: true,
             }
           : {
               label: t(`people.groups.${id}`),

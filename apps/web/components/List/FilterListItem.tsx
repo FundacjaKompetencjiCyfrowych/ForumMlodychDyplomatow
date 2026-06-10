@@ -9,49 +9,33 @@ type Props = {
   label: string;
   slug: string;
   value?: string;
-  everything?: boolean;
+  isDefault?: boolean;
 };
 
-export const FilterListItem = ({ label, slug, value = "everything", everything }: Props) => {
-  // TODO check nuqs library
+export const FilterListItem = ({ label, slug, value = "default", isDefault }: Props) => {
   const { startTransition } = useTransitionProvider();
   const [params, setParams] = useQueryState(
     slug,
     parseAsArrayOf(parseAsString).withDefault([]).withOptions({
-      scroll: false,
-      clearOnDefault: true,
       startTransition,
-      shallow: false,
     })
   );
-  const isChecked = everything ? params.length === 0 : params.includes(value);
 
-  const [checked, setChecked] = React.useOptimistic(isChecked);
-
-  if (!everything && (value === undefined || value === "everything")) {
-    console.warn(
-      "FilterListItem with slug",
-      slug,
-      "is missing value and is not marked as everything"
-    );
-    return null;
-  }
+  // TODO there's an annoying flicker when the default checkbox gets changed due to clicking/unclicking a different param
+  // Will either fix or workaround this in the future
+  const isChecked = isDefault ? params.length === 0 : params.includes(value);
 
   const onClick = () => {
-    startTransition(() => {
-      if (everything && !checked) {
-        setParams([]);
-        setChecked(true);
-        return;
+    if (isDefault && !isChecked) {
+      setParams([]);
+      return;
+    }
+    setParams((prev) => {
+      if (isChecked) {
+        return prev.filter((p) => p !== value);
+      } else {
+        return [...prev, value];
       }
-      setParams((prev) => {
-        if (checked) {
-          return prev.filter((p) => p !== value);
-        } else {
-          return [...prev, value];
-        }
-      });
-      setChecked((prev) => !prev);
     });
   };
   return (
@@ -60,7 +44,7 @@ export const FilterListItem = ({ label, slug, value = "everything", everything }
         <Checkbox
           id={`${slug}-${value}`}
           className="flex flex-row items-center gap-4"
-          checked={checked}
+          checked={isChecked}
           onCheckedChange={onClick}
         />
         <FieldContent>
