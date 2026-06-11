@@ -8,6 +8,7 @@ import {
   PeopleSection,
   PodcastSection,
   SupportUsSection,
+  ContactSection,
 } from "@/components/sections";
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
@@ -35,4 +36,5 @@ export const components: ComponentsRegistry = {
   peopleSection: PeopleSection,
   podcastSection: PodcastSection,
   supportUsSection: SupportUsSection,
+  contactSection: ContactSection,
 };

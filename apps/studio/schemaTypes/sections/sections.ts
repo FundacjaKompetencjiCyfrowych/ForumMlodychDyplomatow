@@ -1,4 +1,5 @@
 import { aboutUsSection } from "./aboutUsSection";
+import { contactSection } from "./contactSection";
 import { divisionsSection } from "./divisionsSection";
 import { eventsSection } from "./eventsSection";
 import { heroSection } from "./heroSection";
@@ -18,6 +19,7 @@ export const sectionTypes = [
   "peopleSection",
   "podcastSection",
   "supportUsSection",
+  "contactSection",
 ] as const;
 
 export const sections = sectionTypes.map((type) => ({ type }));
@@ -32,4 +34,5 @@ export const sectionStructure = [
   peopleSection,
   podcastSection,
   supportUsSection,
+  contactSection,
 ];

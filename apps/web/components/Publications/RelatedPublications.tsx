@@ -32,7 +32,7 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
   const t = translations[locale as keyof typeof translations] || translations.pl;
 
   return (
-    <section className="mx-auto w-full bg-background-50 px-6 pt-10 pb-16 md:px-6">
+    <section className="bg-background-50 mx-auto w-full px-6 pt-10 pb-16 md:px-6">
       <div className="mx-auto mb-8 flex max-w-7xl flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <Typography as="h2" variant="h3" className="text-foreground">
           {t.title}

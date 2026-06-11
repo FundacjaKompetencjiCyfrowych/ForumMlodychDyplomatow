@@ -18,6 +18,16 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type ContactSection = {
+  _type: "contactSection";
+  heading?: string;
+  subtitle?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  contactAddress?: string;
+  recipientEmail?: string;
+};
+
 export type SupportUsSection = {
   _type: "supportUsSection";
   heading?: string;
@@ -147,6 +157,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & SupportUsSection)
+  | ({
+      _key: string;
+    } & ContactSection)
 >;
 
 export type LinkButton = {
@@ -798,6 +811,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | ContactSection
   | SupportUsSection
   | PodcastSection
   | AuthorReference

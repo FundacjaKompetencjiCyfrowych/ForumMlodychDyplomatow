@@ -11,6 +11,7 @@ import { peopleSectionFragment } from "./peopleSectionFragment";
 import { podcastSectionFragment } from "./podcastSectionFragment";
 import { supportUsSectionFragment } from "./supportUsSectionFragment";
 import type { Locale } from "next-intl";
+import { contactSectionFragment } from "./contactSectionFragment";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -19,6 +20,7 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
     {
       aboutUsSection: sub.project(aboutUsSectionFragment),
       divisionsSection: sub.project(divisionsSectionFragment),
+      contactSection: sub.project(contactSectionFragment),
       eventsSection: sub.project(eventsSectionFragment),
       heroSection: sub.project(heroSectionFragment),
       joinUsSection: sub.project(joinUsSectionFragment),

@@ -7,3 +7,4 @@ export { default as NewPublicationsSection } from "./NewPublicationsSection";
 export { default as PeopleSection } from "./PeopleSection";
 export { default as PodcastSection } from "./PodcastSection";
 export { default as SupportUsSection } from "./SupportUsSection";
+export { default as ContactSection } from "./ContactSection";
