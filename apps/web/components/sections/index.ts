@@ -8,3 +8,7 @@ export { default as PeopleSection } from "./PeopleSection";
 export { default as PodcastSection } from "./PodcastSection";
 export { default as SupportUsSection } from "./SupportUsSection";
 export { default as ContactSection } from "./ContactSection";
+export { default as DivisionsHero } from "./DivisionsHeroSection";
+export { default as WhatWeDoDivisions } from "./WhatWeDoDivisionsSection";
+export { default as JoinUsDivisions } from "./JoinUsDivisionsSection";
+export { default as EventsDivisions } from "./EventsDivisionsSection";

@@ -18,6 +18,59 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type Button = {
+  text?: string;
+  link?: string;
+};
+
+export type EventsDivisionsSection = {
+  _type: "eventsDivisionsSection";
+  header?: string;
+};
+
+export type JoinUsDivisionsSection = {
+  _type: "joinUsDivisionsSection";
+  header?: string;
+  features?: Array<{
+    icon?: Img;
+    header?: string;
+    description?: string;
+    _key: string;
+  }>;
+  button?: Button;
+};
+
+export type WhatWeDoDivisionsSection = {
+  _type: "whatWeDoDivisionsSection";
+  title?: string;
+  whatWeDo?: Array<string>;
+};
+
+export type PersonReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "person";
+};
+
+export type TeamDivisionsSection = {
+  _type: "teamDivisionsSection";
+  header?: string;
+  text?: string;
+  members?: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
+};
+
+export type HeroDivisionsSection = {
+  _type: "heroDivisionsSection";
+  header?: string;
+  description?: string;
+  image?: Img;
+};
+
 export type ContactSection = {
   _type: "contactSection";
   heading?: string;
@@ -160,6 +213,21 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & ContactSection)
+  | ({
+      _key: string;
+    } & HeroDivisionsSection)
+  | ({
+      _key: string;
+    } & TeamDivisionsSection)
+  | ({
+      _key: string;
+    } & WhatWeDoDivisionsSection)
+  | ({
+      _key: string;
+    } & JoinUsDivisionsSection)
+  | ({
+      _key: string;
+    } & EventsDivisionsSection)
 >;
 
 export type LinkButton = {
@@ -323,6 +391,13 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
+export type DivisionsPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "divisionsPage";
+};
+
 export type NavigationReference = {
   _ref: string;
   _type: "reference";
@@ -372,7 +447,9 @@ export type InternationalizedArrayReferenceValue = {
     | PostReference
     | EventReference
     | DivisionReference
+    | DivisionsPageReference
     | AuthorReference
+    | PersonReference
     | NavigationReference
     | PublicationReference
     | TagReference
@@ -595,6 +672,45 @@ export type Navigation = {
   locale?: string;
 };
 
+export type Person = {
+  _id: string;
+  _type: "person";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  name?: string;
+  group?:
+    | "board"
+    | "regionalAuthority"
+    | "groupCoordinator"
+    | "author"
+    | "reviewer";
+  img?: Img;
+  title?: string;
+  socials?: Array<{
+    platform?: "linkedin" | "instagram" | "facebook";
+    url?: string;
+    _type: "social";
+    _key: string;
+  }>;
+};
+
+export type DivisionsPage = {
+  _id: string;
+  _type: "divisionsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  title?: string;
+  description?: string;
+  heroImage?: Img;
+  titleDivisions?: string;
+  descriptionDivisions?: string;
+};
+
 export type Event = {
   _id: string;
   _type: "event";
@@ -627,6 +743,23 @@ export type Division = {
   name?: string;
   slug?: Slug;
   coverImage?: Img;
+  pageBuilder?: Array<
+    | ({
+        _key: string;
+      } & HeroDivisionsSection)
+    | ({
+        _key: string;
+      } & WhatWeDoDivisionsSection)
+    | ({
+        _key: string;
+      } & JoinUsDivisionsSection)
+    | ({
+        _key: string;
+      } & TeamDivisionsSection)
+    | ({
+        _key: string;
+      } & EventsDivisionsSection)
+  >;
 };
 
 export type CategoryReference = {
@@ -811,6 +944,13 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | Button
+  | EventsDivisionsSection
+  | JoinUsDivisionsSection
+  | WhatWeDoDivisionsSection
+  | PersonReference
+  | TeamDivisionsSection
+  | HeroDivisionsSection
   | ContactSection
   | SupportUsSection
   | PodcastSection
@@ -841,6 +981,7 @@ export type AllSanitySchemaTypes =
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
+  | DivisionsPageReference
   | NavigationReference
   | PublicationReference
   | TagReference
@@ -858,6 +999,8 @@ export type AllSanitySchemaTypes =
   | SanityImageCrop
   | SanityImageHotspot
   | Navigation
+  | Person
+  | DivisionsPage
   | Event
   | Division
   | CategoryReference

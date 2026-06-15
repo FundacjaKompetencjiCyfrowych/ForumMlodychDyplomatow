@@ -9,9 +9,14 @@ import {
   PodcastSection,
   SupportUsSection,
   ContactSection,
+  DivisionsHero,
+  WhatWeDoDivisions,
+  JoinUsDivisions,
+  EventsDivisions,
 } from "@/components/sections";
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
+import TeamDivisions from "@/components/sections/TeamDivisionsSection";
 
 export type ComponentsRegistry = {
   [K in PageBuilderSectionType]: ComponentType<PageBuilderSectionProps<K>>;
@@ -37,4 +42,9 @@ export const components: ComponentsRegistry = {
   podcastSection: PodcastSection,
   supportUsSection: SupportUsSection,
   contactSection: ContactSection,
+  heroDivisionsSection: DivisionsHero,
+  whatWeDoDivisionsSection: WhatWeDoDivisions,
+  joinUsDivisionsSection: JoinUsDivisions,
+  teamDivisionsSection: TeamDivisions,
+  eventsDivisionsSection: EventsDivisions,
 };

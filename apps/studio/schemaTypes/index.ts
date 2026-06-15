@@ -20,6 +20,8 @@ import tag from "./tag";
 import tagCategory from "./tagCategory";
 import { footer } from "./singletons/footer";
 import { translations } from "./singletons/translations";
+import person from "./person";
+import divisionsPage from "./pages/divisionsPage";
 
 export const schemaTypes = [
   post,
@@ -41,6 +43,8 @@ export const schemaTypes = [
   linkButton,
   pageBuilder,
   page,
+  divisionsPage,
+  person,
   navigation,
   footer,
   // sections defined separately

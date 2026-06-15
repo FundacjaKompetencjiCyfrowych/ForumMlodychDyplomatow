@@ -12,6 +12,11 @@ import { podcastSectionFragment } from "./podcastSectionFragment";
 import { supportUsSectionFragment } from "./supportUsSectionFragment";
 import type { Locale } from "next-intl";
 import { contactSectionFragment } from "./contactSectionFragment";
+import { heroDivisionsSectionFragment } from "./heroDivisionSectionFragment";
+import { whatWeDoDivisionsSectionFragment } from "./whatWeDoDivisionsSectionFragment";
+import { joinUsDivisionsSectionFragment } from "./joinUsDivisionsSectionFragment";
+import { teamDivisionsSectionFragment } from "./teamDivisionsSectionFragment";
+import { eventsDivisionsSectionFragment } from "./eventsDivisionsSectionFragment";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -28,6 +33,11 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       peopleSection: sub.project(peopleSectionFragment),
       podcastSection: sub.project(podcastSectionFragment),
       supportUsSection: sub.project(supportUsSectionFragment),
+      heroDivisionsSection: sub.project(heroDivisionsSectionFragment),
+      whatWeDoDivisionsSection: sub.project(whatWeDoDivisionsSectionFragment),
+      joinUsDivisionsSection: sub.project(joinUsDivisionsSectionFragment),
+      teamDivisionsSection: sub.project(teamDivisionsSectionFragment),
+      eventsDivisionsSection: sub.project(eventsDivisionsSectionFragment),
     },
     {
       isExhaustive: true,
