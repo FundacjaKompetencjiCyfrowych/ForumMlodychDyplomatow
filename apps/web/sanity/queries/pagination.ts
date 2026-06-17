@@ -1,8 +1,7 @@
-export type PaginationParameters<T extends string> = {
+export type PaginationParameters = {
   page?: number;
   perPage?: number;
-  orderBy?: T;
-  order?: "asc" | "desc";
+  q?: string;
 };
 
 export type PaginationResult<T> = {
@@ -13,5 +12,5 @@ export type PaginationResult<T> = {
 };
 
 export type PaginationQueryFunction<T, TParams> = (
-  params: PaginationParameters<any> & TParams
+  params: PaginationParameters & TParams
 ) => Promise<PaginationResult<T>>;

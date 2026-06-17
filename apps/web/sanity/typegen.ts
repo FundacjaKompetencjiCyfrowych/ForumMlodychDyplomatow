@@ -312,6 +312,56 @@ export type IconPicker = {
   svg?: string;
 };
 
+export type PersonGroups = {
+  _id: string;
+  _type: "personGroups";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  groups?: Array<{
+    name?: InternationalizedArrayString;
+    slug?: Slug;
+    subgroups?: Array<{
+      name?: InternationalizedArrayString;
+      slug?: Slug;
+      _type: "subgroup";
+      _key: string;
+    }>;
+    _type: "group";
+    _key: string;
+  }>;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
+
+export type InternationalizedArrayTextValue = {
+  _type: "internationalizedArrayTextValue";
+  value?: string;
+  language?: string;
+};
+
+export type InternationalizedArrayStringValue = {
+  _type: "internationalizedArrayStringValue";
+  value?: string;
+  language?: string;
+};
+
+export type InternationalizedArrayText = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayTextValue
+>;
+
 export type TranslationMetadata = {
   _id: string;
   _type: "translation.metadata";
@@ -377,13 +427,13 @@ export type InternationalizedArrayReferenceValue = {
     | PostReference
     | EventReference
     | DivisionReference
-    | PersonReference
     | NavigationReference
     | PublicationReference
     | TagReference
     | TagCategoryReference
     | FooterReference
     | TranslationsReference;
+  language?: string;
 };
 
 export type Translations = {
@@ -414,14 +464,7 @@ export type Translations = {
   people?: {
     seeAll?: string;
     groupName?: string;
-    groups?: {
-      everything?: string;
-      board?: string;
-      regionalAuthority?: string;
-      groupCoordinator?: string;
-      author?: string;
-      reviewer?: string;
-    };
+    allGroups?: string;
   };
   locale?: string;
 };
@@ -488,12 +531,6 @@ export type TagCategory = {
   locale?: string;
   title?: string;
   description?: string;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type SanityFileAssetReference = {
@@ -688,20 +725,16 @@ export type Person = {
   _rev: string;
   locale?: string;
   name?: string;
-  group?:
-    | "board"
-    | "regionalAuthority"
-    | "groupCoordinator"
-    | "author"
-    | "reviewer";
+  group?: string;
   img?: Img;
-  title?: string;
+  title?: InternationalizedArrayString;
   socials?: Array<{
     platform?: "linkedin" | "instagram" | "facebook";
     url?: string;
     _type: "social";
     _key: string;
   }>;
+  order?: number;
 };
 
 export type Page = {
@@ -854,6 +887,12 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
+  | PersonGroups
+  | Slug
+  | InternationalizedArrayString
+  | InternationalizedArrayTextValue
+  | InternationalizedArrayStringValue
+  | InternationalizedArrayText
   | TranslationMetadata
   | InternationalizedArrayReference
   | PostReference
@@ -867,7 +906,6 @@ export type AllSanitySchemaTypes =
   | Footer
   | Tag
   | TagCategory
-  | Slug
   | SanityFileAssetReference
   | Publication
   | SanityImageCrop

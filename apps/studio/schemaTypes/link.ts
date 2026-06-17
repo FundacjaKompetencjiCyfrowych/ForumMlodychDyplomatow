@@ -46,6 +46,15 @@ const prepareLinkPreview = (
     subtitle,
   };
 };
+
+const filterByLanguage = ({ document }: { document: any }) => {
+  return {
+    filter: "locale == $locale",
+    params: {
+      locale: document?.locale || "pl",
+    },
+  };
+};
 export const link = defineType({
   name: "link",
   title: "Link",
@@ -105,16 +114,9 @@ export const link = defineType({
       title: "Strona",
       type: "reference",
       to: [{ type: "page" }],
+      options: { filter: filterByLanguage },
       hidden: ({ parent }) => parent?.linkType !== "page",
-      validation: (Rule) =>
-        // Custom validation to ensure page reference is provided if the link type is 'page'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "page" && !value) {
-            return "Odwołanie do strony jest wymagane";
-          }
-          return true;
-        }),
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "homepage",
@@ -128,16 +130,9 @@ export const link = defineType({
       title: "Wydarzenie",
       type: "reference",
       to: [{ type: "event" }],
+      options: { filter: filterByLanguage },
       hidden: ({ parent }) => parent?.linkType !== "event" || parent?.homepage,
-      validation: (Rule) =>
-        // Custom validation to ensure event reference is provided if the link type is 'event'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "event" && !parent?.homepage && !value) {
-            return "Odwołanie do wydarzenia jest wymagane";
-          }
-          return true;
-        }),
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
 
     defineField({
@@ -145,32 +140,18 @@ export const link = defineType({
       title: "Oddział",
       type: "reference",
       to: [{ type: "division" }],
+      options: { filter: filterByLanguage },
       hidden: ({ parent }) => parent?.linkType !== "division" || parent?.homepage,
-      validation: (Rule) =>
-        // Custom validation to ensure division reference is provided if the link type is 'division'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "division" && !parent?.homepage && !value) {
-            return "Odwołanie do oddziału jest wymagane";
-          }
-          return true;
-        }),
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "publication",
       title: "Publikacja",
       type: "reference",
       to: [{ type: "publication" }],
+      options: { filter: filterByLanguage },
       hidden: ({ parent }) => parent?.linkType !== "publication" || parent?.homepage,
-      validation: (Rule) =>
-        // Custom validation to ensure publication reference is provided if the link type is 'publication'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "publication" && !parent?.homepage && !value) {
-            return "Odwołanie do publikacji jest wymagane";
-          }
-          return true;
-        }),
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "openInNewTab",

@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { languageField } from "../plugins/intl";
+import { GroupPicker } from "../components/GroupPicker";
 
 export default defineType({
   name: "person",
@@ -17,16 +18,10 @@ export default defineType({
       name: "group",
       type: "string",
       title: "Grupa",
-      validation: (Rule) => Rule.required(),
-      options: {
-        list: [
-          { title: "Zarząd", value: "board" },
-          { title: "Władza PR", value: "regionalAuthority" },
-          { title: "Koordynator grup", value: "groupCoordinator" },
-          { title: "Autor", value: "author" },
-          { title: "Recenzent", value: "reviewer" },
-        ],
+      components: {
+        input: GroupPicker,
       },
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -37,7 +32,7 @@ export default defineType({
     defineField({
       name: "title",
       title: "Tytuł",
-      type: "string",
+      type: "internationalizedArrayString",
       description: "Krótkie określenie roli autora, np. 'Przewodniczący FMD'",
     }),
 
@@ -71,6 +66,13 @@ export default defineType({
           ],
         }),
       ],
+    }),
+    defineField({
+      name: "order",
+      title: "Kolejność",
+      type: "number",
+      description:
+        "Liczba określająca kolejność wyświetlania osób. Mniejsze liczy są wyświetlane wcześniej, te same liczby są sortowane alfabetycznie. Brak liczby będzie wyświetlany na końcu.",
     }),
   ],
   preview: {

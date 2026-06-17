@@ -5,13 +5,14 @@ import { schemaTypes } from "./schemaTypes";
 import { filterSingletonTemplates, singletonDocumentActions } from "./plugins/singleton";
 import { combineTemplates } from "./utils/utils";
 import { structure } from "./plugins/structure";
-import { addLanguageTemplates, intlConfig } from "./plugins/intl";
+import { addLanguageTemplates, intlConfig, intlArrayConfig } from "./plugins/intl";
 import { plPLLocale } from "@sanity/locale-pl-pl";
 import {
   documentInternationalization,
   useDeleteTranslationAction,
   useDuplicateWithTranslationsAction,
 } from "@sanity/document-internationalization";
+import { internationalizedArray } from "sanity-plugin-internationalized-array";
 import { iconPicker } from "sanity-plugin-icon-picker";
 import { media } from "sanity-plugin-media";
 import { Logo } from "./components/Logo";
@@ -69,6 +70,7 @@ export default defineConfig({
     dashboardTool({ widgets: [vercelWidget()] }),
     visionTool(),
     documentInternationalization(intlConfig),
+    internationalizedArray(intlArrayConfig),
     iconPicker(),
     plPLLocale(),
   ],

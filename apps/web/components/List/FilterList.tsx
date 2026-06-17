@@ -1,4 +1,3 @@
-import { ChevronDown } from "lucide-react";
 import type { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import {
@@ -10,10 +9,10 @@ import {
 } from "nuqs/server";
 import React from "react";
 import type { PaginationQueryFunction } from "../../sanity/queries/pagination";
-import { Button } from "../ui/button";
 import Typography from "../ui/typography";
 import { FilterListInput } from "./FilterListInput";
-import { FilterListItem } from "./FilterListItem";
+import { FilterListGroupItem, FilterListItem } from "./FilterListItem";
+import FilterListPagination from "./FilterListPagination";
 import { TransitionContainer, TransitionProvider } from "./FilterListTransition";
 
 export type FilterParams = {
@@ -29,27 +28,38 @@ type Props<T> = {
   searchParams: Record<string, string | string[] | undefined>;
   locale: Locale;
   defaultOrderBy?: string;
+  perPage?: number;
 };
 
+type FilterOption = {
+  label: string;
+  value: string;
+  default?: undefined;
+  subgroups?: undefined;
+};
+type FilterDefaultOption = {
+  label: string;
+  value?: undefined;
+  default: true;
+  subgroups?: undefined;
+};
+type FilterSubgroupOption = {
+  label: string;
+  value?: undefined;
+  default?: undefined;
+  subgroups: FilterOption[];
+};
 export type Filter = {
   slug: string;
-  label: string;
+  label?: string;
   defaultValue?: string;
   multiple?: boolean;
 
-  options: Array<
-    | {
-        label: string;
-        value: string;
-        default?: undefined;
-      }
-    | { label: string; value?: undefined; default: true }
-  >;
+  options: Array<FilterOption | FilterDefaultOption | FilterSubgroupOption>;
 };
 
 const baseFilterListParams = (defaultOrderBy?: string) => ({
   page: parseAsInteger.withDefault(1),
-  perPage: parseAsInteger.withDefault(10),
   q: parseAsString,
   orderBy: defaultOrderBy ? parseAsString.withDefault(defaultOrderBy) : parseAsString,
   order: parseAsStringLiteral(["asc", "desc"]),
@@ -84,6 +94,7 @@ export const FilterList = async <T extends { _id: string }>({
   searchParams,
   defaultOrderBy,
   locale,
+  perPage = 10,
 }: Props<T>) => {
   const t = await getTranslations();
   // we have to make this inline instead of outside as we're depending on the filters
@@ -91,9 +102,7 @@ export const FilterList = async <T extends { _id: string }>({
   const params = createLoader(paramsParser)(searchParams);
   const data = await query({
     page: params.page,
-    perPage: params.perPage,
-    orderBy: params.orderBy ?? undefined,
-    order: params.order ?? undefined,
+    perPage: perPage,
     q: params.q ?? undefined,
     filters: filters.reduce(
       (acc, filter) => {
@@ -107,31 +116,41 @@ export const FilterList = async <T extends { _id: string }>({
     ),
     locale,
   });
+
   return (
     <TransitionProvider>
       <div className="flex w-full flex-col gap-4 desktop:flex-row">
         <div className="flex flex-col items-start">
           {filters.map((filter) => (
-            <div key={filter.slug} className="flex w-auto flex-col items-start">
-              <Typography>{filter.label}</Typography>
-              {filter.options.map((option) => (
-                <FilterListItem
-                  key={option.value ?? "default"}
-                  label={option.label}
-                  slug={filter.slug}
-                  value={option.value}
-                  isDefault={option.default}
-                />
-              ))}
+            <div key={filter.slug} className="flex w-70 flex-col items-start px-2 py-16">
+              {filter.label && <Typography>{filter.label}</Typography>}
+              {filter.options.map((option) => {
+                if (option.subgroups) {
+                  return (
+                    <FilterListGroupItem
+                      key={option.label}
+                      label={option.label}
+                      slug={filter.slug}
+                      subgroups={option.subgroups}
+                    />
+                  );
+                }
+                return (
+                  <FilterListItem
+                    key={option.value ?? "default"}
+                    label={option.label}
+                    slug={filter.slug}
+                    value={option.value}
+                    isDefault={option.default}
+                  />
+                );
+              })}
             </div>
           ))}
         </div>
         <div className="flex grow flex-col gap-4">
           <div className="flex flex-row items-center gap-4">
-            <FilterListInput />
-            <Button variant="ghost" iconRight={<ChevronDown />} disabled>
-              Sort
-            </Button>
+            <FilterListInput placeholder={t("global.search")} />
           </div>
           <Typography>
             {t("global.results")}: {data.total}
@@ -144,6 +163,7 @@ export const FilterList = async <T extends { _id: string }>({
               <Component key={index} item={item} />
             ))}
           </TransitionContainer>
+          <FilterListPagination perPage={perPage} total={data.total} />
         </div>
       </div>
     </TransitionProvider>

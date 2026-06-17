@@ -1,4 +1,5 @@
 import { PluginConfig } from "@sanity/document-internationalization";
+import { PluginConfig as ArrayPluginConfig } from "sanity-plugin-internationalized-array";
 import { StructureBuilder } from "sanity/structure";
 import { SlugValidationContext } from "sanity";
 import { capitalize } from "../utils/utils";
@@ -13,6 +14,11 @@ export const intlConfig: PluginConfig = {
   supportedLanguages: LANGUAGES,
   schemaTypes: TRANSLATIONS,
   languageField: LANGUAGE_FIELD,
+};
+export const intlArrayConfig: ArrayPluginConfig = {
+  languages: LANGUAGES,
+  defaultLanguages: LANGUAGES.map((l) => l.id),
+  fieldTypes: ["string", "text"],
 };
 
 /** Structure API helper to create a list item for documents only in the specified language */
@@ -108,36 +114,59 @@ export const languageField = defineField({
   type: "string",
   hidden: true,
 });
+const uniqueBase =
+  (
+    filters: string,
+    parameters: (value: string, context: SlugValidationContext) => Record<string, any>,
+    validate?: (context: SlugValidationContext) => string | undefined
+  ) =>
+  async (slug: string, context: SlugValidationContext) => {
+    const { document, getClient } = context;
+    if (!document) {
+      console.warn(`Couldn't validate slug: ${slug} document not found`);
+      return false;
+    }
 
-/** Slug validator that allows same unique slug for different translations of the same document */
-export async function uniqueByLanguage(slug: string, context: SlugValidationContext) {
-  const { document, getClient } = context;
-  if (!document) {
-    console.warn(`Couldn't validate slug: ${slug} document not found`);
-    return false;
-  }
-  const langauge = document[LANGUAGE_FIELD];
-  if (!langauge) {
-    console.warn(`Couldn't validate slug: ${slug} locale not found`);
-    return false;
-  }
-  const client = getClient({ apiVersion: API_VERSION });
-  const id = document._id.replace(/^drafts\./, ""); // also check drafts
-  const query = `
+    if (validate) {
+      const validateRes = validate(context);
+      if (validateRes) {
+        console.warn(`Couldn't validate slug: ${validateRes}`);
+        return false;
+      }
+    }
+
+    const client = getClient({ apiVersion: API_VERSION });
+    const id = document._id.replace(/^drafts\./, ""); // also check drafts
+
+    const params = {
+      type: document._type,
+      ...parameters(slug, context),
+      draftId: `drafts.${id}`,
+      publishedId: id,
+    };
+    const query = `
     count(*[
       _type == $type &&
-      slug.current == $slug &&
-      ${LANGUAGE_FIELD} == $langauge &&
+      ${filters} ${filters ? "&&" : ""}
       !(_id in [$draftId, $publishedId])
     ])
   `;
-  const params = {
-    type: document._type,
-    slug,
-    langauge,
-    draftId: `drafts.${id}`,
-    publishedId: id,
+    const count = await client.fetch(query, params);
+    return count === 0;
   };
-  const count = await client.fetch(query, params);
-  return count === 0;
-}
+export const unique = uniqueBase(`slug.current == $slug`, (value, ctx) => ({
+  slug: value,
+}));
+/** Slug validator that allows same unique slug for different translations of the same document */
+export const uniqueByLanguage = uniqueBase(
+  `slug.current == $slug && ${LANGUAGE_FIELD} == $language`,
+  (value, ctx) => ({
+    slug: value,
+    language: ctx.document?.[LANGUAGE_FIELD],
+  }),
+  (ctx) => {
+    if (!ctx.document?.[LANGUAGE_FIELD]) {
+      return "Locale not found";
+    }
+  }
+);

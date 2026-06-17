@@ -31,6 +31,13 @@ const buttonVariants = cva(
         accentSecondary: "border-2 border-brand-red bg-transparent text-brand-red hover:bg-red-50",
         dot: "h-2 w-2 rounded-full border-0 bg-slate-300 p-0! hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800",
         icon: "rounded-[3px] bg-white text-gray-900 hover:bg-slate-200 active:bg-brand-blue active:text-slate-50 disabled:text-gray-500",
+        toggle:
+          "flex gap-1 border-2 border-transparent bg-transparent p-8 text-gray-900 hover:text-brand-red-800 data-[state=on]:border-b-brand-red-800 data-[state=on]:text-brand-red",
+        page: [
+          "h-8 w-8 rounded-lg border-none bg-transparent text-slate-600",
+          "hover:text-gray-900 active:bg-brand-red-700 active:text-white disabled:text-gray-400",
+          "data-current:bg-brand-red-700 data-current:text-white",
+        ],
       },
       size: {
         m: "px-4 py-3",

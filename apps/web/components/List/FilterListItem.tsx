@@ -1,10 +1,10 @@
 "use client";
+import { ChevronDown } from "lucide-react";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import React from "react";
-import { Checkbox } from "../ui/checkbox";
-import { Field, FieldContent, FieldGroup, FieldLabel } from "../ui/field";
-import Typography from "../ui/typography";
+import { Button } from "../ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 import { useTransitionProvider } from "./FilterListTransition";
+import { usePage } from "./FilterListPagination";
 type Props = {
   label: string;
   slug: string;
@@ -20,14 +20,13 @@ export const FilterListItem = ({ label, slug, value = "default", isDefault }: Pr
       startTransition,
     })
   );
-
-  // TODO there's an annoying flicker when the default checkbox gets changed due to clicking/unclicking a different param
-  // Will either fix or workaround this in the future
+  const [_, setPage] = usePage(startTransition);
   const isChecked = isDefault ? params.length === 0 : params.includes(value);
 
   const onClick = () => {
     if (isDefault && !isChecked) {
       setParams([]);
+      setPage(0);
       return;
     }
     setParams((prev) => {
@@ -37,24 +36,44 @@ export const FilterListItem = ({ label, slug, value = "default", isDefault }: Pr
         return [...prev, value];
       }
     });
+    setPage(0);
   };
   return (
-    <FieldGroup className="w-fit flex-row">
-      <Field orientation="horizontal">
-        <Checkbox
-          id={`${slug}-${value}`}
-          className="flex flex-row items-center gap-4"
-          checked={isChecked}
-          onCheckedChange={onClick}
-        />
-        <FieldContent>
-          <Typography asChild>
-            <FieldLabel htmlFor={`${slug}-${value}`} className="whitespace-nowrap">
-              {label}
-            </FieldLabel>
-          </Typography>
-        </FieldContent>
-      </Field>
-    </FieldGroup>
+    <Button
+      id={`${slug}-${value}`}
+      variant="toggle"
+      className="w-full justify-start"
+      data-state={isChecked ? "on" : "off"}
+      onClick={onClick}
+    >
+      {label}
+    </Button>
+  );
+};
+
+export const FilterListGroupItem = ({
+  label,
+  slug,
+  subgroups,
+}: Omit<Props, "value"> & { subgroups: { label: string; value: string }[] }) => {
+  return (
+    <Collapsible>
+      <CollapsibleTrigger asChild className="group">
+        <Button
+          variant="toggle"
+          className="justify-between text-start whitespace-normal"
+          iconRight={
+            <ChevronDown className="transition-transform group-data-[state=open]:rotate-180" />
+          }
+        >
+          {label}
+        </Button>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="w-full pl-4">
+        {subgroups?.map((g) => (
+          <FilterListItem key={g.value} label={g.label} slug={slug} value={g.value} />
+        ))}
+      </CollapsibleContent>
+    </Collapsible>
   );
 };

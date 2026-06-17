@@ -29,6 +29,16 @@
   --color-brand-red-700: #962f30;
   --color-brand-red-800: #8f1c1e;
   --color-brand-red-900: #651415;
+  --color-brand-blue-50: #f4f9ff;
+  --color-brand-blue-100: #ddeeff;
+  --color-brand-blue-200: #c5e2ff;
+  --color-brand-blue-300: #add6ff;
+  --color-brand-blue-400: #96caff;
+  --color-brand-blue-500: #71a9e0;
+  --color-brand-blue-600: #5187be;
+  --color-brand-blue-700: #36699c;
+  --color-brand-blue-800: #204d7a;
+  --color-brand-blue-900: #103255;
   /* Test value */
   /* --color-header: #c5c5c5; */
   --font-heading: var(--font-inter);

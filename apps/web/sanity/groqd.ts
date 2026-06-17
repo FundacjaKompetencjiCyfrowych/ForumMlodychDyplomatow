@@ -7,11 +7,16 @@ import {
 import { sanityFetch } from "./live";
 import * as SanityTypes from "./typegen";
 
-type GroqdContext = {
+export type GroqdContext = {
   schemaTypes: SanityTypes.AllSanitySchemaTypes;
   referenceSymbol: typeof SanityTypes.internalGroqTypeReferenceTo;
 };
-
+export type GroqdContextWithParameters<TParams extends Record<string, any>> = GroqdContext & {
+  parameters: TParams;
+  scope: {
+    [K in keyof TParams as K extends string ? `$${K}` : never]: TParams[K];
+  };
+};
 /**
  * GROQD query builder using auto-generated Sanity types
  * @see https://nearform.com/open-source/groqd/docs/

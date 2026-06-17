@@ -12,9 +12,7 @@ const queryPeople: PaginationQueryFunction<PersonFull, FilterParams> = async (pa
   const { data: res } = await runQuery(
     peoplePaginatedQuery({
       page: params.page ?? 1,
-      perPage: params.perPage ?? 10,
-      orderBy: (params.orderBy as Parameters<typeof peoplePaginatedQuery>[0]["orderBy"]) ?? "name",
-      order: (params.order as Parameters<typeof peoplePaginatedQuery>[0]["order"]) ?? "asc",
+      perPage: 12,
     }),
     {
       parameters: {
@@ -31,36 +29,34 @@ const PersonCardComponent = ({ item }: { item: PersonFull }) => {
   return <PersonCard person={item} />;
 };
 
-const expertsFilterGroupIds = [
-  "everything",
-  "board",
-  "regionalAuthority",
-  "groupCoordinator",
-  "author",
-  "reviewer",
-] as const;
-
 const ExpertsListSection = async ({
   locale,
   searchParams,
+  data,
 }: PageBuilderSectionProps<"expertsListSection">) => {
   const t = await getTranslations();
+
   const filters: Filter[] = [
     {
       slug: "groups",
-      label: t("people.groupName"),
       multiple: true,
-      options: expertsFilterGroupIds.map((id) =>
-        id === "everything"
-          ? {
-              label: t("people.groups.everything"),
-              default: true,
-            }
-          : {
-              label: t(`people.groups.${id}`),
-              value: id,
-            }
-      ),
+      options: [
+        {
+          label: t("people.allGroups"),
+          default: true,
+        },
+        ...data.groups.map(
+          (group) =>
+            ({
+              label: group.name ?? "",
+              value: group.subgroups ? undefined : (group.slug ?? ""),
+              subgroups: group.subgroups?.map((subgroup) => ({
+                label: subgroup.name ?? "",
+                value: subgroup.slug ?? "",
+              })),
+            }) as Filter["options"][number]
+        ),
+      ],
     },
   ];
   return (
@@ -74,6 +70,7 @@ const ExpertsListSection = async ({
         query={queryPeople}
         searchParams={searchParams}
         locale={locale}
+        perPage={12}
       />
     </Container>
   );
