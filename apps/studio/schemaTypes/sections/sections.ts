@@ -3,7 +3,7 @@ import { contactSection } from "./contactSection";
 import { divisionsSection } from "./divisionsSection";
 import { eventsDivisionsSection } from "./eventsDivisionsSection";
 import { eventsSection } from "./eventsSection";
-import { heroDivisionsSection } from "./heroDivisionsSection";
+import { universalHeroSection } from "./universalHeroSection";
 import { heroSection } from "./heroSection";
 import { joinUsDivisionsSection } from "./joinUsDivisionsSection";
 import { joinUsSection } from "./joinUsSection";
@@ -13,6 +13,7 @@ import { podcastSection } from "./podcastSection";
 import { supportUsSection } from "./supportUsSection";
 import { teamDivisionsSection } from "./teamDivisionsSection";
 import { whatWeDoDivisionsSection } from "./whatWeDoDivisionsSection";
+import { divisionsListSection } from "./divisionsListSection";
 
 export const sectionTypes = [
   "aboutUsSection",
@@ -25,11 +26,12 @@ export const sectionTypes = [
   "podcastSection",
   "supportUsSection",
   "contactSection",
-  "heroDivisionsSection",
+  "universalHeroSection",
   "teamDivisionsSection",
   "whatWeDoDivisionsSection",
   "joinUsDivisionsSection",
   "eventsDivisionsSection",
+  "divisionsListSection",
 ] as const;
 
 export const sections = sectionTypes.map((type) => ({ type }));
@@ -45,9 +47,10 @@ export const sectionStructure = [
   podcastSection,
   supportUsSection,
   contactSection,
-  heroDivisionsSection,
+  universalHeroSection,
   teamDivisionsSection,
   whatWeDoDivisionsSection,
   joinUsDivisionsSection,
   eventsDivisionsSection,
+  divisionsListSection,
 ];

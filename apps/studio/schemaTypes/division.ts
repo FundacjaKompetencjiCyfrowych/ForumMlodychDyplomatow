@@ -50,7 +50,7 @@ export default defineType({
       },
       of: [
         // Nowe sekcje dedykowane dla oddziałów
-        defineArrayMember({ type: "heroDivisionsSection" }),
+        defineArrayMember({ type: "universalHeroSection" }),
         defineArrayMember({ type: "whatWeDoDivisionsSection" }),
         defineArrayMember({ type: "joinUsDivisionsSection" }),
         defineArrayMember({ type: "teamDivisionsSection" }),

@@ -26,29 +26,7 @@ export const structure: StructureToolOptions = {
       .title("Content")
       .items([
         S.divider().title("Kolekcje"),
-        S.listItem()
-          .title("Strony i zakładki")
-          .icon(HomeIcon)
-          .child(
-            S.list()
-              .title("Zarządzanie stronami")
-              .items([
-                Collection(S, { type: "page", title: "Zwykłe strony" }),
-                S.divider(),
-                S.listItem()
-                  .title("Strony unikalne")
-                  .child(
-                    S.list()
-                      .title("Strony unikalne")
-                      .items([
-                        Singleton(S, {
-                          type: "divisionsPage",
-                          title: "Przedstawicielstwa",
-                        }),
-                      ])
-                  ),
-              ])
-          ),
+        Collection(S, { type: "page", title: "Strony", icon: HomeIcon }),
         Collection(S, { type: "post", title: "Wpisy", icon: ComposeIcon }),
         Collection(S, { type: "person", title: "Członkowie", icon: UsersIcon }),
         Collection(S, { type: "publication", title: "Publikacje", icon: ComposeIcon }),

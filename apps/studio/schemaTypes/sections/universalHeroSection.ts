@@ -1,12 +1,12 @@
 import { defineField, defineType } from "sanity";
 import { createSectionPreview } from "./sectionPreview";
 
-export const heroDivisionsSection = defineType({
-  name: "heroDivisionsSection",
-  title: "Hero Przedstawicielstwa",
+export const universalHeroSection = defineType({
+  name: "universalHeroSection",
+  title: "Uniwersalna sekcja Hero",
   type: "object",
-  preview: createSectionPreview("heroDivisionsSection", {
-    title: "Hero Przedstawicielstwa",
+  preview: createSectionPreview("universalHeroSection", {
+    title: "Uniwersalne Hero",
     subtitle: "header",
   }),
   fields: [

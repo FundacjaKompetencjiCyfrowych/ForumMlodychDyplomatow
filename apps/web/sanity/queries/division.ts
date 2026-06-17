@@ -53,16 +53,3 @@ export const divisionsSlugQuery = q.star
     slug: sub.field("slug.current"),
     locale: sub.field("locale"),
   }));
-
-export const divisionsPageHeroQuery = q
-  .parameters<{ locale: Locale }>()
-  .star.filterByType("divisionsPage")
-  .filterRaw(`locale == $locale`)
-  .slice(0)
-  .project((sub) => ({
-    title: sub.field("title"),
-    description: sub.field("description"),
-    heroImage: sub.field("heroImage").project(imgFragment),
-    titleDivisions: sub.field("titleDivisions"),
-    descriptionDivisions: sub.field("descriptionDivisions"),
-  }));

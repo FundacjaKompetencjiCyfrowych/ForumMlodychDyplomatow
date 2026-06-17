@@ -2,9 +2,9 @@ import Typography from "../ui/typography";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
 
-export interface DivisionsHeroProps extends PageBuilderSectionProps<"heroDivisionsSection"> {}
+export interface UniversalHeroProps extends PageBuilderSectionProps<"universalHeroSection"> {}
 
-const DivisionsHero = ({ data }: DivisionsHeroProps) => {
+const UniversalHero = ({ data }: UniversalHeroProps) => {
   const { header, description, coverImage } = data;
 
   if (!header) return null;
@@ -35,4 +35,4 @@ const DivisionsHero = ({ data }: DivisionsHeroProps) => {
   );
 };
 
-export default DivisionsHero;
+export default UniversalHero;

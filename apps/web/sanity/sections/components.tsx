@@ -9,10 +9,11 @@ import {
   PodcastSection,
   SupportUsSection,
   ContactSection,
-  DivisionsHero,
+  UniversalHero,
   WhatWeDoDivisions,
   JoinUsDivisions,
   EventsDivisions,
+  DivisionsListSection,
 } from "@/components/sections";
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
@@ -42,9 +43,10 @@ export const components: ComponentsRegistry = {
   podcastSection: PodcastSection,
   supportUsSection: SupportUsSection,
   contactSection: ContactSection,
-  heroDivisionsSection: DivisionsHero,
+  universalHeroSection: UniversalHero,
   whatWeDoDivisionsSection: WhatWeDoDivisions,
   joinUsDivisionsSection: JoinUsDivisions,
   teamDivisionsSection: TeamDivisions,
   eventsDivisionsSection: EventsDivisions,
+  divisionsListSection: DivisionsListSection,
 };

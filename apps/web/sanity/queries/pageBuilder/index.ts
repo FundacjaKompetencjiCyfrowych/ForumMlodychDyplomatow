@@ -12,11 +12,12 @@ import { podcastSectionFragment } from "./podcastSectionFragment";
 import { supportUsSectionFragment } from "./supportUsSectionFragment";
 import type { Locale } from "next-intl";
 import { contactSectionFragment } from "./contactSectionFragment";
-import { heroDivisionsSectionFragment } from "./heroDivisionSectionFragment";
+import { universalHeroSectionFragment } from "./universalHeroSectionFragment";
 import { whatWeDoDivisionsSectionFragment } from "./whatWeDoDivisionsSectionFragment";
 import { joinUsDivisionsSectionFragment } from "./joinUsDivisionsSectionFragment";
 import { teamDivisionsSectionFragment } from "./teamDivisionsSectionFragment";
 import { eventsDivisionsSectionFragment } from "./eventsDivisionsSectionFragment";
+import { divisionsListSectionFragment } from "./divisionsListSectionFragment";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -33,11 +34,12 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       peopleSection: sub.project(peopleSectionFragment),
       podcastSection: sub.project(podcastSectionFragment),
       supportUsSection: sub.project(supportUsSectionFragment),
-      heroDivisionsSection: sub.project(heroDivisionsSectionFragment),
+      universalHeroSection: sub.project(universalHeroSectionFragment),
       whatWeDoDivisionsSection: sub.project(whatWeDoDivisionsSectionFragment),
       joinUsDivisionsSection: sub.project(joinUsDivisionsSectionFragment),
       teamDivisionsSection: sub.project(teamDivisionsSectionFragment),
       eventsDivisionsSection: sub.project(eventsDivisionsSectionFragment),
+      divisionsListSection: sub.project(divisionsListSectionFragment),
     },
     {
       isExhaustive: true,

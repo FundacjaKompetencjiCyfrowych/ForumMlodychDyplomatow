@@ -46,6 +46,36 @@
     }
   },
   {
+    "name": "divisionsListSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "divisionsListSection"
+          }
+        },
+        "header": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "text": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "eventsDivisionsSection",
     "type": "type",
     "value": {
@@ -260,7 +290,7 @@
     }
   },
   {
-    "name": "heroDivisionsSection",
+    "name": "universalHeroSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -269,7 +299,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "heroDivisionsSection"
+            "value": "universalHeroSection"
           }
         },
         "header": {
@@ -1076,7 +1106,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "heroDivisionsSection"
+              "name": "universalHeroSection"
             }
           },
           {
@@ -1137,6 +1167,21 @@
             "rest": {
               "type": "inline",
               "name": "eventsDivisionsSection"
+            }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "divisionsListSection"
             }
           }
         ]
@@ -2091,36 +2136,6 @@
   },
   {
     "type": "type",
-    "name": "divisionsPage.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "divisionsPage"
-    }
-  },
-  {
-    "type": "type",
     "name": "navigation.reference",
     "value": {
       "type": "object",
@@ -2332,10 +2347,6 @@
               {
                 "type": "inline",
                 "name": "division.reference"
-              },
-              {
-                "type": "inline",
-                "name": "divisionsPage.reference"
               },
               {
                 "type": "inline",
@@ -3778,94 +3789,6 @@
     }
   },
   {
-    "name": "divisionsPage",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "divisionsPage"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "locale": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "seo": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "seo"
-        },
-        "optional": true
-      },
-      "title": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "description": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "heroImage": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "img"
-        },
-        "optional": true
-      },
-      "titleDivisions": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "descriptionDivisions": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      }
-    }
-  },
-  {
     "name": "event",
     "type": "document",
     "attributes": {
@@ -4090,7 +4013,7 @@
                 },
                 "rest": {
                   "type": "inline",
-                  "name": "heroDivisionsSection"
+                  "name": "universalHeroSection"
                 }
               },
               {

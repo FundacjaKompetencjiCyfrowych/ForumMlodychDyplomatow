@@ -23,6 +23,12 @@ export type Button = {
   link?: string;
 };
 
+export type DivisionsListSection = {
+  _type: "divisionsListSection";
+  header?: string;
+  text?: string;
+};
+
 export type EventsDivisionsSection = {
   _type: "eventsDivisionsSection";
   header?: string;
@@ -64,8 +70,8 @@ export type TeamDivisionsSection = {
   >;
 };
 
-export type HeroDivisionsSection = {
-  _type: "heroDivisionsSection";
+export type UniversalHeroSection = {
+  _type: "universalHeroSection";
   header?: string;
   description?: string;
   image?: Img;
@@ -215,7 +221,7 @@ export type PageBuilder = Array<
     } & ContactSection)
   | ({
       _key: string;
-    } & HeroDivisionsSection)
+    } & UniversalHeroSection)
   | ({
       _key: string;
     } & TeamDivisionsSection)
@@ -228,6 +234,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & EventsDivisionsSection)
+  | ({
+      _key: string;
+    } & DivisionsListSection)
 >;
 
 export type LinkButton = {
@@ -391,13 +400,6 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
-export type DivisionsPageReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "divisionsPage";
-};
-
 export type NavigationReference = {
   _ref: string;
   _type: "reference";
@@ -447,7 +449,6 @@ export type InternationalizedArrayReferenceValue = {
     | PostReference
     | EventReference
     | DivisionReference
-    | DivisionsPageReference
     | AuthorReference
     | PersonReference
     | NavigationReference
@@ -696,21 +697,6 @@ export type Person = {
   }>;
 };
 
-export type DivisionsPage = {
-  _id: string;
-  _type: "divisionsPage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  locale?: string;
-  seo?: Seo;
-  title?: string;
-  description?: string;
-  heroImage?: Img;
-  titleDivisions?: string;
-  descriptionDivisions?: string;
-};
-
 export type Event = {
   _id: string;
   _type: "event";
@@ -746,7 +732,7 @@ export type Division = {
   pageBuilder?: Array<
     | ({
         _key: string;
-      } & HeroDivisionsSection)
+      } & UniversalHeroSection)
     | ({
         _key: string;
       } & WhatWeDoDivisionsSection)
@@ -945,12 +931,13 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | Robots
   | Button
+  | DivisionsListSection
   | EventsDivisionsSection
   | JoinUsDivisionsSection
   | WhatWeDoDivisionsSection
   | PersonReference
   | TeamDivisionsSection
-  | HeroDivisionsSection
+  | UniversalHeroSection
   | ContactSection
   | SupportUsSection
   | PodcastSection
@@ -981,7 +968,6 @@ export type AllSanitySchemaTypes =
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
-  | DivisionsPageReference
   | NavigationReference
   | PublicationReference
   | TagReference
@@ -1000,7 +986,6 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | Navigation
   | Person
-  | DivisionsPage
   | Event
   | Division
   | CategoryReference
