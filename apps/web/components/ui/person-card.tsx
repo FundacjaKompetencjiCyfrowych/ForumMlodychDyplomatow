@@ -6,6 +6,7 @@ import Typography from "./typography";
 type Person = DeepGet<PageBuilderSectionProps<"peopleSection">, "data.people.members">;
 
 const PersonCard = ({ person }: { person: Person }) => {
+  // w
   return (
     <div className="desktop:stretch flex w-full min-w-full flex-col items-center gap-4 rounded-sm bg-white desktop:min-w-0">
       <SanityImage
@@ -17,9 +18,10 @@ const PersonCard = ({ person }: { person: Person }) => {
         }}
       />
       <Typography variant="h5">{person.name}</Typography>
-      <Typography variant="h6" className="text-gray-600">
+      {/* Because of Maciek's new version of personSchema, I need to change it accordingly after merging it together. */}
+      {/* <Typography variant="h6" className="text-gray-600">
         {person.title}
-      </Typography>
+      </Typography> */}
       {/* TO DO Social Icons at person.socials[] */}
     </div>
   );

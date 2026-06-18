@@ -63,34 +63,38 @@ export const ContactSection = ({
   // Prosty stan dla błędów walidacji (symulacja)
   // W prawdziwej aplikacji najlepiej użyć np. react-hook-form z resolverem Zod
   const [errors, setErrors] = useState<Record<string, boolean>>({
+    firstName: false,
+    lastName: false,
+    email: false,
     subject: false,
     message: false,
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget; // Przechwytujemy referencję do formularza
+    const formData = new FormData(form);
 
-    const subject = formData.get("subject") as string;
-    const message = formData.get("message") as string;
-
-    // Prosta symulacja walidacji (pokazująca błędy na temacie i wiadomości jak na screenie)
+    // const data = Object.fromEntries(formData.entries());
     const newErrors = {
-      subject: !subject.trim(),
-      message: !message.trim(),
+      firstName: !(formData.get("firstName") as string)?.trim(),
+      lastName: !(formData.get("lastName") as string)?.trim(),
+      email: !(formData.get("email") as string)?.trim(),
+      subject: !(formData.get("subject") as string)?.trim(),
+      message: !(formData.get("message") as string)?.trim(),
     };
 
     setErrors(newErrors);
 
     if (Object.values(newErrors).some(Boolean)) {
-      return; // Zatrzymujemy wysyłkę jeśli są błędy
+      return;
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert("Wiadomość wysłana! (Symulacja)");
-    }, 1500);
+
+    setIsSubmitting(false);
+
+    form.reset();
   };
 
   // Helper do renderowania komunikatu o błędzie
@@ -174,12 +178,12 @@ export const ContactSection = ({
                 placeholder={t.placeholders.firstName}
                 className={cn(
                   "w-full rounded-none border bg-white px-4 py-2.5 text-sm transition-colors outline-none placeholder:text-slate-400",
-                  errors.subject
+                  errors.firstName
                     ? "border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red"
                     : "border-brand-slate-400 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue"
                 )}
               />
-              {renderError(errors.subject)}
+              {renderError(errors.firstName)}
             </div>
 
             <div className="flex flex-col gap-2">
@@ -193,12 +197,12 @@ export const ContactSection = ({
                 placeholder={t.placeholders.lastName}
                 className={cn(
                   "w-full rounded-none border bg-white px-4 py-2.5 text-sm transition-colors outline-none placeholder:text-slate-400",
-                  errors.subject
+                  errors.lastName
                     ? "border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red"
                     : "border-brand-slate-400 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue"
                 )}
               />
-              {renderError(errors.subject)}
+              {renderError(errors.lastName)}
             </div>
 
             <div className="flex flex-col gap-2">
@@ -212,12 +216,12 @@ export const ContactSection = ({
                 placeholder={t.placeholders.email}
                 className={cn(
                   "w-full rounded-none border bg-white px-4 py-2.5 text-sm transition-colors outline-none placeholder:text-slate-400",
-                  errors.subject
+                  errors.email
                     ? "border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red"
                     : "border-brand-slate-400 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue"
                 )}
               />
-              {renderError(errors.subject)}
+              {renderError(errors.email)}
             </div>
 
             <div className="flex flex-col gap-2">
@@ -230,13 +234,9 @@ export const ContactSection = ({
                 type="tel"
                 placeholder={t.placeholders.phone}
                 className={cn(
-                  "w-full rounded-none border bg-white px-4 py-2.5 text-sm transition-colors outline-none placeholder:text-slate-400",
-                  errors.subject
-                    ? "border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red"
-                    : "border-brand-slate-400 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue"
+                  "w-full rounded-none border border-brand-slate-400 bg-white px-4 py-2.5 text-sm transition-colors outline-none placeholder:text-slate-400 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue"
                 )}
               />
-              {renderError(errors.subject)}
             </div>
 
             <div className="flex flex-col gap-1">
