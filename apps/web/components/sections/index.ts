@@ -13,3 +13,5 @@ export { default as WhatWeDoDivisions } from "./WhatWeDoDivisionsSection";
 export { default as JoinUsDivisions } from "./JoinUsDivisionsSection";
 export { default as EventsDivisions } from "./EventsDivisionsSection";
 export { default as DivisionsListSection } from "./DivisionsListSection";
+export { default as HeadingSection } from "./HeadingSection";
+export { default as ExpertsListSection } from "./ExpertsListSection";

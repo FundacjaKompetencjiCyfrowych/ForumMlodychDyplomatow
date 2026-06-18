@@ -7,7 +7,11 @@ import { combineTemplates } from "./utils/utils";
 import { structure } from "./plugins/structure";
 import { addLanguageTemplates, intlConfig } from "./plugins/intl";
 import { plPLLocale } from "@sanity/locale-pl-pl";
-import { documentInternationalization } from "@sanity/document-internationalization";
+import {
+  documentInternationalization,
+  useDeleteTranslationAction,
+  useDuplicateWithTranslationsAction,
+} from "@sanity/document-internationalization";
 import { iconPicker } from "sanity-plugin-icon-picker";
 import { media } from "sanity-plugin-media";
 import { Logo } from "./components/Logo";
@@ -17,6 +21,7 @@ import { presentationTool } from "sanity/presentation";
 import { dashboardTool } from "@sanity/dashboard";
 import { vercelWidget } from "sanity-plugin-dashboard-widget-vercel";
 import { addTagTemplates } from "./plugins/tagTemplates";
+import { DOCUMENTS } from "./config";
 
 const parse = envSchema.safeParse(process.env);
 if (!parse.success) {
@@ -74,6 +79,17 @@ export default defineConfig({
   },
 
   document: {
-    actions: singletonDocumentActions,
+    actions: (prev, ctx) => {
+      const translatedSchemaTypes = DOCUMENTS.filter((d) => d.intl).map((d) => d._type);
+      const withSingletonActions = singletonDocumentActions(prev, ctx);
+      if (translatedSchemaTypes.includes(ctx.schemaType)) {
+        return [
+          ...withSingletonActions,
+          useDeleteTranslationAction,
+          useDuplicateWithTranslationsAction,
+        ];
+      }
+      return withSingletonActions;
+    },
   },
 });

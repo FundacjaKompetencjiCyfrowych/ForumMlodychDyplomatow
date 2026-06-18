@@ -239,6 +239,7 @@
   },
   {
     "name": "teamDivisionsSection",
+    "name": "expertsListSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -251,6 +252,10 @@
           }
         },
         "header": {
+            "value": "expertsListSection"
+          }
+        },
+        "dummy": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -291,6 +296,12 @@
   },
   {
     "name": "universalHeroSection",
+        }
+      }
+    }
+  },
+  {
+    "name": "headingSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -303,6 +314,10 @@
           }
         },
         "header": {
+            "value": "headingSection"
+          }
+        },
+        "heading": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -310,6 +325,7 @@
           "optional": true
         },
         "description": {
+        "subheading": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -470,7 +486,7 @@
   },
   {
     "type": "type",
-    "name": "author.reference",
+    "name": "person.reference",
     "value": {
       "type": "object",
       "attributes": {
@@ -495,7 +511,7 @@
           "optional": true
         }
       },
-      "dereferencesTo": "author"
+      "dereferencesTo": "person"
     }
   },
   {
@@ -548,7 +564,7 @@
                       },
                       "rest": {
                         "type": "inline",
-                        "name": "author.reference"
+                        "name": "person.reference"
                       }
                     }
                   },
@@ -1183,6 +1199,21 @@
               "type": "inline",
               "name": "divisionsListSection"
             }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "expertsListSection"
+            }
           }
         ]
       }
@@ -1269,36 +1300,6 @@
   },
   {
     "type": "type",
-    "name": "post.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "post"
-    }
-  },
-  {
-    "type": "type",
     "name": "event.reference",
     "value": {
       "type": "object",
@@ -1328,6 +1329,36 @@
     }
   },
   {
+    "type": "type",
+    "name": "publication.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "publication"
+    }
+  },
+  {
     "name": "link",
     "type": "type",
     "value": {
@@ -1348,10 +1379,6 @@
               {
                 "type": "string",
                 "value": "page"
-              },
-              {
-                "type": "string",
-                "value": "post"
               },
               {
                 "type": "string",
@@ -1402,14 +1429,6 @@
           },
           "optional": true
         },
-        "post": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "post.reference"
-          },
-          "optional": true
-        },
         "event": {
           "type": "objectAttribute",
           "value": {
@@ -1423,6 +1442,14 @@
           "value": {
             "type": "inline",
             "name": "division.reference"
+          },
+          "optional": true
+        },
+        "publication": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "publication.reference"
           },
           "optional": true
         },
@@ -2136,6 +2163,36 @@
   },
   {
     "type": "type",
+    "name": "post.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "post"
+    }
+  },
+  {
+    "type": "type",
     "name": "navigation.reference",
     "value": {
       "type": "object",
@@ -2162,36 +2219,6 @@
         }
       },
       "dereferencesTo": "navigation"
-    }
-  },
-  {
-    "type": "type",
-    "name": "publication.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "publication"
     }
   },
   {
@@ -2350,7 +2377,7 @@
               },
               {
                 "type": "inline",
-                "name": "author.reference"
+                "name": "person.reference"
               },
               {
                 "type": "inline",
@@ -2422,6 +2449,66 @@
           "type": "string"
         }
       },
+      "global": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "results": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "search": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "navigation": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "home": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "skipToContent": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "aboutUs": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "experts": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "buttons": {
         "type": "objectAttribute",
         "value": {
@@ -2484,6 +2571,64 @@
               "type": "objectAttribute",
               "value": {
                 "type": "string"
+              },
+              "optional": true
+            },
+            "groupName": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "groups": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "everything": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "board": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "regionalAuthority": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "groupCoordinator": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "author": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "reviewer": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  }
+                }
               },
               "optional": true
             }
@@ -3047,7 +3192,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "author.reference"
+          "name": "person.reference"
         },
         "optional": true
       },
@@ -3867,6 +4012,13 @@
         },
         "optional": true
       },
+      "isOnline": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "division": {
         "type": "objectAttribute",
         "value": {
@@ -3893,22 +4045,6 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
-        },
-        "optional": true
-      },
-      "description": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "richText"
-        },
-        "optional": true
-      },
-      "image": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "img"
         },
         "optional": true
       },
@@ -4182,7 +4318,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "author.reference"
+          "name": "person.reference"
         },
         "optional": true
       },
@@ -4234,7 +4370,7 @@
     }
   },
   {
-    "name": "author",
+    "name": "person",
     "type": "document",
     "attributes": {
       "_id": {
@@ -4247,7 +4383,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "author"
+          "value": "person"
         }
       },
       "_createdAt": {
@@ -4282,11 +4418,32 @@
         },
         "optional": true
       },
-      "slug": {
+      "group": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "slug"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "board"
+            },
+            {
+              "type": "string",
+              "value": "regionalAuthority"
+            },
+            {
+              "type": "string",
+              "value": "groupCoordinator"
+            },
+            {
+              "type": "string",
+              "value": "author"
+            },
+            {
+              "type": "string",
+              "value": "reviewer"
+            }
+          ]
         },
         "optional": true
       },
@@ -4305,122 +4462,38 @@
         },
         "optional": true
       },
-      "bio": {
+      "socials": {
         "type": "objectAttribute",
         "value": {
           "type": "array",
           "of": {
             "type": "object",
             "attributes": {
-              "children": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "array",
-                  "of": {
-                    "type": "object",
-                    "attributes": {
-                      "marks": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "string"
-                          }
-                        },
-                        "optional": true
-                      },
-                      "text": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
-                        },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "span"
-                        }
-                      }
-                    },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "optional": true
-              },
-              "style": {
+              "platform": {
                 "type": "objectAttribute",
                 "value": {
                   "type": "union",
                   "of": [
                     {
                       "type": "string",
-                      "value": "normal"
+                      "value": "linkedin"
+                    },
+                    {
+                      "type": "string",
+                      "value": "instagram"
+                    },
+                    {
+                      "type": "string",
+                      "value": "facebook"
                     }
                   ]
                 },
                 "optional": true
               },
-              "listItem": {
+              "url": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "union",
-                  "of": []
-                },
-                "optional": true
-              },
-              "markDefs": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "array",
-                  "of": {
-                    "type": "object",
-                    "attributes": {
-                      "href": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
-                        },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "link"
-                        }
-                      }
-                    },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "optional": true
-              },
-              "level": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "number"
+                  "type": "string"
                 },
                 "optional": true
               },
@@ -4428,7 +4501,7 @@
                 "type": "objectAttribute",
                 "value": {
                   "type": "string",
-                  "value": "block"
+                  "value": "social"
                 }
               }
             },
@@ -4496,20 +4569,6 @@
         "value": {
           "type": "inline",
           "name": "slug"
-        },
-        "optional": true
-      },
-      "heading": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "subheading": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
         },
         "optional": true
       },

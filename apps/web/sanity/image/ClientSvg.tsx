@@ -10,8 +10,20 @@ const convertToCurrentColor = (code: string) =>
     .replace(/height=".*?"/g, "")
     .replace(/width=".*?"/g, "");
 
-const ClientSvg = (props: Props) => {
-  return <SVG {...props} preProcessor={convertToCurrentColor} />;
+const compose =
+  (...fns: ((code: string) => string)[]) =>
+  (code: string) =>
+    fns.reduce((acc, fn) => fn(acc), code);
+
+const ClientSvg = ({ preProcessor, ...props }: Props) => {
+  return (
+    <SVG
+      {...props}
+      preProcessor={
+        preProcessor ? compose(preProcessor, convertToCurrentColor) : convertToCurrentColor
+      }
+    />
+  );
 };
 
 export default ClientSvg;

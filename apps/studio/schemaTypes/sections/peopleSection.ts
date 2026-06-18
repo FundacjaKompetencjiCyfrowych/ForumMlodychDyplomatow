@@ -6,7 +6,7 @@ export const peopleSection = defineType({
   title: "Sekcja Ludzie",
   type: "object",
   preview: createSectionPreview("peopleSection", {
-    title: "Sekcja Ludzie",
+    title: "Ludzie",
     subtitle: "heading",
   }),
   fields: [
@@ -38,7 +38,7 @@ export const peopleSection = defineType({
               name: "members",
               type: "array",
               title: "Członkowie grupy",
-              of: [{ type: "reference", to: { type: "author" } }],
+              of: [{ type: "reference", to: { type: "person" } }],
               validation: (Rule) => Rule.required().max(4),
             }),
           ],

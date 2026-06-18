@@ -5,9 +5,12 @@ import { pageQuery, pagesMetadataQuery, pagesSlugQuery } from "@/sanity/queries/
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import { runQuery } from "@/sanity/groqd";
 import type { Locale } from "next-intl";
+import { tryGettingLocaleSlug } from "../../../lib/links";
+import { notFound, redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 /**
@@ -34,8 +37,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   });
 
   return {
-    title: page?.name,
-    description: page?.heading,
+    title: page?.seo?.title ?? page?.name,
+    description: page?.seo?.description,
   } satisfies Metadata;
 }
 
@@ -49,19 +52,20 @@ export default async function Page(props: Props) {
   });
 
   if (!page?._id) {
+    // See if this page exists under a different slug in the current locale, if so - redirect to it
+    // This helps with language change, to stay on the same page.
+    const newSlug = await tryGettingLocaleSlug(params.locale, params.slug);
+    if (newSlug) {
+      return redirect(`/${params.locale}/${newSlug}`);
+    }
     // Alternatively, Redirect to 404 page
-    return (
-      <div className="py-40">
-        <div className="container">
-          <h1 className="text-4xl text-gray-200 sm:text-5xl lg:text-7xl">Strona nie znaleziona</h1>
-        </div>
-      </div>
-    );
+    return notFound();
   }
   const locale = params.locale;
+  const searchParams = await props.searchParams;
   return (
-    <div className="">
-      <SanitySections value={page?.pageBuilder} locale={locale} />
+    <div id="main-content" className="">
+      <SanitySections value={page?.pageBuilder} locale={locale} searchParams={searchParams} />
     </div>
   );
 }

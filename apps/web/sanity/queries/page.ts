@@ -15,8 +15,6 @@ export const pageQuery = q
     _type: sub.field("_type"),
     name: sub.field("name"),
     slug: sub.field("slug.current"),
-    heading: sub.field("heading"),
-    subheading: sub.field("subheading"),
     pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment),
     seo: sub.field("seo").project(seoFragment),
   }));
@@ -40,6 +38,20 @@ export const pagesMetadataQuery = q
   .project((sub) => ({
     name: sub.field("name"),
     slug: sub.field("slug.current"),
-    heading: sub.field("heading"),
     seo: sub.field("seo").project(seoFragment),
+  }));
+
+export const pagesLanguageSlugQuery = q
+  .parameters<{ slug: string; locale: string }>()
+  .star.filterByType("translation.metadata")
+  .filterRaw("$slug in translations[].value->slug.current")
+  .slice(0)
+  .project((sub) => ({
+    slug: sub
+      .field("translations[]")
+      .filterBy(`_key == $locale`)
+      .field("value")
+      .deref()
+      // Needs raw, since we don't have a strongly typed reference, but all translated pages have a slug field
+      .raw("slug.current"),
   }));

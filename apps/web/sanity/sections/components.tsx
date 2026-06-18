@@ -14,6 +14,8 @@ import {
   JoinUsDivisions,
   EventsDivisions,
   DivisionsListSection,
+  HeadingSection,
+  ExpertsListSection,
 } from "@/components/sections";
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
@@ -49,4 +51,6 @@ export const components: ComponentsRegistry = {
   teamDivisionsSection: TeamDivisions,
   eventsDivisionsSection: EventsDivisions,
   divisionsListSection: DivisionsListSection,
+  headingSection: HeadingSection,
+  expertsListSection: ExpertsListSection,
 };

@@ -102,11 +102,11 @@ export type PodcastSection = {
   embed?: string;
 };
 
-export type AuthorReference = {
+export type PersonReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
+  [internalGroqTypeReferenceTo]?: "person";
 };
 
 export type PeopleSection = {
@@ -117,7 +117,7 @@ export type PeopleSection = {
     members?: Array<
       {
         _key: string;
-      } & AuthorReference
+      } & PersonReference
     >;
     _type: "group";
     _key: string;
@@ -200,6 +200,9 @@ export type PageBuilder = Array<
     } & EventsSection)
   | ({
       _key: string;
+    } & HeadingSection)
+  | ({
+      _key: string;
     } & HeroSection)
   | ({
       _key: string;
@@ -252,13 +255,6 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
-export type PostReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "post";
-};
-
 export type EventReference = {
   _ref: string;
   _type: "reference";
@@ -266,16 +262,23 @@ export type EventReference = {
   [internalGroqTypeReferenceTo]?: "event";
 };
 
+export type PublicationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publication";
+};
+
 export type Link = {
   _type: "link";
-  linkType?: "page" | "post" | "publication" | "event" | "division" | "href";
+  linkType?: "page" | "publication" | "event" | "division" | "href";
   text?: string;
   href?: string;
   page?: PageReference;
   homepage?: boolean;
-  post?: PostReference;
   event?: EventReference;
   division?: DivisionReference;
+  publication?: PublicationReference;
   openInNewTab?: boolean;
   isExternal?: boolean;
 };
@@ -400,18 +403,18 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
+export type PostReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "post";
+};
+
 export type NavigationReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "navigation";
-};
-
-export type PublicationReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "publication";
 };
 
 export type TagReference = {
@@ -465,6 +468,16 @@ export type Translations = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  global?: {
+    results?: string;
+    search?: string;
+  };
+  navigation?: {
+    home?: string;
+    skipToContent?: string;
+    aboutUs?: string;
+    experts?: string;
+  };
   buttons?: {
     support?: string;
   };
@@ -476,6 +489,15 @@ export type Translations = {
   };
   people?: {
     seeAll?: string;
+    groupName?: string;
+    groups?: {
+      everything?: string;
+      board?: string;
+      regionalAuthority?: string;
+      groupCoordinator?: string;
+      author?: string;
+      reviewer?: string;
+    };
   };
   locale?: string;
 };
@@ -571,7 +593,7 @@ export type Publication = {
   slug?: Slug;
   date?: string;
   mainImage?: Img;
-  author?: AuthorReference;
+  author?: PersonReference;
   pdfFile?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
@@ -709,12 +731,11 @@ export type Event = {
   slug?: Slug;
   startDate?: string;
   endDate?: string;
+  isOnline?: boolean;
   division?: DivisionReference;
   venue?: string;
   address?: string;
   excerpt?: string;
-  description?: RichText;
-  image?: Img;
   registrationUrl?: string;
 };
 
@@ -765,7 +786,7 @@ export type Post = {
   seo?: Seo;
   title?: string;
   slug?: Slug;
-  author?: AuthorReference;
+  author?: PersonReference;
   image?: Img;
   categories?: Array<
     {
@@ -776,33 +797,26 @@ export type Post = {
   body?: RichText;
 };
 
-export type Author = {
+export type Person = {
   _id: string;
-  _type: "author";
+  _type: "person";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   locale?: string;
   name?: string;
-  slug?: Slug;
+  group?:
+    | "board"
+    | "regionalAuthority"
+    | "groupCoordinator"
+    | "author"
+    | "reviewer";
   img?: Img;
   title?: string;
-  bio?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
+  socials?: Array<{
+    platform?: "linkedin" | "instagram" | "facebook";
+    url?: string;
+    _type: "social";
     _key: string;
   }>;
 };
@@ -815,8 +829,6 @@ export type Page = {
   _rev: string;
   name?: string;
   slug?: Slug;
-  heading?: string;
-  subheading?: string;
   pageBuilder?: PageBuilder;
   locale?: string;
   seo?: Seo;
@@ -941,7 +953,7 @@ export type AllSanitySchemaTypes =
   | ContactSection
   | SupportUsSection
   | PodcastSection
-  | AuthorReference
+  | PersonReference
   | PeopleSection
   | NewPublicationsSection
   | JoinUsSection
@@ -953,8 +965,8 @@ export type AllSanitySchemaTypes =
   | PageBuilder
   | LinkButton
   | PageReference
-  | PostReference
   | EventReference
+  | PublicationReference
   | Link
   | PostsSection
   | LeadSection
@@ -968,8 +980,8 @@ export type AllSanitySchemaTypes =
   | IconPicker
   | TranslationMetadata
   | InternationalizedArrayReference
+  | PostReference
   | NavigationReference
-  | PublicationReference
   | TagReference
   | TagCategoryReference
   | FooterReference
@@ -990,7 +1002,7 @@ export type AllSanitySchemaTypes =
   | Division
   | CategoryReference
   | Post
-  | Author
+  | Person
   | Page
   | MediaTag
   | SanityImagePaletteSwatch

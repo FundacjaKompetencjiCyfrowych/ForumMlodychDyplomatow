@@ -18,6 +18,8 @@ import { joinUsDivisionsSectionFragment } from "./joinUsDivisionsSectionFragment
 import { teamDivisionsSectionFragment } from "./teamDivisionsSectionFragment";
 import { eventsDivisionsSectionFragment } from "./eventsDivisionsSectionFragment";
 import { divisionsListSectionFragment } from "./divisionsListSectionFragment";
+import { headingSectionFragment } from "./headingSection";
+import { expertsListSectionFragment } from "./expertsListSection";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -40,6 +42,8 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       teamDivisionsSection: sub.project(teamDivisionsSectionFragment),
       eventsDivisionsSection: sub.project(eventsDivisionsSectionFragment),
       divisionsListSection: sub.project(divisionsListSectionFragment),
+      headingSection: sub.project(headingSectionFragment),
+      expertsListSection: sub.project(expertsListSectionFragment),
     },
     {
       isExhaustive: true,
@@ -64,4 +68,5 @@ export type PageBuilderSectionProps<T extends PageBuilderSectionType> = {
   data: PageBuilderFragmentData<T>;
   index: number;
   locale: Locale;
+  searchParams: Record<string, string | string[] | undefined>;
 };
