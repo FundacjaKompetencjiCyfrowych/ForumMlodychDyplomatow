@@ -60,8 +60,6 @@ export const ContactSection = ({
   const t = translations[locale as keyof typeof translations] || translations.pl;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Prosty stan dla błędów walidacji (symulacja)
-  // W prawdziwej aplikacji najlepiej użyć np. react-hook-form z resolverem Zod
   const [errors, setErrors] = useState<Record<string, boolean>>({
     firstName: false,
     lastName: false,
@@ -72,7 +70,7 @@ export const ContactSection = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget; // Przechwytujemy referencję do formularza
+    const form = e.currentTarget;
     const formData = new FormData(form);
 
     // const data = Object.fromEntries(formData.entries());

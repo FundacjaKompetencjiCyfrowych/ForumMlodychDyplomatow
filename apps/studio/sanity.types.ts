@@ -614,15 +614,7 @@ export type Publication = {
           _type: "span";
           _key: string;
         }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
+        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -788,12 +780,7 @@ export type Person = {
   _rev: string;
   locale?: string;
   name?: string;
-  group?:
-    | "board"
-    | "regionalAuthority"
-    | "groupCoordinator"
-    | "author"
-    | "reviewer";
+  group?: "board" | "regionalAuthority" | "groupCoordinator" | "author" | "reviewer";
   img?: Img;
   title?: string;
   socials?: Array<{
@@ -996,5 +983,4 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
-
 export declare const internalGroqTypeReferenceTo: unique symbol;

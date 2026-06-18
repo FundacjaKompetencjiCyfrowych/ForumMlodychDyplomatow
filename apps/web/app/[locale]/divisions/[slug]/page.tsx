@@ -5,6 +5,7 @@ import type { Locale } from "next-intl";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>; // Dodaj to
 };
 
 export async function generateStaticParams() {
@@ -18,6 +19,7 @@ export async function generateStaticParams() {
 
 export default async function DivisionSlugPage(props: Props) {
   const params = await props.params;
+  const searchParams = await props.searchParams; // Pobierz searchParams
   const { slug, locale } = params;
 
   const { data: division } = await runQuery(singleDivisionQuery, {
@@ -46,7 +48,11 @@ export default async function DivisionSlugPage(props: Props) {
 
   return (
     <main className="min-h-screen">
-      <SanitySections value={sectionsWithSlug} locale={locale} />
+      <SanitySections
+        value={sectionsWithSlug}
+        locale={locale}
+        searchParams={searchParams} // 3. Przekaż pobrane searchParams tutaj
+      />
     </main>
   );
 }

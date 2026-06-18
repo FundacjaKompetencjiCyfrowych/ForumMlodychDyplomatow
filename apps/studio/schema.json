@@ -46,6 +46,67 @@
     }
   },
   {
+    "name": "expertsListSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "expertsListSection"
+          }
+        },
+        "dummy": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "headingSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "headingSection"
+          }
+        },
+        "heading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "subheading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "image": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "img"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "divisionsListSection",
     "type": "type",
     "value": {
@@ -239,7 +300,6 @@
   },
   {
     "name": "teamDivisionsSection",
-    "name": "expertsListSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -252,10 +312,6 @@
           }
         },
         "header": {
-            "value": "expertsListSection"
-          }
-        },
-        "dummy": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -296,12 +352,6 @@
   },
   {
     "name": "universalHeroSection",
-        }
-      }
-    }
-  },
-  {
-    "name": "headingSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -314,10 +364,6 @@
           }
         },
         "header": {
-            "value": "headingSection"
-          }
-        },
-        "heading": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -325,7 +371,6 @@
           "optional": true
         },
         "description": {
-        "subheading": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -482,36 +527,6 @@
           "optional": true
         }
       }
-    }
-  },
-  {
-    "type": "type",
-    "name": "person.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "person"
     }
   },
   {
@@ -1003,6 +1018,21 @@
             "rest": {
               "type": "inline",
               "name": "eventsSection"
+            }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "headingSection"
             }
           },
           {
@@ -2374,10 +2404,6 @@
               {
                 "type": "inline",
                 "name": "division.reference"
-              },
-              {
-                "type": "inline",
-                "name": "person.reference"
               },
               {
                 "type": "inline",
@@ -3775,159 +3801,6 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
-        },
-        "optional": true
-      }
-    }
-  },
-  {
-    "name": "person",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "person"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "locale": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "name": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "group": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "board"
-            },
-            {
-              "type": "string",
-              "value": "regionalAuthority"
-            },
-            {
-              "type": "string",
-              "value": "groupCoordinator"
-            },
-            {
-              "type": "string",
-              "value": "author"
-            },
-            {
-              "type": "string",
-              "value": "reviewer"
-            }
-          ]
-        },
-        "optional": true
-      },
-      "img": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "img"
-        },
-        "optional": true
-      },
-      "title": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "socials": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "platform": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "linkedin"
-                    },
-                    {
-                      "type": "string",
-                      "value": "instagram"
-                    },
-                    {
-                      "type": "string",
-                      "value": "facebook"
-                    }
-                  ]
-                },
-                "optional": true
-              },
-              "url": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": true
-              },
-              "_type": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string",
-                  "value": "social"
-                }
-              }
-            },
-            "rest": {
-              "type": "object",
-              "attributes": {
-                "_key": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
         },
         "optional": true
       }
