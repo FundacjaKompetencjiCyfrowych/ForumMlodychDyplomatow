@@ -3981,6 +3981,14 @@
         },
         "optional": true
       },
+      "bio": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayText"
+        },
+        "optional": true
+      },
       "socials": {
         "type": "objectAttribute",
         "value": {

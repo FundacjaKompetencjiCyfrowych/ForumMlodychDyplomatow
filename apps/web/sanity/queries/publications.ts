@@ -1,6 +1,8 @@
 import type { InferFragmentType } from "groqd";
+import type { Locale } from "next-intl";
 import { q } from "../groqd";
 import { imgFragment } from "./imgFragment";
+import { intlArrayTextQuery } from "./intl";
 
 export type PublicationsListQueryParams = {
   locale: string;
@@ -24,53 +26,64 @@ export type RelatedPublicationsQueryParams = {
   limit: number;
 };
 
-export const publicationPreviewFragment = q.fragmentForType<"publication">().project((sub) => ({
-  _id: true,
-  _type: true,
-  title: true,
-  type: true,
-  date: true,
-  excerpt: true,
-  slug: sub.field("slug.current").notNull(),
-  mainImage: sub.field("mainImage").project(imgFragment),
-  author: sub
-    .field("author")
-    .deref()
-    .project({
-      name: true,
-      img: sub.field("mainImage").project(imgFragment),
-    }),
-  tags: sub.field("tags[]").deref().project({
+export const publicationPreviewFragment = q
+  .parameters<{ locale: Locale }>()
+  .fragmentForType<"publication">()
+  .project((sub) => ({
     _id: true,
-    name: true,
-  }),
-}));
+    _type: true,
+    title: true,
+    type: true,
+    date: true,
+    excerpt: true,
+    slug: sub.field("slug.current").notNull(),
+    mainImage: sub.field("mainImage").project(imgFragment),
+    author: sub
+      .field("author")
+      .deref()
+      .project((sub) => ({
+        name: true,
+        img: sub.field("img").project(imgFragment),
+      })),
+    tags: sub.field("tags[]").deref().project({
+      _id: true,
+      name: true,
+    }),
+  }));
 
 export type PublicationPreview = InferFragmentType<typeof publicationPreviewFragment>;
 
-export const publicationDetailFragment = q.fragmentForType<"publication">().project((sub) => ({
-  _id: true,
-  _type: true,
-  title: true,
-  type: true,
-  date: true,
-  excerpt: true,
-  slug: "slug.current",
-  mainImage: sub.field("mainImage").project(imgFragment),
-  author: sub.field("author").deref().project({
-    name: true,
-  }),
-  tags: sub.field("tags[]").deref().project({
+export const publicationDetailFragment = q
+  .parameters<{ locale: Locale }>()
+  .fragmentForType<"publication">()
+  .project((sub) => ({
     _id: true,
-    name: true,
-  }),
-  pdfFile: sub.field("pdfFile").field("asset").deref().project({
-    url: true,
-  }),
-  text: sub.field("text[]"),
+    _type: true,
+    title: true,
+    type: true,
+    date: true,
+    excerpt: true,
+    slug: "slug.current",
+    mainImage: sub.field("mainImage").project(imgFragment),
+    author: sub
+      .field("author")
+      .deref()
+      .project((sub) => ({
+        name: true,
+        img: sub.field("img").project(imgFragment),
+        bio: intlArrayTextQuery(sub.field("bio[]")),
+      })),
+    tags: sub.field("tags[]").deref().project({
+      _id: true,
+      name: true,
+    }),
+    pdfFile: sub.field("pdfFile").field("asset").deref().project({
+      url: true,
+    }),
+    text: sub.field("text[]"),
 
-  seo: sub.field("seo"),
-}));
+    seo: sub.field("seo"),
+  }));
 
 export type PublicationDetail = InferFragmentType<typeof publicationDetailFragment>;
 

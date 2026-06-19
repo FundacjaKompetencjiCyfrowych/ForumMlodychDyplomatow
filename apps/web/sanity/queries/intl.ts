@@ -1,7 +1,7 @@
 import type { GroqBuilder, InferResultType } from "groqd";
 import { q, type GroqdContextWithParameters } from "../groqd";
 import type { DeepNonNullable } from "../../lib/types";
-import type { InternationalizedArrayString } from "../typegen";
+import type { InternationalizedArrayString, InternationalizedArrayText } from "../typegen";
 
 export const intlQuery = q
   .parameters<{ locale: string }>()
@@ -37,6 +37,13 @@ declare module "next-intl" {
 export const intlArrayQuery = (
   sub: GroqBuilder<
     InternationalizedArrayString | null,
+    GroqdContextWithParameters<{ locale: Locale }>
+  >
+) => sub.filterBy("language == $locale").slice(0).field("value");
+
+export const intlArrayTextQuery = (
+  sub: GroqBuilder<
+    InternationalizedArrayText | null,
     GroqdContextWithParameters<{ locale: Locale }>
   >
 ) => sub.filterBy("language == $locale").slice(0).field("value");

@@ -35,6 +35,12 @@ export default defineType({
       type: "internationalizedArrayString",
       description: "Krótkie określenie roli autora, np. 'Przewodniczący FMD'",
     }),
+    defineField({
+      name: "bio",
+      title: "Biografia",
+      type: "internationalizedArrayText",
+      description: "Krótka biografia autora",
+    }),
 
     defineField({
       name: "socials",

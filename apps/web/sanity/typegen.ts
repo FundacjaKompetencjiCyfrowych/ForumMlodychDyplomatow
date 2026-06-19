@@ -728,6 +728,7 @@ export type Person = {
   group?: string;
   img?: Img;
   title?: InternationalizedArrayString;
+  bio?: InternationalizedArrayText;
   socials?: Array<{
     platform?: "linkedin" | "instagram" | "facebook";
     url?: string;
