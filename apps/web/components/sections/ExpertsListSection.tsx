@@ -45,17 +45,19 @@ const ExpertsListSection = async ({
           label: t("people.allGroups"),
           default: true,
         },
-        ...data.groups.map(
-          (group) =>
-            ({
-              label: group.name ?? "",
-              value: group.subgroups ? undefined : (group.slug ?? ""),
-              subgroups: group.subgroups?.map((subgroup) => ({
-                label: subgroup.name ?? "",
-                value: subgroup.slug ?? "",
-              })),
-            }) as Filter["options"][number]
-        ),
+        ...(data.groups
+          ? data.groups.map(
+              (group) =>
+                ({
+                  label: group.name ?? "",
+                  value: group.subgroups ? undefined : (group.slug ?? ""),
+                  subgroups: group.subgroups?.map((subgroup) => ({
+                    label: subgroup.name ?? "",
+                    value: subgroup.slug ?? "",
+                  })),
+                }) as Filter["options"][number]
+            )
+          : []),
       ],
     },
   ];

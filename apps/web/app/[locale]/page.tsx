@@ -4,7 +4,6 @@ import { runQuery } from "../../sanity/groqd";
 import { pagesMetadataQuery } from "../../sanity/queries/page";
 import type { Locale } from "next-intl";
 import { routing } from "../../i18n/routing";
-import { setRequestLocale } from "next-intl/server";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -34,8 +33,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   } satisfies Metadata;
 }
 export default async function Page(props: Props) {
-  const { locale } = await props.params;
-  setRequestLocale(locale ?? "pl");
   return (
     <DefaultPage
       params={props.params.then((p) => ({ slug: "home", locale: p.locale }))}

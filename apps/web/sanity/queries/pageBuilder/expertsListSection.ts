@@ -22,6 +22,5 @@ export const expertsListSectionFragment = q
           })),
         })),
       }))
-      .field("groups[]")
-      .notNull(),
+      .field("groups[]"),
   }));

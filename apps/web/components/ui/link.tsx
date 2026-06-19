@@ -2,10 +2,10 @@ import { Link as BaseLink } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { type VariantProps } from "class-variance-authority";
 import type { InferFragmentType } from "groqd";
+import { ExternalLink } from "lucide-react";
 import React from "react";
 import type { linkFragment } from "../../sanity/queries/linkFragment";
 import { buttonVariants } from "./button";
-import ClientSvg from "../../sanity/image/ClientSvg";
 type LinkType = InferFragmentType<typeof linkFragment>;
 type LinkOrHref =
   | {
@@ -29,12 +29,6 @@ const slugsByType = {
   division: "/division/",
   publication: "/publications/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;
-
-const ExternalLinkIcon = () => {
-  return <ClientSvg src="/static/icons/external-link.svg" className="size-[0.875em] self-center" />;
-  // todo hydration errors with svg lib?
-  // return null;
-};
 
 export const Link = ({
   children,
@@ -82,7 +76,7 @@ export const Link = ({
     return `${slugsByType[link.linkType]}${link.href}`;
   };
   const isExternal = link?.linkType === "href" || href?.startsWith("http");
-  const rightIcon = isExternal && !noExternalIcon ? <ExternalLinkIcon /> : iconRight;
+  const rightIcon = isExternal && !noExternalIcon ? <ExternalLink /> : iconRight;
   return (
     <BaseLink
       href={getHref()}

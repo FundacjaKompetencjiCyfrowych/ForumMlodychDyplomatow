@@ -108,7 +108,6 @@ export const PublicationCard = async ({
                   <SanityImage
                     image={author.img}
                     alt={author.name ?? undefined}
-                    fill
                     className="object-cover"
                   />
                 ) : (

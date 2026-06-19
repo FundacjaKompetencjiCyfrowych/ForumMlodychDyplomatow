@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./carousel";
-
+import AutoScroll from "embla-carousel-auto-scroll";
 type ResponsiveCarouselProps = {
   children: React.ReactNode;
   /** Extra classes on the outer wrapper */
@@ -72,6 +72,8 @@ type ButtonCarouselProps = {
   className?: string;
   /** Extra classes forwarded to the CarouselContent inner flex container */
   contentClassName?: string;
+  /** Automatically scroll the carousel */
+  autoscroll?: boolean;
   /**
    * Controls how many items are visible at once by setting the flex basis on each
    * slide wrapper.  Any Tailwind basis/width class works, including responsive
@@ -94,6 +96,7 @@ export function ButtonCarousel({
   className,
   contentClassName,
   itemClassName,
+  autoscroll,
 }: ButtonCarouselProps) {
   const items = React.Children.toArray(children);
 
@@ -109,7 +112,21 @@ export function ButtonCarousel({
       )}
       opts={{
         align: "start",
+        loop: autoscroll ? true : undefined,
       }}
+      plugins={
+        autoscroll
+          ? [
+              AutoScroll({
+                playOnInit: true,
+                stopOnInteraction: false,
+                stopOnMouseEnter: true,
+                stopOnFocusIn: true,
+                speed: 1,
+              }),
+            ]
+          : undefined
+      }
     >
       <CarouselPrevious className="self-center" />
 

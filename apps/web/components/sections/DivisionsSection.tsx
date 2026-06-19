@@ -16,7 +16,10 @@ const DivisionsSection = ({ data, index }: PageBuilderSectionProps<"divisionsSec
           {data.subheading}
         </Typography>
       </div>
-      <ButtonCarousel itemClassName="basis-full aspect-[0.7] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+      <ButtonCarousel
+        autoscroll
+        itemClassName="basis-full aspect-[0.7] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+      >
         {(data.divisions ?? []).map((division, index) => (
           <DivisionCard key={division._id} division={division} index={index} />
         ))}

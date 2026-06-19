@@ -36,7 +36,7 @@ export const publicationPreviewFragment = q
     type: true,
     date: true,
     excerpt: true,
-    slug: sub.field("slug.current").notNull(),
+    slug: sub.field("slug.current"),
     mainImage: sub.field("mainImage").project(imgFragment),
     author: sub
       .field("author")

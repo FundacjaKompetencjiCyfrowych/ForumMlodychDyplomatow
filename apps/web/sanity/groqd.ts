@@ -3,6 +3,7 @@ import {
   type IGroqBuilder,
   type QueryConfig,
   type QueryRunnerOptions,
+  type ValidationErrors,
 } from "groqd";
 import { sanityFetch } from "./live";
 import * as SanityTypes from "./typegen";
@@ -52,6 +53,7 @@ const makeCustomSafeQueryRunner = <TCustomOptions>(
       return { ...results, data: parsed };
     } catch (error) {
       console.error("Error parsing GROQ results:", error);
+      console.error("errors", (error as ValidationErrors).errors);
       return { ...results, data: results.data };
     }
   };

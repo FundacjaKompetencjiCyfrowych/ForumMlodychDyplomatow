@@ -21,7 +21,6 @@ export const pageQuery = q
 
 export type PageData = InferResultType<typeof pageQuery>;
 
-// TODO check if this needs language support to add "en" to some pages
 export const pagesSlugQuery = q.star
   .filterByType("page")
   .filterRaw("defined(slug.current)")
