@@ -27,6 +27,7 @@ export const pagesSlugQuery = q.star
   .filterRaw("defined(slug.current)")
   .project({
     slug: "slug.current",
+    locale: "locale",
   });
 
 export const pagesMetadataQuery = q

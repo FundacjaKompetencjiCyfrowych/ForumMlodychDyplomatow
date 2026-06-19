@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import { singlePublicationQuery, relatedPublicationsQuery } from "@/sanity/queries/publications";
+import {
+  singlePublicationQuery,
+  relatedPublicationsQuery,
+  publicationsStaticParams,
+} from "@/sanity/queries/publications";
 import { runQuery } from "../../../../sanity/groqd";
 import { PublicationHero } from "@/components/Publications/PublicationHero";
 import { PublicationBody } from "@/components/Publications/PublicationBody";
@@ -8,6 +12,7 @@ import { PublicationPdf } from "@/components/Publications/PublicationPdf";
 import { PublicationAuthor } from "@/components/Publications/PublicationAuthor";
 import type { Locale } from "next-intl";
 import { getInitials } from "./helpers";
+import { setRequestLocale } from "next-intl/server";
 
 type Params = {
   locale: Locale;
@@ -41,11 +46,18 @@ const pageTranslations = {
   },
 };
 
-// TODO static params
+export const revalidate = 3600; // 1 hour
 
+export const generateStaticParams = async () => {
+  const { data } = await runQuery(publicationsStaticParams, {
+    stega: false,
+    perspective: "published",
+  });
+  return data;
+};
 export default async function PublicationDetailPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
-
+  setRequestLocale(locale ?? "pl");
   const { data: publication } = await runQuery(singlePublicationQuery, {
     parameters: { locale, slug },
   });

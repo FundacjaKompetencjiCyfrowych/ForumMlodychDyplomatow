@@ -70,7 +70,7 @@ const Header = async () => {
           <Link href="/" className="justify-self-start text-2xl font-bold">
             <FMDLogo />
           </Link>
-          <SkipToContent />
+          <SkipToContent locale={locale} />
         </div>
         <div className="hidden items-center justify-center self-center md:flex">
           <NavigationMenuList className="flex items-center gap-5 self-center">

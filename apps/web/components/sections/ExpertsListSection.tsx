@@ -34,7 +34,7 @@ const ExpertsListSection = async ({
   searchParams,
   data,
 }: PageBuilderSectionProps<"expertsListSection">) => {
-  const t = await getTranslations();
+  const t = await getTranslations({ locale });
 
   const filters: Filter[] = [
     {

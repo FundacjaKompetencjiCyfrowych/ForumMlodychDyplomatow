@@ -113,3 +113,8 @@ export const relatedPublicationsQuery = q
   .order("date desc")
   .raw("[0...$limit]", "passthrough")
   .project(publicationPreviewFragment);
+
+export const publicationsStaticParams = q.star.filterByType("publication").project({
+  slug: "slug.current",
+  locale: "locale",
+});

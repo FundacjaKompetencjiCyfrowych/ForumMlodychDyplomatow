@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { advancedPublicationsQuery } from "@/sanity/queries/publications";
 import { runQuery } from "../../../sanity/groqd";
+import { setRequestLocale } from "next-intl/server";
+import type { Locale } from "next-intl";
 
 type Params = {
-  locale: string;
+  locale: Locale;
 };
 
 type SearchParams = {
@@ -11,7 +13,8 @@ type SearchParams = {
   type?: string;
   author?: string;
 };
-
+export const revalidate = 3600; // 1 hour
+// No static params, as we're using searchParams here.
 export default async function PublicationsPage({
   params,
   searchParams,
@@ -20,6 +23,7 @@ export default async function PublicationsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale ?? "pl");
   const sParams = await searchParams;
 
   const parameters = {

@@ -16,7 +16,7 @@ type Props = {
 } & EventListLimits;
 
 async function EventList({ events, locale, desktopLimit, mobileLimit, isArchive }: Props) {
-  const t = await getTranslations("events");
+  const t = await getTranslations({ locale, namespace: "events" });
   return (
     <div className="flex flex-col gap-4">
       {events && events.length > 0 ? (

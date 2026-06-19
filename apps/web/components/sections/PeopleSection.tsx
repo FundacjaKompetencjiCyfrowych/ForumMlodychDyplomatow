@@ -30,9 +30,9 @@ const PersonCard = ({ person }: { person: Person }) => {
     </div>
   );
 };
-const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSection">) => {
+const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"peopleSection">) => {
   const groups = data.people?.filter((group) => group.groupName && group.members) ?? [];
-  const t = await getTranslations("people");
+  const t = await getTranslations({ locale, namespace: "people" });
   return (
     <Container className="flex flex-col items-center gap-8 desktop:gap-12">
       <Typography variant="h2" as={getHeading(index)}>

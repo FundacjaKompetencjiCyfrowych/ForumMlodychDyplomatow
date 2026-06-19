@@ -17,7 +17,7 @@ export const intlQuery = q
   }));
 /*
 Use
-`const t = await getTranslations("object");`
+`const t = await getTranslations({locale, namespace: "object"});`
 `return <div>{t("key")}</div>`
 All strings should be type safe, in case you don't see your object check the projection above if it's included
 And check if your dev server is running, as it needs to generate the schema to get typed properly.

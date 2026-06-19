@@ -17,7 +17,7 @@ const EventPreview = async ({ event, locale, isArchive, className }: Props) => {
   if (!event.startDate) return null;
   const date = new Date(event.startDate);
   const endDate = event.endDate ? new Date(event.endDate) : null;
-  const t = await getTranslations("events");
+  const t = await getTranslations({ locale, namespace: "events" });
   return (
     <div className={cn("flex flex-col overflow-clip rounded-[8px] desktop:flex-row", className)}>
       <div

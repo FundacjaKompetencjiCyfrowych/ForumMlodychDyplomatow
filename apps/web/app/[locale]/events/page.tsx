@@ -2,6 +2,7 @@ import type { Locale } from "next-intl";
 import { EventTabs } from "../../../components/Events/event-tabs";
 import { runQuery } from "../../../sanity/groqd";
 import { combinedEventsQuery } from "../../../sanity/queries/events";
+import { setRequestLocale } from "next-intl/server";
 
 type Params = {
   locale: Locale;
@@ -9,6 +10,8 @@ type Params = {
 type SearchParams = {
   division?: string;
 };
+export const revalidate = 3600; // 1 hour
+
 export default async function EventsPage({
   params,
   searchParams,
@@ -18,6 +21,7 @@ export default async function EventsPage({
 }) {
   const { locale } = await params;
   const { division } = await searchParams;
+  setRequestLocale(locale ?? "pl");
   const query = runQuery(combinedEventsQuery, {
     parameters: {
       locale,

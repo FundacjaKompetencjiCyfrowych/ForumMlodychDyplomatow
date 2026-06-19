@@ -96,7 +96,7 @@ export const FilterList = async <T extends { _id: string }>({
   locale,
   perPage = 10,
 }: Props<T>) => {
-  const t = await getTranslations();
+  const t = await getTranslations({ locale });
   // we have to make this inline instead of outside as we're depending on the filters
   const paramsParser = createFilterListParams(filters, defaultOrderBy);
   const params = createLoader(paramsParser)(searchParams);

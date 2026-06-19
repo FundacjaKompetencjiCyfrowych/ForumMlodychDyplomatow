@@ -37,9 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Since we are using a dynamic route segment for the [locale] param, we need to
  *  instruct Next.js what params exist so that it may pre-generate pages */
 export function generateStaticParams() {
-  return routing.locales
-    .map((locale) => (locale === "pl" ? undefined : { locale }))
-    .filter(Boolean);
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 /** Setup font optimization
