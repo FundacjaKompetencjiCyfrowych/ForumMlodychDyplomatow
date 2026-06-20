@@ -1,34 +1,38 @@
+"use client";
 import type { Locale } from "next-intl";
-import { getTranslations } from "next-intl/server";
-import {
-  createLoader,
-  parseAsArrayOf,
-  parseAsInteger,
-  parseAsString,
-  parseAsStringLiteral,
-} from "nuqs/server";
-import React from "react";
-import type { PaginationQueryFunction } from "../../sanity/queries/pagination";
+import { useTranslations } from "next-intl";
+import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs";
+import React, { useEffect, useMemo, useState, useTransition } from "react";
+import type { PaginationQueryFunction, PaginationResult } from "../../sanity/queries/pagination";
+import { cn } from "../../lib/utils";
 import Typography from "../ui/typography";
 import { FilterListInput } from "./FilterListInput";
 import { FilterListGroupItem, FilterListItem } from "./FilterListItem";
 import FilterListPagination from "./FilterListPagination";
-import { TransitionContainer, TransitionProvider } from "./FilterListTransition";
+import { FilterListContext, TransitionContainer } from "./FilterListTransition";
 
-export type FilterParams = {
+export type FilterParams<
+  T extends Record<string, string | number | string[]> = Record<string, string | number | string[]>,
+> = {
   q?: string;
-  filters?: Record<string, string | number | string[]>;
+  filters?: T;
   locale: Locale;
 };
 
-type Props<T> = {
+type Props<
+  T,
+  TParams extends Record<string, string | number | string[]> = Record<
+    string,
+    string | number | string[]
+  >,
+> = {
   filters: Filter[];
-  Component: React.ComponentType<{ item: T }>;
-  query: PaginationQueryFunction<T, FilterParams>;
-  searchParams: Record<string, string | string[] | undefined>;
+  Component: React.ComponentType<{ item: T; locale: Locale }>;
+  queryAction: PaginationQueryFunction<T, FilterParams<TParams>>;
   locale: Locale;
-  defaultOrderBy?: string;
   perPage?: number;
+  listClassName?: string;
+  filterSlot?: React.ReactNode;
 };
 
 type FilterOption = {
@@ -58,21 +62,15 @@ export type Filter = {
   options: Array<FilterOption | FilterDefaultOption | FilterSubgroupOption>;
 };
 
-const baseFilterListParams = (defaultOrderBy?: string) => ({
-  page: parseAsInteger.withDefault(1),
-  q: parseAsString,
-  orderBy: defaultOrderBy ? parseAsString.withDefault(defaultOrderBy) : parseAsString,
-  order: parseAsStringLiteral(["asc", "desc"]),
-});
-
 type FilterResultType = typeof parseAsString | ReturnType<typeof parseAsArrayOf<string>>;
 
 /**
  * Create a params parser nuqs object, based on the default filter list params and the filters provided.
  */
-const createFilterListParams = (filters: Filter[], defaultOrderBy?: string) => {
+const createFilterListParams = (filters: Filter[]) => {
   return {
-    ...baseFilterListParams(defaultOrderBy),
+    page: parseAsInteger.withDefault(1),
+    q: parseAsString,
     ...(Object.fromEntries(
       filters.map((filter) => {
         const singleParser = filter.defaultValue
@@ -87,38 +85,56 @@ const createFilterListParams = (filters: Filter[], defaultOrderBy?: string) => {
   };
 };
 
-export const FilterList = async <T extends { _id: string }>({
+export const FilterList = <
+  T extends { _id: string },
+  TParams extends Record<string, string | number | string[]>,
+>({
   filters,
-  query,
+  queryAction,
   Component,
-  searchParams,
-  defaultOrderBy,
   locale,
   perPage = 10,
-}: Props<T>) => {
-  const t = await getTranslations({ locale });
+  listClassName,
+  filterSlot,
+}: Props<T, TParams>) => {
+  const t = useTranslations();
+  const [isPending, startTransition] = useTransition();
+
   // we have to make this inline instead of outside as we're depending on the filters
-  const paramsParser = createFilterListParams(filters, defaultOrderBy);
-  const params = createLoader(paramsParser)(searchParams);
-  const data = await query({
-    page: params.page,
-    perPage: perPage,
-    q: params.q ?? undefined,
-    filters: filters.reduce(
-      (acc, filter) => {
-        const value = params[filter.slug as keyof typeof params] ?? undefined;
-        if (value) {
-          acc[filter.slug] = value;
-        }
-        return acc;
-      },
-      {} as Record<string, number | string | string[]>
-    ),
-    locale,
-  });
+  const paramsParser = useMemo(
+    () => createFilterListParams(filters),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(filters)]
+  );
+
+  const [params] = useQueryStates(paramsParser);
+  const [data, setData] = useState<PaginationResult<T> | null>(null);
+
+  useEffect(() => {
+    startTransition(async () => {
+      const result = await queryAction({
+        page: params.page ?? 1,
+        perPage,
+        q: params.q ?? undefined,
+        filters: filters.reduce(
+          (acc, filter) => {
+            const value = params[filter.slug as keyof typeof params] ?? undefined;
+            if (value) {
+              acc[filter.slug] = value as string | string[] | number;
+            }
+            return acc;
+          },
+          {} as Record<string, number | string | string[]>
+        ) as TParams,
+        locale,
+      });
+      setData(result);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(params), locale, perPage]);
 
   return (
-    <TransitionProvider>
+    <FilterListContext.Provider value={{ isPending, startTransition }}>
       <div className="flex w-full flex-col gap-4 desktop:flex-row">
         <div className="flex flex-col items-start">
           {filters.map((filter) => (
@@ -153,19 +169,22 @@ export const FilterList = async <T extends { _id: string }>({
             <FilterListInput placeholder={t("global.search")} />
           </div>
           <Typography>
-            {t("global.results")}: {data.total}
+            {t("global.results")}: {data?.total ?? 0}
           </Typography>
+          {filterSlot}
           <TransitionContainer
             pendingClassName="opacity-70"
-            className="grid grid-cols-1 transition-opacity duration-150 md:grid-cols-2 lg:grid-cols-3"
+            className={cn("transition-opacity duration-150", listClassName)}
           >
-            {data.items.map((item, index) => (
-              <Component key={index} item={item} />
-            ))}
+            {data === null ? (
+              <Typography>Loading...</Typography>
+            ) : (
+              data.items.map((item, index) => <Component key={index} item={item} locale={locale} />)
+            )}
           </TransitionContainer>
-          <FilterListPagination perPage={perPage} total={data.total} />
+          <FilterListPagination perPage={perPage} total={data?.total ?? 0} />
         </div>
       </div>
-    </TransitionProvider>
+    </FilterListContext.Provider>
   );
 };

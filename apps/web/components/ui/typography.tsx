@@ -20,6 +20,9 @@ export const typographyVariants = cva("", {
       eyebrow: "text-[0.875rem] leading-[1.28] font-semibold uppercase",
       "logo-s": "font-oswald text-[1rem] font-normal text-brand-red",
       "logo-m": "font-oswald text-[1.25rem] font-normal text-brand-red",
+      // Updated to new typography
+      "body-s": "text-[0.75rem] leading-[1.6] desktop:text-[0.875rem]",
+      "body-m": "text-[0.875rem] leading-[1.6] desktop:text-[1rem]",
     },
     lineHeight: {
       default: "",

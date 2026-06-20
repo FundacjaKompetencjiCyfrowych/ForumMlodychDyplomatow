@@ -23,6 +23,29 @@
     }
   },
   {
+    "name": "eventsListSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "eventsListSection"
+          }
+        },
+        "dummy": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "expertsListSection",
     "type": "type",
     "value": {
@@ -806,6 +829,21 @@
               "type": "inline",
               "name": "expertsListSection"
             }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "eventsListSection"
+            }
           }
         ]
       }
@@ -892,36 +930,6 @@
   },
   {
     "type": "type",
-    "name": "event.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "event"
-    }
-  },
-  {
-    "type": "type",
     "name": "publication.reference",
     "value": {
       "type": "object",
@@ -978,10 +986,6 @@
               },
               {
                 "type": "string",
-                "value": "event"
-              },
-              {
-                "type": "string",
                 "value": "division"
               },
               {
@@ -1018,14 +1022,6 @@
           "type": "objectAttribute",
           "value": {
             "type": "boolean"
-          },
-          "optional": true
-        },
-        "event": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "event.reference"
           },
           "optional": true
         },
@@ -2044,6 +2040,36 @@
         }
       },
       "dereferencesTo": "post"
+    }
+  },
+  {
+    "type": "type",
+    "name": "event.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "event"
     }
   },
   {
@@ -3617,11 +3643,10 @@
         },
         "optional": true
       },
-      "slug": {
+      "type": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "slug"
+          "type": "string"
         },
         "optional": true
       },

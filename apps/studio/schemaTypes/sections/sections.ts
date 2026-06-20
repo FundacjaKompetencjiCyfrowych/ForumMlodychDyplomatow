@@ -1,5 +1,6 @@
 import { aboutUsSection } from "./aboutUsSection";
 import { divisionsSection } from "./divisionsSection";
+import { eventsListSection } from "./eventsListSection";
 import { eventsSection } from "./eventsSection";
 import { expertsListSection } from "./expertsListSection";
 import { headingSection } from "./headingSection";
@@ -22,6 +23,7 @@ export const sectionTypes = [
   "podcastSection",
   "supportUsSection",
   "expertsListSection",
+  "eventsListSection",
 ] as const;
 
 export const sections = sectionTypes.map((type) => ({ type }));
@@ -38,4 +40,5 @@ export const sectionStructure = [
   supportUsSection,
   headingSection,
   expertsListSection,
+  eventsListSection,
 ];

@@ -25,7 +25,6 @@ type LinkOrHref =
     };
 const slugsByType = {
   page: "/",
-  event: "/events/",
   division: "/division/",
   publication: "/publications/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;

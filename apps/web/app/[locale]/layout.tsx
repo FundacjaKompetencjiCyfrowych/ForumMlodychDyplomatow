@@ -84,7 +84,6 @@ export default async function RootLayout({
           defaultOptions={{
             scroll: false,
             clearOnDefault: true,
-            shallow: false,
           }}
         >
           <SvgCacheProvider>

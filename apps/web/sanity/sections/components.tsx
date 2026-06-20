@@ -13,6 +13,7 @@ import {
 } from "@/components/sections";
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
+import { EventsListSection } from "../../components/sections/EventsListSection";
 
 export type ComponentsRegistry = {
   [K in PageBuilderSectionType]: ComponentType<PageBuilderSectionProps<K>>;
@@ -35,6 +36,7 @@ export const components: ComponentsRegistry = {
   joinUsSection: JoinUsSection,
   newPublicationsSection: NewPublicationsSection,
   peopleSection: PeopleSection,
+  eventsListSection: EventsListSection,
   podcastSection: PodcastSection,
   supportUsSection: SupportUsSection,
   headingSection: HeadingSection,

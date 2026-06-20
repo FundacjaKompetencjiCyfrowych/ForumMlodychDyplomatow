@@ -14,7 +14,6 @@ const EventsSection = async ({ data, index, locale }: PageBuilderSectionProps<"e
       locale,
       limit: 2,
       divisionSlug: null,
-      currentDate: new Date().toISOString(),
     },
   });
   return (

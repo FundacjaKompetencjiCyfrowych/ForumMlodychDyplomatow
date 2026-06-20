@@ -8,7 +8,7 @@ import { LinkIcon } from "@sanity/icons";
  */
 
 type Link = {
-  linkType: "href" | "page" | "event" | "division" | "publication";
+  linkType: "href" | "page" | "division" | "publication";
   homepage?: boolean;
 };
 const linkPreviewSelect = {
@@ -16,14 +16,12 @@ const linkPreviewSelect = {
   linkType: "linkType",
   href: "href",
   page: "page.name",
-  event: "event.name",
   homepage: "homepage",
   publication: "publication.title",
   division: "division.name",
 } as const;
 const linkTypeTitles = {
   division: "PR",
-  event: "Wydarzenie",
   page: "Strona",
   publication: "Publikacja",
   href: "Zewnętrzny URL",
@@ -70,7 +68,6 @@ export const link = defineType({
         list: [
           { title: "Strona", value: "page" },
           { title: "Publikacja", value: "publication" },
-          { title: "Wydarzenie", value: "event" },
           { title: "Oddział", value: "division" },
           { title: "Zewnętrzny URL", value: "href" },
         ],
@@ -124,15 +121,6 @@ export const link = defineType({
       type: "boolean",
       initialValue: false,
       hidden: ({ parent }) => parent?.linkType === "page" || parent?.linkType === "href",
-    }),
-    defineField({
-      name: "event",
-      title: "Wydarzenie",
-      type: "reference",
-      to: [{ type: "event" }],
-      options: { filter: filterByLanguage },
-      hidden: ({ parent }) => parent?.linkType !== "event" || parent?.homepage,
-      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
 
     defineField({
