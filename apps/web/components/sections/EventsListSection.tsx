@@ -5,7 +5,6 @@ import type { PaginationQueryFunction, PaginationResult } from "../../sanity/que
 import { type Filter, type FilterParams } from "../List/FilterList";
 import { EventsFilterList } from "../List/instances/EventsFilterList";
 import { Container } from "../ui/container";
-import Typography from "../ui/typography";
 const getEventsAction: PaginationQueryFunction<
   EventPreview,
   FilterParams<{ location: string[]; type: "archive" | "upcoming" }>
@@ -51,9 +50,6 @@ export const EventsListSection = async ({
   ];
   return (
     <Container className="flex flex-col gap-8">
-      <Typography variant="h3" className="-mt-20 opacity-30">
-        UI nie jest finalne
-      </Typography>
       <EventsFilterList
         filters={filters}
         queryAction={getEventsAction}

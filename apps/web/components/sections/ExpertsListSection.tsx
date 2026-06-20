@@ -6,7 +6,6 @@ import { peoplePaginatedQuery, type PersonFull } from "../../sanity/queries/pers
 import type { Filter, FilterParams } from "../List/FilterList";
 import { ExpertsFilterList } from "../List/instances/ExpertsFilterList";
 import { Container } from "../ui/container";
-import Typography from "../ui/typography";
 
 const queryPeople: PaginationQueryFunction<PersonFull, FilterParams> = async (params) => {
   "use server";
@@ -59,9 +58,6 @@ const ExpertsListSection = async ({
   ];
   return (
     <Container className="flex flex-col gap-8">
-      <Typography variant="h3" className="-mt-20 opacity-30">
-        UI nie jest finalne
-      </Typography>
       <ExpertsFilterList filters={filters} queryAction={queryPeople} locale={locale} perPage={12} />
     </Container>
   );

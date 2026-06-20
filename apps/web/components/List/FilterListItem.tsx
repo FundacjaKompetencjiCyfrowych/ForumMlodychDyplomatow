@@ -3,7 +3,6 @@ import { ChevronDown } from "lucide-react";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import { Button } from "../ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
-import { useTransitionProvider } from "./FilterListTransition";
 import { usePage } from "./FilterListPagination";
 type Props = {
   label: string;
@@ -13,14 +12,8 @@ type Props = {
 };
 
 export const FilterListItem = ({ label, slug, value = "default", isDefault }: Props) => {
-  const { startTransition } = useTransitionProvider();
-  const [params, setParams] = useQueryState(
-    slug,
-    parseAsArrayOf(parseAsString).withDefault([]).withOptions({
-      startTransition,
-    })
-  );
-  const [_, setPage] = usePage(startTransition);
+  const [params, setParams] = useQueryState(slug, parseAsArrayOf(parseAsString).withDefault([]));
+  const [_, setPage] = usePage();
   const isChecked = isDefault ? params.length === 0 : params.includes(value);
 
   const onClick = () => {

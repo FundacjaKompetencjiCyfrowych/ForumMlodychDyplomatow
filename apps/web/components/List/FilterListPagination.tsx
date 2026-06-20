@@ -1,9 +1,7 @@
 "use client";
-import { useQueryState, parseAsIndex } from "nuqs";
-import React from "react";
-import { useTransitionProvider } from "./FilterListTransition";
-import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { parseAsIndex, useQueryState } from "nuqs";
+import { Button } from "../ui/button";
 import { getPaginationNumbers } from "./paginationUtils";
 
 type Props = {
@@ -11,20 +9,18 @@ type Props = {
   total: number;
 };
 
-export const usePage = (startTransition: React.TransitionStartFunction) => {
+export const usePage = () => {
   return useQueryState(
     "page",
     parseAsIndex.withDefault(0).withOptions({
-      startTransition,
       history: "push",
     })
   );
 };
 
 const FilterListPagination = (props: Props) => {
-  const { startTransition } = useTransitionProvider();
   const totalPages = Math.ceil(props.total / props.perPage);
-  const [page, setPage] = usePage(startTransition);
+  const [page, setPage] = usePage();
   if (totalPages < 2) return null;
   const paginationNumbers = getPaginationNumbers(page + 1, totalPages);
   return (
