@@ -21,8 +21,8 @@ const EventsSection = async ({ data, index, locale }: PageBuilderSectionProps<"e
       <Typography variant="h2" as={getHeading(index)}>
         {data.heading}
       </Typography>
-      <EventTabs query={eventQuery} locale={locale} desktopLimit={2} mobileLimit={1} />
-      {data.link && (
+      <EventTabs query={eventQuery} locale={locale} />
+      {data.link?.href && (
         <Link variant="text" link={data.link} iconRight={<ChevronRight />} className="self-end" />
       )}
     </Container>

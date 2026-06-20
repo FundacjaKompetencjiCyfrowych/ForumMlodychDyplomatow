@@ -113,7 +113,7 @@ const Footer = async () => {
               </div>
             </div>
           )}
-          <div className="flex flex-col gap-4 lg:w-[130px]">
+          <div className="flex flex-col gap-4 lg:w-32.5">
             {footerData?.cta?.link && (
               <Link
                 className="w-full"

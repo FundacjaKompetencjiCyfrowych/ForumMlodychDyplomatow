@@ -31,8 +31,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   });
 
   return {
-    title: page?.seo?.title ?? page?.name,
-    description: page?.seo?.description,
+    title: page?.seo?.title ?? page?.defaultSeo?.title ?? page?.name ?? undefined,
+    description: page?.seo?.description ?? page?.defaultSeo?.description ?? undefined,
   } satisfies Metadata;
 }
 

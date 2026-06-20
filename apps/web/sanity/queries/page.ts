@@ -39,6 +39,7 @@ export const pagesMetadataQuery = q
     name: sub.field("name"),
     slug: sub.field("slug.current"),
     seo: sub.field("seo").project(seoFragment),
+    defaultSeo: sub.star.filterByType("seo").slice(0).project(seoFragment),
   }));
 
 export const pagesLanguageSlugQuery = q
