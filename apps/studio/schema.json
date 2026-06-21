@@ -133,6 +133,13 @@
           },
           "optional": true
         },
+        "description": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "cta": {
           "type": "objectAttribute",
           "value": {
@@ -183,6 +190,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "link": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "link"
           },
           "optional": true
         }
@@ -550,6 +565,13 @@
           "optional": true
         },
         "subheading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "description": {
           "type": "objectAttribute",
           "value": {
             "type": "string"

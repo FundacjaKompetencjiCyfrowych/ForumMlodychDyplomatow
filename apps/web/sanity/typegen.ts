@@ -39,6 +39,7 @@ export type SupportUsSection = {
   _type: "supportUsSection";
   heading?: string;
   subheading?: string;
+  description?: string;
   cta?: Link;
   image?: Img;
 };
@@ -48,6 +49,7 @@ export type PodcastSection = {
   heading?: string;
   subheading?: string;
   embed?: string;
+  link?: Link;
 };
 
 export type PersonReference = {
@@ -117,6 +119,7 @@ export type DivisionsSection = {
   _type: "divisionsSection";
   heading?: string;
   subheading?: string;
+  description?: string;
   divisions?: Array<
     {
       _key: string;

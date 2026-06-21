@@ -19,7 +19,7 @@ async function EventList({ events, locale, isArchive }: Props) {
           <EventPreview key={e._id} event={e} locale={locale} isArchive={isArchive} />
         ))
       ) : (
-        <Typography variant="h5" className="self-center pt-12 opacity-60">
+        <Typography variant="h4" className="self-center pt-12 opacity-60">
           {t("noEvents")}
         </Typography>
       )}

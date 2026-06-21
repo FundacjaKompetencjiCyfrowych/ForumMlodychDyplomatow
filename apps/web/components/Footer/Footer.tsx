@@ -49,14 +49,14 @@ const Footer = async () => {
       <div className="flex flex-col gap-4 border-b border-slate-200 desktop:flex-1 desktop:flex-row desktop:justify-between">
         <div className="flex flex-col gap-4">
           <FMDLogo />
-          <Typography variant="p2" className="whitespace-pre text-gray-700">
+          <Typography variant="body-s" className="whitespace-pre text-gray-700">
             {footerData?.description}
           </Typography>
         </div>
         <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_130px] lg:gap-10">
           {footerData?.columns?.map((column) => (
             <div key={column._key} className="flex flex-col items-start gap-4 desktop:gap-2">
-              <Typography variant="p1" className="leading-normal font-bold text-gray-600">
+              <Typography variant="body-s" className="leading-normal font-bold text-gray-600">
                 {column.title}
               </Typography>
               {column.links?.map((link) => (
@@ -71,7 +71,7 @@ const Footer = async () => {
           ))}
           {footerData?.contactColumn && (
             <div className="flex flex-col items-start gap-4">
-              <Typography variant="p1" className="leading-normal font-bold text-gray-600">
+              <Typography variant="body-s" className="leading-normal font-bold text-gray-600">
                 {footerData.contactColumn.title}
               </Typography>
               {footerData.contactColumn.email && (
@@ -127,12 +127,12 @@ const Footer = async () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col text-gray-700 desktop:flex-row desktop:justify-between">
-        <Typography variant="p2">{footerData?.copyright}</Typography>
+      <div className="flex flex-col text-gray-600 desktop:flex-row desktop:justify-between">
+        <Typography variant="caption">{footerData?.copyright}</Typography>
         <div className="flex flex-col items-start gap-8 desktop:flex-row desktop:gap-12">
           {footerData?.links?.map((link) => (
             <Link key={link._key} variant="link" link={link} className="leading-normal">
-              <Typography variant="p2" className="font-normal">
+              <Typography variant="caption" className="font-normal">
                 {link.text}
               </Typography>
             </Link>

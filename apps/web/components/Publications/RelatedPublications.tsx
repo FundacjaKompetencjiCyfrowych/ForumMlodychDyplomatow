@@ -1,9 +1,7 @@
-import React from "react";
 import { Typography } from "@/components/ui/typography";
-import { Link } from "@/components/ui/link";
-import { PublicationCard } from "./PublicationCard";
-import type { publicationPreviewFragment } from "../../sanity/queries/publications";
 import type { InferFragmentType } from "groqd";
+import type { publicationPreviewFragment } from "../../sanity/queries/publications";
+import { PublicationCard } from "./PublicationCard";
 
 export interface RelatedPublicationsProps {
   publications: InferFragmentType<typeof publicationPreviewFragment>[];
@@ -38,7 +36,8 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
           {t.title}
         </Typography>
 
-        <Link
+        {/* Looks like we don't need this anymore but need to verify */}
+        {/* <Link
           href={`/${locale}${t.baseHref}`}
           variant="link"
           className="hover:text-brand-400 h-auto border-none p-0! text-brand-blue no-underline transition-colors hover:border-transparent active:border-transparent"
@@ -47,7 +46,7 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
           <Typography as="span" variant="p2" className="font-medium">
             {t.viewAll}
           </Typography>
-        </Link>
+        </Link> */}
       </div>
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

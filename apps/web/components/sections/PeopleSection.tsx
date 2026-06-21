@@ -23,10 +23,11 @@ const PersonCard = ({ person }: { person: Person }) => {
           desktop: "300px",
         }}
       />
-      <Typography variant="h5">{person.name}</Typography>
-      <Typography variant="h6" className="text-gray-600">
+      <Typography variant="body-xl">{person.name}</Typography>
+      <Typography variant="body-m" className="text-center whitespace-break-spaces text-gray-600">
         {person.title}
       </Typography>
+      {/* TODO social links after merge */}
     </div>
   );
 };

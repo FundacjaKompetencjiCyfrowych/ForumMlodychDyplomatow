@@ -6,6 +6,7 @@ import { ExternalLink } from "lucide-react";
 import React from "react";
 import type { linkFragment } from "../../sanity/queries/linkFragment";
 import { buttonVariants } from "./button";
+import { useLocale } from "next-intl";
 type LinkType = InferFragmentType<typeof linkFragment>;
 type LinkOrHref =
   | {
@@ -49,6 +50,8 @@ export const Link = ({
     openInNewTab?: boolean;
     noExternalIcon?: boolean;
   } & LinkOrHref) => {
+  const localeBase = useLocale();
+  const locale = localeBase === "pl" ? "" : `/${localeBase}`;
   const getHref = ():
     | string
     | { pathname?: string; query: Record<string, string | string[] | undefined> } => {
@@ -69,10 +72,10 @@ export const Link = ({
       return link.href || "#";
     }
     if (link.homepage) {
-      return slugsByType[link.linkType];
+      return `${locale}${slugsByType[link.linkType]}`;
     }
 
-    return `${slugsByType[link.linkType]}${link.href}`;
+    return `${locale}${slugsByType[link.linkType]}${link.href}`;
   };
   const isExternal = link?.linkType === "href" || href?.startsWith("http");
   const rightIcon = isExternal && !noExternalIcon ? <ExternalLink /> : iconRight;

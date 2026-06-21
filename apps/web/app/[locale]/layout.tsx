@@ -6,7 +6,7 @@ import { SanityPreview } from "@/sanity/preview/SanityPreview";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Inter, Libre_Baskerville, Oswald } from "next/font/google";
+import { Inter, Libre_Baskerville, Oswald, Lora } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SvgCacheProvider from "react-inlinesvg/provider";
@@ -57,6 +57,10 @@ const oswald = Oswald({
   variable: "--font-base-oswald",
   subsets: ["latin"],
 });
+const lora = Lora({
+  variable: "--font-base-lora",
+  subsets: ["latin"],
+});
 
 export default async function RootLayout({
   children,
@@ -78,7 +82,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} relative bg-white font-inter text-gray-900 antialiased`}
+        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} ${lora.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
         <NuqsAdapter
           defaultOptions={{

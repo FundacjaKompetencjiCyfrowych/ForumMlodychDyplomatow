@@ -22,7 +22,7 @@ const DivisionCard = ({ division }: Props) => {
           "fill-mode-forwards blur-in-sm blur-out-sm fade-out zoom-in-150 zoom-out-150 not-[group-hover]:animate-out group-hover:animate-in"
         )}
       >
-        <Typography variant="h5" className="text-center text-slate-50">
+        <Typography variant="title-l" className="text-center text-slate-50">
           {division.name}
         </Typography>
       </div>

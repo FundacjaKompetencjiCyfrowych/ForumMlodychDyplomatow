@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "../ui/container";
 import Typography from "../ui/typography";
 import type { PageBuilderSectionProps } from "../../sanity/queries/pageBuilder";
-import { getHeading, getSubHeading } from "../../lib/heading";
+import { getHeading } from "../../lib/heading";
 import { SanityImage } from "../../sanity/image/SanityImage";
 
 const HeadingSection = ({ data, index }: PageBuilderSectionProps<"headingSection">) => {
@@ -12,11 +12,7 @@ const HeadingSection = ({ data, index }: PageBuilderSectionProps<"headingSection
         <Typography variant="h1" as={getHeading(index)} className="text-4xl desktop:text-5xl">
           {data.heading}
         </Typography>
-        {data.subheading && (
-          <Typography variant="p1" as={getSubHeading(index)}>
-            {data.subheading}
-          </Typography>
-        )}
+        {data.subheading && <Typography variant="body-xl">{data.subheading}</Typography>}
       </div>
       <div className="">
         <SanityImage image={data.image} />

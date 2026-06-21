@@ -91,7 +91,7 @@ export const PublicationCard = async ({
         {excerpt && (
           <Typography
             as="p"
-            variant="p2"
+            variant="body-s"
             className="mt-2 line-clamp-2 whitespace-break-spaces text-muted-foreground"
           >
             {excerpt}
