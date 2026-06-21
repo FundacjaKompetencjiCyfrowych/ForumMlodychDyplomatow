@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { languageField } from "../plugins/intl";
 import { seoField } from "../utils/fields";
 import { pageGroups } from "../utils/groups";
@@ -38,7 +38,24 @@ export default defineType({
       title: "Zdjęcie przedstawicielstwa",
       type: "img",
       group: "content",
-      description: "Małe zdjęcie prezentujące przedstwicielstwo, używane na listach",
+      description: "Małe zdjęcie prezentujące przedstwicielstwo, używane na listach.",
+    }),
+    defineField({
+      name: "pageBuilder",
+      title: "Budowniczy strony",
+      type: "array",
+      group: "content",
+      options: {
+        layout: "grid",
+      },
+      of: [
+        // Nowe sekcje dedykowane dla oddziałów
+        defineArrayMember({ type: "universalHeroSection" }),
+        defineArrayMember({ type: "whatWeDoDivisionsSection" }),
+        defineArrayMember({ type: "joinUsDivisionsSection" }),
+        defineArrayMember({ type: "teamDivisionsSection" }),
+        defineArrayMember({ type: "eventsDivisionsSection" }),
+      ],
     }),
   ],
   preview: {

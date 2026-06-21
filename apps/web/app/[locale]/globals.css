@@ -18,7 +18,28 @@
   --color-muted: #a4a4a4;
   --color-header: #ffffff;
   --color-accent-700: #36699c;
-  --color-background-50: #f8fafc;
+  /* Slate (Background and state colors) */
+  --color-brand-slate-50: #f8fafc;
+  --color-brand-slate-100: #f1f5f9;
+  --color-brand-slate-200: #e2e8f0;
+  --color-brand-slate-300: #cad5e2;
+  --color-brand-slate-400: #90a1b9;
+  --color-brand-slate-500: #62748e;
+  --color-brand-slate-600: #45556c;
+
+  /* Gray (Font colors) */
+  --color-brand-gray-50: #f9fafb;
+  --color-brand-gray-100: #f3f4f6;
+  --color-brand-gray-200: #e5e7eb;
+  --color-brand-gray-300: #d1d5db;
+  --color-brand-gray-400: #99a1af;
+  --color-brand-gray-500: #6a7282;
+  --color-brand-gray-600: #4a5565;
+  --color-brand-gray-700: #364153;
+  --color-brand-gray-800: #1e2939; /* Primary */
+  --color-brand-gray-900: #101828;
+
+  /* Brand Red */
   --color-brand-red-50: #fef2f2;
   --color-brand-red-100: #ffe2e2;
   --color-brand-red-200: #ffc9c9;
@@ -29,6 +50,24 @@
   --color-brand-red-700: #962f30;
   --color-brand-red-800: #8f1c1e;
   --color-brand-red-900: #651415;
+
+  /* Brand Blue (Accent colors) */
+  --color-brand-blue-50: #f4f9ff;
+  --color-brand-blue-100: #ddeeff;
+  --color-brand-blue-200: #c5e2ff;
+  --color-brand-blue-300: #add6ff;
+  --color-brand-blue-400: #96caff;
+  --color-brand-blue-500: #71a9e0;
+  --color-brand-blue-600: #5187be;
+  --color-brand-blue-700: #36699c;
+  --color-brand-blue-800: #204d7a;
+  --color-brand-blue-900: #103255;
+
+  /* Green (Success colors) */
+  --color-brand-green-50: #ecfdf5;
+  --color-brand-green-200: #a4f4cf;
+  --color-brand-green-500: #00bc7d;
+  --color-brand-green-800: #008045;
   /* Test value */
   /* --color-header: #c5c5c5; */
   --font-heading: var(--font-inter);

@@ -1,14 +1,21 @@
 import { aboutUsSection } from "./aboutUsSection";
+import { contactSection } from "./contactSection";
 import { divisionsSection } from "./divisionsSection";
+import { eventsDivisionsSection } from "./eventsDivisionsSection";
 import { eventsSection } from "./eventsSection";
+import { universalHeroSection } from "./universalHeroSection";
 import { expertsListSection } from "./expertsListSection";
 import { headingSection } from "./headingSection";
 import { heroSection } from "./heroSection";
+import { joinUsDivisionsSection } from "./joinUsDivisionsSection";
 import { joinUsSection } from "./joinUsSection";
 import { newPublicationsSection } from "./newPublicationsSection";
 import { peopleSection } from "./peopleSection";
 import { podcastSection } from "./podcastSection";
 import { supportUsSection } from "./supportUsSection";
+import { teamDivisionsSection } from "./teamDivisionsSection";
+import { whatWeDoDivisionsSection } from "./whatWeDoDivisionsSection";
+import { divisionsListSection } from "./divisionsListSection";
 
 export const sectionTypes = [
   "aboutUsSection",
@@ -21,6 +28,13 @@ export const sectionTypes = [
   "peopleSection",
   "podcastSection",
   "supportUsSection",
+  "contactSection",
+  "universalHeroSection",
+  "teamDivisionsSection",
+  "whatWeDoDivisionsSection",
+  "joinUsDivisionsSection",
+  "eventsDivisionsSection",
+  "divisionsListSection",
   "expertsListSection",
 ] as const;
 
@@ -36,6 +50,13 @@ export const sectionStructure = [
   peopleSection,
   podcastSection,
   supportUsSection,
+  contactSection,
+  universalHeroSection,
+  teamDivisionsSection,
+  whatWeDoDivisionsSection,
+  joinUsDivisionsSection,
+  eventsDivisionsSection,
+  divisionsListSection,
   headingSection,
   expertsListSection,
 ];

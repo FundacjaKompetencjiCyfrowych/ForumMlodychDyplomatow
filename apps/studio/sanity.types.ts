@@ -18,6 +18,11 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type Button = {
+  text?: string;
+  link?: string;
+};
+
 export type ExpertsListSection = {
   _type: "expertsListSection";
   dummy?: string;
@@ -50,7 +55,7 @@ export type JoinUsDivisionsSection = {
     description?: string;
     _key: string;
   }>;
-  button?: Link;
+  button?: Button;
 };
 
 export type WhatWeDoDivisionsSection = {
@@ -89,6 +94,7 @@ export type ContactSection = {
   heading?: string;
   subtitle?: string;
   contactEmail?: string;
+  contactPhone?: string;
   contactAddress?: string;
   recipientEmail?: string;
 };
@@ -500,29 +506,6 @@ export type Translations = {
       reviewer?: string;
     };
   };
-  contactForm?: {
-    starsign?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    phone?: string;
-    subject?: string;
-    message?: string;
-    submit?: string;
-    sending?: string;
-    requiredError?: string;
-    placeholders?: {
-      firstName?: string;
-      lastName?: string;
-      email?: string;
-      phone?: string;
-      subject?: string;
-      message?: string;
-    };
-  };
-  divisions?: {
-    divisionNotFound?: string;
-  };
   locale?: string;
 };
 
@@ -631,15 +614,7 @@ export type Publication = {
           _type: "span";
           _key: string;
         }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
+        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -805,12 +780,7 @@ export type Person = {
   _rev: string;
   locale?: string;
   name?: string;
-  group?:
-    | "board"
-    | "regionalAuthority"
-    | "groupCoordinator"
-    | "author"
-    | "reviewer";
+  group?: "board" | "regionalAuthority" | "groupCoordinator" | "author" | "reviewer";
   img?: Img;
   title?: string;
   socials?: Array<{
@@ -942,6 +912,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | Button
   | ExpertsListSection
   | HeadingSection
   | DivisionsListSection
@@ -1012,5 +983,4 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
-
 export declare const internalGroqTypeReferenceTo: unique symbol;

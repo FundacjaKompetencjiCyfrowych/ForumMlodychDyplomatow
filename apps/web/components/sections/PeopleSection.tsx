@@ -1,35 +1,14 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
 import { getTranslations } from "next-intl/server";
 import { getHeading } from "../../lib/heading";
-import type { DeepGet } from "../../lib/types";
-import { SanityImage } from "../../sanity/image/SanityImage";
 import { Container } from "../ui/container";
 import { Link } from "../ui/link";
 import { ResponsiveCarousel } from "../ui/responsive-carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Typography from "../ui/typography";
 import { ChevronRight } from "lucide-react";
+import PersonCard from "../ui/person-card";
 
-type Person = DeepGet<PageBuilderSectionProps<"peopleSection">, "data.people.members">;
-
-const PersonCard = ({ person }: { person: Person }) => {
-  return (
-    <div className="desktop:stretch flex w-full min-w-full flex-col items-center gap-4 desktop:min-w-0">
-      <SanityImage
-        image={person.img}
-        className="aspect-square w-full max-w-100 object-cover desktop:max-w-74"
-        sizes={{
-          default: "400px",
-          desktop: "300px",
-        }}
-      />
-      <Typography variant="h5">{person.name}</Typography>
-      <Typography variant="h6" className="text-gray-600">
-        {person.title}
-      </Typography>
-    </div>
-  );
-};
 const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSection">) => {
   const groups = data.people?.filter((group) => group.groupName && group.members) ?? [];
   const t = await getTranslations("people");
