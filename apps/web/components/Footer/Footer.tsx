@@ -45,7 +45,7 @@ const Footer = async () => {
   });
 
   return (
-    <footer className="flex flex-col gap-4 px-6 py-8">
+    <footer className="flex max-w-full flex-col gap-4 px-6 py-8">
       <div className="flex flex-col gap-4 border-b border-slate-200 desktop:flex-1 desktop:flex-row desktop:justify-between">
         <div className="flex flex-col gap-4">
           <FMDLogo />
@@ -53,7 +53,7 @@ const Footer = async () => {
             {footerData?.description}
           </Typography>
         </div>
-        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_130px] lg:gap-10">
+        <div className="flex max-w-full flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_130px] lg:gap-10">
           {footerData?.columns?.map((column) => (
             <div key={column._key} className="flex flex-col items-start gap-4 desktop:gap-2">
               <Typography variant="body-s" className="leading-normal font-bold text-gray-600">
@@ -121,7 +121,7 @@ const Footer = async () => {
                 link={footerData.cta.link}
               />
             )}
-            <div className="self-start">
+            <div className="max-w-full self-start">
               <LocaleButtons />
             </div>
           </div>

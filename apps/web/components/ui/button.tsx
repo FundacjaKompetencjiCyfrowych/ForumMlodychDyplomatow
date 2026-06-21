@@ -30,7 +30,7 @@ const buttonVariants = cva(
         icon: [
           "bg-white text-brand-red-900 hover:bg-slate-50 hover:text-brand-red-700 active:border-brand-red-800 active:bg-brand-red-800 active:text-white disabled:border-gray-400 disabled:bg-brand-red-50 disabled:text-gray-400",
         ],
-        link: "inline-flex text-gray-900 underline hover:text-brand-red-800 active:text-brand-red-900",
+        link: "inline-flex text-gray-900 hover:text-brand-red-800 active:text-brand-red-900",
         // not updated yet
         ghost: "typography-p1 border-0 bg-transparent text-gray-900 hover:bg-gray-100",
         dot: "h-2 w-2 rounded-full border-0 bg-slate-300 p-0! hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800",

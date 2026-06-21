@@ -1,11 +1,9 @@
 "use client";
-import { type ReactNode } from "react";
-import { Button } from "../ui/button";
-import { usePathname, useRouter } from "../../i18n/navigation";
-import { useParams } from "next/navigation";
-import { Separator } from "radix-ui";
-import { GlobeIcon } from "lucide-react";
 import type { Locale } from "next-intl";
+import { useParams } from "next/navigation";
+import { type ReactNode } from "react";
+import { usePathname, useRouter } from "../../i18n/navigation";
+import { Button } from "../ui/button";
 
 type Props = {
   locale: Locale;
@@ -15,9 +13,7 @@ type Props = {
 export const LocaleButtons = () => {
   return (
     <div className="flex h-7 items-center gap-2">
-      <GlobeIcon className="text-brand-red" />
       <ChangeLocaleLink locale="pl">PL</ChangeLocaleLink>
-      <Separator.Separator className="h-full border border-gray-300" orientation="vertical" />
       <ChangeLocaleLink locale="en">ENG</ChangeLocaleLink>
     </div>
   );

@@ -67,7 +67,7 @@ const Header = async () => {
     >
       <div className="relative isolate z-80 grid h-(--header-height-mobile) w-full max-w-full grid-cols-2 items-center px-6 md:grid-cols-3 md:px-12 desktop:h-(--header-height-desktop)">
         <div className="flex flex-row items-center">
-          <Link href="/" className="justify-self-start text-2xl font-bold">
+          <Link href="/" className="justify-self-start text-2xl font-bold no-underline">
             <FMDLogo />
           </Link>
           <SkipToContent locale={locale} />
