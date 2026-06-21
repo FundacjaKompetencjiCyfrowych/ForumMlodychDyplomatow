@@ -18,13 +18,15 @@ const EventsSection = async ({ data, index, locale }: PageBuilderSectionProps<"e
   });
   return (
     <Container className="flex flex-col items-center gap-8">
-      <Typography variant="h2" as={getHeading(index)}>
-        {data.heading}
-      </Typography>
-      <EventTabs query={eventQuery} locale={locale} />
-      {data.link?.href && (
-        <Link variant="text" link={data.link} iconRight={<ChevronRight />} className="self-end" />
-      )}
+      <div className="flex w-full max-w-5xl flex-col items-center gap-8">
+        <Typography variant="h2" as={getHeading(index)}>
+          {data.heading}
+        </Typography>
+        <EventTabs query={eventQuery} locale={locale} />
+        {data.link?.href && (
+          <Link variant="text" link={data.link} iconRight={<ChevronRight />} className="self-end" />
+        )}
+      </div>
     </Container>
   );
 };
