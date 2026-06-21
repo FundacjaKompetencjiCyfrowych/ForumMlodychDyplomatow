@@ -2,6 +2,7 @@ import { runQuery } from "@/sanity/groqd";
 import { singleDivisionQuery, divisionsSlugQuery } from "@/sanity/queries/division"; // Upewnij się co do nazwy pliku
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import type { Locale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
@@ -19,8 +20,9 @@ export async function generateStaticParams() {
 
 export default async function DivisionSlugPage(props: Props) {
   const params = await props.params;
-  const searchParams = await props.searchParams; // Pobierz searchParams
+  const searchParams = await props.searchParams;
   const { slug, locale } = params;
+  const t = await getTranslations();
 
   const { data: division } = await runQuery(singleDivisionQuery, {
     parameters: {
@@ -33,13 +35,12 @@ export default async function DivisionSlugPage(props: Props) {
     return (
       <div className="py-40 text-center">
         <h1 className="text-4xl text-slate-800 sm:text-5xl lg:text-7xl">
-          Przedstawicielstwo nie znalezione
+          {t("divisions.divisionNotFound")}
         </h1>
       </div>
     );
   }
 
-  // Używamy params.slug zamiast division.slug.current
   const sectionsWithSlug =
     division?.pageBuilder?.map((section) => ({
       ...section,
@@ -48,11 +49,7 @@ export default async function DivisionSlugPage(props: Props) {
 
   return (
     <main className="min-h-screen">
-      <SanitySections
-        value={sectionsWithSlug}
-        locale={locale}
-        searchParams={searchParams} // 3. Przekaż pobrane searchParams tutaj
-      />
+      <SanitySections value={sectionsWithSlug} locale={locale} searchParams={searchParams} />
     </main>
   );
 }

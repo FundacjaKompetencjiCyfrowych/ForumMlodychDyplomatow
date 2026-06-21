@@ -26,11 +26,6 @@ export const contactSection = defineType({
       validation: (Rule) => Rule.required().email(),
     }),
     defineField({
-      name: "contactPhone",
-      type: "string",
-      title: "Wyświetlany Telefon",
-    }),
-    defineField({
       name: "contactAddress",
       type: "string",
       title: "Wyświetlany Adres",

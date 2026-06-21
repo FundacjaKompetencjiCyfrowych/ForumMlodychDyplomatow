@@ -1,11 +1,15 @@
-import { DeepGet } from "@/lib/types";
 import { SanityImage } from "@/sanity/image/SanityImage";
-import { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
 import Typography from "./typography";
 
-type Person = DeepGet<PageBuilderSectionProps<"peopleSection">, "data.people.members">;
+// Zamiast polegać na DeepGet, zdefiniuj interfejs jawnie:
+interface PersonProps {
+  _key?: string;
+  name: string | null;
+  title: string | null;
+  img: any;
+}
 
-const PersonCard = ({ person }: { person: Person }) => {
+const PersonCard = ({ person }: { person: PersonProps }) => {
   // w
   return (
     <div className="desktop:stretch flex w-full min-w-full flex-col items-center gap-4 rounded-sm bg-white desktop:min-w-0">

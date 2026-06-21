@@ -1,8 +1,7 @@
 import Typography from "../ui/typography";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import { Button } from "../ui/button";
-import Link from "next/link";
+import { Link } from "../ui/link";
 
 const JoinUsDivisions = ({ data }: PageBuilderSectionProps<"joinUsDivisionsSection">) => {
   const { header, features, button } = data;
@@ -14,7 +13,7 @@ const JoinUsDivisions = ({ data }: PageBuilderSectionProps<"joinUsDivisionsSecti
       </Typography>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {features?.map((item: any, index: number) => (
+        {features?.map((item, index) => (
           <div
             key={index}
             className="flex flex-col gap-4 border-t border-t-brand-slate-500 p-4 pt-6"
@@ -35,11 +34,9 @@ const JoinUsDivisions = ({ data }: PageBuilderSectionProps<"joinUsDivisionsSecti
         ))}
       </div>
 
-      {button?.link && (
+      {button && (
         <div className="mx-auto w-fit">
-          <Button asChild variant="primary" size="m">
-            <Link href={button.link}>{button.text}</Link>
-          </Button>
+          <Link link={data.button!} variant="primary" size="m" />
         </div>
       )}
     </section>

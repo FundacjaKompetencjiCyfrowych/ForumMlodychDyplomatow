@@ -19,7 +19,7 @@ const TeamDivisions = ({ data }: PageBuilderSectionProps<"teamDivisionsSection">
       </div>
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {members?.map((member: any, index: number) => (
+        {members?.map((member, index) => (
           <PersonCard person={member} key={index} />
         ))}
       </div>

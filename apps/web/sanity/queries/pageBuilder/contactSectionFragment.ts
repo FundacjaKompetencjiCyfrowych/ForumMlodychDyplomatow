@@ -7,7 +7,6 @@ export const contactSectionFragment = q
     heading: sub.field("heading"),
     subtitle: sub.field("subtitle"),
     contactEmail: sub.field("contactEmail"),
-    contactPhone: sub.field("contactPhone"),
     contactAddress: sub.field("contactAddress"),
     recipientEmail: sub.field("recipientEmail"),
   }));

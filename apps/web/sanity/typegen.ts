@@ -18,11 +18,6 @@ export type Robots = {
   noFollow?: boolean;
 };
 
-export type Button = {
-  text?: string;
-  link?: string;
-};
-
 export type ExpertsListSection = {
   _type: "expertsListSection";
   dummy?: string;
@@ -55,7 +50,7 @@ export type JoinUsDivisionsSection = {
     description?: string;
     _key: string;
   }>;
-  button?: Button;
+  button?: Link;
 };
 
 export type WhatWeDoDivisionsSection = {
@@ -94,7 +89,6 @@ export type ContactSection = {
   heading?: string;
   subtitle?: string;
   contactEmail?: string;
-  contactPhone?: string;
   contactAddress?: string;
   recipientEmail?: string;
 };
@@ -505,6 +499,29 @@ export type Translations = {
       author?: string;
       reviewer?: string;
     };
+  };
+  contactForm?: {
+    starsign?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    subject?: string;
+    message?: string;
+    submit?: string;
+    sending?: string;
+    requiredError?: string;
+    placeholders?: {
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+      phone?: string;
+      subject?: string;
+      message?: string;
+    };
+  };
+  divisions?: {
+    divisionNotFound?: string;
   };
   locale?: string;
 };
@@ -925,7 +942,6 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
-  | Button
   | ExpertsListSection
   | HeadingSection
   | DivisionsListSection

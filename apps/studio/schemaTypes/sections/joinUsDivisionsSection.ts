@@ -48,21 +48,9 @@ export const joinUsDivisionsSection = defineType({
     }),
     defineField({
       name: "button",
-      type: "object",
+      type: "link",
       title: "Przycisk akcji",
-      fields: [
-        defineField({
-          name: "text",
-          type: "string",
-          title: "Tekst na przycisku",
-        }),
-        defineField({
-          name: "link",
-          type: "string",
-          title: "Link docelowy",
-          description: "Może być URL (https://...) lub ścieżka wewnątrz aplikacji (/kontakt).",
-        }),
-      ],
+      validation: (Rule) => Rule.required(),
     }),
   ],
 });

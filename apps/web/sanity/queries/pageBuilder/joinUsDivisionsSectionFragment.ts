@@ -1,6 +1,7 @@
 import { q } from "@/sanity/groqd";
 import type { PageBuilderSection } from ".";
 import { imgFragment } from "../imgFragment";
+import { linkFragment } from "../linkFragment";
 
 export const joinUsDivisionsSectionFragment = q
   .fragment<PageBuilderSection<"joinUsDivisionsSection">>()
@@ -11,8 +12,5 @@ export const joinUsDivisionsSectionFragment = q
       header: feat.field("header"),
       description: feat.field("description"),
     })),
-    button: sub.field("button").project((btn) => ({
-      text: btn.field("text"),
-      link: btn.field("link"),
-    })),
+    button: sub.field("button").project(linkFragment),
   }));
