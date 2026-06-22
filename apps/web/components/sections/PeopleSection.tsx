@@ -1,36 +1,35 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
 import { getTranslations } from "next-intl/server";
 import { getHeading } from "../../lib/heading";
-import type { DeepGet } from "../../lib/types";
-import { SanityImage } from "../../sanity/image/SanityImage";
 import { Container } from "../ui/container";
 import { Link } from "../ui/link";
 import { ResponsiveCarousel } from "../ui/responsive-carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Typography from "../ui/typography";
 import { ChevronRight } from "lucide-react";
+import PersonCard from "../ui/person-card";
 
-type Person = DeepGet<PageBuilderSectionProps<"peopleSection">, "data.people.members">;
+// type Person = DeepGet<PageBuilderSectionProps<"peopleSection">, "data.people.members">;
 
-const PersonCard = ({ person }: { person: Person }) => {
-  return (
-    <div className="desktop:stretch flex w-full min-w-full flex-col items-center gap-4 desktop:min-w-0">
-      <SanityImage
-        image={person.img}
-        className="aspect-square w-full max-w-100 object-cover desktop:max-w-74"
-        sizes={{
-          default: "400px",
-          desktop: "300px",
-        }}
-      />
-      <Typography variant="body-xl">{person.name}</Typography>
-      <Typography variant="body-m" className="text-center whitespace-break-spaces text-gray-600">
-        {person.title}
-      </Typography>
-      {/* TODO social links after merge */}
-    </div>
-  );
-};
+// const PersonCard = ({ person }: { person: Person }) => {
+//   return (
+//     <div className="desktop:stretch flex w-full min-w-full flex-col items-center gap-4 desktop:min-w-0">
+//       <SanityImage
+//         image={person.img}
+//         className="aspect-square w-full max-w-100 object-cover desktop:max-w-74"
+//         sizes={{
+//           default: "400px",
+//           desktop: "300px",
+//         }}
+//       />
+//       <Typography variant="body-xl">{person.name}</Typography>
+//       <Typography variant="body-m" className="text-center whitespace-break-spaces text-gray-600">
+//         {person.title}
+//       </Typography>
+//       {/* TODO social links after merge */}
+//     </div>
+//   );
+// };
 const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"peopleSection">) => {
   const groups = data.people?.filter((group) => group.groupName && group.members) ?? [];
   const t = await getTranslations({ locale, namespace: "people" });
@@ -53,8 +52,8 @@ const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"p
         {groups.map((group, index) => (
           <TabsContent key={`${group._key}-${index}`} value={group.groupName ?? ""}>
             <ResponsiveCarousel contentClassName="desktop:gap-6">
-              {group.members?.map((member, index) => (
-                <PersonCard key={`${member._key}-${index}`} person={member} />
+              {group.members?.map((member) => (
+                <PersonCard key={member._id} person={member} />
               ))}
             </ResponsiveCarousel>
           </TabsContent>

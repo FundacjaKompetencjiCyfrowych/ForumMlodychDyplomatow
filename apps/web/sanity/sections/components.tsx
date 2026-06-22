@@ -8,12 +8,19 @@ import {
   PeopleSection,
   PodcastSection,
   SupportUsSection,
+  ContactSection,
+  UniversalHero,
+  WhatWeDoDivisions,
+  JoinUsDivisions,
+  EventsDivisions,
+  DivisionsListSection,
   HeadingSection,
   ExpertsListSection,
 } from "@/components/sections";
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
 import { EventsListSection } from "../../components/sections/EventsListSection";
+import TeamDivisions from "@/components/sections/TeamDivisionsSection";
 
 export type ComponentsRegistry = {
   [K in PageBuilderSectionType]: ComponentType<PageBuilderSectionProps<K>>;
@@ -39,6 +46,13 @@ export const components: ComponentsRegistry = {
   eventsListSection: EventsListSection,
   podcastSection: PodcastSection,
   supportUsSection: SupportUsSection,
+  contactSection: ContactSection,
+  universalHeroSection: UniversalHero,
+  whatWeDoDivisionsSection: WhatWeDoDivisions,
+  joinUsDivisionsSection: JoinUsDivisions,
+  teamDivisionsSection: TeamDivisions,
+  eventsDivisionsSection: EventsDivisions,
+  divisionsListSection: DivisionsListSection,
   headingSection: HeadingSection,
   expertsListSection: ExpertsListSection,
 };

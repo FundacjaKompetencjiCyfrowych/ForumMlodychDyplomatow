@@ -44,6 +44,7 @@ type Components =
   | "time"
   | "div"
   | "label"
+  | "li"
   | "a";
 type Props<T extends Components> = {
   as?: T;

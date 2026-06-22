@@ -1,6 +1,6 @@
 import { q } from "@/sanity/groqd";
 import type { PageBuilderSection } from ".";
-import { divisionPreviewFragment } from "../division";
+import { imgFragment } from "../imgFragment";
 
 export const divisionsSectionFragment = q
   .fragment<PageBuilderSection<"divisionsSection">>()
@@ -8,5 +8,13 @@ export const divisionsSectionFragment = q
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
     description: sub.field("description"),
-    divisions: sub.field("divisions[]").deref().project(divisionPreviewFragment),
+    divisions: sub
+      .field("divisions[]")
+      .deref()
+      .project((div) => ({
+        _id: div.field("_id"),
+        name: div.field("name"),
+        slug: div.field("slug.current"),
+        coverImage: div.field("coverImage").project(imgFragment),
+      })),
   }));

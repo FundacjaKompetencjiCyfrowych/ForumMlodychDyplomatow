@@ -13,7 +13,7 @@ const DivisionCard = ({ division }: Props) => {
   return (
     <Link
       href={`/divisions/${division.slug}`}
-      className="group relative block h-full w-full overflow-clip rounded-[8px] text-white transition-all"
+      className="group relative block h-full w-full overflow-clip rounded-lg text-white transition-all"
     >
       <SanityImage image={division.coverImage} className="h-full w-full object-cover" />
       <div

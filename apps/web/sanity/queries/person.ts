@@ -4,7 +4,21 @@ import { q } from "../groqd";
 import { imgFragment } from "./imgFragment";
 import type { PaginationParameters } from "./pagination";
 import { intlArrayQuery } from "./intl";
-
+export const personCardFragment = q
+  .parameters<{ locale: Locale }>()
+  .fragmentForType<"person">()
+  .project((sub) => ({
+    _id: true,
+    name: true,
+    title: intlArrayQuery(sub.field("title[]")),
+    img: sub.field("img").project(imgFragment),
+    socials: sub.field("socials[]").project((_sub) => ({
+      _key: true,
+      platform: true,
+      url: true,
+    })),
+  }));
+export type PersonCard = InferFragmentType<typeof personCardFragment>;
 export const personFragment = q
   .parameters<{ locale: Locale }>()
   .fragmentForType<"person">()

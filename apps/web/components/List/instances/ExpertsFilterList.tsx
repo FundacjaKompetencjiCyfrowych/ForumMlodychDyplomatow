@@ -3,7 +3,7 @@ import type { Locale } from "next-intl";
 import { FilterList, type Filter, type FilterParams } from "../FilterList";
 import type { PaginationQueryFunction } from "../../../sanity/queries/pagination";
 import type { PersonFull } from "../../../sanity/queries/person";
-import { PersonCard } from "../../People/PersonCard";
+import PersonCard from "../../ui/person-card";
 
 const PersonCardComponent = ({ item }: { item: PersonFull }) => <PersonCard person={item} />;
 
