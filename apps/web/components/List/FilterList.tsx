@@ -3,12 +3,13 @@ import type { Locale } from "next-intl";
 import { useTranslations } from "next-intl";
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import React, { useEffect, useMemo, useState, useTransition } from "react";
-import type { PaginationQueryFunction, PaginationResult } from "../../sanity/queries/pagination";
 import { cn } from "../../lib/utils";
+import type { PaginationQueryFunction, PaginationResult } from "../../sanity/queries/pagination";
 import Typography from "../ui/typography";
 import { FilterListInput } from "./FilterListInput";
 import { FilterListGroupItem, FilterListItem } from "./FilterListItem";
 import FilterListPagination from "./FilterListPagination";
+import FilterListTabs from "./FilterListTabs";
 import { FilterListContext, TransitionContainer } from "./FilterListTransition";
 
 export type FilterParams<
@@ -18,7 +19,7 @@ export type FilterParams<
   filters?: T;
   locale: Locale;
 };
-
+type TabsType = { slug: string; values: { label: string; value: string; default?: boolean }[] };
 type Props<
   T,
   TParams extends Record<string, string | number | string[]> = Record<
@@ -27,14 +28,13 @@ type Props<
   >,
 > = {
   filters: Filter[];
+  tabs?: TabsType;
   Component: React.ComponentType<{ item: T; locale: Locale }>;
   queryAction: PaginationQueryFunction<T, FilterParams<TParams>>;
   locale: Locale;
   perPage?: number;
   listClassName?: string;
-  filterSlot?: React.ReactNode;
 };
-
 type FilterOption = {
   label: string;
   value: string;
@@ -53,6 +53,7 @@ type FilterSubgroupOption = {
   default?: undefined;
   subgroups: FilterOption[];
 };
+
 export type Filter = {
   slug: string;
   label?: string;
@@ -67,7 +68,7 @@ type FilterResultType = typeof parseAsString | ReturnType<typeof parseAsArrayOf<
 /**
  * Create a params parser nuqs object, based on the default filter list params and the filters provided.
  */
-const createFilterListParams = (filters: Filter[]) => {
+const createFilterListParams = (filters: Filter[], tabs?: TabsType) => {
   return {
     page: parseAsInteger.withDefault(1),
     q: parseAsString,
@@ -82,6 +83,13 @@ const createFilterListParams = (filters: Filter[]) => {
         return [filter.slug, singleParser];
       })
     ) as Record<string, FilterResultType>),
+    ...(tabs
+      ? {
+          [tabs.slug]: parseAsString.withDefault(
+            tabs.values.find((tab) => tab.default)?.value ?? tabs.values[0].value
+          ),
+        }
+      : {}),
   };
 };
 
@@ -90,21 +98,21 @@ export const FilterList = <
   TParams extends Record<string, string | number | string[]>,
 >({
   filters,
+  tabs,
   queryAction,
   Component,
   locale,
   perPage = 10,
   listClassName,
-  filterSlot,
 }: Props<T, TParams>) => {
   const t = useTranslations();
   const [isPending, startTransition] = useTransition();
 
   // we have to make this inline instead of outside as we're depending on the filters
   const paramsParser = useMemo(
-    () => createFilterListParams(filters),
+    () => createFilterListParams(filters, tabs),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(filters)]
+    [JSON.stringify(filters), JSON.stringify(tabs)]
   );
 
   const [params] = useQueryStates(paramsParser);
@@ -116,23 +124,25 @@ export const FilterList = <
         page: params.page ?? 1,
         perPage,
         q: params.q ?? undefined,
-        filters: filters.reduce(
-          (acc, filter) => {
-            const value = params[filter.slug as keyof typeof params] ?? undefined;
-            if (value) {
-              acc[filter.slug] = value as string | string[] | number;
-            }
-            return acc;
-          },
-          {} as Record<string, number | string | string[]>
-        ) as TParams,
+        filters: {
+          ...(filters.reduce(
+            (acc, filter) => {
+              const value = params[filter.slug as keyof typeof params] ?? undefined;
+              if (value) {
+                acc[filter.slug] = value as string | string[] | number;
+              }
+              return acc;
+            },
+            {} as Record<string, number | string | string[]>
+          ) as TParams),
+          ...(tabs ? { [tabs.slug]: params[tabs.slug as keyof typeof params] } : {}),
+        },
         locale,
       });
       setData(result);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(params), locale, perPage]);
-
   return (
     <FilterListContext.Provider value={{ isPending, startTransition }}>
       <div className="flex w-full flex-col gap-4 desktop:flex-row">
@@ -171,7 +181,7 @@ export const FilterList = <
           <Typography>
             {t("global.results")}: {data?.total ?? 0}
           </Typography>
-          {filterSlot}
+          {tabs && <FilterListTabs slug={tabs.slug} tabs={tabs.values} />}
           <TransitionContainer
             pendingClassName="opacity-70"
             className={cn("transition-opacity duration-150", listClassName)}

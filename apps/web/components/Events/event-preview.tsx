@@ -18,7 +18,7 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
   const date = new Date(event.startDate);
   const endDate = event.endDate ? new Date(event.endDate) : null;
   return (
-    <div className={cn("flex flex-col overflow-clip rounded-[8px] desktop:flex-row", className)}>
+    <div className={cn("flex flex-col overflow-clip rounded-lg desktop:flex-row", className)}>
       <div
         className={cn(
           "flex flex-col items-center justify-center gap-4 bg-clip-border px-2 text-gray-50 desktop:w-20",
@@ -76,7 +76,7 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
           {event.excerpt}
         </Typography>
         {!isArchive && event.registrationUrl && (
-          <Link href={event.registrationUrl} openInNewTab variant="primary">
+          <Link href={event.registrationUrl} openInNewTab variant="primary" className="w-fit">
             {t("signUp")}
           </Link>
         )}
