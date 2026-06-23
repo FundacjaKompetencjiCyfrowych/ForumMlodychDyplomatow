@@ -31,6 +31,7 @@ const buttonVariants = cva(
           "bg-white text-brand-red-900 hover:bg-slate-50 hover:text-brand-red-700 active:border-brand-red-800 active:bg-brand-red-800 active:text-white disabled:border-gray-400 disabled:bg-brand-red-50 disabled:text-gray-400",
         ],
         link: "inline-flex text-gray-900 hover:text-brand-red-800 active:text-brand-red-900",
+        nav: "gap-2 text-gray-700 decoration-2 underline-offset-4 hover:text-brand-red-700 data-current:underline",
         // not updated yet
         ghost: "typography-p1 border-0 bg-transparent text-gray-900 hover:bg-gray-100",
         dot: "h-2 w-2 rounded-full border-0 bg-slate-300 p-0! hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800",

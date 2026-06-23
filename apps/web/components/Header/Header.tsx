@@ -18,6 +18,7 @@ import MobileMenuContent from "./MobileMenuContent";
 import { FMDLogo } from "../Icons/FMDLogo";
 import { LANGUAGE_FIELD } from "../../../studio/config";
 import SkipToContent from "./SkipToContent";
+import { HeaderTopLink } from "./HeaderTopLink";
 
 export const navQuery = q.star
   .parameters<{ locale: string }>()
@@ -79,7 +80,7 @@ const Header = async () => {
                 <HeaderMenu key={link._key} dropdown={link} />
               ) : (
                 <NavigationMenuItem key={link._key}>
-                  <Link link={link} />
+                  <HeaderTopLink variant="nav" size="inline" link={link} />
                 </NavigationMenuItem>
               )
             )}

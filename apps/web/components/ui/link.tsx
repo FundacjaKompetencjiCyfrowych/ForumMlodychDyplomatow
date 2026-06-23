@@ -3,10 +3,10 @@ import { cn } from "@/lib/utils";
 import { type VariantProps } from "class-variance-authority";
 import type { InferFragmentType } from "groqd";
 import { ExternalLink } from "lucide-react";
+import { useLocale } from "next-intl";
 import React from "react";
 import type { linkFragment } from "../../sanity/queries/linkFragment";
 import { buttonVariants } from "./button";
-import { useLocale } from "next-intl";
 type LinkType = InferFragmentType<typeof linkFragment>;
 type LinkOrHref =
   | {
@@ -29,7 +29,14 @@ const slugsByType = {
   division: "/division/",
   publication: "/publications/",
 } satisfies Record<Exclude<LinkType["linkType"], "href" | null | undefined>, string>;
-
+export type LinkProps = Omit<React.ComponentProps<typeof BaseLink>, "href"> &
+  VariantProps<typeof buttonVariants> & {
+    iconLeft?: React.ReactNode;
+    iconRight?: React.ReactNode;
+    openInNewTab?: boolean;
+    noExternalIcon?: boolean;
+    currentPathname?: string;
+  } & LinkOrHref;
 export const Link = ({
   children,
   className,
@@ -41,15 +48,10 @@ export const Link = ({
   link,
   href,
   searchParams,
+  currentPathname,
   noExternalIcon = false,
   ...props
-}: Omit<React.ComponentProps<typeof BaseLink>, "href"> &
-  VariantProps<typeof buttonVariants> & {
-    iconLeft?: React.ReactNode;
-    iconRight?: React.ReactNode;
-    openInNewTab?: boolean;
-    noExternalIcon?: boolean;
-  } & LinkOrHref) => {
+}: LinkProps) => {
   const localeBase = useLocale();
   const locale = localeBase === "pl" ? "" : `/${localeBase}`;
   const getHref = ():
@@ -79,10 +81,13 @@ export const Link = ({
   };
   const isExternal = link?.linkType === "href" || href?.startsWith("http");
   const rightIcon = isExternal && !noExternalIcon ? <ExternalLink /> : iconRight;
+  const fullHref = getHref();
+  const isCurrent = currentPathname && typeof fullHref === "string" && currentPathname === fullHref;
   return (
     <BaseLink
-      href={getHref()}
+      href={fullHref}
       target={link?.openInNewTab || openInNewTab ? "_blank" : undefined}
+      data-current={isCurrent ? true : undefined}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
