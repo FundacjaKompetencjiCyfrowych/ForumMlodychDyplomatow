@@ -76,7 +76,7 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
           {event.excerpt}
         </Typography>
         {!isArchive && event.registrationUrl && (
-          <Link href={event.registrationUrl} openInNewTab variant="primary" className="w-fit">
+          <Link href={event.registrationUrl} openInNewTab variant="secondary" className="w-fit">
             {t("signUp")}
           </Link>
         )}

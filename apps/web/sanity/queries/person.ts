@@ -4,6 +4,7 @@ import { q } from "../groqd";
 import { imgFragment } from "./imgFragment";
 import type { PaginationParameters } from "./pagination";
 import { intlArrayQuery } from "./intl";
+import { socialsFragment } from "./socialsFragment";
 export const personCardFragment = q
   .parameters<{ locale: Locale }>()
   .fragmentForType<"person">()
@@ -12,11 +13,7 @@ export const personCardFragment = q
     name: true,
     title: intlArrayQuery(sub.field("title[]")),
     img: sub.field("img").project(imgFragment),
-    socials: sub.field("socials[]").project((_sub) => ({
-      _key: true,
-      platform: true,
-      url: true,
-    })),
+    socials: sub.field("socials[]").project(socialsFragment),
   }));
 export type PersonCard = InferFragmentType<typeof personCardFragment>;
 export const personFragment = q
@@ -28,11 +25,7 @@ export const personFragment = q
     title: intlArrayQuery(sub.field("title[]")),
     group: true,
     img: sub.field("img").project(imgFragment),
-    socials: sub.field("socials[]").project({
-      _key: true,
-      platform: true,
-      url: true,
-    }),
+    socials: sub.field("socials[]").project(socialsFragment),
   }));
 
 export type PeoplePaginatedParameters = {

@@ -1,7 +1,15 @@
+import type { InferFragmentType } from "groqd";
 import React from "react";
-import type { PersonCard } from "../../sanity/queries/person";
-import { BsFacebook, BsInstagram, BsLinkedin } from "react-icons/bs";
-type Socials = PersonCard["socials"];
+import {
+  BsFacebook,
+  BsInstagram,
+  BsLinkedin,
+  BsSpotify,
+  BsTwitterX,
+  BsYoutube,
+} from "react-icons/bs";
+import type { socialsFragment } from "../../sanity/queries/socialsFragment";
+type Socials = Array<InferFragmentType<typeof socialsFragment>> | null | undefined;
 type Props = {
   socials: Socials;
 };
@@ -9,6 +17,9 @@ const icons = {
   facebook: <BsFacebook />,
   instagram: <BsInstagram />,
   linkedin: <BsLinkedin />,
+  spotify: <BsSpotify />,
+  twitter: <BsTwitterX />,
+  youtube: <BsYoutube />,
 } satisfies Record<Exclude<NonNullable<Socials>[number]["platform"], null>, React.ReactNode>;
 export const SocialIcons = ({ socials }: Props) => {
   if (socials == null || socials.length === 0) return null;

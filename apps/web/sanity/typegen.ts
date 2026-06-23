@@ -195,6 +195,19 @@ export type AboutUsSection = {
   }>;
 };
 
+export type Socials = Array<{
+  platform?:
+    | "facebook"
+    | "instagram"
+    | "linkedin"
+    | "twitter"
+    | "youtube"
+    | "spotify";
+  url?: string;
+  _type: "socialLink";
+  _key: string;
+}>;
+
 export type PageBuilder = Array<
   | ({
       _key: string;
@@ -586,30 +599,16 @@ export type Footer = {
   _updatedAt: string;
   _rev: string;
   locale?: string;
-  description?: string;
-  cta?: LinkButton;
-  columns?: Array<{
-    title?: string;
-    links?: Array<
-      {
-        _key: string;
-      } & Link
-    >;
-    _type: "footerColumn";
-    _key: string;
-  }>;
-  contactColumn?: {
-    title?: string;
-    email?: string;
-    phone?: string;
-    socials?: Array<{
-      platform?: string;
-      link?: Link;
-      icon?: Img;
-      _type: "socialLink";
+  email?: string;
+  phone?: string;
+  socials?: Socials;
+  address?: string;
+  identfiers?: string;
+  nav?: Array<
+    {
       _key: string;
-    }>;
-  };
+    } & Link
+  >;
   copyright?: string;
   links?: Array<
     {
@@ -856,12 +855,7 @@ export type Person = {
   img?: Img;
   title?: InternationalizedArrayString;
   bio?: InternationalizedArrayText;
-  socials?: Array<{
-    platform?: "linkedin" | "instagram" | "facebook";
-    url?: string;
-    _type: "social";
-    _key: string;
-  }>;
+  socials?: Socials;
   order?: number;
 };
 
@@ -1007,6 +1001,7 @@ export type AllSanitySchemaTypes =
   | DivisionReference
   | DivisionsSection
   | AboutUsSection
+  | Socials
   | PageBuilder
   | LinkButton
   | PageReference

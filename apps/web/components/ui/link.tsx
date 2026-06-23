@@ -80,7 +80,8 @@ export const Link = ({
     return `${locale}${slugsByType[link.linkType]}${link.href}`;
   };
   const isExternal = link?.linkType === "href" || href?.startsWith("http");
-  const rightIcon = isExternal && !noExternalIcon ? <ExternalLink /> : iconRight;
+  const rightIcon =
+    isExternal && !noExternalIcon ? <ExternalLink className="size-[1em]" /> : iconRight;
   const fullHref = getHref();
   const isCurrent = currentPathname && typeof fullHref === "string" && currentPathname === fullHref;
   return (

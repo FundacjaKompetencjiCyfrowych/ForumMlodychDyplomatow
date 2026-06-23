@@ -10,10 +10,12 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
         text: sub.field("text"),
       },
       'linkType == "page"': {
-        href: sub.select({
-          "homepage==true": sub.value(""),
-          "homepage!=true": sub.field("page").deref().field("slug.current"),
-        }),
+        href: sub
+          .select({
+            "homepage==true": sub.value(""),
+            "homepage!=true": sub.field("page").deref().field("slug.current"),
+          })
+          .transform((slug) => (slug === "home" ? "" : slug)),
         text: sub.coalesce(sub.field("text"), sub.field("page").deref().field("name")),
       },
 

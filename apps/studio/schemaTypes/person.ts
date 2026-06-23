@@ -1,6 +1,6 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
-import { languageField } from "../plugins/intl";
+import { defineField, defineType } from "sanity";
 import { GroupPicker } from "../components/GroupPicker";
+import { languageField } from "../plugins/intl";
 
 export default defineType({
   name: "person",
@@ -45,33 +45,7 @@ export default defineType({
     defineField({
       name: "socials",
       title: "Media społecznościowe",
-      type: "array",
-      of: [
-        defineArrayMember({
-          name: "social",
-          title: "Media społecznościowe",
-          type: "object",
-          fields: [
-            defineField({
-              name: "platform",
-              title: "Platforma",
-              type: "string",
-              options: {
-                list: [
-                  { title: "LinkedIn", value: "linkedin" },
-                  { title: "Instagram", value: "instagram" },
-                  { title: "Facebook", value: "facebook" },
-                ],
-              },
-            }),
-            defineField({
-              name: "url",
-              title: "URL",
-              type: "url",
-            }),
-          ],
-        }),
-      ],
+      type: "socials",
     }),
     defineField({
       name: "order",
