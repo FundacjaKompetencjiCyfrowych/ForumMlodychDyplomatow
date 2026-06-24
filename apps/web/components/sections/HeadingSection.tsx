@@ -13,7 +13,7 @@ const HeadingSection = ({ data, index }: PageBuilderSectionProps<"headingSection
         </Typography>
         {data.subheading && <Typography variant="body-xl">{data.subheading}</Typography>}
       </div>
-      <div className="">
+      {data.image && (
         <GradientImage
           sizes={{
             default: "100vw",
@@ -23,7 +23,7 @@ const HeadingSection = ({ data, index }: PageBuilderSectionProps<"headingSection
           image={data.image}
           className="max-h-46 object-cover desktop:max-h-80"
         />
-      </div>
+      )}
     </Container>
   );
 };
