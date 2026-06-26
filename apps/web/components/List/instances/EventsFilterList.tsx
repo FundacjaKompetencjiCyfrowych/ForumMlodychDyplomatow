@@ -4,7 +4,6 @@ import type { EventPreview as EventPreviewType } from "../../../sanity/queries/e
 import type { PaginationQueryFunction } from "../../../sanity/queries/pagination";
 import EventPreview from "../../Events/event-preview";
 import { FilterList, type Filter, type FilterParams } from "../FilterList";
-import { useMemo } from "react";
 const EventListComponent = ({ item, locale }: { item: EventPreviewType; locale: Locale }) => {
   return <EventPreview locale={locale} event={item} isArchive={item.archive} />;
 };
@@ -20,15 +19,13 @@ type Props = {
 
 export const EventsFilterList = ({ filters, queryAction, locale, perPage }: Props) => {
   const t = useTranslations("events");
-  const eventTabs = useMemo(() => {
-    return {
-      slug: "type",
-      values: [
-        { label: t("upcoming"), value: "upcoming", default: true },
-        { label: t("archive"), value: "archive" },
-      ],
-    };
-  }, [t]);
+  const eventTabs = {
+    slug: "type",
+    values: [
+      { label: t("upcoming"), value: "upcoming", default: true },
+      { label: t("archive"), value: "archive" },
+    ],
+  };
   return (
     <FilterList
       filters={filters}

@@ -35,18 +35,6 @@ export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPubl
         <Typography as="h2" variant="h3" className="text-foreground">
           {t.title}
         </Typography>
-
-        {/* Looks like we don't need this anymore but need to verify */}
-        {/* <Link
-          href={`/${locale}${t.baseHref}`}
-          variant="link"
-          className="hover:text-brand-400 h-auto border-none p-0! text-brand-blue no-underline transition-colors hover:border-transparent active:border-transparent"
-          iconRight={<span className="text-lg leading-none">›</span>}
-        >
-          <Typography as="span" variant="p2" className="font-medium">
-            {t.viewAll}
-          </Typography>
-        </Link> */}
       </div>
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
