@@ -73,17 +73,17 @@ export const PublicationHero = ({
                 variant="link"
                 className="h-auto border-none p-0! text-muted-foreground no-underline transition-colors hover:border-transparent hover:text-foreground active:border-transparent"
               >
-                <Typography as="span" variant="p2">
+                <Typography as="span" variant="body-s">
                   {item.label}
                 </Typography>
               </Link>
             ) : (
-              <Typography as="span" variant="p2" className="text-foreground">
+              <Typography as="span" variant="body-s" className="text-foreground">
                 {item.label}
               </Typography>
             )}
             {index < breadcrumbs.length - 1 && (
-              <Typography as="span" variant="p2" className="text-muted-foreground">
+              <Typography as="span" variant="body-s" className="text-muted-foreground">
                 ›
               </Typography>
             )}
@@ -96,17 +96,17 @@ export const PublicationHero = ({
         <div className="order-2 flex w-full flex-col gap-6 lg:order-1 lg:col-span-7 xl:col-span-6">
           <div className="flex items-center gap-3">
             <div className="h-0.5 w-6 bg-brand-red"></div>
-            <Typography as="span" variant="eyebrow" className="tracking-widest text-brand-red">
+            <Typography as="span" variant="body-s" className="tracking-widest text-brand-red">
               {tags[1] || category}
             </Typography>
           </div>
 
-          <Typography as="h1" variant="title" className="text-foreground">
+          <Typography as="h1" variant="h3" className="text-foreground">
             {title}
           </Typography>
 
           {excerpt && (
-            <Typography as="p" variant="p1" className="text-foreground/80">
+            <Typography as="p" variant="body-m" className="text-foreground/80">
               {excerpt}
             </Typography>
           )}
@@ -116,11 +116,15 @@ export const PublicationHero = ({
             <div className="flex flex-wrap items-center gap-3">
               {tags.map((tag, index) => (
                 <React.Fragment key={index}>
-                  <Typography as="span" variant="p2" className="text-muted-foreground">
+                  <Typography as="span" variant="body-m" className="text-muted-foreground">
                     {tag}
                   </Typography>
                   {index < tags.length - 1 && (
-                    <Typography as="span" variant="p2" className="text-muted-foreground opacity-50">
+                    <Typography
+                      as="span"
+                      variant="body-m"
+                      className="text-muted-foreground opacity-50"
+                    >
                       •
                     </Typography>
                   )}
@@ -140,15 +144,11 @@ export const PublicationHero = ({
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <Typography as="span" variant="p2" className="font-semibold text-foreground">
+                  <Typography as="span" variant="body-s" className="font-semibold text-foreground">
                     {author.name}
                   </Typography>
                   {author.role && (
-                    <Typography
-                      as="span"
-                      variant="caption"
-                      className="mt-0.5 text-muted-foreground"
-                    >
+                    <Typography as="span" variant="body-s" className="mt-0.5 text-muted-foreground">
                       {author.role}
                     </Typography>
                   )}
@@ -163,7 +163,11 @@ export const PublicationHero = ({
             )}
 
             {date && (
-              <Typography variant="p2" className="whitespace-nowrap text-muted-foreground" asChild>
+              <Typography
+                variant="caption"
+                className="whitespace-nowrap text-muted-foreground"
+                asChild
+              >
                 <time dateTime={isoDate}>{date}</time>
               </Typography>
             )}
@@ -209,7 +213,7 @@ export const PublicationHero = ({
             ) : (
               <div className="flex flex-col items-center gap-2 text-muted-foreground/50">
                 <ImageIcon className="h-12 w-12" />
-                <Typography as="span" variant="p2" className="font-medium">
+                <Typography as="span" variant="body-s" className="font-medium">
                   {t.noImage}
                 </Typography>
               </div>

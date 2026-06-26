@@ -14,12 +14,11 @@ const WhatWeDoDivisions = ({ data }: WhatWeDoDivisionsProps) => {
 
       <div className="mt-6 flex flex-col items-center gap-4">
         {whatWeDo?.map((item: string, index: number) => (
-          <div key={index} className="flex max-w-5xl items-center justify-center gap-3">
-            <span className="h-2 w-2 shrink-0 rounded-full bg-black" />
-            <Typography as="p" variant="h5" className="text-center">
+          <ul key={index} className="flex max-w-5xl list-disc items-center justify-center gap-3">
+            <Typography as="li" variant="body-l" className="text-center">
               {item}
             </Typography>
-          </div>
+          </ul>
         ))}
       </div>
     </section>

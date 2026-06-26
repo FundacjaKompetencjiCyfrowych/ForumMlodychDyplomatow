@@ -28,16 +28,16 @@ export const PublicationAuthor = ({ author, date, isoDate }: PublicationAuthorPr
         </div>
 
         <div className="flex flex-col justify-center">
-          <Typography as="span" variant="p1" className="font-semibold text-foreground">
+          <Typography as="span" variant="body-s" className="font-semibold text-foreground">
             {author.name}
           </Typography>
           {author.role && (
-            <Typography as="span" variant="p2" className="mt-0.5 text-muted-foreground">
+            <Typography as="span" variant="body-s" className="mt-0.5 text-muted-foreground">
               {author.role}
             </Typography>
           )}
           {date && (
-            <Typography variant="p2" className="mt-0.5 text-muted-foreground" asChild>
+            <Typography variant="caption" className="mt-0.5 text-muted-foreground" asChild>
               <time dateTime={isoDate}>{date}</time>
             </Typography>
           )}

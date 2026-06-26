@@ -1,10 +1,9 @@
-import * as React from "react";
 import { cva } from "class-variance-authority";
 import { NavigationMenu as NavigationMenuPrimitive } from "radix-ui";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { ChevronDownIcon } from "lucide-react";
-import { buttonVariants } from "./button";
 
 function NavigationMenu({
   className,
@@ -56,9 +55,20 @@ function NavigationMenuItem({
   );
 }
 
-const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center px-2.5 py-1.5 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted"
-);
+const navigationMenuTriggerStyle = cva([
+  "group/navigation-menu-trigger",
+  "inline-flex",
+  "items-center justify-center",
+  "text-sm font-medium",
+  "transition-all",
+  "outline-none",
+  "text-gray-700",
+  "hover:text-brand-red-700",
+  "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1",
+  "disabled:pointer-events-none disabled:opacity-50",
+  "data-open:text-brand-red-800 data-open:hover:text-brand-red-800",
+  "",
+]);
 
 function NavigationMenuTrigger({
   className,
@@ -68,12 +78,12 @@ function NavigationMenuTrigger({
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
-      className={cn(buttonVariants({ className, variant: "link" }))}
+      className={cn(navigationMenuTriggerStyle({ className }))}
       {...props}
     >
       {children}{" "}
       <ChevronDownIcon
-        className="relative top-px ml-1 size-3 transition duration-300 group-data-popup-open/navigation-menu-trigger:rotate-180 group-data-open/navigation-menu-trigger:rotate-180"
+        className="relative top-px ml-1 size-3 transition duration-300 in-data-open:rotate-180"
         aria-hidden="true"
       />
     </NavigationMenuPrimitive.Trigger>
@@ -178,12 +188,12 @@ function NavigationMenuIndicator({
 
 export {
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
   NavigationMenuContent,
-  NavigationMenuTrigger,
-  NavigationMenuLink,
   NavigationMenuIndicator,
-  NavigationMenuViewport,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
+  NavigationMenuViewport,
 };

@@ -12,7 +12,7 @@ const TeamDivisions = ({ data }: PageBuilderSectionProps<"teamDivisionsSection">
           {header}
         </Typography>
         {text && (
-          <Typography as="p" variant="p1" className="mx-auto max-w-2xl text-slate-600">
+          <Typography as="p" variant="body-m" className="mx-auto max-w-2xl text-slate-600">
             {text}
           </Typography>
         )}

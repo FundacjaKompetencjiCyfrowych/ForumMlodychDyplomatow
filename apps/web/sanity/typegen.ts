@@ -18,6 +18,11 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type EventsListSection = {
+  _type: "eventsListSection";
+  dummy?: string;
+};
+
 export type ExpertsListSection = {
   _type: "expertsListSection";
   dummy?: string;
@@ -97,6 +102,7 @@ export type SupportUsSection = {
   _type: "supportUsSection";
   heading?: string;
   subheading?: string;
+  description?: string;
   cta?: Link;
   image?: Img;
 };
@@ -106,6 +112,7 @@ export type PodcastSection = {
   heading?: string;
   subheading?: string;
   embed?: string;
+  link?: Link;
 };
 
 export type PeopleSection = {
@@ -168,6 +175,7 @@ export type DivisionsSection = {
   _type: "divisionsSection";
   heading?: string;
   subheading?: string;
+  description?: string;
   divisions?: Array<
     {
       _key: string;
@@ -186,6 +194,19 @@ export type AboutUsSection = {
     _key: string;
   }>;
 };
+
+export type Socials = Array<{
+  platform?:
+    | "facebook"
+    | "instagram"
+    | "linkedin"
+    | "twitter"
+    | "youtube"
+    | "spotify";
+  url?: string;
+  _type: "socialLink";
+  _key: string;
+}>;
 
 export type PageBuilder = Array<
   | ({
@@ -242,6 +263,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & ExpertsListSection)
+  | ({
+      _key: string;
+    } & EventsListSection)
 >;
 
 export type LinkButton = {
@@ -257,13 +281,6 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
-export type EventReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "event";
-};
-
 export type PublicationReference = {
   _ref: string;
   _type: "reference";
@@ -273,12 +290,11 @@ export type PublicationReference = {
 
 export type Link = {
   _type: "link";
-  linkType?: "page" | "publication" | "event" | "division" | "href";
+  linkType?: "page" | "publication" | "division" | "href";
   text?: string;
   href?: string;
   page?: PageReference;
   homepage?: boolean;
-  event?: EventReference;
   division?: DivisionReference;
   publication?: PublicationReference;
   openInNewTab?: boolean;
@@ -389,6 +405,56 @@ export type IconPicker = {
   svg?: string;
 };
 
+export type PersonGroups = {
+  _id: string;
+  _type: "personGroups";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  groups?: Array<{
+    name?: InternationalizedArrayString;
+    slug?: Slug;
+    subgroups?: Array<{
+      name?: InternationalizedArrayString;
+      slug?: Slug;
+      _type: "subgroup";
+      _key: string;
+    }>;
+    _type: "group";
+    _key: string;
+  }>;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
+
+export type InternationalizedArrayTextValue = {
+  _type: "internationalizedArrayTextValue";
+  value?: string;
+  language?: string;
+};
+
+export type InternationalizedArrayStringValue = {
+  _type: "internationalizedArrayStringValue";
+  value?: string;
+  language?: string;
+};
+
+export type InternationalizedArrayText = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayTextValue
+>;
+
 export type TranslationMetadata = {
   _id: string;
   _type: "translation.metadata";
@@ -410,6 +476,13 @@ export type PostReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "post";
+};
+
+export type EventReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "event";
 };
 
 export type NavigationReference = {
@@ -454,13 +527,13 @@ export type InternationalizedArrayReferenceValue = {
     | PostReference
     | EventReference
     | DivisionReference
-    | PersonReference
     | NavigationReference
     | PublicationReference
     | TagReference
     | TagCategoryReference
     | FooterReference
     | TranslationsReference;
+  language?: string;
 };
 
 export type Translations = {
@@ -491,14 +564,7 @@ export type Translations = {
   people?: {
     seeAll?: string;
     groupName?: string;
-    groups?: {
-      everything?: string;
-      board?: string;
-      regionalAuthority?: string;
-      groupCoordinator?: string;
-      author?: string;
-      reviewer?: string;
-    };
+    allGroups?: string;
   };
   contactForm?: {
     starsign?: string;
@@ -533,30 +599,16 @@ export type Footer = {
   _updatedAt: string;
   _rev: string;
   locale?: string;
-  description?: string;
-  cta?: LinkButton;
-  columns?: Array<{
-    title?: string;
-    links?: Array<
-      {
-        _key: string;
-      } & Link
-    >;
-    _type: "footerColumn";
-    _key: string;
-  }>;
-  contactColumn?: {
-    title?: string;
-    email?: string;
-    phone?: string;
-    socials?: Array<{
-      platform?: string;
-      link?: Link;
-      icon?: Img;
-      _type: "socialLink";
+  email?: string;
+  phone?: string;
+  socials?: Socials;
+  address?: string;
+  identfiers?: string;
+  nav?: Array<
+    {
       _key: string;
-    }>;
-  };
+    } & Link
+  >;
   copyright?: string;
   links?: Array<
     {
@@ -588,12 +640,6 @@ export type TagCategory = {
   locale?: string;
   title?: string;
   description?: string;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type SanityFileAssetReference = {
@@ -728,7 +774,7 @@ export type Event = {
   locale?: string;
   seo?: Seo;
   name?: string;
-  slug?: Slug;
+  type?: string;
   startDate?: string;
   endDate?: string;
   isOnline?: boolean;
@@ -805,20 +851,12 @@ export type Person = {
   _rev: string;
   locale?: string;
   name?: string;
-  group?:
-    | "board"
-    | "regionalAuthority"
-    | "groupCoordinator"
-    | "author"
-    | "reviewer";
+  group?: string;
   img?: Img;
-  title?: string;
-  socials?: Array<{
-    platform?: "linkedin" | "instagram" | "facebook";
-    url?: string;
-    _type: "social";
-    _key: string;
-  }>;
+  title?: InternationalizedArrayString;
+  bio?: InternationalizedArrayText;
+  socials?: Socials;
+  order?: number;
 };
 
 export type Page = {
@@ -942,6 +980,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | EventsListSection
   | ExpertsListSection
   | HeadingSection
   | DivisionsListSection
@@ -962,10 +1001,10 @@ export type AllSanitySchemaTypes =
   | DivisionReference
   | DivisionsSection
   | AboutUsSection
+  | Socials
   | PageBuilder
   | LinkButton
   | PageReference
-  | EventReference
   | PublicationReference
   | Link
   | PostsSection
@@ -978,9 +1017,16 @@ export type AllSanitySchemaTypes =
   | Settings
   | Category
   | IconPicker
+  | PersonGroups
+  | Slug
+  | InternationalizedArrayString
+  | InternationalizedArrayTextValue
+  | InternationalizedArrayStringValue
+  | InternationalizedArrayText
   | TranslationMetadata
   | InternationalizedArrayReference
   | PostReference
+  | EventReference
   | NavigationReference
   | TagReference
   | TagCategoryReference
@@ -991,7 +1037,6 @@ export type AllSanitySchemaTypes =
   | Footer
   | Tag
   | TagCategory
-  | Slug
   | SanityFileAssetReference
   | Publication
   | SanityImageCrop

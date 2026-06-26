@@ -14,16 +14,16 @@ const ContactSection = async ({ index, data }: any) => {
         <div>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col">
-              <Typography as={getHeading(index)} variant="title">
+              <Typography as={getHeading(index)} variant="h1">
                 {data.heading}
               </Typography>
 
               {data.subtitle && (
-                <Typography as="p" variant="p1" className="font-semibold lg:text-xl">
+                <Typography as="p" variant="title-m" className="font-semibold lg:text-xl">
                   {data.subtitle}
                 </Typography>
               )}
-              <Typography as="p" variant="p1" className="">
+              <Typography as="p" variant="body-m" className="text-gray-600">
                 {t("contactForm.starsign")}
               </Typography>
             </div>
@@ -44,7 +44,7 @@ const ContactSection = async ({ index, data }: any) => {
               {data.contactAddress && (
                 <div className="text- flex items-start gap-3">
                   <MapPin className="mt-0.5 h-5 w-5 shrink-0" strokeWidth={1.5} />
-                  <Typography as="span" variant="p1" className="text-brand-gray-900">
+                  <Typography as="span" variant="body-m" className="text-brand-gray-900">
                     {data.contactAddress}
                   </Typography>
                 </div>

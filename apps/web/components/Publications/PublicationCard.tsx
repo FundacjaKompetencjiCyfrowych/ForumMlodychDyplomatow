@@ -37,7 +37,7 @@ export const PublicationCard = async ({
       data-orientation={layout}
       className={cn(
         "group flex w-full overflow-hidden rounded-lg border border-border/60 bg-white transition-all hover:shadow-md",
-        "flex-col items-start desktop:data-[orientation=horizontal]:h-80 desktop:data-[orientation=horizontal]:flex-row desktop:data-[orientation=horizontal]:items-stretch",
+        "flex-col items-start desktop:data-[orientation=horizontal]:h-80 desktop:data-[orientation=horizontal]:flex-row desktop:data-[orientation=horizontal]:items-stretch desktop:data-[orientation=vertical]:h-100",
         className
       )}
     >
@@ -91,7 +91,7 @@ export const PublicationCard = async ({
         {excerpt && (
           <Typography
             as="p"
-            variant="p2"
+            variant="body-s"
             className="mt-2 line-clamp-2 whitespace-break-spaces text-muted-foreground"
           >
             {excerpt}
@@ -103,12 +103,11 @@ export const PublicationCard = async ({
 
           <div className="flex items-center gap-3">
             {author && (
-              <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-200/60">
+              <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-200/60">
                 {author.img ? (
                   <SanityImage
                     image={author.img}
                     alt={author.name ?? undefined}
-                    fill
                     className="object-cover"
                   />
                 ) : (

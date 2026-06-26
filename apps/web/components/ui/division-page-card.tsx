@@ -5,14 +5,15 @@ import type { DivisionPreview } from "../../sanity/queries/division";
 import Typography from "./typography";
 import { ChevronRight } from "lucide-react";
 import { Button } from "./button";
+import { getSubHeading } from "../../lib/heading";
 
 type Props = {
   division: DivisionPreview;
-  index?: number;
+  index: number;
   locale?: string;
 };
 
-const DivisionPageCard = ({ division, locale = "pl" }: Props) => {
+const DivisionPageCard = ({ division, index, locale = "pl" }: Props) => {
   return (
     <Link
       href={`/divisions/${division.slug}`}
@@ -27,7 +28,11 @@ const DivisionPageCard = ({ division, locale = "pl" }: Props) => {
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center gap-2 p-6 text-center">
-        <Typography as="h3" variant="h5" className="font-medium text-[#1a2332]">
+        <Typography
+          as={getSubHeading(index)}
+          variant="body-xl"
+          className="font-medium text-[#1a2332]"
+        >
           {division.name}
         </Typography>
 

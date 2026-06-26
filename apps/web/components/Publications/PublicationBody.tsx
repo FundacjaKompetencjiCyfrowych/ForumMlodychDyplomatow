@@ -71,7 +71,7 @@ const translations = {
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <Typography as="p" variant="p1" className="mb-6 text-foreground/90">
+      <Typography as="p" variant="body-l" className="mb-6 text-foreground/90">
         {children}
       </Typography>
     ),
@@ -107,23 +107,23 @@ const portableTextComponents: PortableTextComponents = {
       </Typography>
     ),
     h4: ({ children }) => (
-      <Typography as="h4" variant="h5" className="mt-6 mb-3 text-foreground">
+      <Typography as="h4" variant="h4" className="mt-6 mb-3 text-foreground">
         {children}
       </Typography>
     ),
     h5: ({ children }) => (
-      <Typography as="h5" variant="h6" className="mt-6 mb-2 text-foreground">
+      <Typography as="h5" variant="h4" className="mt-6 mb-2 text-foreground">
         {children}
       </Typography>
     ),
     h6: ({ children }) => (
-      <Typography as="h6" variant="h6" className="mt-6 mb-2 text-foreground">
+      <Typography as="h6" variant="h4" className="mt-6 mb-2 text-foreground">
         {children}
       </Typography>
     ),
     blockquote: ({ children }) => (
       <blockquote className="my-8 rounded-r-lg border-l-[3px] border-brand-blue bg-muted/30 py-2 pl-5 text-foreground/80 italic">
-        <Typography variant="p1">{children}</Typography>
+        <Typography variant="body-l">{children}</Typography>
       </blockquote>
     ),
   },
@@ -203,7 +203,7 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
 
         {/* Prawa kolumna: Pływający Spis Treści (TOC) */}
         <div className="sticky top-24 hidden w-full max-w-48 lg:block">
-          <Typography variant="h6" className="mb-4 font-normal text-muted-foreground">
+          <Typography variant="h4" className="mb-4 font-normal text-muted-foreground">
             {t.inThisArticle}
           </Typography>
 
@@ -217,7 +217,7 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
                   <li key={index} className="group flex items-start gap-4">
                     <Typography
                       as="span"
-                      variant="p1"
+                      variant="body-m"
                       className="mt-0.5 shrink-0 font-semibold text-brand-red"
                     >
                       {number}
@@ -228,7 +228,7 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
                       variant="link"
                       className="block h-auto border-none p-0! text-left text-muted-foreground no-underline transition-colors hover:border-transparent hover:text-foreground active:border-transparent"
                     >
-                      <Typography as="span" variant="p1">
+                      <Typography as="span" variant="body-m">
                         {item.title}
                       </Typography>
                     </Link>
@@ -237,7 +237,7 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
               })}
             </ul>
           ) : (
-            <Typography variant="p2" className="text-muted-foreground italic">
+            <Typography variant="body-m" className="text-muted-foreground italic">
               {t.noHeadings}
             </Typography>
           )}

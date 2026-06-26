@@ -22,6 +22,11 @@ export const supportUsSection = defineType({
       title: "Podtytuł",
     }),
     defineField({
+      name: "description",
+      type: "text",
+      title: "Opis",
+    }),
+    defineField({
       name: "cta",
       type: "link",
       title: "Call to action",

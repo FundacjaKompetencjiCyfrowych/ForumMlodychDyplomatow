@@ -1,6 +1,7 @@
-import type { InferResultType } from "groqd";
-import { q } from "../groqd";
+import type { GroqBuilder, InferResultType } from "groqd";
+import { q, type GroqdContextWithParameters } from "../groqd";
 import type { DeepNonNullable } from "../../lib/types";
+import type { InternationalizedArrayString, InternationalizedArrayText } from "../typegen";
 
 export const intlQuery = q
   .parameters<{ locale: string }>()
@@ -18,7 +19,7 @@ export const intlQuery = q
   }));
 /*
 Use
-`const t = await getTranslations("object");`
+`const t = await getTranslations({locale, namespace: "object"});`
 `return <div>{t("key")}</div>`
 All strings should be type safe, in case you don't see your object check the projection above if it's included
 And check if your dev server is running, as it needs to generate the schema to get typed properly.
@@ -34,3 +35,17 @@ declare module "next-intl" {
     Messages: Translations;
   }
 }
+
+export const intlArrayQuery = (
+  sub: GroqBuilder<
+    InternationalizedArrayString | null,
+    GroqdContextWithParameters<{ locale: Locale }>
+  >
+) => sub.filterBy("language == $locale").slice(0).field("value");
+
+export const intlArrayTextQuery = (
+  sub: GroqBuilder<
+    InternationalizedArrayText | null,
+    GroqdContextWithParameters<{ locale: Locale }>
+  >
+) => sub.filterBy("language == $locale").slice(0).field("value");

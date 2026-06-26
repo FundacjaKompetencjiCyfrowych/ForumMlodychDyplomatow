@@ -14,18 +14,19 @@ const EventsSection = async ({ data, index, locale }: PageBuilderSectionProps<"e
       locale,
       limit: 2,
       divisionSlug: null,
-      currentDate: new Date().toISOString(),
     },
   });
   return (
     <Container className="flex flex-col items-center gap-8">
-      <Typography variant="h2" as={getHeading(index)}>
-        {data.heading}
-      </Typography>
-      <EventTabs query={eventQuery} locale={locale} desktopLimit={2} mobileLimit={1} />
-      {data.link && (
-        <Link variant="text" link={data.link} iconRight={<ChevronRight />} className="self-end" />
-      )}
+      <div className="flex w-full max-w-5xl flex-col items-center gap-8">
+        <Typography variant="h2" as={getHeading(index)}>
+          {data.heading}
+        </Typography>
+        <EventTabs query={eventQuery} locale={locale} />
+        {data.link?.href && (
+          <Link variant="text" link={data.link} iconRight={<ChevronRight />} className="self-end" />
+        )}
+      </div>
     </Container>
   );
 };

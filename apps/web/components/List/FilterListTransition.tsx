@@ -10,15 +10,6 @@ export const FilterListContext = React.createContext<{
   startTransition: () => {},
 });
 
-export const TransitionProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isPending, startTransition] = React.useTransition();
-  return (
-    <FilterListContext.Provider value={{ isPending, startTransition }}>
-      {children}
-    </FilterListContext.Provider>
-  );
-};
-
 export const useTransitionProvider = () => {
   const context = React.use(FilterListContext);
   if (!context) {

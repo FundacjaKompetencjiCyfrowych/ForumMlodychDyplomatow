@@ -34,16 +34,12 @@ export default defineType({
       validation: (Rule) => Rule.required().min(3).max(120),
     }),
     defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
+      name: "type",
+      title: "Typ wydarzenia",
+      type: "string",
       group: "content",
-      description: "Przyjazny adres URL wydarzenia.",
-      options: {
-        source: "name",
-        maxLength: 96,
-      },
-      validation: (Rule) => Rule.required(),
+      description: "Kategoria lub format wydarzenia, np. konferencja, warsztat, webinar.",
+      validation: (Rule) => Rule.max(60),
     }),
     defineField({
       name: "startDate",
@@ -78,7 +74,7 @@ export default defineType({
       title: "Wydarzenie online",
       type: "boolean",
       group: "content",
-      description: "Zaznacz, jeśli wydarzenie odbywa się online. Ukryje to pole adresu.",
+      description: "Zaznacz, jeśli wydarzenie odbywa się online.",
     }),
     defineField({
       name: "division",
@@ -89,8 +85,6 @@ export default defineType({
       to: {
         type: "division",
       },
-      hidden: ({ parent }) => parent?.isOnline,
-      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "venue",
@@ -99,8 +93,7 @@ export default defineType({
       group: "content",
       description:
         "Nazwa obiektu, instytucji lub platformy online, na której odbywa się wydarzenie.",
-      hidden: ({ parent }) => parent?.isOnline,
-      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required().max(120)),
+      validation: (Rule) => Rule.max(120),
     }),
     defineField({
       name: "address",
@@ -109,8 +102,7 @@ export default defineType({
       rows: 3,
       group: "content",
       description: "Adres wydarzenia lub informacja organizacyjna dla wydarzeń online.",
-      hidden: ({ parent }) => parent?.isOnline,
-      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required().max(300)),
+      validation: (Rule) => Rule.max(300),
     }),
     defineField({
       name: "excerpt",
@@ -119,7 +111,7 @@ export default defineType({
       rows: 3,
       group: "content",
       description: "Zwięzły opis do listingów",
-      validation: (Rule) => Rule.required().max(220),
+      validation: (Rule) => Rule.max(220),
     }),
     // defineField({
     //   name: "image",

@@ -9,9 +9,9 @@ import Typography from "../ui/typography";
 import { ChevronRight } from "lucide-react";
 import PersonCard from "../ui/person-card";
 
-const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSection">) => {
+const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"peopleSection">) => {
   const groups = data.people?.filter((group) => group.groupName && group.members) ?? [];
-  const t = await getTranslations("people");
+  const t = await getTranslations({ locale, namespace: "people" });
   return (
     <Container className="flex flex-col items-center gap-8 desktop:gap-12">
       <Typography variant="h2" as={getHeading(index)}>
@@ -31,8 +31,8 @@ const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSec
         {groups.map((group, index) => (
           <TabsContent key={`${group._key}-${index}`} value={group.groupName ?? ""}>
             <ResponsiveCarousel contentClassName="desktop:gap-6">
-              {group.members?.map((member, index) => (
-                <PersonCard key={`${member._key}-${index}`} person={member} />
+              {group.members?.map((member) => (
+                <PersonCard key={member._id} person={member} />
               ))}
             </ResponsiveCarousel>
           </TabsContent>

@@ -7,6 +7,7 @@ export const divisionsSectionFragment = q
   .project((sub) => ({
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
+    description: sub.field("description"),
     divisions: sub
       .field("divisions[]")
       .deref()

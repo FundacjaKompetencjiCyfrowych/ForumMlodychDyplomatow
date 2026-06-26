@@ -28,5 +28,10 @@ export const podcastSection = defineType({
       description: "Kod osadzenia z platformy podcastowej, np. Spotify.",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "link",
+      type: "link",
+      title: "Link do podcastu",
+    }),
   ],
 });

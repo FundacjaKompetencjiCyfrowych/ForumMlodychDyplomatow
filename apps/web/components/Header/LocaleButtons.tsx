@@ -1,11 +1,10 @@
 "use client";
-import { type ReactNode } from "react";
-import { Button } from "../ui/button";
-import { usePathname, useRouter } from "../../i18n/navigation";
-import { useParams } from "next/navigation";
-import { Separator } from "radix-ui";
-import { GlobeIcon } from "lucide-react";
 import type { Locale } from "next-intl";
+import { useParams } from "next/navigation";
+import { type ReactNode } from "react";
+import { usePathname, useRouter } from "../../i18n/navigation";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 
 type Props = {
   locale: Locale;
@@ -15,10 +14,9 @@ type Props = {
 export const LocaleButtons = () => {
   return (
     <div className="flex h-7 items-center gap-2">
-      <GlobeIcon className="text-brand-red" />
       <ChangeLocaleLink locale="pl">PL</ChangeLocaleLink>
-      <Separator.Separator className="h-full border border-gray-300" orientation="vertical" />
-      <ChangeLocaleLink locale="en">ENG</ChangeLocaleLink>
+      <Separator orientation="vertical" />
+      <ChangeLocaleLink locale="en">EN</ChangeLocaleLink>
     </div>
   );
 };
@@ -29,10 +27,11 @@ const ChangeLocaleLink = ({ locale, children }: Props) => {
   return (
     <Button
       variant="link"
-      data-active={locale === currentLocale ? "true" : undefined}
+      size="inline"
       onClick={() => {
         router.replace(pathname, { locale });
       }}
+      className={locale === currentLocale ? "text-red-900" : "text-gray-700 hover:text-red-700"}
     >
       {children}
     </Button>

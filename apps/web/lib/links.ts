@@ -10,12 +10,15 @@ type ResultLinkType = InferFragmentType<typeof linkFragment>;
 
 type Options = {
   openInNewTab?: boolean;
-  slug: string;
+  slug: string | null;
   type: LinkType;
   text: string | null;
 };
 
 export const formatLink = (options: Options): ResultLinkType => {
+  if (!options.slug) {
+    throw new Error("Slug is required to format a link");
+  }
   return {
     linkType: options.type,
     href: options.slug,

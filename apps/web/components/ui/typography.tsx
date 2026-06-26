@@ -6,18 +6,20 @@ import { Slot } from "radix-ui";
 export const typographyVariants = cva("", {
   variants: {
     variant: {
-      hero: "text-[34px] leading-[1.4] font-bold desktop:text-[3.5rem] desktop:leading-[1.28]",
-      title: "font-baskerville text-[30px] leading-[1.28] font-bold desktop:text-[3rem]",
-      h1: "mb-4 text-[30px] leading-[1.28] font-bold desktop:text-[3rem]",
-      h2: "mb-3.5 text-[26px] leading-[1.44] font-semibold desktop:text-[2.5rem]",
-      h3: "mb-3 text-[22px] leading-[1.52] font-semibold desktop:text-[2rem]",
-      h4: "mb-2 text-[20px] leading-[1.52] font-medium desktop:text-[1.75rem]",
-      h5: "mb-1 text-[18px] leading-[1.52] font-medium desktop:text-[1.5rem]",
-      h6: "font-open-sans mb-1 text-[1rem] leading-[1.28] font-semibold",
-      p1: "text-[1rem] leading-[1.6]",
-      p2: "text-[0.875rem] leading-[1.44]",
-      caption: "text-[0.75rem] leading-[1.44]",
-      eyebrow: "text-[0.875rem] leading-[1.28] font-semibold uppercase",
+      h1: "font-lora text-[2.125rem] leading-tight font-semibold tracking-[-0.5%] desktop:text-[3.5rem] desktop:leading-[1.2] desktop:tracking-[-1%]",
+      h2: "font-lora text-[1.75rem] leading-[1.3] font-semibold tracking-[-0.5%] desktop:text-[2.5rem] desktop:leading-tight desktop:tracking-[-0.5%]",
+      h3: "font-lora text-[1.5rem] leading-[1.35] font-semibold desktop:text-[2rem] desktop:leading-[1.3] desktop:tracking-[-0.5%]",
+      h4: "font-lora text-[1.25rem] leading-[1.4] font-semibold desktop:text-[1.5rem] desktop:leading-[1.35]",
+      "body-xl": "text-[1.25rem] leading-[1.55]",
+      "body-l": "text-[1.125rem] leading-[1.55]",
+      "body-m": "text-[1rem] leading-[1.6]",
+      "body-s": "text-[0.875rem] leading-[1.6]",
+      caption: "text-[0.75rem] leading-normal",
+      "title-l": "text-[1.25rem] leading-[1.3] font-semibold desktop:text-[1.5rem]",
+      "title-m": "text-[1.125rem] leading-[1.4] font-semibold desktop:text-[1.25rem]",
+      "title-s": "text-[1rem] leading-normal font-semibold desktop:text-[1rem]",
+
+      // not updated yet
       "logo-s": "font-oswald text-[1rem] font-normal text-brand-red",
       "logo-m": "font-oswald text-[1.25rem] font-normal text-brand-red",
     },
@@ -42,6 +44,7 @@ type Components =
   | "time"
   | "div"
   | "label"
+  | "li"
   | "a";
 type Props<T extends Components> = {
   as?: T;

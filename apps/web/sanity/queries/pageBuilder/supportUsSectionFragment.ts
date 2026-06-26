@@ -8,6 +8,7 @@ export const supportUsSectionFragment = q
   .project((sub) => ({
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
+    description: sub.field("description"),
     cta: sub.field("cta").project(linkFragment),
     image: sub.field("image").project(imgFragment),
   }));

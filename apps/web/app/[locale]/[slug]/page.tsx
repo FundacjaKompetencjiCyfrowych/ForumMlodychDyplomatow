@@ -1,28 +1,22 @@
 import type { Metadata } from "next";
 
 // import { sanityFetch } from "../../sanity/live";
-import { pageQuery, pagesMetadataQuery, pagesSlugQuery } from "@/sanity/queries/page";
-import { SanitySections } from "@/sanity/sections/SanitySections";
 import { runQuery } from "@/sanity/groqd";
+import { pageQuery, pagesMetadataQuery } from "@/sanity/queries/page";
+import { SanitySections } from "@/sanity/sections/SanitySections";
 import type { Locale } from "next-intl";
-import { tryGettingLocaleSlug } from "../../../lib/links";
 import { notFound, redirect } from "next/navigation";
+import { tryGettingLocaleSlug } from "../../../lib/links";
+import { setRequestLocale } from "next-intl/server";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-/**
- * Generate the static params for the page.
- * Learn more: https://nextjs.org/docs/app/api-reference/functions/generate-static-params
- */
-export async function generateStaticParams() {
-  const { data } = await runQuery(pagesSlugQuery, { stega: false, perspective: "published" });
-
-  return data.filter((item) => item.slug !== "home");
-}
-
+// Opting into ISR instead of full-static due to searchParams being used on some pages.
+// It could be reworked later to make all the search params components be client-side
+export const revalidate = 3600; // 1 hour
 /**
  * Generate metadata for the page.
  * Learn more: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
@@ -37,13 +31,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   });
 
   return {
-    title: page?.seo?.title ?? page?.name,
-    description: page?.seo?.description,
+    title: page?.seo?.title ?? page?.defaultSeo?.title ?? page?.name ?? undefined,
+    description: page?.seo?.description ?? page?.defaultSeo?.description ?? undefined,
   } satisfies Metadata;
 }
 
 export default async function Page(props: Props) {
   const params = await props.params;
+  setRequestLocale(params.locale ?? "pl");
   const { data: page } = await runQuery(pageQuery, {
     parameters: {
       slug: params.slug,

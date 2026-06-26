@@ -14,7 +14,6 @@ const EventsDivisions = async ({ data, locale }: any) => {
       locale,
       limit: 3,
       divisionSlug: divisionSlug,
-      currentDate: new Date().toISOString(),
     },
   });
 

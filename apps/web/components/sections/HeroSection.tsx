@@ -1,5 +1,5 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import { getHeading, getSubHeading } from "../../lib/heading";
+import { getHeading } from "../../lib/heading";
 import GradientImage from "../../sanity/image/GradientImage";
 import { Container } from "../ui/container";
 import { Link } from "../ui/link";
@@ -10,17 +10,17 @@ const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) =>
     <Container className="flex flex-col items-center gap-5 desktop:gap-20" size="stretch">
       <div className="mx-2 flex flex-col items-center gap-14 desktop:mx-0">
         <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
-          <Typography as={getHeading(index)} variant="hero">
+          <Typography as={getHeading(index)} variant="h1">
             {data.heading}
           </Typography>
-          <Typography as={getSubHeading(index)} className="text-gray-600" variant="h5">
+          <Typography className="text-gray-600" variant="body-xl">
             {data.subheading}
           </Typography>
         </div>
-        <div className="flex w-full max-w-3xl flex-col justify-stretch gap-4 desktop:flex-row desktop:gap-8">
-          {data.cta && <Link link={data.cta} variant="accent" className="grow" />}
+        <div className="flex w-full max-w-md flex-col justify-center gap-4 desktop:flex-row desktop:gap-8">
+          {data.cta && <Link size="l" link={data.cta} variant="primary" className="grow basis-1" />}
           {data.secondaryCta && (
-            <Link link={data.secondaryCta} variant="accentSecondary" className="grow" />
+            <Link size="l" link={data.secondaryCta} variant="secondary" className="grow basis-1" />
           )}
         </div>
       </div>

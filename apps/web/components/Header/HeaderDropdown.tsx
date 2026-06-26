@@ -33,7 +33,7 @@ export const HeaderMenu = ({ dropdown }: Props) => {
             <div key={column._key} className="flex flex-col items-start gap-6">
               <h4 className="text-md font-semibold">{column.header}</h4>
               {column.items?.map((item) => (
-                <Link className="p-0" key={item._key} link={item} />
+                <Link className="p-0" variant="nav" key={item._key} link={item} size="inline" />
               ))}
             </div>
           ))}

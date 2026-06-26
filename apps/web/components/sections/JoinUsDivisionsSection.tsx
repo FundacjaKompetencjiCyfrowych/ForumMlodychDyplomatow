@@ -24,10 +24,10 @@ const JoinUsDivisions = ({ data }: PageBuilderSectionProps<"joinUsDivisionsSecti
                 className="h-8 w-8 object-contain text-brand-slate-500"
               />
             )}
-            <Typography as="h3" variant="h5" className="font-bold text-brand-gray-600">
+            <Typography as="h3" variant="title-m" className="font-bold text-brand-gray-600">
               {item.header}
             </Typography>
-            <Typography as="p" variant="h5" className="font-normal text-slate-500">
+            <Typography as="p" variant="body-l" className="font-normal text-slate-500">
               {item.description}
             </Typography>
           </div>

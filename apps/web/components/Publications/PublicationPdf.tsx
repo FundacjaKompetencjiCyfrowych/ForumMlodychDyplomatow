@@ -33,10 +33,10 @@ export const PublicationPdf = ({ pdfUrl, locale = "pl" }: PublicationPdfProps) =
           loading="lazy"
         >
           <div className="flex h-full flex-col items-center justify-center p-6 text-center">
-            <Typography variant="p1" className="mb-4 text-muted-foreground">
+            <Typography variant="body-m" className="mb-4 text-muted-foreground">
               {t.pdfFallback}
             </Typography>
-            <Link href={pdfUrl} variant="accentSecondary" target="_blank" rel="noopener noreferrer">
+            <Link href={pdfUrl} variant="secondary" target="_blank" rel="noopener noreferrer">
               {t.downloadPdf}
             </Link>
           </div>

@@ -27,8 +27,16 @@ export const structure: StructureToolOptions = {
       .items([
         S.divider().title("Kolekcje"),
         Collection(S, { type: "page", title: "Strony", icon: HomeIcon }),
-        Collection(S, { type: "post", title: "Wpisy", icon: ComposeIcon }),
-        Collection(S, { type: "person", title: "Członkowie", icon: UsersIcon }),
+        S.listItem()
+          .title("Osoby")
+          .icon(UsersIcon)
+          .child(S.documentTypeList("person").schemaType("person").title("Osoby")),
+        S.listItem()
+          .title("Grupy osób")
+          .icon(UsersIcon)
+          .child(
+            S.document().documentId("personGroups").schemaType("personGroups").title("Grupy osób")
+          ),
         Collection(S, { type: "publication", title: "Publikacje", icon: ComposeIcon }),
         S.listItem()
           .title("Tagi wg kategorii")

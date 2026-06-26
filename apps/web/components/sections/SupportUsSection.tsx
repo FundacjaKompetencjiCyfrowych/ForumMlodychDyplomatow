@@ -1,5 +1,5 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import { getHeading, getSubHeading } from "../../lib/heading";
+import { getHeading } from "../../lib/heading";
 import GradientImage from "../../sanity/image/GradientImage";
 import { Container } from "../ui/container";
 import { Link } from "../ui/link";
@@ -26,16 +26,19 @@ const SupportUsSection = ({ data, index }: PageBuilderSectionProps<"supportUsSec
         size="sm"
         desktopSize="md"
       />
-      <div className="flex w-full flex-col items-stretch gap-10 px-2 pt-8 text-center desktop:w-5/11 desktop:justify-center desktop:gap-8 desktop:px-10">
-        <div className="flex flex-col">
-          <Typography variant="h1" as={getHeading(index)}>
-            {data.heading}
-          </Typography>
-          <Typography variant="p1" as={getSubHeading(index)}>
-            {data.subheading}
+      <div className="flex w-full flex-col items-stretch gap-16 px-2 pt-8 text-center desktop:w-5/11 desktop:justify-center desktop:gap-8 desktop:px-10">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6">
+            <Typography variant="h2" as={getHeading(index)}>
+              {data.heading}
+            </Typography>
+            <Typography variant="body-xl">{data.subheading}</Typography>
+          </div>
+          <Typography variant="body-m" className="text-gray-600">
+            {data.description}
           </Typography>
         </div>
-        {data.cta && <Link link={data.cta} variant="accent" />}
+        {data.cta && <Link link={data.cta} variant="primary" />}
       </div>
     </Container>
   );

@@ -26,7 +26,7 @@ const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
         {dropdown.columns?.map((column, i) => (
           <Fragment key={i}>
             {column.header && (
-              <Typography variant="h6" as="h4" className="mb-0 py-2 pl-4 text-gray-500">
+              <Typography variant="body-xl" as="h4" className="mb-0 py-2 pl-4 text-gray-500">
                 {column.header}
               </Typography>
             )}

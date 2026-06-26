@@ -1,10 +1,11 @@
 import Typography from "../ui/typography";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
+import { getHeading } from "../../lib/heading";
 
 export interface UniversalHeroProps extends PageBuilderSectionProps<"universalHeroSection"> {}
 
-const UniversalHero = ({ data }: UniversalHeroProps) => {
+const UniversalHero = ({ data, index }: UniversalHeroProps) => {
   const { header, description, coverImage } = data;
 
   if (!header) return null;
@@ -13,11 +14,11 @@ const UniversalHero = ({ data }: UniversalHeroProps) => {
     <section className="bg-white desktop:p-8">
       <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-20">
         <div className="order-2 flex flex-col gap-4 p-4 lg:order-1 lg:gap-6">
-          <Typography as="h1" variant="title">
+          <Typography as={getHeading(index)} variant="h1">
             {header}
           </Typography>
           {description && (
-            <Typography as="p" variant="h5" className="max-w-xl text-[#374151]">
+            <Typography as="p" variant="body-l" className="max-w-xl text-[#374151]">
               {description}
             </Typography>
           )}

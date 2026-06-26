@@ -18,6 +18,7 @@ import MobileMenuContent from "./MobileMenuContent";
 import { FMDLogo } from "../Icons/FMDLogo";
 import { LANGUAGE_FIELD } from "../../../studio/config";
 import SkipToContent from "./SkipToContent";
+import { HeaderTopLink } from "./HeaderTopLink";
 
 export const navQuery = q.star
   .parameters<{ locale: string }>()
@@ -67,10 +68,10 @@ const Header = async () => {
     >
       <div className="relative isolate z-80 grid h-(--header-height-mobile) w-full max-w-full grid-cols-2 items-center px-6 md:grid-cols-3 md:px-12 desktop:h-(--header-height-desktop)">
         <div className="flex flex-row items-center">
-          <Link href="/" className="justify-self-start text-2xl font-bold">
+          <Link href="/" className="justify-self-start text-2xl font-bold no-underline">
             <FMDLogo />
           </Link>
-          <SkipToContent />
+          <SkipToContent locale={locale} />
         </div>
         <div className="hidden items-center justify-center self-center md:flex">
           <NavigationMenuList className="flex items-center gap-5 self-center">
@@ -79,7 +80,7 @@ const Header = async () => {
                 <HeaderMenu key={link._key} dropdown={link} />
               ) : (
                 <NavigationMenuItem key={link._key}>
-                  <Link link={link} />
+                  <HeaderTopLink variant="nav" size="inline" link={link} />
                 </NavigationMenuItem>
               )
             )}

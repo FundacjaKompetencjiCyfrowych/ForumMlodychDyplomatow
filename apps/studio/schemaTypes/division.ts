@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { languageField } from "../plugins/intl";
+import { languageField, uniqueByLanguage } from "../plugins/intl";
 import { seoField } from "../utils/fields";
 import { pageGroups } from "../utils/groups";
 
@@ -30,6 +30,7 @@ export default defineType({
       options: {
         source: "name",
         maxLength: 96,
+        isUnique: uniqueByLanguage,
       },
       validation: (Rule) => Rule.required(),
     }),

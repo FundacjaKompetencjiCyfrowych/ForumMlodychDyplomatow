@@ -1,9 +1,8 @@
-import React from "react";
+import { getHeading } from "../../lib/heading";
+import GradientImage from "../../sanity/image/GradientImage";
+import type { PageBuilderSectionProps } from "../../sanity/queries/pageBuilder";
 import { Container } from "../ui/container";
 import Typography from "../ui/typography";
-import type { PageBuilderSectionProps } from "../../sanity/queries/pageBuilder";
-import { getHeading, getSubHeading } from "../../lib/heading";
-import { SanityImage } from "../../sanity/image/SanityImage";
 
 const HeadingSection = ({ data, index }: PageBuilderSectionProps<"headingSection">) => {
   return (
@@ -12,15 +11,19 @@ const HeadingSection = ({ data, index }: PageBuilderSectionProps<"headingSection
         <Typography variant="h1" as={getHeading(index)} className="text-4xl desktop:text-5xl">
           {data.heading}
         </Typography>
-        {data.subheading && (
-          <Typography variant="p1" as={getSubHeading(index)}>
-            {data.subheading}
-          </Typography>
-        )}
+        {data.subheading && <Typography variant="body-xl">{data.subheading}</Typography>}
       </div>
-      <div className="">
-        <SanityImage image={data.image} />
-      </div>
+      {data.image && (
+        <GradientImage
+          sizes={{
+            default: "100vw",
+            desktop: "50vw",
+          }}
+          direction={["left", "right"]}
+          image={data.image}
+          className="max-h-46 object-cover desktop:max-h-80"
+        />
+      )}
     </Container>
   );
 };

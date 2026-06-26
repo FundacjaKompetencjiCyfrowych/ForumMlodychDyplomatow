@@ -1,6 +1,6 @@
 import type { Locale } from "next-intl";
 import type { CombinedEventsQueryResult } from "../../sanity/queries/events";
-import EventList, { type EventListLimits } from "./EventList";
+import EventList from "./EventList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Suspense } from "react";
 import { Skeleton } from "../ui/skeleton";
@@ -9,10 +9,10 @@ import { getTranslations } from "next-intl/server";
 type EventTabsProps = {
   query: Promise<{ data: CombinedEventsQueryResult }>;
   locale: Locale;
-} & EventListLimits;
+};
 
-export const EventTabs = async ({ query, ...rest }: EventTabsProps) => {
-  const t = await getTranslations("events");
+export const EventTabs = async ({ query, locale, ...rest }: EventTabsProps) => {
+  const t = await getTranslations({ locale, namespace: "events" });
   return (
     <Tabs defaultValue="upcoming" className="w-full">
       <TabsList variant="line">
@@ -24,7 +24,7 @@ export const EventTabs = async ({ query, ...rest }: EventTabsProps) => {
         </TabsTrigger>
       </TabsList>
       <Suspense fallback={<Skeleton className="h-40" />}>
-        <EventTabsContent query={query} {...rest} />
+        <EventTabsContent locale={locale} query={query} {...rest} />
       </Suspense>
     </Tabs>
   );

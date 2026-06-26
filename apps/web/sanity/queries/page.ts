@@ -21,12 +21,12 @@ export const pageQuery = q
 
 export type PageData = InferResultType<typeof pageQuery>;
 
-// TODO check if this needs language support to add "en" to some pages
 export const pagesSlugQuery = q.star
   .filterByType("page")
   .filterRaw("defined(slug.current)")
   .project({
     slug: "slug.current",
+    locale: "locale",
   });
 
 export const pagesMetadataQuery = q
@@ -39,6 +39,7 @@ export const pagesMetadataQuery = q
     name: sub.field("name"),
     slug: sub.field("slug.current"),
     seo: sub.field("seo").project(seoFragment),
+    defaultSeo: sub.star.filterByType("seo").slice(0).project(seoFragment),
   }));
 
 export const pagesLanguageSlugQuery = q

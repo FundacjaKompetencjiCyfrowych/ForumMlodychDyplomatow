@@ -8,7 +8,7 @@ import { LinkIcon } from "@sanity/icons";
  */
 
 type Link = {
-  linkType: "href" | "page" | "event" | "division" | "publication";
+  linkType: "href" | "page" | "division" | "publication";
   homepage?: boolean;
 };
 const linkPreviewSelect = {
@@ -16,14 +16,12 @@ const linkPreviewSelect = {
   linkType: "linkType",
   href: "href",
   page: "page.name",
-  event: "event.name",
   homepage: "homepage",
   publication: "publication.title",
   division: "division.name",
 } as const;
 const linkTypeTitles = {
   division: "PR",
-  event: "Wydarzenie",
   page: "Strona",
   publication: "Publikacja",
   href: "Zewnętrzny URL",
@@ -46,6 +44,15 @@ const prepareLinkPreview = (
     subtitle,
   };
 };
+
+const filterByLanguage = ({ document }: { document: any }) => {
+  return {
+    filter: "locale == $locale",
+    params: {
+      locale: document?.locale || "pl",
+    },
+  };
+};
 export const link = defineType({
   name: "link",
   title: "Link",
@@ -61,7 +68,6 @@ export const link = defineType({
         list: [
           { title: "Strona", value: "page" },
           { title: "Publikacja", value: "publication" },
-          { title: "Wydarzenie", value: "event" },
           { title: "Oddział", value: "division" },
           { title: "Zewnętrzny URL", value: "href" },
         ],
@@ -105,16 +111,9 @@ export const link = defineType({
       title: "Strona",
       type: "reference",
       to: [{ type: "page" }],
+      options: { filter: filterByLanguage },
       hidden: ({ parent }) => parent?.linkType !== "page",
-      validation: (Rule) =>
-        // Custom validation to ensure page reference is provided if the link type is 'page'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "page" && !value) {
-            return "Odwołanie do strony jest wymagane";
-          }
-          return true;
-        }),
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "homepage",
@@ -123,54 +122,24 @@ export const link = defineType({
       initialValue: false,
       hidden: ({ parent }) => parent?.linkType === "page" || parent?.linkType === "href",
     }),
-    defineField({
-      name: "event",
-      title: "Wydarzenie",
-      type: "reference",
-      to: [{ type: "event" }],
-      hidden: ({ parent }) => parent?.linkType !== "event" || parent?.homepage,
-      validation: (Rule) =>
-        // Custom validation to ensure event reference is provided if the link type is 'event'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "event" && !parent?.homepage && !value) {
-            return "Odwołanie do wydarzenia jest wymagane";
-          }
-          return true;
-        }),
-    }),
 
     defineField({
       name: "division",
       title: "Oddział",
       type: "reference",
       to: [{ type: "division" }],
+      options: { filter: filterByLanguage },
       hidden: ({ parent }) => parent?.linkType !== "division" || parent?.homepage,
-      validation: (Rule) =>
-        // Custom validation to ensure division reference is provided if the link type is 'division'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "division" && !parent?.homepage && !value) {
-            return "Odwołanie do oddziału jest wymagane";
-          }
-          return true;
-        }),
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "publication",
       title: "Publikacja",
       type: "reference",
       to: [{ type: "publication" }],
+      options: { filter: filterByLanguage },
       hidden: ({ parent }) => parent?.linkType !== "publication" || parent?.homepage,
-      validation: (Rule) =>
-        // Custom validation to ensure publication reference is provided if the link type is 'publication'
-        Rule.custom((value, context) => {
-          const parent = context.parent as Link;
-          if (parent?.linkType === "publication" && !parent?.homepage && !value) {
-            return "Odwołanie do publikacji jest wymagane";
-          }
-          return true;
-        }),
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
       name: "openInNewTab",

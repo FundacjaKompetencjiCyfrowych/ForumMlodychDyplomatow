@@ -22,6 +22,11 @@ export const divisionsSection = defineType({
       title: "Podtytuł",
     }),
     defineField({
+      name: "description",
+      type: "text",
+      title: "Opis",
+    }),
+    defineField({
       name: "divisions",
       type: "array",
       title: "Przedstawicielstwa",

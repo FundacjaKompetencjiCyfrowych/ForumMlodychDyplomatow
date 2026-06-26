@@ -1,7 +1,7 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import React from "react";
+import { getHeading } from "../../lib/heading";
 import { Container } from "../ui/container";
-import { getHeading, getSubHeading } from "../../lib/heading";
+import { Link } from "../ui/link";
 import Typography from "../ui/typography";
 
 const PodcastSection = ({ index, data }: PageBuilderSectionProps<"podcastSection">) => {
@@ -12,17 +12,13 @@ const PodcastSection = ({ index, data }: PageBuilderSectionProps<"podcastSection
           {data.heading}
         </Typography>
         {data.subheading && (
-          <Typography
-            variant="h5"
-            lineHeight="none"
-            as={getSubHeading(index)}
-            className="text-gray-600"
-          >
+          <Typography variant="body-xl" lineHeight="none" className="text-gray-600">
             {data.subheading}
           </Typography>
         )}
       </div>
       {data.embed && <div className="w-full" dangerouslySetInnerHTML={{ __html: data.embed }} />}
+      {data.link && <Link variant="primary" link={data.link} />}
     </Container>
   );
 };

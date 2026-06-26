@@ -20,11 +20,14 @@ import tag from "./tag";
 import tagCategory from "./tagCategory";
 import { footer } from "./singletons/footer";
 import { translations } from "./singletons/translations";
+import { personGroup } from "./personGroup";
+import { socials } from "./socials";
 
 export const schemaTypes = [
   post,
   event,
   person,
+  personGroup,
   division,
   publications,
   tag,
@@ -43,6 +46,7 @@ export const schemaTypes = [
   page,
   navigation,
   footer,
+  socials,
   // sections defined separately
   ...sectionStructure,
   translations,

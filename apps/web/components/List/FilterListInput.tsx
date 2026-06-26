@@ -1,26 +1,47 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { SearchIcon, XIcon } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
-import { Input } from "../ui/input";
-import { useTransitionProvider } from "./FilterListTransition";
+import { Button } from "../ui/button";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group";
+import { usePage } from "./FilterListPagination";
 
-export const FilterListInput = () => {
-  const t = useTranslations("global");
-  const { startTransition } = useTransitionProvider();
+export const FilterListInput = ({ placeholder }: { placeholder?: string }) => {
   const [value, setValue] = useQueryState(
     "q",
     parseAsString.withDefault("").withOptions({
-      scroll: false,
-      clearOnDefault: true,
-      shallow: false,
-      startTransition,
       limitUrlUpdates: {
-        method: "debounce",
-        timeMs: 300,
+        method: "throttle",
+        timeMs: 500,
       },
     })
   );
+  const [_, setPage] = usePage();
+
   return (
-    <Input placeholder={t("search")} value={value} onChange={(e) => setValue(e.target.value)} />
+    <InputGroup className="gap-2">
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+      <InputGroupInput
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+          setPage(0);
+        }}
+      />
+      <InputGroupAddon align="inline-end">
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={() => {
+            setValue("");
+            setPage(0);
+          }}
+        >
+          <XIcon />
+        </Button>
+      </InputGroupAddon>
+    </InputGroup>
   );
 };

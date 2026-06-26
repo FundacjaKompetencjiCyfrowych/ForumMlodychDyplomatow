@@ -1,6 +1,7 @@
 import { aboutUsSection } from "./aboutUsSection";
 import { contactSection } from "./contactSection";
 import { divisionsSection } from "./divisionsSection";
+import { eventsListSection } from "./eventsListSection";
 import { eventsDivisionsSection } from "./eventsDivisionsSection";
 import { eventsSection } from "./eventsSection";
 import { universalHeroSection } from "./universalHeroSection";
@@ -36,6 +37,7 @@ export const sectionTypes = [
   "eventsDivisionsSection",
   "divisionsListSection",
   "expertsListSection",
+  "eventsListSection",
 ] as const;
 
 export const sections = sectionTypes.map((type) => ({ type }));
@@ -59,4 +61,5 @@ export const sectionStructure = [
   divisionsListSection,
   headingSection,
   expertsListSection,
+  eventsListSection,
 ];
