@@ -18,6 +18,49 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type FileDataFile = {
+  asset?: SanityFileAssetReference;
+  media?: unknown; // Unable to locate the referenced type "media" in schema
+  _type: "file";
+};
+
+export type DocumentsSection = {
+  _type: "documentsSection";
+  groups?: Array<{
+    title?: string;
+    items?: Array<
+      | {
+          file?: FileDataFile;
+          title?: string;
+          date?: string;
+          _type: "fileData";
+          _key: string;
+        }
+      | {
+          title?: string;
+          items?: Array<{
+            file?: FileDataFile;
+            title?: string;
+            date?: string;
+            _type: "fileData";
+            _key: string;
+          }>;
+          _type: "documentSubgroup";
+          _key: string;
+        }
+    >;
+    _type: "documentGroup";
+    _key: string;
+  }>;
+};
+
 export type EventsListSection = {
   _type: "eventsListSection";
   dummy?: string;
@@ -266,6 +309,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & EventsListSection)
+  | ({
+      _key: string;
+    } & DocumentsSection)
 >;
 
 export type LinkButton = {
@@ -642,13 +688,6 @@ export type TagCategory = {
   description?: string;
 };
 
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-};
-
 export type Publication = {
   _id: string;
   _type: "publication";
@@ -980,6 +1019,9 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | SanityFileAssetReference
+  | FileDataFile
+  | DocumentsSection
   | EventsListSection
   | ExpertsListSection
   | HeadingSection
@@ -1037,7 +1079,6 @@ export type AllSanitySchemaTypes =
   | Footer
   | Tag
   | TagCategory
-  | SanityFileAssetReference
   | Publication
   | SanityImageCrop
   | SanityImageHotspot
