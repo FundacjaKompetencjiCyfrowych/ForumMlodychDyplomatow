@@ -12,17 +12,10 @@ import { Skeleton } from "../../components/ui/skeleton";
 function renderSection<T extends PageBuilderSectionType>(
   item: PageBuilderFragmentData<T>,
   index: number,
-  locale: Locale,
+  locale: Locale
 ) {
   const Component = components[item._type] as ComponentType<PageBuilderSectionProps<T>>;
-  return (
-    <Component
-      key={item._key}
-      index={index}
-      data={item}
-      locale={locale}
-    />
-  );
+  return <Component key={item._key} index={index} data={item} locale={locale} />;
 }
 
 /**
@@ -33,10 +26,7 @@ function renderSection<T extends PageBuilderSectionType>(
  * 2. Passes the entire object as the `data` prop to the corresponding component.
  * 3. Warns in the console and renders nothing if no matching component is found.
  */
-export function render(
-  data: PageBuilderFragment[],
-  locale: Locale,
-) {
+export function render(data: PageBuilderFragment[], locale: Locale) {
   return data.map((item, index) => {
     if (!item) {
       console.warn("Item is undefined or null at index:", index);
@@ -48,11 +38,7 @@ export function render(
     }
     return (
       <Suspense key={item._key} fallback={<Skeleton className="h-96 w-full" />}>
-        {renderSection(
-          item as PageBuilderFragmentData<PageBuilderSectionType>,
-          index,
-          locale,
-        )}
+        {renderSection(item as PageBuilderFragmentData<PageBuilderSectionType>, index, locale)}
       </Suspense>
     );
   });

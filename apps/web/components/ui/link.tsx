@@ -34,7 +34,7 @@ export type LinkProps = Omit<React.ComponentProps<typeof BaseLink>, "href"> &
   VariantProps<typeof buttonVariants> & {
     iconLeft?: React.ReactNode;
     iconRight?: React.ReactNode;
-    openInNewTab?: boolean;
+    openInNewTab?: boolean | null;
     noExternalIcon?: boolean;
     currentPathname?: string;
   } & LinkOrHref;

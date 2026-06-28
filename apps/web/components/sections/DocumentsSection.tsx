@@ -3,7 +3,7 @@ import { DownloadIcon } from "lucide-react";
 import type { Locale } from "next-intl";
 import { cn } from "../../lib/utils";
 import type { PageBuilderSectionProps } from "../../sanity/queries/pageBuilder";
-import type {
+import {
   documentGroupFragment,
   transformFile,
 } from "../../sanity/queries/pageBuilder/documentsSectionFragment";
@@ -73,7 +73,8 @@ const DocumentGroup = ({
   group: InferFragmentType<typeof documentGroupFragment>;
 }) => {
   if (group._type === "fileData") {
-    return <DocumentItem file={group.fileData} locale={locale} />;
+    // GROQD transform seems to be broken, so we need to transform the file data here instead of in the GROQD query
+    return <DocumentItem file={transformFile(group.fileData)} locale={locale} />;
   }
   return (
     <AccordionItem value={group._key} className="w-full">
@@ -87,7 +88,11 @@ const DocumentGroup = ({
       <AccordionContent className="p-0">
         {group.items?.map((item) =>
           item.fileData ? (
-            <DocumentItem key={item.fileData._id} file={item.fileData} locale={locale} />
+            <DocumentItem
+              key={item.fileData.file?._id}
+              file={transformFile(item.fileData)}
+              locale={locale}
+            />
           ) : null
         )}
       </AccordionContent>

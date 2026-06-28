@@ -29,12 +29,14 @@ const SupportUsSection = ({ data, index }: PageBuilderSectionProps<"supportUsSec
       <div className="flex w-full flex-col items-stretch gap-16 px-2 pt-8 text-center desktop:w-5/11 desktop:justify-center desktop:gap-8 desktop:px-10">
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-6">
-            <Typography variant="h2" as={getHeading(index)}>
+            <Typography variant="h2" as={getHeading(index)} className="text-white">
               {data.heading}
             </Typography>
-            <Typography variant="body-xl">{data.subheading}</Typography>
+            <Typography variant="body-xl" className="text-gray-300">
+              {data.subheading}
+            </Typography>
           </div>
-          <Typography variant="body-m" className="text-gray-600">
+          <Typography variant="body-m" className="text-gray-300">
             {data.description}
           </Typography>
         </div>

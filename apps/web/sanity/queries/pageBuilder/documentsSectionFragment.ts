@@ -39,12 +39,12 @@ export const documentGroupFragment = q.fragment<DocumentGroup>().project((sub) =
   _key: sub.field("_key"),
   ...sub.conditionalByType({
     fileData: (sub) => ({
-      fileData: sub.project(documentFileFragment).transform(transformFile),
+      fileData: sub.project(documentFileFragment),
     }),
     documentSubgroup: (sub) => ({
       title: sub.field("title"),
       items: sub.field("items[]").project((sub) => ({
-        fileData: sub.project(documentFileFragment).transform(transformFile),
+        fileData: sub.project(documentFileFragment),
       })),
     }),
   }),
