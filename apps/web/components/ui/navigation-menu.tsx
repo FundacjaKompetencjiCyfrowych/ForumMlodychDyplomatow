@@ -100,13 +100,13 @@ function NavigationMenuContent({
       data-motion="from-start"
       className={cn(
         [
-          "top-0 left-0 z-50 w-full p-1 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "top-0 left-0 z-30 w-auto p-1 ease-[cubic-bezier(0.22,1,0.36,1)]",
           "group-data-[viewport=false]/navigation-menu:overflow-hidden",
           "group-data-[viewport=false]/navigation-menu:duration-300",
-          "data-[motion=from-end]:slide-in-from-bottom-14",
-          "data-[motion=from-start]:slide-in-from-top-14",
-          "data-[motion=to-end]:slide-out-to-bottom-14",
-          "data-[motion=to-start]:slide-out-to-top-14",
+          "data-[motion=from-end]:slide-in-from-top-2",
+          "data-[motion=from-start]:slide-in-from-top-2",
+          "data-[motion=to-end]:slide-out-to-top-2",
+          "data-[motion=to-start]:slide-out-to-top-2",
           "data-[motion^=from-]:animate-in",
           "data-[motion^=from-]:fade-in",
           "data-[motion^=to-]:animate-out",
@@ -138,7 +138,7 @@ function NavigationMenuViewport({
         className={cn(
           [
             "origin-top-center relative z-50",
-            "h-(--radix-navigation-menu-viewport-height) w-full",
+            "h-(--radix-navigation-menu-viewport-height)",
             "overflow-hidden bg-popover text-popover-foreground",
             "duration-100",
             "data-open:animate-in data-open:slide-in-from-top",

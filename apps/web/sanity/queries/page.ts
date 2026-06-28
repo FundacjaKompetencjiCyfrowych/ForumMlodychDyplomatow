@@ -3,6 +3,7 @@ import { q } from "../groqd";
 import { pageBuilderQueryFragment } from "./pageBuilder";
 import { seoFragment } from "./seo";
 import { LANGUAGE_FIELD } from "../../../studio/config";
+import type { Locale } from "next-intl";
 
 export const pageQuery = q
   .parameters<{ slug: string; locale: string }>()
@@ -15,8 +16,7 @@ export const pageQuery = q
     _type: sub.field("_type"),
     name: sub.field("name"),
     slug: sub.field("slug.current"),
-    pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment),
-    seo: sub.field("seo").project(seoFragment),
+    pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment).notNull(),
   }));
 
 export type PageData = InferResultType<typeof pageQuery>;
@@ -30,7 +30,7 @@ export const pagesSlugQuery = q.star
   });
 
 export const pagesMetadataQuery = q
-  .parameters<{ slug: string; locale: string }>()
+  .parameters<{ slug: string; locale: Locale }>()
   .star.filterByType("page")
   .filterBy("slug.current == $slug")
   .filterBy(`${LANGUAGE_FIELD} == $locale`)
@@ -39,7 +39,7 @@ export const pagesMetadataQuery = q
     name: sub.field("name"),
     slug: sub.field("slug.current"),
     seo: sub.field("seo").project(seoFragment),
-    defaultSeo: sub.star.filterByType("seo").slice(0).project(seoFragment),
+    defaultSeo: q.star.filterByType("settings").slice(0).field("seo").project(seoFragment),
   }));
 
 export const pagesLanguageSlugQuery = q

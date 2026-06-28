@@ -3,7 +3,7 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const joinUsSection = defineType({
   name: "joinUsSection",
-  title: "Sekcja Dołącz do nas",
+  title: "Dołącz do nas",
   type: "object",
   preview: createSectionPreview("joinUsSection", {
     title: "Dołącz do nas",
@@ -55,7 +55,6 @@ export const joinUsSection = defineType({
               type: "img",
               title: "Ikona",
             }),
-            // TODO separate link for each option???
             defineField({
               name: "link",
               type: "link",

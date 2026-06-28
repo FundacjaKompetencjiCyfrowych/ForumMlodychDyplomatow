@@ -3,9 +3,9 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const contactSection = defineType({
   name: "contactSection",
-  title: "Sekcja Kontaktowa",
+  title: "Kontakt",
   type: "object",
-  preview: createSectionPreview("contactSection", { title: "Sekcja Kontakt", subtitle: "heading" }),
+  preview: createSectionPreview("contactSection", { title: "Kontakt", subtitle: "heading" }),
   fields: [
     defineField({
       name: "heading",

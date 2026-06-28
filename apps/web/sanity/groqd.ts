@@ -49,12 +49,13 @@ const makeCustomSafeQueryRunner = <TCustomOptions>(
       options as QueryRunnerOptions & TCustomOptions
     );
     try {
-      const parsed = builder.parse(results.data);
+      const parsed = builder.parse(results.data) ?? results.data;
+      // if (builder.query.includes('_type == "page"')) console.log(parsed);
       return { ...results, data: parsed };
     } catch (error) {
       console.error("Error parsing GROQ results:", error);
       console.error("errors", (error as ValidationErrors).errors);
-      return { ...results, data: results.data };
+      return results;
     }
   };
 };

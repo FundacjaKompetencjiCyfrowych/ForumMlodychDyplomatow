@@ -1,20 +1,19 @@
-import React, { Fragment } from "react";
-import type { NavQueryResult } from "./Header";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
-import { Link } from "../ui/link";
-import { buttonVariants } from "../ui/button";
+import React from "react";
 import { cn } from "../../lib/utils";
-import Typography from "../ui/typography";
+import type { NavigationLinks } from "../../sanity/queries/navigation";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import { buttonVariants } from "../ui/button";
+import { Link } from "../ui/link";
 
 type Props = {
-  navigation: NavQueryResult;
+  navigation: NavigationLinks;
 };
-type NavItem = Exclude<NavQueryResult["links"], null>[number];
+type NavItem = Exclude<NavigationLinks, null>[number];
 type NavLink = Extract<NavItem, { _type: "link" }>;
 type NavDropdown = Extract<NavItem, { _type: "dropdown" }>;
 
 const MenuLinkItem = ({ link }: { link: NavLink }) => {
-  return <Link link={link} variant="ghost" className="justify-start" />;
+  return <Link link={link.link} variant="ghost" className="justify-start" />;
 };
 const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
   return (
@@ -23,22 +22,13 @@ const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
         {dropdown.name}
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-start gap-2 pl-3">
-        {dropdown.columns?.map((column, i) => (
-          <Fragment key={i}>
-            {column.header && (
-              <Typography variant="body-xl" as="h4" className="mb-0 py-2 pl-4 text-gray-500">
-                {column.header}
-              </Typography>
-            )}
-            {column.items.map((item) => (
-              <Link
-                key={item._key}
-                link={item}
-                variant="ghost"
-                className="justify-start text-start no-underline!"
-              />
-            ))}
-          </Fragment>
+        {dropdown.items?.map((item) => (
+          <Link
+            key={item._key}
+            link={item}
+            variant="ghost"
+            className="justify-start text-start no-underline!"
+          />
         ))}
       </AccordionContent>
     </AccordionItem>
@@ -46,8 +36,8 @@ const MenuDropdownItem = ({ dropdown }: { dropdown: NavDropdown }) => {
 };
 const MobileMenuContent: React.FC<Props> = (props) => {
   return (
-    <Accordion type="single" className="flex w-full flex-col" collapsible>
-      {props.navigation.links?.map((link) => {
+    <Accordion type="single" className="flex flex-col" collapsible>
+      {props.navigation?.map((link) => {
         if (link._type === "link") {
           return <MenuLinkItem key={link._key} link={link} />;
         }

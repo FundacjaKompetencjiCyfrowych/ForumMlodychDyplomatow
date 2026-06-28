@@ -3,10 +3,10 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const eventsSection = defineType({
   name: "eventsSection",
-  title: "Sekcja Wydarzenia",
+  title: "Krótkie Wydarzenia",
   type: "object",
   preview: createSectionPreview("eventsSection", {
-    title: "Wydarzenia",
+    title: "Krótkie Wydarzenia",
     subtitle: "heading",
   }),
   fields: [

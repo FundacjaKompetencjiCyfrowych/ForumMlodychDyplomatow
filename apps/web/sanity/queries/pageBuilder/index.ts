@@ -21,6 +21,7 @@ import { divisionsListSectionFragment } from "./divisionsListSectionFragment";
 import { headingSectionFragment } from "./headingSection";
 import { expertsListSectionFragment } from "./expertsListSection";
 import { eventsListSectionFragment } from "./eventsListSection";
+import { documentsSectionFragment } from "./documentsSectionFragment";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -46,6 +47,7 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       divisionsListSection: sub.project(divisionsListSectionFragment),
       headingSection: sub.project(headingSectionFragment),
       expertsListSection: sub.project(expertsListSectionFragment),
+      documentsSection: sub.project(documentsSectionFragment),
     },
     {
       isExhaustive: true,
@@ -70,5 +72,4 @@ export type PageBuilderSectionProps<T extends PageBuilderSectionType> = {
   data: PageBuilderFragmentData<T>;
   index: number;
   locale: Locale;
-  searchParams: Record<string, string | string[] | undefined>;
 };
