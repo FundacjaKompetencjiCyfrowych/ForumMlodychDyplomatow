@@ -20,7 +20,6 @@ export async function generateStaticParams() {
 
 export default async function DivisionSlugPage(props: Props) {
   const params = await props.params;
-  const searchParams = await props.searchParams;
   const { slug, locale } = params;
   const t = await getTranslations();
 
@@ -49,7 +48,7 @@ export default async function DivisionSlugPage(props: Props) {
 
   return (
     <main className="min-h-screen">
-      <SanitySections value={sectionsWithSlug} locale={locale} searchParams={searchParams} />
+      <SanitySections value={sectionsWithSlug} locale={locale} />
     </main>
   );
 }

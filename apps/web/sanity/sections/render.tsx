@@ -13,7 +13,6 @@ function renderSection<T extends PageBuilderSectionType>(
   item: PageBuilderFragmentData<T>,
   index: number,
   locale: Locale,
-  searchParams: Record<string, string | string[] | undefined>
 ) {
   const Component = components[item._type] as ComponentType<PageBuilderSectionProps<T>>;
   return (
@@ -22,7 +21,6 @@ function renderSection<T extends PageBuilderSectionType>(
       index={index}
       data={item}
       locale={locale}
-      searchParams={searchParams}
     />
   );
 }
@@ -38,7 +36,6 @@ function renderSection<T extends PageBuilderSectionType>(
 export function render(
   data: PageBuilderFragment[],
   locale: Locale,
-  searchParams: Record<string, string | string[] | undefined>
 ) {
   return data.map((item, index) => {
     if (!item) {
@@ -55,7 +52,6 @@ export function render(
           item as PageBuilderFragmentData<PageBuilderSectionType>,
           index,
           locale,
-          searchParams
         )}
       </Suspense>
     );

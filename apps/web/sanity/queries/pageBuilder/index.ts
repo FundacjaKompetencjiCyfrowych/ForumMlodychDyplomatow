@@ -72,5 +72,4 @@ export type PageBuilderSectionProps<T extends PageBuilderSectionType> = {
   data: PageBuilderFragmentData<T>;
   index: number;
   locale: Locale;
-  searchParams: Record<string, string | string[] | undefined>;
 };

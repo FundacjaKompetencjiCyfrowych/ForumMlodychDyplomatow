@@ -3,15 +3,15 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const expertsListSection = defineType({
   name: "expertsListSection",
-  title: "Sekcja Ekspertów",
+  title: "Lista Osób",
   type: "object",
   preview: createSectionPreview(
     "expertsListSection",
     {
-      title: "Eksperci",
+      title: "Lista Osób",
     },
     {
-      subtitle: "Automatycznie generowana sekcja z listą ekspertów.",
+      subtitle: "Automatycznie generowana sekcja z listą osób.",
     }
   ),
   fields: [

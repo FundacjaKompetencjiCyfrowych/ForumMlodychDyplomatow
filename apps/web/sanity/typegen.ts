@@ -552,13 +552,6 @@ export type TagCategoryReference = {
   [internalGroqTypeReferenceTo]?: "tagCategory";
 };
 
-export type FooterReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "footer";
-};
-
 export type TranslationsReference = {
   _ref: string;
   _type: "reference";
@@ -577,7 +570,6 @@ export type InternationalizedArrayReferenceValue = {
     | PublicationReference
     | TagReference
     | TagCategoryReference
-    | FooterReference
     | TranslationsReference;
   language?: string;
 };
@@ -595,8 +587,7 @@ export type Translations = {
   navigation?: {
     home?: string;
     skipToContent?: string;
-    aboutUs?: string;
-    experts?: string;
+    menu?: string;
   };
   buttons?: {
     support?: string;
@@ -636,31 +627,6 @@ export type Translations = {
     divisionNotFound?: string;
   };
   locale?: string;
-};
-
-export type Footer = {
-  _id: string;
-  _type: "footer";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  locale?: string;
-  email?: string;
-  phone?: string;
-  socials?: Socials;
-  address?: string;
-  identfiers?: string;
-  nav?: Array<
-    {
-      _key: string;
-    } & Link
-  >;
-  copyright?: string;
-  links?: Array<
-    {
-      _key: string;
-    } & Link
-  >;
 };
 
 export type Tag = {
@@ -775,25 +741,15 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  button?: Array<
-    {
-      _key: string;
-    } & LinkButton
-  >;
-  links?: Array<
+  button?: Link;
+  navigation?: Array<
     | {
         name?: string;
-        header?: string;
-        description?: string;
-        columns?: Array<{
-          header?: string;
-          items?: Array<
-            {
-              _key: string;
-            } & Link
-          >;
-          _key: string;
-        }>;
+        items?: Array<
+          {
+            _key: string;
+          } & Link
+        >;
         _type: "dropdown";
         _key: string;
       }
@@ -801,6 +757,19 @@ export type Navigation = {
         _key: string;
       } & Link)
   >;
+  contactInfo?: {
+    email?: string;
+    phone?: string;
+    socials?: Socials;
+    address?: string;
+    identifiers?: string;
+  };
+  additionalLinks?: Array<
+    {
+      _key: string;
+    } & Link
+  >;
+  copyright?: string;
   locale?: string;
 };
 
@@ -1072,11 +1041,9 @@ export type AllSanitySchemaTypes =
   | NavigationReference
   | TagReference
   | TagCategoryReference
-  | FooterReference
   | TranslationsReference
   | InternationalizedArrayReferenceValue
   | Translations
-  | Footer
   | Tag
   | TagCategory
   | Publication

@@ -16,7 +16,6 @@ import postsSection from "./sections/postsSection";
 import { sectionStructure } from "./sections/sections";
 import seo from "./seo";
 import settings from "./settings";
-import { footer } from "./singletons/footer";
 import navigation from "./singletons/navigation";
 import { translations } from "./singletons/translations";
 import { socials } from "./socials";
@@ -45,7 +44,6 @@ export const schemaTypes = [
   pageBuilder,
   page,
   navigation,
-  footer,
   socials,
   // sections defined separately
   ...sectionStructure,

@@ -49,9 +49,9 @@ const documentFileData = defineArrayMember({
 
 export const documentsSection = defineType({
   name: "documentsSection",
-  title: "Sekcja Dokumenty",
+  title: "Dokumenty",
   type: "object",
-  preview: createSectionPreview("documentsSection", { title: "Sekcja Dokumenty" }),
+  preview: createSectionPreview("documentsSection", { title: "Dokumenty" }),
   fields: [
     defineField({
       name: "groups",
