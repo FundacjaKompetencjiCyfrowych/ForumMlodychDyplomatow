@@ -20,9 +20,6 @@ const Header = async ({
   header: NavigationHeader;
 }) => {
   const locale = await getLocale();
-  // const { data: navigation } = await runQuery(navQuery, {
-  //   parameters: { locale },
-  // });
   return (
     <NavigationMenu
       orientation="horizontal"
