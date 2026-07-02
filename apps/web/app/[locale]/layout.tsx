@@ -15,6 +15,7 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { intlQuery } from "../../sanity/queries/intl";
 import "./globals.css";
+import { navigationQuery } from "../../sanity/queries/navigation";
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
 
@@ -78,11 +79,14 @@ export default async function RootLayout({
   const { data: translations } = await runQuery(intlQuery, {
     parameters: { locale },
   });
+  const { data: navigation } = await runQuery(navigationQuery, {
+    parameters: { locale },
+  });
 
   return (
     <html lang={locale}>
       <body
-        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} ${lora.variable} relative bg-white font-inter text-gray-900 antialiased`}
+        className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} ${lora.variable} relativebg-white font-inter text-gray-900 antialiased`}
       >
         <NuqsAdapter
           defaultOptions={{
@@ -92,13 +96,13 @@ export default async function RootLayout({
         >
           <SvgCacheProvider>
             <NextIntlClientProvider messages={translations as any}>
-              <Header />
+              <Header header={navigation!.header} navigation={navigation!.navigation} />
               <main id="main-content" className="w-full" tabIndex={-1}>
                 {children}
               </main>
               <Toaster />
               <SanityPreview />
-              <Footer />
+              <Footer footer={navigation!.footer} navigation={navigation!.navigation} />
             </NextIntlClientProvider>
           </SvgCacheProvider>
         </NuqsAdapter>

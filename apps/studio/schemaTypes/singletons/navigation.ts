@@ -5,23 +5,33 @@ export default defineType({
   name: "navigation",
   title: "Nawigacja",
   type: "document",
-
+  groups: [
+    {
+      name: "navigation",
+      title: "Nawigacja",
+    },
+    {
+      name: "header",
+      title: "Nagłówek",
+    },
+    {
+      name: "footer",
+      title: "Stopka",
+    },
+  ],
   fields: [
     defineField({
       name: "button",
-      title: "Przyciski",
-      type: "array",
-      of: [
-        {
-          type: "linkButton",
-        },
-      ],
+      title: "Przycisk",
+      type: "link",
+      group: "header",
     }),
     defineField({
-      name: "links",
-      title: "Linki",
+      name: "navigation",
+      title: "Nawigacja",
       description: "Linki nawigacyjne",
       type: "array",
+      group: "navigation",
       validation: (Rule) => Rule.required().min(1).max(6),
       of: [
         defineArrayMember({
@@ -38,44 +48,13 @@ export default defineType({
             }),
 
             defineField({
-              name: "header",
-              title: "Nagłówek",
-              description: "Nagłówek widoczny po rozwinięciu",
-              type: "string",
-            }),
-            defineField({
-              name: "description",
-              title: "Opis",
-              description: "Krótki opis widoczny po rozwinięciu",
-              type: "text",
-              rows: 3,
-            }),
-            defineField({
-              name: "columns",
-              title: "Kolumny",
+              name: "items",
+              title: "Elementy",
               type: "array",
-              validation: (Rule) => Rule.required().min(1).max(3),
+              validation: (Rule) => Rule.required().min(1).max(4),
               of: [
                 defineArrayMember({
-                  type: "object",
-                  fields: [
-                    defineField({
-                      name: "header",
-                      title: "Nagłówek",
-                      type: "string",
-                    }),
-                    defineField({
-                      name: "items",
-                      title: "Elementy",
-                      type: "array",
-                      validation: (Rule) => Rule.required().min(1).max(4),
-                      of: [
-                        defineArrayMember({
-                          type: "link",
-                        }),
-                      ],
-                    }),
-                  ],
+                  type: "link",
                 }),
               ],
             }),
@@ -86,6 +65,71 @@ export default defineType({
           type: "link",
         }),
       ],
+    }),
+
+    defineField({
+      name: "contactInfo",
+      title: "Informacje kontaktowe",
+      type: "object",
+      group: "footer",
+      fields: [
+        defineField({
+          name: "email",
+          title: "Adres e-mail",
+          type: "string",
+          description: "Adres e-mail wyświetlany w stopce.",
+          validation: (Rule) => Rule.email().error("Niepoprawny adres e-mail").required(),
+        }),
+        defineField({
+          name: "phone",
+          title: "Numer telefonu",
+          type: "string",
+          description: "Numer telefonu wyświetlany w stopce. Opcjonalny",
+        }),
+
+        defineField({
+          name: "socials",
+          title: "Media społecznościowe",
+          type: "socials",
+        }),
+
+        defineField({
+          name: "address",
+          title: "Adres",
+          type: "text",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "identifiers",
+          title: "Identyfikator",
+          type: "text",
+          description: "Pole na numery krs, nip, regon itp.",
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
+    }),
+    defineField({
+      name: "additionalLinks",
+      title: "Dodatkowe linki",
+      type: "array",
+      group: "footer",
+      of: [
+        defineArrayMember({
+          name: "footerLink",
+          title: "Link stopki",
+          type: "link",
+        }),
+      ],
+      description:
+        "Dodatkowe linki wyświetlane w stopce, np. Polityka prywatności, Regulamin itp. (maksymalnie 3).",
+      validation: (Rule) => Rule.max(3),
+    }),
+    defineField({
+      name: "copyright",
+      title: "Copyright",
+      type: "string",
+      group: "footer",
+      description: "Tekst wyświetlany na samym dole stopki, np. informacja o prawach autorskich.",
     }),
     languageField,
   ],

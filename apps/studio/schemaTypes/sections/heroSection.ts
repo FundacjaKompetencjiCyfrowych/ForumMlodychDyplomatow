@@ -3,7 +3,7 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const heroSection = defineType({
   name: "heroSection",
-  title: "Sekcja Hero",
+  title: "Hero",
   type: "object",
   preview: createSectionPreview("heroSection", {
     title: "Hero",

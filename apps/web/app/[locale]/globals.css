@@ -111,19 +111,6 @@
     @apply font-inter;
   }
 
-  .menu-bar {
-    transform-box: fill-box;
-    transform-origin: center;
-    transition: transform 0.25s ease;
-  }
-
-  [data-state="open"] .menu-bar-top {
-    transform: translateY(5px) translateX(-2px) rotate(45deg);
-  }
-
-  [data-state="open"] .menu-bar-bottom {
-    transform: translateY(-5px) translateX(-2px) rotate(-45deg);
-  }
   * {
     @apply border-border outline-ring/50;
   }

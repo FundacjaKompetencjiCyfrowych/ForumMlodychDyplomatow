@@ -3,10 +3,10 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const joinUsDivisionsSection = defineType({
   name: "joinUsDivisionsSection",
-  title: "Dołącz do nas",
+  title: "Dołącz do nas - przedstawicielstwa",
   type: "object",
   preview: createSectionPreview("joinUsDivisionsSection", {
-    title: "Dołącz do nas",
+    title: "Dołącz do nas - przedstawicielstwa",
     subtitle: "header",
   }),
   fields: [

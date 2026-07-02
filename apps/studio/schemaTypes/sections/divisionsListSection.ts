@@ -3,10 +3,10 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const divisionsListSection = defineType({
   name: "divisionsListSection",
-  title: "Sekcja Listy przedstawicielstw",
+  title: "Lista przedstawicielstw",
   type: "object",
   preview: createSectionPreview("divisionsListSection", {
-    title: "Sekcja Listy przedstawicielstw",
+    title: "Lista przedstawicielstw",
     subtitle: "heading",
   }),
   fields: [

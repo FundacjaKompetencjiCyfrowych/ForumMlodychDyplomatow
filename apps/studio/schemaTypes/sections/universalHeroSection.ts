@@ -3,7 +3,7 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const universalHeroSection = defineType({
   name: "universalHeroSection",
-  title: "Uniwersalna sekcja Hero",
+  title: "Uniwersalne Hero",
   type: "object",
   preview: createSectionPreview("universalHeroSection", {
     title: "Uniwersalne Hero",

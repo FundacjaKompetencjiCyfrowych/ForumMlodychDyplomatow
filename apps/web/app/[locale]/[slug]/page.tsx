@@ -57,10 +57,9 @@ export default async function Page(props: Props) {
     return notFound();
   }
   const locale = params.locale;
-  const searchParams = await props.searchParams;
   return (
     <div id="main-content" className="">
-      <SanitySections value={page?.pageBuilder} locale={locale} searchParams={searchParams} />
+      <SanitySections value={page?.pageBuilder} locale={locale} />
     </div>
   );
 }
