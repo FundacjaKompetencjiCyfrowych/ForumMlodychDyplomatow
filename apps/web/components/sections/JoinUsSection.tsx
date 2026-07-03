@@ -17,7 +17,7 @@ const OfferCard = ({
   item: DeepGet<PageBuilderSectionProps<"joinUsSection">, "data.benefits">;
 }) => {
   return (
-    <div className="flex min-w-full flex-col items-stretch gap-4 border border-slate-100 bg-slate-50 p-6 text-center desktop:min-w-auto">
+    <div className="flex min-w-full flex-col items-stretch gap-4 border border-slate-100 bg-white p-6 text-center desktop:min-w-auto">
       {item.icon && <SanityImage image={item.icon} className="mx-auto h-18 w-18" />}
       <Typography variant="title-l" as={getSubHeading(index)}>
         {item.title}
@@ -34,8 +34,12 @@ const OfferCard = ({
 
 const JoinUsSection = ({ index: sectionIndex, data }: PageBuilderSectionProps<"joinUsSection">) => {
   return (
-    <Container className="flex flex-col items-center gap-10 desktop:gap-16">
-      <div className="flex flex-col gap-4 text-center desktop:gap-6">
+    <Container
+      className="flex flex-col items-center gap-10 desktop:gap-16"
+      background="slate"
+      contentWidth="xl"
+    >
+      <div className="mb-8 flex flex-col gap-4 text-center lg:mb-12 desktop:gap-6">
         <Typography variant="h2" lineHeight="none" as={getHeading(sectionIndex)}>
           {data.heading}
         </Typography>

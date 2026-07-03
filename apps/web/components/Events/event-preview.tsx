@@ -34,7 +34,7 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
         </Typography>
         <span className="text-sm capitalize">{date.toLocaleString(locale, { month: "long" })}</span>
       </div>
-      <div className="flex w-full flex-col gap-6 px-4 py-6 desktop:px-6">
+      <div className="flex w-full flex-col gap-6 bg-(--color-background) px-4 py-6 desktop:px-6">
         <div className="flex flex-col gap-2">
           {event.type && (
             <Typography variant="caption" className="text-gray-600 uppercase">

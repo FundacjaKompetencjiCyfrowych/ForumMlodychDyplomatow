@@ -26,14 +26,14 @@ const Header = async ({
       viewport={false}
       className="sticky top-0 z-50 flex w-full max-w-screen flex-row gap-0 border border-gray-200 bg-header md:flex-col"
     >
-      <div className="relative isolate z-80 grid h-(--header-height-mobile) w-full max-w-screen grid-cols-2 items-center px-6 md:grid-cols-3 md:px-12 desktop:h-(--header-height-desktop)">
+      <div className="relative isolate z-80 mx-auto grid h-(--header-height-mobile) w-full max-w-(--width-content-max) grid-cols-2 items-center px-6 lg:grid-cols-3 2xl:px-0 desktop:h-(--header-height-desktop)">
         <div className="flex flex-col items-start">
-          <Link href="/" className="justify-self-start text-2xl font-bold no-underline">
+          <Link href="/" className="justify-self-start px-0 text-2xl font-bold no-underline">
             <FMDLogo />
           </Link>
           <SkipToContent locale={locale} />
         </div>
-        <div className="hidden items-center justify-center self-center md:flex">
+        <div className="hidden items-center justify-center self-center lg:flex">
           <NavigationMenuList className="flex items-center gap-5 self-center">
             {navigation?.map((navItem) =>
               navItem._type === "dropdown" ? (
@@ -46,7 +46,7 @@ const Header = async ({
             )}
           </NavigationMenuList>
         </div>
-        <div className="hidden items-center gap-8 justify-self-end md:flex">
+        <div className="hidden items-center gap-8 justify-self-end lg:flex">
           <LocaleButtons />
 
           {header?.button && (

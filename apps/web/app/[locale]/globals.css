@@ -5,6 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 @theme {
   --breakpoint-desktop: 48rem /* Same as breakpoint-md */;
+  --width-content-max: 90rem;
+  --width-content-xl: 75rem;
 }
 @theme inline {
   --color-background: #ffffff;

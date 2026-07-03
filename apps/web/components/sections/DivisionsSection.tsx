@@ -7,7 +7,7 @@ import Typography from "../ui/typography";
 
 const DivisionsSection = ({ data, index }: PageBuilderSectionProps<"divisionsSection">) => {
   return (
-    <Container className="flex flex-col items-stretch gap-10 desktop:gap-16">
+    <Container className="flex flex-col items-stretch gap-10 desktop:gap-16" contentWidth="xl">
       <div className="flex flex-col items-center gap-10 text-center">
         <Typography variant="h2" as={getHeading(index)}>
           {data.heading}
