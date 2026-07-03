@@ -1,10 +1,11 @@
 import { SanityImage, type SanityImageProps } from "./SanityImage";
 import { cn } from "../../lib/utils";
+import type { GradientImgFragment } from "../queries/imgFragment";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Direction = "top" | "bottom" | "left" | "right";
-type Size = "sm" | "md" | "lg" | "xl" | "2xl";
+type Size = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 /**
  * A single gradient overlay config.
@@ -23,9 +24,9 @@ type Size = "sm" | "md" | "lg" | "xl" | "2xl";
  */
 export type GradientConfig = {
   direction: Direction | Direction[];
-  desktopDirection?: Direction;
+  desktopDirection?: Direction | null;
   size?: Size;
-  desktopSize?: Size;
+  desktopSize?: Size | null;
   color?: "white" | "blue" | "red" | (string & {});
 };
 
@@ -62,8 +63,8 @@ const desktopDirClasses: Record<Direction, string> = {
 
 /** Mobile size — axis derived from direction at render time. */
 const mobileSizeClasses: Record<"horizontal" | "vertical", Record<Size, string>> = {
-  horizontal: { sm: "w-20", md: "w-30", lg: "w-40", xl: "w-60", "2xl": "w-80" },
-  vertical: { sm: "h-20", md: "h-30", lg: "h-40", xl: "h-60", "2xl": "h-80" },
+  horizontal: { xs: "w-10", sm: "w-20", md: "w-30", lg: "w-40", xl: "w-60", "2xl": "w-80" },
+  vertical: { xs: "h-10", sm: "h-20", md: "h-30", lg: "h-40", xl: "h-60", "2xl": "h-80" },
 };
 
 /**
@@ -73,6 +74,7 @@ const mobileSizeClasses: Record<"horizontal" | "vertical", Record<Size, string>>
  */
 const desktopSizeClasses: Record<"horizontal" | "vertical", Record<Size, string>> = {
   horizontal: {
+    xs: "desktop:w-10 desktop:h-auto",
     sm: "desktop:w-20 desktop:h-auto",
     md: "desktop:w-30 desktop:h-auto",
     lg: "desktop:w-40 desktop:h-auto",
@@ -80,6 +82,7 @@ const desktopSizeClasses: Record<"horizontal" | "vertical", Record<Size, string>
     "2xl": "desktop:w-80 desktop:h-auto",
   },
   vertical: {
+    xs: "desktop:h-10 desktop:w-auto",
     sm: "desktop:h-20 desktop:w-auto",
     md: "desktop:h-30 desktop:w-auto",
     lg: "desktop:h-40 desktop:w-auto",
@@ -113,10 +116,10 @@ function GradientDiv({
   gradientClassName,
 }: {
   mobileDir: Direction;
-  desktopDir?: Direction;
+  desktopDir?: Direction | null;
   size?: Size;
-  desktopSize?: Size;
-  color?: GradientConfig["color"];
+  desktopSize?: Size | null;
+  color?: GradientConfig["color"] | null;
   gradientClassName?: string;
 }) {
   const mobileAxis = axis(mobileDir);
@@ -130,7 +133,7 @@ function GradientDiv({
         "absolute z-10",
         dirClasses[mobileDir],
         mobileSizeClasses[mobileAxis][size],
-        resolveColor(color),
+        resolveColor(color ?? undefined),
         desktopDir && desktopDirClasses[desktopDir],
         effectiveDesktopSize && desktopSizeClasses[desktopAxis][effectiveDesktopSize],
         gradientClassName
@@ -138,6 +141,32 @@ function GradientDiv({
     />
   );
 }
+const isGradientImage = (image: Props["image"]): image is GradientImgFragment =>
+  !!image && "gradient" in image && (image.gradient?.enabled ?? false);
+const getGradientConfigs = ({
+  gradients,
+  direction,
+  desktopDirection,
+  size,
+  desktopSize,
+  color,
+  image,
+}: Props): GradientConfig[] => {
+  if (isGradientImage(image) && image.gradient?.config) {
+    return image.gradient?.config
+      .map((cfg) => ({
+        direction: cfg.direction,
+        desktopDirection: cfg.desktopDirection,
+        size: cfg.size,
+        desktopSize: cfg.desktopSize,
+        color: cfg.color,
+      }))
+      .filter((cfg) => !!cfg.direction) as GradientConfig[];
+  }
+  if (gradients) return toArray(gradients);
+  if (direction) return [{ direction, desktopDirection, size, desktopSize, color }];
+  return [];
+};
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -174,12 +203,15 @@ const GradientImage = ({
   gradientClassName,
   ...props
 }: Props) => {
-  const configs: GradientConfig[] = gradients
-    ? toArray(gradients)
-    : direction
-      ? [{ direction, desktopDirection, size, desktopSize, color }]
-      : [];
-
+  const configs = getGradientConfigs({
+    gradients,
+    direction,
+    desktopDirection,
+    size,
+    desktopSize,
+    color,
+    image: props.image,
+  });
   return (
     <div className={cn("relative", wrapperClassName)}>
       <SanityImage {...props} />

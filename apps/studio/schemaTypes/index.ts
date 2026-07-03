@@ -1,7 +1,7 @@
 import category from "./category";
 import division from "./division";
 import event from "./event";
-import img from "./img";
+import { img, gradientImg } from "./img";
 import { link, linkButton } from "./link";
 import { pageBuilder } from "./pageBuilderType";
 import home from "./pages/home";
@@ -37,6 +37,7 @@ export const schemaTypes = [
   seo,
   richText,
   img,
+  gradientImg,
   leadSection,
   postsSection,
   link,

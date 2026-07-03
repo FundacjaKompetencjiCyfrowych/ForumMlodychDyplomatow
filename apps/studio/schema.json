@@ -24,6 +24,194 @@
   },
   {
     "type": "type",
+    "name": "gradient",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "color": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "red"
+              },
+              {
+                "type": "string",
+                "value": "blue"
+              },
+              {
+                "type": "string",
+                "value": "white"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "config": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "direction": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "top"
+                      },
+                      {
+                        "type": "string",
+                        "value": "bottom"
+                      },
+                      {
+                        "type": "string",
+                        "value": "left"
+                      },
+                      {
+                        "type": "string",
+                        "value": "right"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "desktopDirection": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "top"
+                      },
+                      {
+                        "type": "string",
+                        "value": "bottom"
+                      },
+                      {
+                        "type": "string",
+                        "value": "left"
+                      },
+                      {
+                        "type": "string",
+                        "value": "right"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "size": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "xs"
+                      },
+                      {
+                        "type": "string",
+                        "value": "sm"
+                      },
+                      {
+                        "type": "string",
+                        "value": "md"
+                      },
+                      {
+                        "type": "string",
+                        "value": "lg"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "desktopSize": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "xs"
+                      },
+                      {
+                        "type": "string",
+                        "value": "sm"
+                      },
+                      {
+                        "type": "string",
+                        "value": "md"
+                      },
+                      {
+                        "type": "string",
+                        "value": "lg"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "color": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "red"
+                      },
+                      {
+                        "type": "string",
+                        "value": "blue"
+                      },
+                      {
+                        "type": "string",
+                        "value": "white"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "gradientConfig"
+                  }
+                }
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "sanity.fileAsset.reference",
     "value": {
       "type": "object",
@@ -80,6 +268,73 @@
             "type": "string",
             "value": "file"
           }
+        }
+      }
+    }
+  },
+  {
+    "name": "doubleHeroSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "doubleHeroSection"
+          }
+        },
+        "heading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "headingText": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "subheading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "subheadingText": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "caption": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "cta": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "link"
+          },
+          "optional": true
+        },
+        "image": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "gradientImg"
+          },
+          "optional": true
         }
       }
     }
@@ -1613,6 +1868,21 @@
               "type": "inline",
               "name": "documentsSection"
             }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "doubleHeroSection"
+            }
           }
         ]
       }
@@ -1908,6 +2178,61 @@
         }
       },
       "dereferencesTo": "sanity.imageAsset"
+    }
+  },
+  {
+    "name": "gradientImg",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "gradientImg"
+          }
+        },
+        "asset": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageAsset.reference"
+          },
+          "optional": true
+        },
+        "media": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "unknown"
+          },
+          "optional": true
+        },
+        "hotspot": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageHotspot"
+          },
+          "optional": true
+        },
+        "crop": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageCrop"
+          },
+          "optional": true
+        },
+        "gradient": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "gradient"
+          },
+          "optional": true
+        }
+      }
     }
   },
   {

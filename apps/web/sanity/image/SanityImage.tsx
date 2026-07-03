@@ -1,7 +1,6 @@
 import { ComponentProps, ElementType } from "react";
 import { SanityImage as Image, type CropData } from "sanity-image";
-import type { ImgFragment } from "../queries/imgFragment";
-import SVG from "react-inlinesvg";
+import type { GradientImgFragment, ImgFragment } from "../queries/imgFragment";
 import ClientSvg from "./ClientSvg";
 type Sizes =
   | string
@@ -9,7 +8,7 @@ type Sizes =
   | undefined;
 
 export type SanityImageProps = {
-  image?: ImgFragment | null;
+  image?: ImgFragment | GradientImgFragment | null;
   preview?: boolean;
   alt?: string;
   width?: number;
