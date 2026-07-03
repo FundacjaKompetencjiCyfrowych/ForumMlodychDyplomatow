@@ -6,7 +6,10 @@ import Typography from "../ui/typography";
 
 const HeadingSection = ({ data, index }: PageBuilderSectionProps<"headingSection">) => {
   return (
-    <Container className="grid grid-cols-1 content-evenly items-stretch gap-8 desktop:grid-cols-2">
+    <Container
+      className="grid grid-cols-1 content-evenly items-stretch gap-8 desktop:grid-cols-2"
+      contentWidth="max"
+    >
       <div className="flex flex-col gap-8">
         <Typography variant="h1" as={getHeading(index)} className="text-4xl desktop:text-5xl">
           {data.heading}

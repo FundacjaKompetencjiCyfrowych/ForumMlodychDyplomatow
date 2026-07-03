@@ -7,10 +7,12 @@ const JoinUsDivisions = ({ data }: PageBuilderSectionProps<"joinUsDivisionsSecti
   const { header, features, button } = data;
 
   return (
-    <section className="w-full bg-white px-6 py-18">
-      <Typography as="h2" variant="h2" className="mb-12 text-center text-brand-blue-900">
-        {header}
-      </Typography>
+    <section className="w-full bg-(--color-brand-slate-50) px-6 py-18">
+      <div className="mb-8 lg:mb-12">
+        <Typography as="h2" variant="h2" className="mb-12 text-center text-brand-blue-900">
+          {header}
+        </Typography>
+      </div>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
         {features?.map((item, index) => (

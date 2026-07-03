@@ -48,8 +48,8 @@ const NewPublicationsSection = async ({
   index,
 }: PageBuilderSectionProps<"newPublicationsSection">) => {
   return (
-    <Container className="flex flex-col items-center">
-      <Typography as={getHeading(index)} variant="h2">
+    <Container className="flex flex-col items-center" background="slate" contentWidth="xl">
+      <Typography as={getHeading(index)} variant="h2" className="text-center sm:mb-4 lg:mb-16">
         {data.heading}
       </Typography>
       <Suspense fallback={<Skeleton className="h-40" />}>

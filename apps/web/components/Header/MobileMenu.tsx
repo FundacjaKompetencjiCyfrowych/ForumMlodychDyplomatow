@@ -11,10 +11,10 @@ const MobileMenu = async ({ children }: Props) => {
   const locale = await getLocale();
   const t = await getTranslations({ locale, namespace: "navigation" });
   return (
-    <div className="flex justify-self-end md:hidden">
+    <div className="flex justify-self-end lg:hidden">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="ghost" className="text-brand-red-900">
+          <Button variant="ghost" className="px-0 text-brand-red-900">
             <MenuIcon />
             <span className="sr-only">{t("menu")}</span>
           </Button>

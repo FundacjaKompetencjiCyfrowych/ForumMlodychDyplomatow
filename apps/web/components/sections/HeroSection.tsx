@@ -7,7 +7,11 @@ import Typography from "../ui/typography";
 
 const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) => {
   return (
-    <Container className="flex flex-col items-center gap-5 desktop:gap-20" size="stretch">
+    <Container
+      className="flex flex-col items-center gap-5 desktop:gap-20"
+      size="stretch"
+      contentWidth="max"
+    >
       <div className="mx-2 flex flex-col items-center gap-14 desktop:mx-0">
         <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
           <Typography as={getHeading(index)} variant="h1">

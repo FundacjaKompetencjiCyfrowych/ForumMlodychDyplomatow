@@ -15,7 +15,7 @@ const Footer = async ({
   footer: NavigationFooter;
 }) => {
   return (
-    <footer className="flex max-w-full flex-col gap-4 px-6 py-8 text-gray-600">
+    <footer className="mx-auto flex w-full max-w-(--width-content-max) flex-col gap-4 px-6 py-8 text-gray-600">
       <FMDLogo />
       <div className="grid grid-cols-1 gap-4 desktop:grid-cols-[1fr_1fr_auto] desktop:flex-row">
         <div className="flex flex-col gap-6">
