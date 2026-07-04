@@ -23,6 +23,7 @@ import { EventsListSection } from "../../components/sections/EventsListSection";
 import TeamDivisions from "@/components/sections/TeamDivisionsSection";
 import DocumentsSection from "../../components/sections/DocumentsSection";
 import DoubleHeroSection from "../../components/sections/DoubleHeroSection";
+import { BenefitsSection } from "../../components/sections/BenefitsSection";
 
 export type ComponentsRegistry = {
   [K in PageBuilderSectionType]: ComponentType<PageBuilderSectionProps<K>>;
@@ -59,4 +60,5 @@ export const components: ComponentsRegistry = {
   expertsListSection: ExpertsListSection,
   documentsSection: DocumentsSection,
   doubleHeroSection: DoubleHeroSection,
+  benefitsSection: BenefitsSection,
 };

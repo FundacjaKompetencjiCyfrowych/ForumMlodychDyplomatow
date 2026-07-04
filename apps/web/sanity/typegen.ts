@@ -45,6 +45,18 @@ export type FileDataFile = {
   _type: "file";
 };
 
+export type BenefitsSection = {
+  _type: "benefitsSection";
+  heading?: string;
+  benefits?: Array<{
+    title?: string;
+    image?: Img;
+    _type: "benefit";
+    _key: string;
+  }>;
+  cta?: Link;
+};
+
 export type DoubleHeroSection = {
   _type: "doubleHeroSection";
   heading?: string;
@@ -340,6 +352,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & DoubleHeroSection)
+  | ({
+      _key: string;
+    } & BenefitsSection)
 >;
 
 export type LinkButton = {
@@ -1028,6 +1043,7 @@ export type AllSanitySchemaTypes =
   | Gradient
   | SanityFileAssetReference
   | FileDataFile
+  | BenefitsSection
   | DoubleHeroSection
   | DocumentsSection
   | EventsListSection

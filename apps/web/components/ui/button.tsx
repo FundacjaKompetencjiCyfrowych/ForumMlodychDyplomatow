@@ -18,9 +18,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "active:brand-red-800 bg-brand-red-900 font-semibold text-white hover:bg-brand-red-700 disabled:bg-brand-red-50 disabled:text-gray-400",
+          "bg-brand-red-900 font-semibold text-white hover:bg-brand-red-700 active:bg-brand-red-800 disabled:bg-brand-red-50 disabled:text-gray-400",
         secondary:
           "border border-brand-red-900 bg-transparent font-semibold text-brand-red-900 hover:border-brand-red-700 hover:text-brand-red-700 active:border-brand-red-800 active:text-brand-red-800 disabled:border-brand-red-200 disabled:text-red-200",
+        primaryLight:
+          "bg-white text-red-900 hover:bg-red-50 hover:text-red-700 active:bg-red-100 active:text-red-800 disabled:bg-gray-300 disabled:text-gray-400",
+        secondaryLight:
+          "border border-white bg-transparent font-semibold hover:border-brand-red-50 hover:text-brand-red-50 active:border-brand-red-100 active:text-brand-red-100 disabled:border-gray-400 disabled:text-gray-400",
         text: "border-transparent bg-transparent font-semibold text-brand-red-900 hover:text-brand-red-700 active:text-brand-red-900 disabled:text-gray-400",
         page: [
           "h-8 w-8 border-none bg-transparent text-slate-600",
