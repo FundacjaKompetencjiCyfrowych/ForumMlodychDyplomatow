@@ -45,6 +45,20 @@ export type FileDataFile = {
   _type: "file";
 };
 
+export type PatronitePerksSection = {
+  _type: "patronitePerksSection";
+  heading?: string;
+  subheading?: string;
+  caption?: string;
+  tiers?: Array<{
+    amount?: string;
+    perks?: Array<string>;
+    _type: "tier";
+    _key: string;
+  }>;
+  cta?: Link;
+};
+
 export type WhoWeWorkWithSection = {
   _type: "whoWeWorkWithSection";
   heading?: string;
@@ -371,6 +385,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & WhoWeWorkWithSection)
+  | ({
+      _key: string;
+    } & PatronitePerksSection)
 >;
 
 export type LinkButton = {
@@ -1059,6 +1076,7 @@ export type AllSanitySchemaTypes =
   | Gradient
   | SanityFileAssetReference
   | FileDataFile
+  | PatronitePerksSection
   | WhoWeWorkWithSection
   | BenefitsSection
   | DoubleHeroSection

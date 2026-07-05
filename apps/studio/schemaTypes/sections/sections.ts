@@ -21,6 +21,7 @@ import { documentsSection } from "./documentsSection";
 import { doubleHeroSection } from "./doubleHeroSection";
 import { benefitsSection } from "./benefitsSection";
 import { whoWeWorkWithSection } from "./whoWeWorkWithSection";
+import { patronitePerksSection } from "./patronitePerksSection";
 
 export const sectionTypes = [
   "aboutUsSection",
@@ -46,6 +47,7 @@ export const sectionTypes = [
   "doubleHeroSection",
   "benefitsSection",
   "whoWeWorkWithSection",
+  "patronitePerksSection",
 ] as const;
 
 export const sections = sectionTypes.map((type) => ({ type }));
@@ -74,4 +76,5 @@ export const sectionStructure = [
   doubleHeroSection,
   benefitsSection,
   whoWeWorkWithSection,
+  patronitePerksSection,
 ];

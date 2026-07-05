@@ -25,6 +25,7 @@ import { documentsSectionFragment } from "./documentsSectionFragment";
 import { doubleHeroSectionFragment } from "./doubleHeroSectionFragment";
 import { benefitsSectionFragment } from "./benefitsSectionFragment";
 import { whoWeWorkWithSectionFragment } from "./whoWeWorkWithSectionFragment";
+import { patronitePerksSectionFragment } from "./patronitePerksSectionFragment";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -54,6 +55,7 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       doubleHeroSection: sub.project(doubleHeroSectionFragment),
       benefitsSection: sub.project(benefitsSectionFragment),
       whoWeWorkWithSection: sub.project(whoWeWorkWithSectionFragment),
+      patronitePerksSection: sub.project(patronitePerksSectionFragment),
     },
     {
       isExhaustive: true,

@@ -25,6 +25,7 @@ import DocumentsSection from "../../components/sections/DocumentsSection";
 import DoubleHeroSection from "../../components/sections/DoubleHeroSection";
 import { BenefitsSection } from "../../components/sections/BenefitsSection";
 import { WhoWeWorkWithSection } from "../../components/sections/WhoWeWorkWithSection";
+import { PatronitePerksSection } from "../../components/sections/PatronitePerksSection";
 
 export type ComponentsRegistry = {
   [K in PageBuilderSectionType]: ComponentType<PageBuilderSectionProps<K>>;
@@ -63,4 +64,5 @@ export const components: ComponentsRegistry = {
   doubleHeroSection: DoubleHeroSection,
   benefitsSection: BenefitsSection,
   whoWeWorkWithSection: WhoWeWorkWithSection,
+  patronitePerksSection: PatronitePerksSection,
 };
