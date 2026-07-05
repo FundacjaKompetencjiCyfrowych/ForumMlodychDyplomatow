@@ -17,9 +17,9 @@ export const DescriptionCard = ({
   sectionIndex: number;
 }) => {
   return (
-    <div className="flex w-full flex-col items-center gap-10 border border-white px-4 py-10">
+    <div className="flex w-full flex-col items-center border border-white px-6 py-10">
       {/* TODO change this to some other icon component, this doesn't work with setting the color. Might need a separate icon schema */}
-      {icon && <SanityImage image={icon} className="h-18 w-18" />}
+      {icon && <SanityImage image={icon} className="mb-6 h-18 w-18" />}
       {text && (
         <Typography as={getSubHeading(sectionIndex)} variant="h4" className="w-full text-center">
           {text}
@@ -36,10 +36,11 @@ const AboutUsSection = ({
     <Container
       background="blue"
       override="mobile-stretch"
+      contentWidth="xl"
       className="flex flex-col items-center gap-14 pb-0 desktop:gap-4"
     >
-      <div className="flex w-full flex-col items-center gap-10">
-        <Typography as={getHeading(sectionIndex)} variant="h2">
+      <div className="mb-16 flex w-full flex-col items-center">
+        <Typography as={getHeading(sectionIndex)} variant="h2" className="mb-4">
           {data.heading}
         </Typography>
         <ResponsiveCarousel className="w-full" contentClassName="desktop:gap-4">
@@ -53,7 +54,7 @@ const AboutUsSection = ({
           ))}
         </ResponsiveCarousel>
       </div>
-      <SanityImage image={data.image} className="w-full" sizes="100vw" />
+      <SanityImage image={data.image} className="hidden w-full md:block" sizes="100vw" />
     </Container>
   );
 };

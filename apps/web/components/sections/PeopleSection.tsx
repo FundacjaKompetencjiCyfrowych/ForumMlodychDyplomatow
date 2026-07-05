@@ -13,7 +13,11 @@ const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"p
   const groups = data.people?.filter((group) => group.groupName && group.members) ?? [];
   const t = await getTranslations({ locale, namespace: "people" });
   return (
-    <Container className="flex flex-col items-center gap-8 desktop:gap-12">
+    <Container
+      className="flex flex-col items-center gap-8 desktop:gap-12"
+      background="slate"
+      contentWidth="xl"
+    >
       <Typography variant="h2" as={getHeading(index)}>
         {data.heading}
       </Typography>

@@ -6,8 +6,8 @@ import Typography from "../ui/typography";
 
 const PodcastSection = ({ index, data }: PageBuilderSectionProps<"podcastSection">) => {
   return (
-    <Container className="flex flex-col items-center gap-10 desktop:gap-16">
-      <div className="flex flex-col items-center gap-4 text-center desktop:gap-6">
+    <Container className="flex flex-col items-center gap-10 desktop:gap-16" contentWidth="xl">
+      <div className="mb-6 flex flex-col items-center text-center lg:mb-8 desktop:gap-6">
         <Typography variant="h2" lineHeight="none" as={getHeading(index)}>
           {data.heading}
         </Typography>
@@ -17,8 +17,14 @@ const PodcastSection = ({ index, data }: PageBuilderSectionProps<"podcastSection
           </Typography>
         )}
       </div>
-      {data.embed && <div className="w-full" dangerouslySetInnerHTML={{ __html: data.embed }} />}
-      {data.link && <Link variant="primary" link={data.link} />}
+      {data.embed && (
+        <div className="mb-8 w-full lg:mb-12" dangerouslySetInnerHTML={{ __html: data.embed }} />
+      )}
+      {data.link && (
+        <div className="hidden justify-center md:flex">
+          <Link variant="primary" link={data.link} className="w-max" />
+        </div>
+      )}
     </Container>
   );
 };

@@ -9,7 +9,7 @@ const ContactSection = async ({ index, data }: any) => {
   const t = await getTranslations();
 
   return (
-    <Container className="py-16">
+    <Container className="py-16" contentWidth="xl">
       <div className="mx-auto grid grid-cols-1 gap-24 lg:grid-cols-2">
         <div>
           <div className="flex flex-col gap-8">

@@ -12,7 +12,7 @@ const WhatWeDoDivisions = ({ data }: WhatWeDoDivisionsProps) => {
         {title}
       </Typography>
 
-      <div className="mt-6 flex flex-col items-center gap-4">
+      <div className="mt-6 flex flex-col items-center gap-16">
         {whatWeDo?.map((item: string, index: number) => (
           <ul key={index} className="flex max-w-5xl list-disc items-center justify-center gap-3">
             <Typography as="li" variant="body-l" className="text-center">
