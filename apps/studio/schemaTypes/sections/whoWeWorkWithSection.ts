@@ -1,11 +1,12 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { createSectionPreview } from "./sectionPreview";
-export const benefitsSection = defineType({
-  name: "benefitsSection",
-  title: "Korzyści",
+
+export const whoWeWorkWithSection = defineType({
+  name: "whoWeWorkWithSection",
+  title: "Z kim współpracujemy",
   type: "object",
-  preview: createSectionPreview("benefitsSection", {
-    title: "Korzyści",
+  preview: createSectionPreview("whoWeWorkWithSection", {
+    title: "Z kim współpracujemy",
     subtitle: "heading",
   }),
   fields: [
@@ -16,19 +17,25 @@ export const benefitsSection = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "benefits",
-      title: "Korzyści",
+      name: "subheading",
+      title: "Podnagłówek",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "items",
+      title: "Elementy",
       type: "array",
-      validation: (Rule) => Rule.required().min(1).max(3),
+      validation: (Rule) => Rule.required().min(1).max(4),
       of: [
         defineArrayMember({
-          name: "benefit",
-          title: "Korzyść",
+          name: "item",
+          title: "Element",
           type: "object",
           preview: {
             select: {
               title: "title",
-              media: "image",
+              media: "icon",
             },
           },
           fields: [
@@ -39,20 +46,20 @@ export const benefitsSection = defineType({
               validation: (Rule) => Rule.required(),
             }),
             defineField({
-              name: "image",
-              title: "Obraz",
+              name: "subtitle",
+              title: "Podtytuł",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "icon",
+              title: "Ikona",
               type: "img",
               validation: (Rule) => Rule.required(),
             }),
           ],
         }),
       ],
-    }),
-    defineField({
-      name: "cta",
-      title: "Przycisk CTA",
-      type: "link",
-      validation: (Rule) => Rule.required(),
     }),
   ],
 });
