@@ -16,8 +16,13 @@ type ResponsiveCarouselProps = {
   className?: string;
   /** Extra classes forwarded to the CarouselContent inner flex container (e.g. "desktop:gap-6") */
   contentClassName?: string;
-  /** Extra classes forwarded to each item wrapper */
+  /** Extra classes forwarded to each item wrapper (applies on desktop) */
   desktopItemClassName?: string;
+  /**
+   * Extra classes for each item wrapper on mobile. Use to override the default
+   * full-width slide, e.g. "min-w-[80%]" so part of the next slide peeks in.
+   */
+  mobileItemClassName?: string;
 };
 
 /**
@@ -34,6 +39,7 @@ export function ResponsiveCarousel({
   className,
   contentClassName,
   desktopItemClassName,
+  mobileItemClassName,
 }: ResponsiveCarouselProps) {
   const items = React.Children.toArray(children);
 
@@ -52,6 +58,7 @@ export function ResponsiveCarousel({
                 "flex min-w-full items-stretch justify-stretch px-4 py-px",
                 // Desktop: flexible equal-width column, no extra padding
                 "desktop:min-w-0 desktop:flex-1 desktop:px-0",
+                mobileItemClassName,
                 desktopItemClassName
               )}
             >
@@ -60,7 +67,7 @@ export function ResponsiveCarousel({
           ))}
         </CarouselContent>
 
-        <CarouselControls className="desktop:hidden" />
+        {/* <CarouselControls className="desktop:hidden" /> */}
       </Carousel>
     </div>
   );

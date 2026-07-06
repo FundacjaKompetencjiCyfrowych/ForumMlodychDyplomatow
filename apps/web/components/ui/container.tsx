@@ -15,8 +15,8 @@ type Props = {
 const containerStyles = cva("w-full", {
   variants: {
     size: {
-      base: "px-2 pt-14 pb-14 desktop:px-22 desktop:pt-24 desktop:pb-24",
-      stretch: "px-0 pt-12 pb-14 desktop:pt-26",
+      base: "px-2 pt-14 pb-12 desktop:px-22 desktop:pt-24 desktop:pb-24",
+      stretch: "px-0 pt-12 pb-14 desktop:pt-24",
     },
     background: {
       default: "bg-transparent text-gray-900",
