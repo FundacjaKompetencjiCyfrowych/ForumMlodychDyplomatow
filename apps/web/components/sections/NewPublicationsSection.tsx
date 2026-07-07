@@ -8,9 +8,9 @@ import { getLocale } from "next-intl/server";
 import { latestPublicationsQuery } from "../../sanity/queries/publications";
 import { runQuery } from "../../sanity/groqd";
 import { ResponsiveCarousel } from "../ui/responsive-carousel";
-import { PublicationCard } from "../Publications/PublicationCard";
-import { Button } from "../ui/button";
-import { Link } from "../ui/link";
+// import { Button } from "../ui/button";
+// import { Link } from "../ui/link";
+import { PublicationCard } from "../ui/publication-card";
 
 const NewPublicationsList = async () => {
   const locale = await getLocale();

@@ -3,6 +3,7 @@ import type { Locale } from "next-intl";
 import { q } from "../groqd";
 import { imgFragment } from "./imgFragment";
 import { intlArrayTextQuery } from "./intl";
+import { PaginationParameters } from "./pagination";
 
 export type PublicationsListQueryParams = {
   locale: string;
@@ -12,10 +13,12 @@ export type PublicationsListQueryParams = {
 export type PublicationsSearchQueryParams = {
   locale: string;
   limit: number;
+  type: "article" | "news" | "guide" | "review" | null;
   offset: number;
   searchTerm?: string | null;
   pubType?: string | null;
   authorId?: string | null;
+  tags?: string[] | null;
 };
 
 export type RelatedPublicationsQueryParams = {
@@ -25,6 +28,8 @@ export type RelatedPublicationsQueryParams = {
   pubType: string | null;
   limit: number;
 };
+
+export type PublicationCard = InferFragmentType<typeof publicationPreviewFragment>;
 
 export const publicationPreviewFragment = q
   .parameters<{ locale: Locale }>()
@@ -48,6 +53,7 @@ export const publicationPreviewFragment = q
     tags: sub.field("tags[]").deref().project({
       _id: true,
       name: true,
+      slug: true,
     }),
   }));
 
@@ -76,6 +82,7 @@ export const publicationDetailFragment = q
     tags: sub.field("tags[]").deref().project({
       _id: true,
       name: true,
+      slug: true,
     }),
     pdfFile: sub.field("pdfFile").field("asset").deref().project({
       url: true,
@@ -90,6 +97,10 @@ export type PublicationDetail = InferFragmentType<typeof publicationDetailFragme
 // ZAPYTANIA
 // -----------------------------------------------------------------------------
 
+export const countPublicationsQuery = q
+  .parameters<Partial<PublicationsSearchQueryParams>>()
+  .raw("count(*[_type == 'publication' && locale == $locale])", "passthrough");
+
 export const latestPublicationsQuery = q
   .parameters<PublicationsListQueryParams>()
   .star.filterByType("publication")
@@ -98,18 +109,37 @@ export const latestPublicationsQuery = q
   .raw("[0...$limit]", "passthrough")
   .project(publicationPreviewFragment);
 
-export const advancedPublicationsQuery = q
-  .parameters<PublicationsSearchQueryParams>()
-  .star.filterByType("publication")
-  .filterRaw(`locale == $locale`)
-  .filterRaw(`(!defined($pubType) || type == $pubType)`)
-  .filterRaw(`(!defined($authorId) || author._ref == $authorId)`)
-  .filterRaw(
-    `(!defined($searchTerm) || (title match $searchTerm + "*" || author->name match $searchTerm + "*"))`
-  )
-  .order("date desc")
-  .raw("[$offset...$offset + $limit]", "passthrough")
-  .project(publicationPreviewFragment);
+export const advancedPublicationsQuery = ({
+  page = 1,
+  perPage = 9,
+  sortOrder = "desc",
+}: PaginationParameters & { sortOrder?: "asc" | "desc" }) =>
+  q
+    .parameters<PublicationsSearchQueryParams>()
+    .project((sub) => ({
+      items: sub.star
+        .filterByType("publication")
+        .filterRaw("locale == $locale")
+        .filterRaw(
+          "(!defined($tags) || length($tags) == 0 || count(tags[@->slug.current in $tags]) > 0)"
+        )
+        .filterRaw("(!defined($type) || $type == '' || type == $type)")
+        .filterRaw(
+          "(!defined($searchTerm) || $searchTerm == '' || title match $searchTerm + '*' || author->name match $searchTerm + '*')"
+        )
+        .order(sortOrder === "asc" ? "date asc" : "date desc"),
+    }))
+    .project((sub) => ({
+      total: sub.count("items[]"),
+      page: sub.value(page),
+      perPage: sub.value(perPage),
+      items: sub
+        .field("items[]")
+        .slice((page - 1) * perPage, (page - 1) * perPage + perPage - 1)
+        .project(publicationPreviewFragment),
+    }));
+
+export type PublicationFull = InferFragmentType<typeof publicationPreviewFragment>;
 
 export const singlePublicationQuery = q
   .parameters<{ slug: string; locale: string }>()

@@ -75,7 +75,7 @@ export default defineType({
       type: "img",
       group: "content",
       description:
-        "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach",
+        "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach. Zalecany format obrazu 4:3",
     }),
     defineField({
       name: "author",

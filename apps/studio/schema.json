@@ -24,6 +24,7 @@
   },
   {
     "type": "type",
+<<<<<<< HEAD
     "name": "gradient",
     "value": {
       "type": "object",
@@ -204,6 +205,24 @@
                 }
               }
             }
+=======
+    "name": "filterPublications",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "filterFields": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "filterFields"
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           },
           "optional": true
         }
@@ -273,7 +292,48 @@
     }
   },
   {
+<<<<<<< HEAD
     "name": "patronitePerksSection",
+=======
+    "type": "type",
+    "name": "filterFields",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "article": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "news": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "guide": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "review": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "heroPublicationsSection",
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
     "type": "type",
     "value": {
       "type": "object",
@@ -282,7 +342,11 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
+<<<<<<< HEAD
             "value": "patronitePerksSection"
+=======
+            "value": "heroPublicationsSection"
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           }
         },
         "heading": {
@@ -299,18 +363,27 @@
           },
           "optional": true
         },
+<<<<<<< HEAD
         "caption": {
+=======
+        "publicationCounter": {
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           "type": "objectAttribute",
           "value": {
             "type": "string"
           },
           "optional": true
         },
+<<<<<<< HEAD
         "tiers": {
+=======
+        "badges": {
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           "type": "objectAttribute",
           "value": {
             "type": "array",
             "of": {
+<<<<<<< HEAD
               "type": "object",
               "attributes": {
                 "amount": {
@@ -439,6 +512,9 @@
                   }
                 }
               }
+=======
+              "type": "string"
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
             }
           },
           "optional": true
@@ -447,7 +523,11 @@
     }
   },
   {
+<<<<<<< HEAD
     "name": "benefitsSection",
+=======
+    "name": "publicationFilterSection",
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
     "type": "type",
     "value": {
       "type": "object",
@@ -456,16 +536,24 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
+<<<<<<< HEAD
             "value": "benefitsSection"
           }
         },
         "heading": {
+=======
+            "value": "publicationFilterSection"
+          }
+        },
+        "filterHeading": {
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           "type": "objectAttribute",
           "value": {
             "type": "string"
           },
           "optional": true
         },
+<<<<<<< HEAD
         "benefits": {
           "type": "objectAttribute",
           "value": {
@@ -583,6 +671,27 @@
           "value": {
             "type": "inline",
             "name": "gradientImg"
+=======
+        "searchbarPlaceholder": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "publicationsPerPage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "filterPublications": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "filterPublications"
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           },
           "optional": true
         }
@@ -2131,7 +2240,11 @@
             },
             "rest": {
               "type": "inline",
+<<<<<<< HEAD
               "name": "doubleHeroSection"
+=======
+              "name": "publicationFilterSection"
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
             }
           },
           {
@@ -2146,6 +2259,7 @@
             },
             "rest": {
               "type": "inline",
+<<<<<<< HEAD
               "name": "benefitsSection"
             }
           },
@@ -2177,6 +2291,9 @@
             "rest": {
               "type": "inline",
               "name": "patronitePerksSection"
+=======
+              "name": "heroPublicationsSection"
+>>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
             }
           }
         ]
@@ -3966,6 +4083,159 @@
               "type": "objectAttribute",
               "value": {
                 "type": "string"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "publications": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "cardButton": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "singlePublicationPage": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "share": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "downloadPdf": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "noImage": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "inThisArticle": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "noHeadings": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "relatedPublicationTitle": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "allPublications": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  }
+                }
+              },
+              "optional": true
+            },
+            "filterComponent": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "search": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "results": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "reset": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "sortBy": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "sortNewest": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "sortOldest": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "emptyStateTitle": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "emptyStateDesc": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "showAll": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "loading": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  }
+                }
               },
               "optional": true
             }

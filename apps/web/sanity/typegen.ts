@@ -32,6 +32,11 @@ export type Gradient = {
   }>;
 };
 
+export type FilterPublications = {
+  label?: string;
+  filterFields?: FilterFields;
+};
+
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -93,6 +98,29 @@ export type DoubleHeroSection = {
   caption?: string;
   cta?: Link;
   image?: GradientImg;
+};
+
+export type FilterFields = {
+  article?: string;
+  news?: string;
+  guide?: string;
+  review?: string;
+};
+
+export type HeroPublicationsSection = {
+  _type: "heroPublicationsSection";
+  heading?: string;
+  subheading?: string;
+  publicationCounter?: string;
+  badges?: Array<string>;
+};
+
+export type PublicationFilterSection = {
+  _type: "publicationFilterSection";
+  filterHeading?: string;
+  searchbarPlaceholder?: string;
+  publicationsPerPage?: number;
+  filterPublications?: FilterPublications;
 };
 
 export type DocumentsSection = {
@@ -303,13 +331,7 @@ export type AboutUsSection = {
 };
 
 export type Socials = Array<{
-  platform?:
-    | "facebook"
-    | "instagram"
-    | "linkedin"
-    | "twitter"
-    | "youtube"
-    | "spotify";
+  platform?: "facebook" | "instagram" | "linkedin" | "twitter" | "youtube" | "spotify";
   url?: string;
   _type: "socialLink";
   _key: string;
@@ -388,6 +410,12 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & PatronitePerksSection)
+  | ({
+      _key: string;
+    } & PublicationFilterSection)
+  | ({
+      _key: string;
+    } & HeroPublicationsSection)
 >;
 
 export type LinkButton = {
@@ -712,6 +740,30 @@ export type Translations = {
     divisionNotFound?: string;
     checkDetails?: string;
   };
+  publications?: {
+    cardButton?: string;
+    singlePublicationPage?: {
+      share?: string;
+      downloadPdf?: string;
+      noImage?: string;
+      inThisArticle?: string;
+      noHeadings?: string;
+      relatedPublicationTitle?: string;
+      allPublications?: string;
+    };
+    filterComponent?: {
+      search?: string;
+      results?: string;
+      reset?: string;
+      sortBy?: string;
+      sortNewest?: string;
+      sortOldest?: string;
+      emptyStateTitle?: string;
+      emptyStateDesc?: string;
+      showAll?: string;
+      loading?: string;
+    };
+  };
   locale?: string;
 };
 
@@ -768,15 +820,7 @@ export type Publication = {
           _type: "span";
           _key: string;
         }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
+        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -1081,6 +1125,12 @@ export type AllSanitySchemaTypes =
   | WhoWeWorkWithSection
   | BenefitsSection
   | DoubleHeroSection
+  | FilterPublications
+  | SanityFileAssetReference
+  | FileDataFile
+  | FilterFields
+  | HeroPublicationsSection
+  | PublicationFilterSection
   | DocumentsSection
   | EventsListSection
   | ExpertsListSection

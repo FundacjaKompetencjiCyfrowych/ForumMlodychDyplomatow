@@ -1,44 +1,41 @@
 import { Typography } from "@/components/ui/typography";
 import type { InferFragmentType } from "groqd";
 import type { publicationPreviewFragment } from "../../sanity/queries/publications";
-import { PublicationCard } from "./PublicationCard";
+import { Locale } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/components/ui/link";
+import { ChevronDown } from "lucide-react";
+import { PublicationCard } from "@/components/ui/publication-card";
 
 export interface RelatedPublicationsProps {
   publications: InferFragmentType<typeof publicationPreviewFragment>[];
-  locale?: string;
+  locale?: Locale;
 }
 
-// Słownik tłumaczeń
-const translations = {
-  pl: {
-    title: "Sprawdź podobne publikacje",
-    viewAll: "Wszystkie publikacje",
-    baseHref: "/publications",
-  },
-  en: {
-    title: "Related publications",
-    viewAll: "All publications",
-    baseHref: "/publications",
-  },
-};
-
-export const RelatedPublications = ({ publications, locale = "pl" }: RelatedPublicationsProps) => {
+export const RelatedPublications = async ({
+  publications,
+  locale = "pl",
+}: RelatedPublicationsProps) => {
   if (!publications || publications.length === 0) {
     return null;
   }
 
-  const t = translations[locale as keyof typeof translations] || translations.pl;
+  const t = await getTranslations({ locale, namespace: "publications" });
 
   return (
-    <section className="bg-background-50 mx-auto w-full px-6 pt-10 pb-16 md:px-6">
-      <div className="mx-auto mb-8 flex max-w-7xl flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-        <Typography as="h2" variant="h3" className="text-foreground">
-          {t.title}
+    <section className="mx-auto w-full bg-brand-slate-50 px-6 pt-10 pb-16 md:px-6">
+      <div className="mx-auto mb-8 flex max-w-370 flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+        <Typography as="h2" variant="h2" className="text-black">
+          {t("singlePublicationPage.relatedPublicationTitle")}
         </Typography>
+
+        <Link href="/publications" variant="secondary" size="l" className="text-brand-red">
+          {t("singlePublicationPage.allPublications")} <ChevronDown />
+        </Link>
       </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {publications.slice(0, 3).map((pub) => (
+      <div className="mx-auto grid max-w-370 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {publications.slice(0, 4).map((pub) => (
           <PublicationCard key={pub._id} publication={pub} layout="vertical" className="h-full" />
         ))}
       </div>

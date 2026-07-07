@@ -240,6 +240,136 @@ export const translations = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "publications",
+      title: "Publikacje",
+      type: "object",
+      fields: [
+        defineField({
+          name: "cardButton",
+          title: "Przycisk na karcie publikacji",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "singlePublicationPage",
+          title: "Strona pojedynczej publikacji",
+          type: "object",
+          fields: [
+            defineField({
+              name: "share",
+              title: "Udostępnij",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "downloadPdf",
+              title: "Pobierz PDF",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "noImage",
+              title: "Brak zdjęcia",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+
+            defineField({
+              name: "inThisArticle",
+              title: "W tym artykule",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "noHeadings",
+              title: "Brak nagłówków",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "relatedPublicationTitle",
+              title: "Podobne publikacje",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "allPublications",
+              title: "Wszystkie publikacje",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        }),
+        defineField({
+          name: "filterComponent",
+          title: "Komponent filtra publikacji",
+          type: "object",
+          fields: [
+            defineField({
+              name: "search",
+              title: "Szukaj",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "results",
+              title: "Rezultaty",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "reset",
+              title: "Reset",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "sortBy",
+              title: "Sortuj",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "sortNewest",
+              title: "Od najnowszych",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "sortOldest",
+              title: "Od najstarszych",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "emptyStateTitle",
+              title: "Brak publikacji tytul",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "emptyStateDesc",
+              title: "Brak publiakcji opis",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "showAll",
+              title: "Wszystkie publikacje",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "loading",
+              title: "Ładowanie",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        }),
+      ],
+    }),
     languageField,
   ],
 });

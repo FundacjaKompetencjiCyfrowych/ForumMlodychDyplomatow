@@ -16,6 +16,8 @@ import {
   DivisionsListSection,
   HeadingSection,
   ExpertsListSection,
+  PublicationsFilter,
+  HeroPublications,
 } from "@/components/sections";
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
@@ -65,4 +67,6 @@ export const components: ComponentsRegistry = {
   benefitsSection: BenefitsSection,
   whoWeWorkWithSection: WhoWeWorkWithSection,
   patronitePerksSection: PatronitePerksSection,
+  publicationFilterSection: PublicationsFilter,
+  heroPublicationsSection: HeroPublications,
 };

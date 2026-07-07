@@ -88,58 +88,51 @@ export default async function PublicationDetailPage({ params }: { params: Promis
   const formattedDate = publication.date
     ? new Date(publication.date).toLocaleDateString(locale, {
         day: "numeric",
-        month: "long",
+        month: "numeric",
         year: "numeric",
       })
     : undefined;
 
   const isoDate = publication.date ?? undefined;
 
-  const tagNames = publication.tags?.map((tag: any) => tag.name).filter(Boolean) || [];
+  const tags =
+    publication.tags
+      ?.map((tag: any) => ({
+        name: tag?.name,
+        slug: tag?.slug.current,
+      }))
+      .filter((tag): tag is { name: string; slug: string } => Boolean(tag?.name && tag?.slug)) ||
+    [];
 
   const authorData = publication.author?.name
     ? {
         name: publication.author.name,
         initials: getInitials(publication.author.name),
         role: "Ekspert FMD",
+        imageUrl: publication.author?.img?.asset?.url ?? undefined,
+        bio: publication.author.bio ?? "",
       }
     : undefined;
-
-  const breadcrumbs = [
-    { label: t.home, href: `/${locale}` },
-    { label: t.publications, href: `/${locale}/publications` },
-    { label: publication.title || t.noTitle },
-  ];
 
   return (
     <div className="min-h-screen">
       <PublicationHero
-        breadcrumbs={breadcrumbs}
         category={categoryLabel}
         title={publication.title || t.noTitle}
         excerpt={publication.excerpt ?? undefined}
-        tags={tagNames}
+        tags={tags}
         author={authorData}
         date={formattedDate}
         isoDate={isoDate}
         pdfUrl={publication.pdfFile?.url}
-        image={
-          publication.mainImage?.asset?.url
-            ? {
-                src: publication.mainImage.asset.url,
-                alt: publication.mainImage.asset.altText || publication.title || "Zdjęcie główne",
-                caption: publication.mainImage.asset.description ?? undefined,
-                blurDataURL: publication.mainImage.asset.metadata?.lqip ?? undefined,
-              }
-            : null
-        }
+        image={publication.mainImage}
         locale={locale}
       />
       <PublicationBody content={publication.text || []} locale={locale} />
 
-      <PublicationPdf pdfUrl={publication.pdfFile?.url} locale={locale} />
+      <PublicationPdf pdfUrl={publication.pdfFile?.url} />
 
-      <PublicationAuthor author={authorData} date={formattedDate} isoDate={isoDate} />
+      <PublicationAuthor author={authorData} date={formattedDate} isoDate={isoDate} tags={tags} />
 
       <RelatedPublications publications={rawRelatedPublications} locale={locale} />
     </div>

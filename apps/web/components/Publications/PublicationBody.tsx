@@ -4,6 +4,8 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Typography } from "@/components/ui/typography";
 import { Link } from "@/components/ui/link";
 import imageUrlBuilder from "@sanity/image-url";
+import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -31,7 +33,7 @@ export interface PublicationBodyProps {
     imageUrl?: string;
   };
   date?: string;
-  locale?: string;
+  locale?: Locale;
 }
 
 const slugify = (text: string) => {
@@ -57,21 +59,10 @@ const getBlockText = (block: any) => {
   return block.children?.map((child: any) => child.text).join("") || "";
 };
 
-const translations = {
-  pl: {
-    inThisArticle: "W tym artykule",
-    noHeadings: "Brak nagłówków w tekście.",
-  },
-  en: {
-    inThisArticle: "In this article",
-    noHeadings: "No headings in the text.",
-  },
-};
-
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <Typography as="p" variant="body-l" className="mb-6 text-foreground/90">
+      <Typography as="p" variant="body-l" className="mb-6 text-brand-gray-900">
         {children}
       </Typography>
     ),
@@ -80,8 +71,8 @@ const portableTextComponents: PortableTextComponents = {
       return (
         <Typography
           as="h1"
-          variant="h2"
-          className="mt-12 mb-6 scroll-mt-[20vh] pt-4 text-foreground"
+          variant="h3"
+          className="my-4 scroll-mt-[20vh] pt-4 text-brand-gray-900"
           asChild
         >
           <h1 id={id}>{children}</h1>
@@ -93,8 +84,8 @@ const portableTextComponents: PortableTextComponents = {
       return (
         <Typography
           as="h2"
-          variant="h3"
-          className="mt-10 mb-5 scroll-mt-[20vh] pt-4 text-foreground"
+          variant="h4"
+          className="my-4 scroll-mt-[20vh] pt-4 text-brand-gray-900"
           asChild
         >
           <h2 id={id}>{children}</h2>
@@ -102,27 +93,27 @@ const portableTextComponents: PortableTextComponents = {
       );
     },
     h3: ({ children }) => (
-      <Typography as="h3" variant="h4" className="mt-8 mb-4 text-foreground">
+      <Typography as="h3" variant="h4" className="mt-4 mb-4 text-brand-gray-900">
         {children}
       </Typography>
     ),
     h4: ({ children }) => (
-      <Typography as="h4" variant="h4" className="mt-6 mb-3 text-foreground">
+      <Typography as="h4" variant="h4" className="mt-4 mb-3 text-brand-gray-900">
         {children}
       </Typography>
     ),
     h5: ({ children }) => (
-      <Typography as="h5" variant="h4" className="mt-6 mb-2 text-foreground">
+      <Typography as="h5" variant="h4" className="mt-4 mb-2 text-brand-gray-900">
         {children}
       </Typography>
     ),
     h6: ({ children }) => (
-      <Typography as="h6" variant="h4" className="mt-6 mb-2 text-foreground">
+      <Typography as="h6" variant="h4" className="mt-4 mb-2 text-brand-gray-900">
         {children}
       </Typography>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="my-8 rounded-r-lg border-l-[3px] border-brand-blue bg-muted/30 py-2 pl-5 text-foreground/80 italic">
+      <blockquote className="my-6 rounded-r-lg border-l-[3px] border-brand-red px-2 py-0.5 text-brand-red">
         <Typography variant="body-l">{children}</Typography>
       </blockquote>
     ),
@@ -145,7 +136,7 @@ const portableTextComponents: PortableTextComponents = {
           </div>
           {value.caption && (
             <div className="mt-3 flex items-start gap-3 border-l-2 border-brand-red p-1">
-              <Typography variant="caption" className="leading-snug text-muted-foreground">
+              <Typography variant="caption" className="text-muted-brand leading-snug">
                 {value.caption}
               </Typography>
             </div>
@@ -155,7 +146,9 @@ const portableTextComponents: PortableTextComponents = {
     },
   },
   marks: {
-    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+    strong: ({ children }) => (
+      <strong className="font-semibold text-brand-gray-900">{children}</strong>
+    ),
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ children, value }) => {
       const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
@@ -164,7 +157,7 @@ const portableTextComponents: PortableTextComponents = {
           href={value?.href || "#"}
           target={target}
           variant="link"
-          className="hover:text-brand-400 border-none text-brand-blue no-underline underline-offset-4 transition-colors hover:border-transparent"
+          className="hover:text-brand-gray-900-400 text-brand-gray-900-blue border-none no-underline underline-offset-4 transition-colors hover:border-transparent"
         >
           {children}
         </Link>
@@ -173,8 +166,8 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
-export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps) => {
-  const t = translations[locale as keyof typeof translations] || translations.pl;
+export const PublicationBody = async ({ content, locale = "pl" }: PublicationBodyProps) => {
+  const t = await getTranslations({ locale, namespace: "publications" });
 
   const toc = Array.isArray(content)
     ? content
@@ -202,33 +195,25 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
         </div>
 
         {/* Prawa kolumna: Pływający Spis Treści (TOC) */}
-        <div className="sticky top-24 hidden w-full max-w-48 lg:block">
-          <Typography variant="h4" className="mb-4 font-normal text-muted-foreground">
-            {t.inThisArticle}
+        <div className="sticky top-24 hidden w-full max-w-70 lg:block">
+          <Typography variant="h4" className="p-2.5 pl-0 text-brand-gray-900">
+            {t("singlePublicationPage.inThisArticle")}
           </Typography>
 
-          <hr className="mb-6 h-px w-full shrink-0 border-none bg-border/60" />
+          <hr className="mb-2 h-px w-full shrink-0 border-none bg-border/60" />
 
           {toc.length > 0 ? (
-            <ul className="flex flex-col gap-5">
+            <ul className="flex flex-col">
               {toc.map((item, index) => {
                 const number = String(index + 1).padStart(2, "0");
                 return (
-                  <li key={index} className="group flex items-start gap-4">
-                    <Typography
-                      as="span"
-                      variant="body-m"
-                      className="mt-0.5 shrink-0 font-semibold text-brand-red"
-                    >
+                  <li key={index} className="group flex items-center">
+                    <Typography as="span" variant="body-m" className="p-2.5 text-brand-red">
                       {number}
                     </Typography>
 
-                    <Link
-                      href={`#${item.id}`}
-                      variant="link"
-                      className="block h-auto border-none p-0! text-left text-muted-foreground no-underline transition-colors hover:border-transparent hover:text-foreground active:border-transparent"
-                    >
-                      <Typography as="span" variant="body-m">
+                    <Link href={`#${item.id}`} variant="none" size="inline">
+                      <Typography as="span" variant="body-m" className="text-brand-red">
                         {item.title}
                       </Typography>
                     </Link>
@@ -237,8 +222,8 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
               })}
             </ul>
           ) : (
-            <Typography variant="body-m" className="text-muted-foreground italic">
-              {t.noHeadings}
+            <Typography variant="body-m" className="text-brand-red italic">
+              {t("singlePublicationPage.noHeadings")}
             </Typography>
           )}
         </div>
