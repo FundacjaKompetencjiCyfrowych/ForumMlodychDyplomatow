@@ -39,7 +39,7 @@ export const PublicationCard = async ({
       size="inline"
       className={cn(
         "group flex w-full overflow-hidden border border-border/60 bg-white transition-all hover:shadow-md",
-        "desktop:data-[orientation=vertical]:h-max-[565px] flex-col items-start desktop:data-[orientation=horizontal]:h-80 desktop:data-[orientation=horizontal]:flex-row desktop:data-[orientation=horizontal]:items-stretch",
+        "flex-col items-start desktop:data-[orientation=horizontal]:h-80 desktop:data-[orientation=horizontal]:flex-row desktop:data-[orientation=horizontal]:items-stretch desktop:data-[orientation=vertical]:max-h-144",
         className
       )}
     >
@@ -52,7 +52,7 @@ export const PublicationCard = async ({
       >
         {image ? (
           <SanityImage
-            sizes={{ default: "100vw", desktop: isHorizontal ? "50vw" : "375px" }}
+            sizes={{ default: "100vw", desktop: isHorizontal ? "50vw" : "23.5rem" }}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             image={image}
           />

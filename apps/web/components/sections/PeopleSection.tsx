@@ -37,7 +37,7 @@ const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"p
         </TabsList>
         {groups.map((group, index) => (
           <TabsContent key={`${group._key}-${index}`} value={group.groupName ?? ""}>
-            <div className="grid w-full grid-cols-2 gap-16 sm:gap-4 md:gap-8 desktop:grid-cols-4">
+            <div className="grid w-full grid-cols-2 gap-4 md:gap-8 lg:grid-cols-4">
               {group.members?.map((member) => (
                 <PersonCard key={member._id} person={member} />
               ))}

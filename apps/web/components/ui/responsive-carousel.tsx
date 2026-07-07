@@ -114,7 +114,7 @@ export function ButtonCarousel({
     // stay inside the container on all screen sizes.
     <Carousel
       className={cn(
-        "align-stretch grid grid-cols-[36px_1fr_36px] content-stretch items-stretch justify-stretch gap-4",
+        "align-stretch grid grid-cols-1 content-stretch items-stretch justify-stretch gap-4 desktop:grid-cols-[36px_1fr_36px]",
         className
       )}
       opts={{
@@ -135,7 +135,7 @@ export function ButtonCarousel({
           : undefined
       }
     >
-      <CarouselPrevious className="self-center" />
+      <CarouselPrevious className="hidden self-center desktop:flex" />
 
       <CarouselContent className={contentClassName}>
         {items.map((child, i) => (
@@ -148,7 +148,7 @@ export function ButtonCarousel({
         ))}
       </CarouselContent>
 
-      <CarouselNext className="self-center" />
+      <CarouselNext className="hidden self-center desktop:flex" />
     </Carousel>
   );
 }
