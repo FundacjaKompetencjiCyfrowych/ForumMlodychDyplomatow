@@ -25,5 +25,13 @@ export const imgFragment = q.fragmentForType<"img">().project((sub) => ({
   crop: sub.field("crop"),
   hotspot: sub.field("hotspot"),
 }));
+export const gradientImgFragment = q.fragmentForType<"gradientImg">().project((sub) => ({
+  ...imgFragment,
+  gradient: sub.field("gradient").project((sub) => ({
+    enabled: sub.field("enabled"),
+    config: sub.field("config[]"),
+  })),
+}));
 
 export type ImgFragment = InferFragmentType<typeof imgFragment>;
+export type GradientImgFragment = InferFragmentType<typeof gradientImgFragment>;

@@ -18,6 +18,10 @@ import { teamDivisionsSection } from "./teamDivisionsSection";
 import { whatWeDoDivisionsSection } from "./whatWeDoDivisionsSection";
 import { divisionsListSection } from "./divisionsListSection";
 import { documentsSection } from "./documentsSection";
+import { doubleHeroSection } from "./doubleHeroSection";
+import { benefitsSection } from "./benefitsSection";
+import { whoWeWorkWithSection } from "./whoWeWorkWithSection";
+import { patronitePerksSection } from "./patronitePerksSection";
 
 export const sectionTypes = [
   "aboutUsSection",
@@ -40,6 +44,10 @@ export const sectionTypes = [
   "expertsListSection",
   "eventsListSection",
   "documentsSection",
+  "doubleHeroSection",
+  "benefitsSection",
+  "whoWeWorkWithSection",
+  "patronitePerksSection",
 ] as const;
 
 export const sections = sectionTypes.map((type) => ({ type }));
@@ -65,4 +73,8 @@ export const sectionStructure = [
   expertsListSection,
   eventsListSection,
   documentsSection,
+  doubleHeroSection,
+  benefitsSection,
+  whoWeWorkWithSection,
+  patronitePerksSection,
 ];

@@ -18,6 +18,20 @@ export type Robots = {
   noFollow?: boolean;
 };
 
+export type Gradient = {
+  enabled?: boolean;
+  color?: "red" | "blue" | "white";
+  config?: Array<{
+    direction?: "top" | "bottom" | "left" | "right";
+    desktopDirection?: "top" | "bottom" | "left" | "right";
+    size?: "xs" | "sm" | "md" | "lg";
+    desktopSize?: "xs" | "sm" | "md" | "lg";
+    color?: "red" | "blue" | "white";
+    _type: "gradientConfig";
+    _key: string;
+  }>;
+};
+
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -29,6 +43,56 @@ export type FileDataFile = {
   asset?: SanityFileAssetReference;
   media?: unknown; // Unable to locate the referenced type "media" in schema
   _type: "file";
+};
+
+export type PatronitePerksSection = {
+  _type: "patronitePerksSection";
+  heading?: string;
+  subheading?: string;
+  caption?: string;
+  tiers?: Array<{
+    amount?: string;
+    perks?: Array<string>;
+    _type: "tier";
+    _key: string;
+  }>;
+  cta?: Link;
+};
+
+export type WhoWeWorkWithSection = {
+  _type: "whoWeWorkWithSection";
+  heading?: string;
+  subheading?: string;
+  items?: Array<{
+    title?: string;
+    subtitle?: string;
+    icon?: Img;
+    _type: "item";
+    _key: string;
+  }>;
+};
+
+export type BenefitsSection = {
+  _type: "benefitsSection";
+  heading?: string;
+  benefits?: Array<{
+    title?: string;
+    image?: Img;
+    _type: "benefit";
+    _key: string;
+  }>;
+  cta?: Link;
+};
+
+export type DoubleHeroSection = {
+  _type: "doubleHeroSection";
+  heading?: string;
+  headingText?: string;
+  subheading?: string;
+  subheadingText?: string;
+  caption?: string;
+  cta?: Link;
+  image?: GradientImg;
 };
 
 export type DocumentsSection = {
@@ -312,6 +376,18 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & DocumentsSection)
+  | ({
+      _key: string;
+    } & DoubleHeroSection)
+  | ({
+      _key: string;
+    } & BenefitsSection)
+  | ({
+      _key: string;
+    } & WhoWeWorkWithSection)
+  | ({
+      _key: string;
+    } & PatronitePerksSection)
 >;
 
 export type LinkButton = {
@@ -363,6 +439,15 @@ export type SanityImageAssetReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type GradientImg = {
+  _type: "gradientImg";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  gradient?: Gradient;
 };
 
 export type Img = {
@@ -988,8 +1073,13 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Robots
+  | Gradient
   | SanityFileAssetReference
   | FileDataFile
+  | PatronitePerksSection
+  | WhoWeWorkWithSection
+  | BenefitsSection
+  | DoubleHeroSection
   | DocumentsSection
   | EventsListSection
   | ExpertsListSection
@@ -1021,6 +1111,7 @@ export type AllSanitySchemaTypes =
   | PostsSection
   | LeadSection
   | SanityImageAssetReference
+  | GradientImg
   | Img
   | RichText
   | Seo
