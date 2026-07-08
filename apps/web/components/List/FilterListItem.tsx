@@ -7,7 +7,7 @@ import { usePage } from "./FilterListPagination";
 
 export type FilterButtonVariant = "toggle" | "chip" | "radio";
 
-type Props = {
+type FilterItemProps = {
   label: string;
   slug: string;
   value?: string;
@@ -21,7 +21,7 @@ export const FilterListItem = ({
   value = "default",
   isDefault,
   type = "toggle",
-}: Omit<Props, "type"> & {
+}: Omit<FilterItemProps, "type"> & {
   type?: "chip" | "toggle";
 }) => {
   const [params, setParams] = useQueryState(slug, parseAsArrayOf(parseAsString).withDefault([]));
@@ -79,10 +79,10 @@ export const FilterRadioItem = ({
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-2 text-sm text-brand-gray-700 transition-colors hover:text-brand-red"
+      className="flex w-full items-center gap-2 text-left text-sm text-brand-gray-700 transition-colors hover:text-brand-red"
     >
       <div
-        className={`flex size-4 items-center justify-center rounded-full border border-slate-400 ${isChecked ? "border-brand-red bg-brand-red" : ""}`}
+        className={`flex size-4 shrink-0 items-center justify-center rounded-full border border-slate-400 ${isChecked ? "border-brand-red bg-brand-red" : ""}`}
       >
         {isChecked && <div className="size-2 rounded-full bg-white" />}
       </div>
@@ -91,37 +91,42 @@ export const FilterRadioItem = ({
   );
 };
 
-// W pliku FilterListItem.tsx
-
 export const FilterListGroupItem = ({
   label,
   slug,
   subgroups,
   type = "event",
-}: Omit<Props, "value" | "type"> & {
+  activeCount = 0,
+}: Omit<FilterItemProps, "value" | "type"> & {
   type?: string;
-  // Zmieniamy typ na taki, który dopuszcza "radio"
   subgroups: { label: string; value: string; type: FilterButtonVariant | "radio" }[];
+  activeCount?: number;
 }) => {
   return (
-    <Collapsible>
+    <Collapsible className="w-full">
       <CollapsibleTrigger asChild className="group">
         <Button
           variant="toggle"
           className={
-            "justify-between text-start whitespace-normal " + (type == "publications" ? "p-2" : "")
+            "w-full justify-between text-start font-bold whitespace-normal " +
+            (type == "publications" ? "p-2" : "")
           }
           iconRight={
-            <ChevronDown className="transition-transform group-data-[state=open]:rotate-180" />
+            <ChevronDown className="shrink-0 transition-transform group-data-[state=open]:rotate-180" />
           }
         >
-          {label}
+          <span className="flex items-center gap-2">
+            {label}
+            {activeCount > 0 && (
+              <span className="flex size-5 items-center justify-center rounded-full bg-brand-red-900 text-[10px] font-bold text-white desktop:hidden">
+                {activeCount}
+              </span>
+            )}
+          </span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="flex w-full flex-wrap gap-2 pl-4">
-        {/* Zmienione na flex-col dla lepszego układu */}
+      <CollapsibleContent className="flex w-full flex-wrap gap-2 pt-2 pb-4 pl-4">
         {subgroups?.map((g) => {
-          // Logika decyzyjna:
           if (g.type === "radio") {
             return <FilterRadioItem key={g.value} label={g.label} slug={slug} value={g.value} />;
           }

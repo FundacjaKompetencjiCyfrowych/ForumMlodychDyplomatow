@@ -16,4 +16,4 @@ export { default as DivisionsListSection } from "./DivisionsListSection";
 export { default as HeadingSection } from "./HeadingSection";
 export { default as ExpertsListSection } from "./ExpertsListSection";
 export { default as PublicationsFilter } from "./PublicationsFilter";
-export { default as HeroPublications } from "../Publications/HeroPublications";
+export { default as HeroPublications } from "./HeroPublications";

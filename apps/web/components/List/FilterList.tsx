@@ -1,160 +1,24 @@
 "use client";
 import type { Locale } from "next-intl";
 import { useTranslations } from "next-intl";
-import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates, useQueryState } from "nuqs";
+import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import React, { useEffect, useMemo, useState, useTransition } from "react";
-import { ChevronDown, X, List, ChevronLeft } from "lucide-react";
+import { X, List, ChevronLeft } from "lucide-react";
 import { cn } from "../../lib/utils";
 import type { PaginationQueryFunction, PaginationResult } from "../../sanity/queries/pagination";
 import Typography from "../ui/typography";
 import { FilterListInput } from "./FilterListInput";
-import FilterListPagination, { usePage } from "./FilterListPagination";
+import FilterListPagination from "./FilterListPagination";
 import FilterListTabs from "./FilterListTabs";
 import { FilterListContext, TransitionContainer } from "./FilterListTransition";
+
+import {
+  FilterButtonVariant,
+  FilterListGroupItem,
+  FilterListItem,
+  FilterRadioItem,
+} from "./FilterListItem";
 import { Button } from "../ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
-
-// --- TYPY I KOMPONENTY POJEDYNCZYCH FILTRÓW ---
-
-export type FilterButtonVariant = "toggle" | "chip" | "radio";
-
-type FilterItemProps = {
-  label: string;
-  slug: string;
-  value?: string;
-  isDefault?: boolean;
-  type?: FilterButtonVariant;
-};
-
-export const FilterListItem = ({
-  label,
-  slug,
-  value = "default",
-  isDefault,
-  type = "toggle",
-}: Omit<FilterItemProps, "type"> & {
-  type?: "chip" | "toggle";
-}) => {
-  const [params, setParams] = useQueryState(slug, parseAsArrayOf(parseAsString).withDefault([]));
-  const [_, setPage] = usePage();
-  const isChecked = isDefault ? params.length === 0 : params.includes(value);
-
-  const onClick = () => {
-    if (isDefault && !isChecked) {
-      setParams([]);
-      setPage(0);
-      return;
-    }
-    setParams((prev) => {
-      if (isChecked) {
-        return prev.filter((p) => p !== value);
-      } else {
-        return [...prev, value];
-      }
-    });
-    setPage(0);
-  };
-  return (
-    <Button
-      id={`${slug}-${value}`}
-      variant={type}
-      size="inline"
-      className={"justify-start text-left"}
-      data-state={isChecked ? "on" : "off"}
-      onClick={onClick}
-    >
-      {label}
-    </Button>
-  );
-};
-
-export const FilterRadioItem = ({
-  label,
-  slug,
-  value,
-}: {
-  label: string;
-  slug: string;
-  value: string;
-}) => {
-  const [currentValue, setValue] = useQueryState(slug, parseAsString);
-  const [_, setPage] = usePage();
-
-  const isChecked = currentValue === value;
-
-  const onClick = () => {
-    setValue(isChecked ? null : value);
-    setPage(0);
-  };
-
-  return (
-    <button
-      onClick={onClick}
-      className="flex items-center gap-2 text-left text-sm text-brand-gray-700 transition-colors hover:text-brand-red"
-    >
-      <div
-        className={`flex size-4 shrink-0 items-center justify-center rounded-full border border-slate-400 ${isChecked ? "border-brand-red bg-brand-red" : ""}`}
-      >
-        {isChecked && <div className="size-2 rounded-full bg-white" />}
-      </div>
-      {label}
-    </button>
-  );
-};
-
-export const FilterListGroupItem = ({
-  label,
-  slug,
-  subgroups,
-  type = "event",
-  activeCount = 0,
-}: Omit<FilterItemProps, "value" | "type"> & {
-  type?: string;
-  subgroups: { label: string; value: string; type: FilterButtonVariant | "radio" }[];
-  activeCount?: number;
-}) => {
-  return (
-    <Collapsible>
-      <CollapsibleTrigger asChild className="group">
-        <Button
-          variant="toggle"
-          className={
-            "justify-between text-start font-bold whitespace-normal " +
-            (type == "publications" ? "p-2" : "")
-          }
-          iconRight={
-            <ChevronDown className="shrink-0 transition-transform group-data-[state=open]:rotate-180" />
-          }
-        >
-          <span className="flex items-center gap-2">
-            {label}
-            {activeCount > 0 && (
-              <span className="flex size-5 items-center justify-center rounded-full bg-brand-red-900 text-[10px] font-bold text-white">
-                {activeCount}
-              </span>
-            )}
-          </span>
-        </Button>
-      </CollapsibleTrigger>
-      <CollapsibleContent className="flex w-full flex-wrap gap-2 pt-2 pb-4 pl-4">
-        {subgroups?.map((g) => {
-          if (g.type === "radio") {
-            return <FilterRadioItem key={g.value} label={g.label} slug={slug} value={g.value} />;
-          }
-          return (
-            <FilterListItem
-              key={g.value}
-              label={g.label}
-              slug={slug}
-              value={g.value}
-              type={g.type as "chip" | "toggle"}
-            />
-          );
-        })}
-      </CollapsibleContent>
-    </Collapsible>
-  );
-};
 
 // --- GŁÓWNE TYPY DLA FILTER LIST ---
 
@@ -258,7 +122,7 @@ export const FilterList = <
   listClassName,
   type = "event",
 }: Props<T, TParams>) => {
-  const t = useTranslations("publications.filterComponent");
+  const t = useTranslations("filterComponent");
   const [isPending, startTransition] = useTransition();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -362,7 +226,7 @@ export const FilterList = <
   const renderFiltersList = () => (
     <>
       {filters.map((filter) => (
-        <div key={filter.slug} className="flex w-full flex-col items-start">
+        <div key={filter.slug} className="flex w-full max-w-90 flex-col items-start">
           {filter.label && type !== "publications" && (
             <Typography variant="body-m" className="mb-2 font-semibold">
               {filter.label}
@@ -431,7 +295,9 @@ export const FilterList = <
               <ChevronLeft className="size-6" />
             </button>
             <div className="flex-1">
-              <FilterListInput placeholder={t("search")} />
+              <FilterListInput
+                placeholder={type == "publications" ? t("publicationsSearch") : t("search")}
+              />
             </div>
           </div>
 
@@ -477,7 +343,9 @@ export const FilterList = <
           {/* PASEK WYSZUKIWANIA I TRIGGER MOBILNY (TERAZ DLA WSZYSTKICH TYPÓW) */}
           <div className="flex flex-col gap-4">
             <div className="flex w-full flex-row items-center gap-4">
-              <FilterListInput placeholder={t("search")} />
+              <FilterListInput
+                placeholder={type == "publications" ? t("publicationsSearch") : t("search")}
+              />
             </div>
 
             {/* Trigger "KATEGORIE" widoczny tylko na mobile */}
@@ -487,7 +355,7 @@ export const FilterList = <
                 className="flex items-center gap-2 font-semibold text-brand-blue-900"
               >
                 <List className="size-5" />
-                KATEGORIE
+                {t("category")}
                 {activeFilters.length > 0 && (
                   <span className="flex size-5 items-center justify-center rounded-full bg-brand-red-900 text-xs font-bold text-white">
                     {activeFilters.length}
@@ -558,21 +426,22 @@ export const FilterList = <
             {data === null ? (
               <Typography>{t("loading")}</Typography>
             ) : data.items.length === 0 && type === "publications" ? (
-              <div className="mt-4 flex flex-col items-center justify-between rounded-lg border border-gray-100 bg-white p-8 shadow-sm md:flex-row">
+              <div className="col-span-2 mt-4 flex w-full flex-col items-center justify-between rounded-lg border border-brand-slate-100 bg-white p-8 md:flex-row">
                 <div className="mb-4 md:mb-0">
                   <Typography variant="body-m" className="font-bold text-gray-900">
-                    {t("emptyStateTitle")}
+                    {t("emptyStatePublicationsTitle")}
                   </Typography>
-                  <Typography className="mt-1 text-sm text-gray-500">
-                    {t("emptyStateDesc")}
+                  <Typography variant="body-m" className="mt-1 text-gray-500">
+                    {t("emptyStatePublicationsDesc")}
                   </Typography>
                 </div>
-                <button
+                <Button
                   onClick={handleResetFilters}
-                  className="rounded-md border border-slate-900 px-6 py-2 font-semibold text-slate-900 transition-colors hover:bg-slate-50"
+                  variant="secondary"
+                  className="border-brand-blue text-brand-blue"
                 >
-                  {t("showAll")}
-                </button>
+                  {t("showAllPublications")}
+                </Button>
               </div>
             ) : (
               data.items.map((item, index) => <Component key={index} item={item} locale={locale} />)

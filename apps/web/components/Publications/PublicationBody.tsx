@@ -59,6 +59,9 @@ const getBlockText = (block: any) => {
   return block.children?.map((child: any) => child.text).join("") || "";
 };
 
+const truncateText = (text: string, maxLength = 30) =>
+  text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
@@ -206,6 +209,7 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
             <ul className="flex flex-col">
               {toc.map((item, index) => {
                 const number = String(index + 1).padStart(2, "0");
+                const displayTitle = truncateText(item.title, 30);
                 return (
                   <li key={index} className="group flex items-center">
                     <Typography as="span" variant="body-m" className="p-2.5 text-brand-red">
@@ -213,8 +217,13 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
                     </Typography>
 
                     <Link href={`#${item.id}`} variant="none" size="inline">
-                      <Typography as="span" variant="body-m" className="text-brand-red">
-                        {item.title}
+                      <Typography
+                        as="span"
+                        variant="body-m"
+                        className="text-wrap text-brand-red"
+                        title={item.title}
+                      >
+                        {displayTitle}
                       </Typography>
                     </Link>
                   </li>

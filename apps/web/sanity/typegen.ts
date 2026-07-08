@@ -751,18 +751,21 @@ export type Translations = {
       relatedPublicationTitle?: string;
       allPublications?: string;
     };
-    filterComponent?: {
-      search?: string;
-      results?: string;
-      reset?: string;
-      sortBy?: string;
-      sortNewest?: string;
-      sortOldest?: string;
-      emptyStateTitle?: string;
-      emptyStateDesc?: string;
-      showAll?: string;
-      loading?: string;
-    };
+  };
+  filterComponent?: {
+    search?: string;
+    category?: string;
+    publicationsSearch?: string;
+    results?: string;
+    reset?: string;
+    sortBy?: string;
+    sortNewest?: string;
+    sortOldest?: string;
+    emptyState?: string;
+    emptyStatePublicationsTitle?: string;
+    emptyStatePublicationsDesc?: string;
+    showAllPublications?: string;
+    loading?: string;
   };
   locale?: string;
 };
