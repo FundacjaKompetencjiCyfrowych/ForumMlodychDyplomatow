@@ -43,7 +43,7 @@ export const PatronitePerksSection = ({
   return (
     <Container
       background="red"
-      className="ditems-center flex flex-col gap-10 text-white desktop:gap-16"
+      className="flex flex-col items-center gap-10 text-white desktop:gap-16"
     >
       <div className="flex flex-col items-center gap-10">
         <Typography variant="h2" as={getHeading(index)}>

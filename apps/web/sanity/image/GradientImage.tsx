@@ -103,7 +103,8 @@ const axis = (dir: Direction) => (dir === "left" || dir === "right" ? "horizonta
 
 const toArray = <T,>(v: T | T[]): T[] => (Array.isArray(v) ? v : [v]);
 
-const resolveColor = (color: GradientConfig["color"] = "white") => colorClasses[color] ?? color;
+const resolveColor = (color: GradientConfig["color"] | null | undefined = "white") =>
+  color ? (colorClasses[color] ?? color) : color;
 
 // ─── Single gradient div ──────────────────────────────────────────────────────
 
@@ -133,7 +134,7 @@ function GradientDiv({
         "absolute z-10",
         dirClasses[mobileDir],
         mobileSizeClasses[mobileAxis][size],
-        resolveColor(color ?? undefined),
+        resolveColor(color),
         desktopDir && desktopDirClasses[desktopDir],
         effectiveDesktopSize && desktopSizeClasses[desktopAxis][effectiveDesktopSize],
         gradientClassName
