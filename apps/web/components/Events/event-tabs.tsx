@@ -14,7 +14,7 @@ type EventTabsProps = {
 export const EventTabs = async ({ query, locale, ...rest }: EventTabsProps) => {
   const t = await getTranslations({ locale, namespace: "events" });
   return (
-    <Tabs defaultValue="upcoming" className="w-full">
+    <Tabs defaultValue="upcoming" className="w-full gap-8">
       <TabsList variant="line">
         <TabsTrigger value="upcoming" className="grow-0">
           {t("upcoming")}

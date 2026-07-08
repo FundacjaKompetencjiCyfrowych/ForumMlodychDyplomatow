@@ -21,7 +21,7 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
     <div className={cn("flex flex-col overflow-clip rounded-lg desktop:flex-row", className)}>
       <div
         className={cn(
-          "flex flex-col items-center justify-center gap-4 bg-clip-border px-2 text-gray-50 desktop:w-20",
+          "flex flex-col items-center justify-center bg-clip-border py-4 text-gray-50 desktop:w-20 desktop:gap-4 desktop:py-0",
           isArchive ? "bg-brand-red-100" : "bg-brand-red-900"
         )}
       >
@@ -32,9 +32,11 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
         >
           {date.getDate()}
         </Typography>
-        <span className="text-sm capitalize">{date.toLocaleString(locale, { month: "long" })}</span>
+        <span className="text-sm font-bold uppercase">
+          {date.toLocaleString(locale, { month: "short" })}
+        </span>
       </div>
-      <div className="flex w-full flex-col gap-6 bg-(--color-background) px-4 py-6 desktop:px-6">
+      <div className="flex w-full flex-col gap-6 bg-(--color-background) px-4 py-6 desktop:px-0 desktop:px-6">
         <div className="flex flex-col gap-2">
           {event.type && (
             <Typography variant="caption" className="text-gray-600 uppercase">
@@ -76,7 +78,13 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
           {event.excerpt}
         </Typography>
         {!isArchive && event.registrationUrl && (
-          <Link href={event.registrationUrl} openInNewTab variant="secondary" className="w-fit">
+          <Link
+            href={event.registrationUrl}
+            openInNewTab
+            variant="secondary"
+            className="w-full desktop:w-fit"
+          >
+            {/* To nie powinno być brane z CMS'a? */}
             {t("signUp")}
           </Link>
         )}

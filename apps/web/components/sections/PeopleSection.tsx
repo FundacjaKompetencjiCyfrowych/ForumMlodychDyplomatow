@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 import { getHeading } from "../../lib/heading";
 import { Container } from "../ui/container";
 import { Link } from "../ui/link";
-import { ResponsiveCarousel } from "../ui/responsive-carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Typography from "../ui/typography";
 import { ChevronRight } from "lucide-react";
@@ -18,38 +17,39 @@ const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"p
       background="slate"
       contentWidth="xl"
     >
-      <Typography variant="h2" as={getHeading(index)}>
+      <Typography variant="h2" as={getHeading(index)} className="mb-4 text-center desktop:mb-16">
         {data.heading}
       </Typography>
       <Tabs
         defaultValue={groups[0]?.groupName ?? ""}
-        className="flex w-full max-w-full gap-6 desktop:gap-8"
+        className="flex w-full max-w-full gap-6 px-8 desktop:gap-8 desktop:px-0"
       >
-        <TabsList variant="line" className="">
+        <TabsList variant="line" className="gap-20">
           {groups.map((group, index) => (
-            <TabsTrigger key={`${group._key}-${index}`} value={group.groupName ?? ""}>
+            <TabsTrigger
+              key={`${group._key}-${index}`}
+              value={group.groupName ?? ""}
+              className="max-w-60 flex-none"
+            >
               {group.groupName}
             </TabsTrigger>
           ))}
         </TabsList>
         {groups.map((group, index) => (
           <TabsContent key={`${group._key}-${index}`} value={group.groupName ?? ""}>
-            <ResponsiveCarousel contentClassName="desktop:gap-6">
+            <div className="grid w-full grid-cols-2 gap-4 md:gap-8 lg:grid-cols-4">
               {group.members?.map((member) => (
                 <PersonCard key={member._id} person={member} />
               ))}
-            </ResponsiveCarousel>
+            </div>
           </TabsContent>
         ))}
       </Tabs>
-      <Link
-        href="/people"
-        variant="text"
-        className="w-full desktop:w-auto desktop:self-end"
-        iconRight={<ChevronRight />}
-      >
-        {t("seeAll")}
-      </Link>
+      <div className="mx-auto mt-16 hidden w-fit desktop:block">
+        <Link href="/people" variant="secondary" iconRight={<ChevronRight />}>
+          {t("seeAll")}
+        </Link>
+      </div>
     </Container>
   );
 };

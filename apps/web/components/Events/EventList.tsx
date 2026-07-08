@@ -13,10 +13,16 @@ type Props = {
 async function EventList({ events, locale, isArchive }: Props) {
   const t = await getTranslations({ locale, namespace: "events" });
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex justify-center gap-4">
       {events && events.length > 0 ? (
         events.map((e) => (
-          <EventPreview key={e._id} event={e} locale={locale} isArchive={isArchive} />
+          <EventPreview
+            key={e._id}
+            event={e}
+            locale={locale}
+            isArchive={isArchive}
+            className="w-full desktop:max-w-3xl"
+          />
         ))
       ) : (
         <Typography variant="h4" className="self-center pt-12 opacity-60">

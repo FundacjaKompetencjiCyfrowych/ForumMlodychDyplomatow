@@ -9,6 +9,8 @@ import { latestPublicationsQuery } from "../../sanity/queries/publications";
 import { runQuery } from "../../sanity/groqd";
 import { ResponsiveCarousel } from "../ui/responsive-carousel";
 import { PublicationCard } from "../Publications/PublicationCard";
+import { Button } from "../ui/button";
+import { Link } from "../ui/link";
 
 const NewPublicationsList = async () => {
   const locale = await getLocale();
@@ -18,7 +20,7 @@ const NewPublicationsList = async () => {
   return (
     <>
       <div className="w-full desktop:hidden">
-        <ResponsiveCarousel>
+        <ResponsiveCarousel mobileItemClassName="min-w-[80%]">
           {publications.map((pub, index) => (
             <PublicationCard
               key={pub._id}
@@ -48,13 +50,19 @@ const NewPublicationsSection = async ({
   index,
 }: PageBuilderSectionProps<"newPublicationsSection">) => {
   return (
-    <Container className="flex flex-col items-center" background="slate" contentWidth="xl">
-      <Typography as={getHeading(index)} variant="h2" className="text-center sm:mb-4 lg:mb-16">
+    <Container className="flex flex-col items-center pt-12" background="slate" contentWidth="xl">
+      <Typography as={getHeading(index)} variant="h2" className="mb-12 text-center lg:mb-16">
         {data.heading}
       </Typography>
       <Suspense fallback={<Skeleton className="h-40" />}>
         <NewPublicationsList />
       </Suspense>
+      {/* Tutaj nalezy dodać CTA do Sanity z hrefem  */}
+      {/* <div className="mx-auto w-fit hidden desktop:block">
+        <Link href="TO-DO" variant="secondary" size="l" className="desktop:mt-10">
+          Test
+        </Link>
+      </div> */}
     </Container>
   );
 };

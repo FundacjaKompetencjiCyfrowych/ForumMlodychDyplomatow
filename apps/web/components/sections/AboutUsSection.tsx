@@ -3,7 +3,6 @@ import React from "react";
 import { Container } from "../ui/container";
 import Typography from "../ui/typography";
 import { getHeading, getSubHeading } from "../../lib/heading";
-import { ResponsiveCarousel } from "../ui/responsive-carousel";
 import { SanityImage } from "../../sanity/image/SanityImage";
 import type { ImgFragment } from "../../sanity/queries/imgFragment";
 
@@ -33,17 +32,12 @@ const AboutUsSection = ({
   data,
 }: PageBuilderSectionProps<"aboutUsSection">) => {
   return (
-    <Container
-      background="blue"
-      override="mobile-stretch"
-      contentWidth="xl"
-      className="flex flex-col items-center gap-14 pb-0 desktop:gap-4"
-    >
-      <div className="mb-16 flex w-full flex-col items-center">
-        <Typography as={getHeading(sectionIndex)} variant="h2" className="mb-4">
+    <Container background="blue" size="base" contentWidth="xl">
+      <div className="flex w-full flex-col items-center px-6 desktop:mb-16 desktop:px-0">
+        <Typography as={getHeading(sectionIndex)} variant="h2" className="mb-10 desktop:mb-16">
           {data.heading}
         </Typography>
-        <ResponsiveCarousel className="w-full" contentClassName="desktop:gap-4">
+        <div className="grid w-full [grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))] gap-16 md:gap-8">
           {data.content?.map((item) => (
             <DescriptionCard
               key={item._key}
@@ -52,7 +46,7 @@ const AboutUsSection = ({
               sectionIndex={sectionIndex}
             />
           ))}
-        </ResponsiveCarousel>
+        </div>
       </div>
       <SanityImage image={data.image} className="hidden w-full md:block" sizes="100vw" />
     </Container>

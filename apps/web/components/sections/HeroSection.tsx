@@ -8,11 +8,11 @@ import Typography from "../ui/typography";
 const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) => {
   return (
     <Container
-      className="flex flex-col items-center gap-5 desktop:gap-20"
+      className="flex flex-col items-center gap-5 pb-0 desktop:gap-20"
       size="stretch"
       contentWidth="max"
     >
-      <div className="mx-2 flex flex-col items-center gap-14 desktop:mx-0">
+      <div className="flex flex-col items-center gap-6 px-4 pb-10 desktop:gap-14 desktop:px-0 desktop:pb-0">
         <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
           <Typography as={getHeading(index)} variant="h1">
             {data.heading}
@@ -22,16 +22,14 @@ const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) =>
           </Typography>
         </div>
         <div className="flex w-full max-w-md flex-col justify-center gap-4 desktop:flex-row desktop:gap-8">
-          {data.cta && <Link size="l" link={data.cta} variant="primary" className="grow basis-1" />}
-          {data.secondaryCta && (
-            <Link size="l" link={data.secondaryCta} variant="secondary" className="grow basis-1" />
-          )}
+          {data.cta && <Link size="l" link={data.cta} variant="primary" />}
+          {data.secondaryCta && <Link size="l" link={data.secondaryCta} variant="secondary" />}
         </div>
       </div>
       {data.backgroundImage && (
         <GradientImage
           image={data.backgroundImage}
-          className="w-full"
+          className="hidden w-full desktop:block"
           sizes="100vw"
           direction="top"
           size="md"

@@ -232,6 +232,12 @@ export const translations = defineType({
           type: "string",
           validation: (Rule) => Rule.required(),
         }),
+        defineField({
+          name: "checkDetails",
+          title: "Sprawdź szczegóły",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
       ],
     }),
     languageField,
