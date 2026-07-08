@@ -3341,6 +3341,13 @@
                 "type": "string"
               },
               "optional": true
+            },
+            "checkDetails": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
             }
           }
         },

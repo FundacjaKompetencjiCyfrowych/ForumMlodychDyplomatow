@@ -625,6 +625,7 @@ export type Translations = {
   };
   divisions?: {
     divisionNotFound?: string;
+    checkDetails?: string;
   };
   locale?: string;
 };

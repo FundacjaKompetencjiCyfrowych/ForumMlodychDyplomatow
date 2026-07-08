@@ -3,14 +3,17 @@ import type { DivisionPreview } from "../../sanity/queries/division";
 import Typography from "./typography";
 import { ChevronRight } from "lucide-react";
 import { Link } from "./link";
+import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
 
 type Props = {
   division: DivisionPreview;
   index: number;
-  locale?: string;
+  locale: Locale;
 };
 
-const DivisionCard = ({ division, locale = "pl" }: Props) => {
+const DivisionCard = async ({ division, locale }: Props) => {
+  const t = await getTranslations({ locale, namespace: "divisions" });
   return (
     <div className="flex h-full w-full flex-col rounded-lg bg-slate-50 p-6">
       <Typography as="h3" variant="title-l" className="text-center text-gray-900">
@@ -29,7 +32,7 @@ const DivisionCard = ({ division, locale = "pl" }: Props) => {
           <ChevronRight className="transition-transform duration-300 group-hover/button:translate-x-1" />
         }
       >
-        {locale === "pl" ? "Sprawdź szczegóły" : "Check details"}
+        {t("checkDetails")}
       </Link>
     </div>
   );
