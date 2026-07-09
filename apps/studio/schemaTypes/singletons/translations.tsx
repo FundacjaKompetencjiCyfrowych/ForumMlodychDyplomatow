@@ -207,6 +207,25 @@ export const translations = defineType({
           validation: (Rule) => Rule.required(),
         }),
         defineField({
+          name: "successMessage",
+          title: "Komunikat po wysłaniu (sukces)",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "errorMessage",
+          title: "Komunikat błędu wysyłania",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "errorMessageWithEmail",
+          title: "Komunikat błędu wysyłania (z adresem e-mail)",
+          description: "Użyj {email} jako miejsca na wyświetlany adres, np. „…napisz do nas na {email}”.",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
           name: "placeholders",
           title: "Placeholdery",
           type: "object",

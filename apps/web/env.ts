@@ -37,6 +37,13 @@ export const envSchema = z.object({
   NEXT_PUBLIC_SANITY_USE_CDN: z.enum(["true", "false"]),
   CI: z.enum(["true", "false"]).optional(),
   NEXT_PUBLIC_SANITY_STUDIO_URL: z.url().optional(),
+  // Contact form email delivery (Resend)
+  RESEND_API_KEY: z.string().min(1).optional(),
+  CONTACT_FROM_EMAIL: z.email().optional(),
+  // Rate limiting for the contact endpoint (Upstash). Optional — if unset,
+  // rate limiting is skipped (honeypot + timing check still apply).
+  UPSTASH_REDIS_REST_URL: z.url().optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional(),
 });
 
 declare global {

@@ -54,7 +54,7 @@ const ContactSection = async ({ index, data }: any) => {
         </div>
 
         {/* Kliencki formularz */}
-        <ContactForm />
+        <ContactForm sectionKey={data._key} contactEmail={data.contactEmail} />
       </div>
     </Container>
   );
