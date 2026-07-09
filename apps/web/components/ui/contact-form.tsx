@@ -44,7 +44,12 @@ export const ContactForm = ({ sectionKey, contactEmail }: ContactFormProps) => {
         required
         hasError={errors.email}
       />
-      <ContactField name="phone" label={t("phone")} placeholder={t("placeholders.phone")} type="tel" />
+      <ContactField
+        name="phone"
+        label={t("phone")}
+        placeholder={t("placeholders.phone")}
+        type="tel"
+      />
       <ContactField
         name="subject"
         label={t("subject")}

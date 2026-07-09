@@ -221,7 +221,8 @@ export const translations = defineType({
         defineField({
           name: "errorMessageWithEmail",
           title: "Komunikat błędu wysyłania (z adresem e-mail)",
-          description: "Użyj {email} jako miejsca na wyświetlany adres, np. „…napisz do nas na {email}”.",
+          description:
+            "Użyj {email} jako miejsca na wyświetlany adres, np. „…napisz do nas na {email}”.",
           type: "string",
           validation: (Rule) => Rule.required(),
         }),

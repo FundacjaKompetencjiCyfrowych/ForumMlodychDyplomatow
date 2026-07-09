@@ -74,7 +74,9 @@ export const useContactForm = ({ sectionKey, contactEmail }: UseContactFormArgs)
       startedAtRef.current = Date.now();
     } catch {
       // Keep the user's input so they can retry; point them at the direct address.
-      toast.error(contactEmail ? t("errorMessageWithEmail", { email: contactEmail }) : t("errorMessage"));
+      toast.error(
+        contactEmail ? t("errorMessageWithEmail", { email: contactEmail }) : t("errorMessage")
+      );
     } finally {
       setIsSubmitting(false);
     }
