@@ -6,6 +6,7 @@ import { Link } from "@/components/ui/link";
 import imageUrlBuilder from "@sanity/image-url";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "next-intl";
+import { ArrowUp } from "lucide-react";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -62,7 +63,28 @@ const getBlockText = (block: any) => {
 const truncateText = (text: string, maxLength = 30) =>
   text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
-const portableTextComponents: PortableTextComponents = {
+// 1. FUNKCJA DO EKSTRAKCJI PRZYPISÓW Z PORTABLE TEXT
+const extractFootnotes = (content: any[]) => {
+  const footnotes: any[] = [];
+  if (!Array.isArray(content)) return footnotes;
+
+  content.forEach((block) => {
+    if (block._type === "block" && block.markDefs) {
+      block.markDefs.forEach((def: any) => {
+        if (def._type === "footnote") {
+          // Zapobiega duplikatom, jeśli ten sam przypis obejmuje kilka węzłów tekstowych
+          if (!footnotes.find((f) => f._key === def._key)) {
+            footnotes.push(def);
+          }
+        }
+      });
+    }
+  });
+  return footnotes;
+};
+
+// 2. FABRYKA KOMPONENTÓW (musi wiedzieć o przypisach, aby renderować poprawne numery)
+const getPortableTextComponents = (footnotes: any[]): PortableTextComponents => ({
   block: {
     normal: ({ children }) => (
       <Typography as="p" variant="body-l" className="mb-6 text-brand-gray-900">
@@ -166,8 +188,25 @@ const portableTextComponents: PortableTextComponents = {
         </Link>
       );
     },
+    // NOWY MARKER DLA PRZYPISÓW
+    footnote: ({ children, value }) => {
+      const index = footnotes.findIndex((f) => f._key === value._key) + 1;
+      return (
+        <span className="relative inline-block">
+          {children}
+          <sup
+            id={`ref-${value._key}`}
+            className="ml-0.5 scroll-mt-[20vh] font-semibold text-brand-red"
+          >
+            <a href={`#footnote-${value._key}`} className="hover:underline" title={value.source}>
+              [{index}]
+            </a>
+          </sup>
+        </span>
+      );
+    },
   },
-};
+});
 
 export const PublicationBody = async ({ content, locale = "pl" }: PublicationBodyProps) => {
   const t = await getTranslations({ locale, namespace: "publications" });
@@ -187,18 +226,63 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
         })
     : [];
 
+  const footnotes = extractFootnotes(content);
+  const components = getPortableTextComponents(footnotes);
+
   return (
     <section className="mx-auto w-full px-4 py-8 sm:px-12">
-      <div className="relative flex flex-col items-start justify-center gap-8 md:flex-row">
-        {/* Lewa kolumna: Treść główna */}
-        <div className="w-full max-w-170 lg:col-span-7 xl:col-span-6">
+      <div className="relative flex flex-col-reverse items-start justify-center gap-8 md:flex-row">
+        {/* Lewa kolumna: Treść główna + Bibliografia */}
+        <div className="flex w-full max-w-170 flex-col gap-12 lg:col-span-7 xl:col-span-6">
           <div className="prose-custom max-w-none">
-            <PortableText value={content} components={portableTextComponents} />
+            <PortableText value={content} components={components} />
           </div>
+
+          {/* 3. KOMPONENT BIBLIOGRAFII Renderowany pod głównym tekstem */}
+          {footnotes.length > 0 && (
+            <div className="mt-8 border-t border-gray-200 pt-8">
+              <Typography variant="h4" className="mb-4 text-brand-gray-900">
+                {/* Zależnie od tego, czy masz ten klucz w tlumaczeniach, możesz go dodać: t("singlePublicationPage.bibliography") */}
+                Bibliografia / Przypisy
+              </Typography>
+              <ol className="flex flex-col gap-3">
+                {footnotes.map((note, index) => (
+                  <li
+                    key={note._key}
+                    id={`footnote-${note._key}`}
+                    className="flex scroll-mt-[20vh] gap-2 text-sm text-brand-gray-700"
+                  >
+                    <span className="font-semibold text-brand-red">[{index + 1}]</span>
+                    <div>
+                      <span>{note.source}</span>
+                      {note.url && (
+                        <a
+                          href={note.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-2 break-all text-brand-red hover:underline"
+                        >
+                          [Link]
+                        </a>
+                      )}
+                      {/* Przycisk powrotu do tekstu */}
+                      <a
+                        href={`#ref-${note._key}`}
+                        className="ml-2 text-gray-400 hover:text-brand-gray-900"
+                        title="Wróć do tekstu"
+                      >
+                        <ArrowUp />
+                      </a>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
         </div>
 
         {/* Prawa kolumna: Pływający Spis Treści (TOC) */}
-        <div className="sticky top-24 hidden w-full max-w-70 lg:block">
+        <div className="top-24 block w-full md:sticky md:max-w-70">
           <Typography variant="h4" className="p-2.5 pl-0 text-brand-gray-900">
             {t("singlePublicationPage.inThisArticle")}
           </Typography>

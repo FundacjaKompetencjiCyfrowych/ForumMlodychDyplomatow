@@ -826,8 +826,9 @@ export type Publication = {
         style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
-          href?: string;
-          _type: "link";
+          source?: string;
+          url?: string;
+          _type: "footnote";
           _key: string;
         }>;
         level?: number;

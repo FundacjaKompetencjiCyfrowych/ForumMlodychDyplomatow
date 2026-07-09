@@ -102,7 +102,31 @@ export default defineType({
       type: "array",
       group: "content",
       of: [
-        { type: "block" },
+        {
+          type: "block",
+          marks: {
+            annotations: [
+              {
+                name: "footnote",
+                type: "object",
+                title: "Przypis / Źródło",
+                fields: [
+                  defineField({
+                    name: "source",
+                    title: "Treść przypisu lub źródło bibliograficzne",
+                    type: "text",
+                    validation: (Rule) => Rule.required(),
+                  }),
+                  defineField({
+                    name: "url",
+                    title: "Link zewnętrzny (opcjonalnie)",
+                    type: "url",
+                  }),
+                ],
+              },
+            ],
+          },
+        },
         {
           type: "image",
           options: { hotspot: true },

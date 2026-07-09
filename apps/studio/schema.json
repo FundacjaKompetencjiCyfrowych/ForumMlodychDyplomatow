@@ -4687,7 +4687,14 @@
                       "of": {
                         "type": "object",
                         "attributes": {
-                          "href": {
+                          "source": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            },
+                            "optional": true
+                          },
+                          "url": {
                             "type": "objectAttribute",
                             "value": {
                               "type": "string"
@@ -4698,7 +4705,7 @@
                             "type": "objectAttribute",
                             "value": {
                               "type": "string",
-                              "value": "link"
+                              "value": "footnote"
                             }
                           }
                         },

@@ -79,10 +79,10 @@ export const FilterRadioItem = ({
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center gap-2 text-left text-sm text-brand-gray-700 transition-colors hover:text-brand-red"
+      className="flex w-full items-center gap-2 text-left text-brand-gray-700 transition-colors hover:text-brand-blue"
     >
       <div
-        className={`flex size-4 shrink-0 items-center justify-center rounded-full border border-slate-400 ${isChecked ? "border-brand-red bg-brand-red" : ""}`}
+        className={`flex size-4 shrink-0 items-center justify-center rounded-full border border-slate-400 ${isChecked ? "border-brand-blue bg-brand-blue" : ""}`}
       >
         {isChecked && <div className="size-2 rounded-full bg-white" />}
       </div>

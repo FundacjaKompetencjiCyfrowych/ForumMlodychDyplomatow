@@ -43,6 +43,22 @@ const PublicationsFilter = ({
 
   const filters: Filter[] = [
     {
+      slug: "pubType",
+      multiple: false,
+      options: [
+        {
+          label: data.filterPublications?.label ?? "Rodzaj publikacji",
+          subgroups: Object.entries(data.filterPublications?.filterFields ?? {}).map(
+            ([key, label]) => ({
+              label: label as string,
+              value: key,
+              type: "radio",
+            })
+          ),
+        },
+      ],
+    },
+    {
       slug: "tags",
       multiple: true,
       options:
@@ -55,22 +71,6 @@ const PublicationsFilter = ({
               type: "chip",
             })) ?? [],
         })) ?? [],
-    },
-    {
-      slug: "pubType",
-      multiple: false,
-      options: [
-        {
-          label: data.filterPublications?.label ?? "Rodzaj publikacji",
-          subgroups: Object.entries(data.filterPublications?.filterFields ?? {}).map(
-            ([key, label]) => ({
-              label: label as string,
-              value: key,
-              type: "radio" as const,
-            })
-          ),
-        },
-      ],
     },
   ];
 
