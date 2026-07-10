@@ -95,12 +95,12 @@ const createFilterListParams = (filters: Filter[], tabs?: TabsType) => {
           return [filter.slug, parseAsArrayOf(singleParser)];
         }
         return [filter.slug, singleParser];
-      }),
+      })
     ) as Record<string, FilterResultType>),
     ...(tabs
       ? {
           [tabs.slug]: parseAsString.withDefault(
-            tabs.values.find((tab) => tab.default)?.value ?? tabs.values[0].value,
+            tabs.values.find((tab) => tab.default)?.value ?? tabs.values[0].value
           ),
         }
       : {}),
@@ -130,7 +130,7 @@ export const FilterList = <
   const paramsParser = useMemo(
     () => createFilterListParams(filters, tabs),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(filters), JSON.stringify(tabs)],
+    [JSON.stringify(filters), JSON.stringify(tabs)]
   );
 
   const [params, setParams] = useQueryStates(paramsParser);
@@ -211,7 +211,7 @@ export const FilterList = <
               }
               return acc;
             },
-            {} as Record<string, number | string | string[]>,
+            {} as Record<string, number | string | string[]>
           ) as TParams),
           ...(tabs ? { [tabs.slug]: params[tabs.slug as keyof typeof params] } : {}),
           sort: params.sort,

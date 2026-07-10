@@ -30,7 +30,7 @@ const getPublicationsAction = async (params: any) => {
         limit: params.perPage,
         offset: ((params.page ?? 1) - 1) * 9,
       },
-    },
+    }
   );
   return res.data;
 };
@@ -53,7 +53,7 @@ const PublicationsFilter = ({
               label: label as string,
               value: key,
               type: "radio",
-            }),
+            })
           ),
         },
       ],

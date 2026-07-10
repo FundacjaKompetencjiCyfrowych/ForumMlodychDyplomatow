@@ -63,7 +63,7 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
     },
     {
       isExhaustive: true,
-    },
+    }
   ),
 }));
 
