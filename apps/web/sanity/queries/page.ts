@@ -4,6 +4,7 @@ import { pageBuilderQueryFragment } from "./pageBuilder";
 import { seoFragment } from "./seo";
 import { LANGUAGE_FIELD } from "../../../studio/config";
 import type { Locale } from "next-intl";
+import { breadcrumbsFragment } from "./breadcrumbs";
 
 export const pageQuery = q
   .parameters<{ slug: string; locale: string }>()
@@ -16,6 +17,7 @@ export const pageQuery = q
     _type: sub.field("_type"),
     name: sub.field("name"),
     slug: sub.field("slug.current"),
+    breadcrumbs: sub.field("breadcrumbs[]").project(breadcrumbsFragment),
     pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment).notNull(),
   }));
 

@@ -193,7 +193,8 @@ export type UniversalHeroSection = {
   _type: "universalHeroSection";
   header?: string;
   description?: string;
-  image?: Img;
+  caption?: string;
+  image?: GradientImg;
 };
 
 export type ContactSection = {
@@ -301,6 +302,17 @@ export type AboutUsSection = {
     _key: string;
   }>;
 };
+
+export type Breadcrumbs = Array<
+  | ({
+      _key: string;
+    } & Link)
+  | {
+      text?: string;
+      _type: "label";
+      _key: string;
+    }
+>;
 
 export type Socials = Array<{
   platform?:
@@ -961,6 +973,7 @@ export type Page = {
   _rev: string;
   name?: string;
   slug?: Slug;
+  breadcrumbs?: Breadcrumbs;
   pageBuilder?: PageBuilder;
   locale?: string;
   seo?: Seo;
@@ -1103,6 +1116,7 @@ export type AllSanitySchemaTypes =
   | DivisionReference
   | DivisionsSection
   | AboutUsSection
+  | Breadcrumbs
   | Socials
   | PageBuilder
   | LinkButton

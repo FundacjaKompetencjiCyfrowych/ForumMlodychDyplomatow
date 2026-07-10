@@ -52,7 +52,7 @@ export const Container = ({
   contentClassName,
 }: Props & VariantProps<typeof containerStyles>) => {
   return (
-    <Component className={cn(containerStyles({ size, background, override, className }))}>
+    <Component className={cn(containerStyles({ size, background, override }), className)}>
       {contentWidth === "none" ? (
         children
       ) : (

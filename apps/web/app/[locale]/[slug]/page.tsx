@@ -8,6 +8,7 @@ import type { Locale } from "next-intl";
 import { notFound, redirect } from "next/navigation";
 import { tryGettingLocaleSlug } from "../../../lib/links";
 import { setRequestLocale } from "next-intl/server";
+import { Breadcrumbs } from "../../../components/ui/breadcrumb";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
@@ -59,6 +60,11 @@ export default async function Page(props: Props) {
   const locale = params.locale;
   return (
     <div id="main-content" className="">
+      <div className="">
+        {page?.breadcrumbs && (
+          <Breadcrumbs breadcrumbs={page.breadcrumbs} currentPageName={page.name} />
+        )}
+      </div>
       <SanitySections value={page?.pageBuilder} locale={locale} />
     </div>
   );

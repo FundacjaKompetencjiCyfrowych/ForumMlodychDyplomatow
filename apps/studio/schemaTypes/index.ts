@@ -1,3 +1,4 @@
+import { breadcrumbs } from "./breadcrumbs";
 import category from "./category";
 import division from "./division";
 import event from "./event";
@@ -46,6 +47,7 @@ export const schemaTypes = [
   page,
   navigation,
   socials,
+  breadcrumbs,
   // sections defined separately
   ...sectionStructure,
   translations,

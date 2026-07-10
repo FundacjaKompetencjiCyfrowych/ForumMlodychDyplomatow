@@ -18,7 +18,7 @@ const EventsSection = async ({ data, index, locale }: PageBuilderSectionProps<"e
   });
   return (
     <Container className="flex flex-col items-center gap-8" background="slate" contentWidth="xl">
-      <div className="flex w-full max-w-5xl flex-col items-center gap-8 px-8 desktop:px-0">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 px-8 desktop:px-0">
         <Typography variant="h2" as={getHeading(index)}>
           {data.heading}
         </Typography>

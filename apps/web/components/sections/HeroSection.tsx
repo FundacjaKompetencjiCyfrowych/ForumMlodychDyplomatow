@@ -10,7 +10,7 @@ const HeroSection = ({ data, index }: PageBuilderSectionProps<"heroSection">) =>
     <Container
       className="flex flex-col items-center gap-5 pb-0 desktop:gap-20"
       size="stretch"
-      contentWidth="max"
+      contentWidth="none"
     >
       <div className="flex flex-col items-center gap-6 px-4 pb-10 desktop:gap-14 desktop:px-0 desktop:pb-0">
         <div className="flex max-w-4xl flex-col items-center gap-8 text-center">

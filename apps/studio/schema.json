@@ -1136,11 +1136,18 @@
           },
           "optional": true
         },
+        "caption": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "image": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
-            "name": "img"
+            "name": "gradientImg"
           },
           "optional": true
         }
@@ -1738,6 +1745,63 @@
           },
           "optional": true
         }
+      }
+    }
+  },
+  {
+    "name": "breadcrumbs",
+    "type": "type",
+    "value": {
+      "type": "array",
+      "of": {
+        "type": "union",
+        "of": [
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "link"
+            }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "text": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "label"
+                }
+              }
+            },
+            "rest": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     }
   },
@@ -5422,6 +5486,14 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": true
+      },
+      "breadcrumbs": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "breadcrumbs"
         },
         "optional": true
       },

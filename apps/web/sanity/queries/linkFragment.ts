@@ -11,21 +11,36 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
       },
       'linkType == "page"': {
         href: sub.field("page").deref().field("slug.current"),
-        text: sub.coalesce(sub.field("text"), sub.field("page").deref().field("name")),
+        text: sub.select(
+          {
+            "defined(text)": sub.field("text"),
+          },
+          sub.field("page").deref().field("name")
+        ),
       },
       'linkType == "division"': {
         href: sub.select({
           "homepage==true": sub.value(""),
           "homepage!=true": sub.field("division").deref().field("slug.current"),
         }),
-        text: sub.coalesce(sub.field("text"), sub.field("division").deref().field("name")),
+        text: sub.select(
+          {
+            "defined(text)": sub.field("text"),
+          },
+          sub.field("division").deref().field("name")
+        ),
       },
       'linkType == "publication"': {
         href: sub.select({
           "homepage==true": sub.value(""),
           "homepage!=true": sub.field("publication").deref().field("slug.current"),
         }),
-        text: sub.coalesce(sub.field("text"), sub.field("publication").deref().field("title")),
+        text: sub.select(
+          {
+            "defined(text)": sub.field("text"),
+          },
+          sub.field("publication").deref().field("title")
+        ),
       },
     },
     {
