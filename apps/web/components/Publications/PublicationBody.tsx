@@ -4,6 +4,8 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Typography } from "@/components/ui/typography";
 import { Link } from "@/components/ui/link";
 import imageUrlBuilder from "@sanity/image-url";
+import { Container } from "../ui/container";
+import { trim } from "../../lib/text";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -184,7 +186,7 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
         .map((block) => {
           const text = getBlockText(block);
           return {
-            title: text,
+            title: trim(text, 40),
             id: slugify(text),
             style: block.style,
           };
@@ -192,17 +194,17 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
     : [];
 
   return (
-    <section className="mx-auto w-full px-4 py-8 sm:px-12">
-      <div className="relative flex flex-col items-start justify-center gap-8 md:flex-row">
+    <Container contentWidth="xl">
+      <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row">
         {/* Lewa kolumna: Treść główna */}
-        <div className="w-full max-w-170 lg:col-span-7 xl:col-span-6">
+        <div className="w-full lg:col-span-7 xl:col-span-6">
           <div className="prose-custom max-w-none">
             <PortableText value={content} components={portableTextComponents} />
           </div>
         </div>
 
         {/* Prawa kolumna: Pływający Spis Treści (TOC) */}
-        <div className="sticky top-24 hidden w-full max-w-48 lg:block">
+        <div className="min-w-content sticky top-24 hidden lg:block">
           <Typography variant="h4" className="mb-4 font-normal text-muted-foreground">
             {t.inThisArticle}
           </Typography>
@@ -243,6 +245,6 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
           )}
         </div>
       </div>
-    </section>
+    </Container>
   );
 };

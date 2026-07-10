@@ -61,8 +61,8 @@ export const PublicationHero = ({
 
   return (
     <>
-      <Breadcrumbs breadcrumbs={breadcrumbs} currentPageName={title} />
-      <Container className="mx-auto w-full max-w-400 px-4 py-8 md:px-6">
+      <Breadcrumbs contentWidth="xl" breadcrumbs={breadcrumbs} currentPageName={title} />
+      <Container contentWidth="xl" className="mx-auto w-full max-w-400 px-4 py-8 md:px-6">
         {/* Breadcrumbs */}
 
         <div className="flex flex-col items-center gap-8 lg:grid lg:grid-cols-12 lg:gap-16">

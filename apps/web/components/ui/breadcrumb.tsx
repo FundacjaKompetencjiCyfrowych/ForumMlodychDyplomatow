@@ -3,10 +3,10 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
-import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
-import { Link } from "./link";
-import { Container } from "./container";
 import { trim } from "../../lib/text";
+import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
+import { Container } from "./container";
+import { Link } from "./link";
 import Typography from "./typography";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
@@ -115,12 +115,18 @@ export {
 export const Breadcrumbs = ({
   breadcrumbs,
   currentPageName,
+  contentWidth,
 }: {
   breadcrumbs: BreadcrumbsFragment[];
   currentPageName: string | null;
+  contentWidth?: React.ComponentProps<typeof Container>["contentWidth"];
 }) => {
   return (
-    <Container as="div" className="flex min-h-14 items-center justify-start py-0 desktop:py-0">
+    <Container
+      as="div"
+      contentWidth={contentWidth}
+      className="flex min-h-14 items-center justify-start py-0 desktop:py-0"
+    >
       <Breadcrumb className="flex items-center justify-start text-gray-500">
         <BreadcrumbList>
           {breadcrumbs.map((breadcrumb) => (
