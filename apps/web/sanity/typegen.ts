@@ -50,6 +50,29 @@ export type FileDataFile = {
   _type: "file";
 };
 
+export type FilterFields = {
+  article?: string;
+  news?: string;
+  guide?: string;
+  review?: string;
+};
+
+export type HeroPublicationsSection = {
+  _type: "heroPublicationsSection";
+  heading?: string;
+  subheading?: string;
+  publicationCounter?: string;
+  badges?: Array<string>;
+};
+
+export type PublicationFilterSection = {
+  _type: "publicationFilterSection";
+  filterHeading?: string;
+  searchbarPlaceholder?: string;
+  publicationsPerPage?: number;
+  filterPublications?: FilterPublications;
+};
+
 export type PatronitePerksSection = {
   _type: "patronitePerksSection";
   heading?: string;
@@ -98,29 +121,6 @@ export type DoubleHeroSection = {
   caption?: string;
   cta?: Link;
   image?: GradientImg;
-};
-
-export type FilterFields = {
-  article?: string;
-  news?: string;
-  guide?: string;
-  review?: string;
-};
-
-export type HeroPublicationsSection = {
-  _type: "heroPublicationsSection";
-  heading?: string;
-  subheading?: string;
-  publicationCounter?: string;
-  badges?: Array<string>;
-};
-
-export type PublicationFilterSection = {
-  _type: "publicationFilterSection";
-  filterHeading?: string;
-  searchbarPlaceholder?: string;
-  publicationsPerPage?: number;
-  filterPublications?: FilterPublications;
 };
 
 export type DocumentsSection = {
@@ -331,7 +331,13 @@ export type AboutUsSection = {
 };
 
 export type Socials = Array<{
-  platform?: "facebook" | "instagram" | "linkedin" | "twitter" | "youtube" | "spotify";
+  platform?:
+    | "facebook"
+    | "instagram"
+    | "linkedin"
+    | "twitter"
+    | "youtube"
+    | "spotify";
   url?: string;
   _type: "socialLink";
   _key: string;
@@ -823,7 +829,15 @@ export type Publication = {
           _type: "span";
           _key: string;
         }>;
-        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           source?: string;
@@ -1123,18 +1137,16 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | Robots
   | Gradient
-  | SanityFileAssetReference
-  | FileDataFile
-  | PatronitePerksSection
-  | WhoWeWorkWithSection
-  | BenefitsSection
-  | DoubleHeroSection
   | FilterPublications
   | SanityFileAssetReference
   | FileDataFile
   | FilterFields
   | HeroPublicationsSection
   | PublicationFilterSection
+  | PatronitePerksSection
+  | WhoWeWorkWithSection
+  | BenefitsSection
+  | DoubleHeroSection
   | DocumentsSection
   | EventsListSection
   | ExpertsListSection

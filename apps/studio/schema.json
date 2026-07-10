@@ -24,7 +24,6 @@
   },
   {
     "type": "type",
-<<<<<<< HEAD
     "name": "gradient",
     "value": {
       "type": "object",
@@ -205,7 +204,14 @@
                 }
               }
             }
-=======
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "filterPublications",
     "value": {
       "type": "object",
@@ -222,7 +228,6 @@
           "value": {
             "type": "inline",
             "name": "filterFields"
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           },
           "optional": true
         }
@@ -292,9 +297,6 @@
     }
   },
   {
-<<<<<<< HEAD
-    "name": "patronitePerksSection",
-=======
     "type": "type",
     "name": "filterFields",
     "value": {
@@ -333,7 +335,6 @@
   },
   {
     "name": "heroPublicationsSection",
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
     "type": "type",
     "value": {
       "type": "object",
@@ -342,11 +343,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-<<<<<<< HEAD
-            "value": "patronitePerksSection"
-=======
             "value": "heroPublicationsSection"
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           }
         },
         "heading": {
@@ -363,27 +360,110 @@
           },
           "optional": true
         },
-<<<<<<< HEAD
-        "caption": {
-=======
         "publicationCounter": {
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           "type": "objectAttribute",
           "value": {
             "type": "string"
           },
           "optional": true
         },
-<<<<<<< HEAD
-        "tiers": {
-=======
         "badges": {
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           "type": "objectAttribute",
           "value": {
             "type": "array",
             "of": {
-<<<<<<< HEAD
+              "type": "string"
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "publicationFilterSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "publicationFilterSection"
+          }
+        },
+        "filterHeading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "searchbarPlaceholder": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "publicationsPerPage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
+        "filterPublications": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "filterPublications"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "patronitePerksSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "patronitePerksSection"
+          }
+        },
+        "heading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "subheading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "caption": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "tiers": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
               "type": "object",
               "attributes": {
                 "amount": {
@@ -512,9 +592,6 @@
                   }
                 }
               }
-=======
-              "type": "string"
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
             }
           },
           "optional": true
@@ -523,11 +600,7 @@
     }
   },
   {
-<<<<<<< HEAD
     "name": "benefitsSection",
-=======
-    "name": "publicationFilterSection",
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
     "type": "type",
     "value": {
       "type": "object",
@@ -536,24 +609,16 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-<<<<<<< HEAD
             "value": "benefitsSection"
           }
         },
         "heading": {
-=======
-            "value": "publicationFilterSection"
-          }
-        },
-        "filterHeading": {
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           "type": "objectAttribute",
           "value": {
             "type": "string"
           },
           "optional": true
         },
-<<<<<<< HEAD
         "benefits": {
           "type": "objectAttribute",
           "value": {
@@ -671,27 +736,6 @@
           "value": {
             "type": "inline",
             "name": "gradientImg"
-=======
-        "searchbarPlaceholder": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "publicationsPerPage": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "number"
-          },
-          "optional": true
-        },
-        "filterPublications": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "filterPublications"
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
           },
           "optional": true
         }
@@ -2240,11 +2284,7 @@
             },
             "rest": {
               "type": "inline",
-<<<<<<< HEAD
               "name": "doubleHeroSection"
-=======
-              "name": "publicationFilterSection"
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
             }
           },
           {
@@ -2259,7 +2299,6 @@
             },
             "rest": {
               "type": "inline",
-<<<<<<< HEAD
               "name": "benefitsSection"
             }
           },
@@ -2291,9 +2330,36 @@
             "rest": {
               "type": "inline",
               "name": "patronitePerksSection"
-=======
+            }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "publicationFilterSection"
+            }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
               "name": "heroPublicationsSection"
->>>>>>> b0a479d (single publication page and publications serach page + filter component changes)
             }
           }
         ]

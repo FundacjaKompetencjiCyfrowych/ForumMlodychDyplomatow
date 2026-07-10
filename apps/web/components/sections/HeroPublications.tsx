@@ -14,7 +14,7 @@ const HeroPublications = async ({
   });
 
   return (
-    <section className="mx-auto hidden w-full max-w-360 flex-col gap-2 border-b border-brand-slate-100 px-4 py-2 desktop:flex">
+    <section className="mx-auto hidden w-full max-w-(--width-content-max) flex-col gap-2 border-b border-brand-slate-100 px-4 py-2 desktop:flex">
       <Typography variant="h3" as="h1">
         {sectionData.heading}
       </Typography>

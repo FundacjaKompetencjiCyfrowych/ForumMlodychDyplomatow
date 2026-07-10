@@ -46,7 +46,7 @@ export const PublicationHero = async ({
   const t = await getTranslations({ locale, namespace: "publications" });
 
   return (
-    <section className="mx-auto w-full max-w-360 px-5 py-10 md:px-6">
+    <section className="mx-auto w-full max-w-(--width-content-max) px-5 py-10 md:px-6">
       <div className="flex flex-col items-center gap-8 lg:grid lg:grid-cols-12 lg:gap-16">
         {/* Lewa kolumna: Treść */}
         <div className="order-2 flex w-full flex-col gap-6 lg:order-1 lg:col-span-7 xl:col-span-6">

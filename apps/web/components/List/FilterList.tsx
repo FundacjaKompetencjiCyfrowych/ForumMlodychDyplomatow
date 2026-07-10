@@ -95,12 +95,12 @@ const createFilterListParams = (filters: Filter[], tabs?: TabsType) => {
           return [filter.slug, parseAsArrayOf(singleParser)];
         }
         return [filter.slug, singleParser];
-      })
+      }),
     ) as Record<string, FilterResultType>),
     ...(tabs
       ? {
           [tabs.slug]: parseAsString.withDefault(
-            tabs.values.find((tab) => tab.default)?.value ?? tabs.values[0].value
+            tabs.values.find((tab) => tab.default)?.value ?? tabs.values[0].value,
           ),
         }
       : {}),
@@ -130,7 +130,7 @@ export const FilterList = <
   const paramsParser = useMemo(
     () => createFilterListParams(filters, tabs),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(filters), JSON.stringify(tabs)]
+    [JSON.stringify(filters), JSON.stringify(tabs)],
   );
 
   const [params, setParams] = useQueryStates(paramsParser);
@@ -211,7 +211,7 @@ export const FilterList = <
               }
               return acc;
             },
-            {} as Record<string, number | string | string[]>
+            {} as Record<string, number | string | string[]>,
           ) as TParams),
           ...(tabs ? { [tabs.slug]: params[tabs.slug as keyof typeof params] } : {}),
           sort: params.sort,
@@ -226,7 +226,7 @@ export const FilterList = <
   const renderFiltersList = () => (
     <>
       {filters.map((filter) => (
-        <div key={filter.slug} className="flex w-full max-w-90 flex-col items-start">
+        <div key={filter.slug} className="flex w-full flex-col items-start">
           {filter.label && type !== "publications" && (
             <Typography variant="body-m" className="mb-2 font-semibold">
               {filter.label}
@@ -288,12 +288,13 @@ export const FilterList = <
         <div className="fixed inset-0 z-100 flex flex-col bg-white desktop:hidden">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-gray-200 p-4">
-            <button
+            <Button
+              variant="none"
               onClick={() => setIsMobileMenuOpen(false)}
               className="rounded-full p-1 text-brand-red-900 hover:bg-gray-50"
             >
               <ChevronLeft className="size-6" />
-            </button>
+            </Button>
             <div className="flex-1">
               <FilterListInput
                 placeholder={type == "publications" ? t("publicationsSearch") : t("search")}
@@ -307,21 +308,21 @@ export const FilterList = <
             {(activeFilters.length > 0 || params.q) && (
               <div className="mb-6 flex flex-wrap items-center gap-2">
                 {activeFilters.map((f, i) => (
-                  <button
+                  <Button
                     key={`mobile-${f.slug}-${f.value}-${i}`}
                     onClick={() => handleRemoveFilter(f.slug, f.value)}
                     className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm transition-colors hover:bg-red-50 hover:text-brand-red-700"
                   >
                     {f.label}
                     <X className="size-3.5" />
-                  </button>
+                  </Button>
                 ))}
-                <button
+                <Button
                   onClick={handleResetFilters}
                   className="ml-2 text-sm font-semibold text-brand-red-900"
                 >
                   {t("reset")}
-                </button>
+                </Button>
               </div>
             )}
 
@@ -350,7 +351,8 @@ export const FilterList = <
 
             {/* Trigger "KATEGORIE" widoczny tylko na mobile */}
             <div className="flex items-center justify-center py-2 desktop:hidden">
-              <button
+              <Button
+                variant="none"
                 onClick={() => setIsMobileMenuOpen(true)}
                 className="flex items-center gap-2 font-semibold text-brand-blue-900"
               >
@@ -361,7 +363,7 @@ export const FilterList = <
                     {activeFilters.length}
                   </span>
                 )}
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -374,23 +376,23 @@ export const FilterList = <
                 </span>
 
                 {activeFilters.map((f, i) => (
-                  <button
+                  <Button
                     key={`${f.slug}-${f.value}-${i}`}
                     onClick={() => handleRemoveFilter(f.slug, f.value)}
                     className="flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 transition-colors hover:bg-red-50 hover:text-brand-red-700"
                   >
                     {f.label}
                     <X className="size-3" />
-                  </button>
+                  </Button>
                 ))}
 
                 {(activeFilters.length > 0 || params.q) && (
-                  <button
+                  <Button
                     onClick={handleResetFilters}
                     className="ml-2 font-semibold text-brand-red-900 hover:text-brand-red-700"
                   >
                     {t("reset")}
-                  </button>
+                  </Button>
                 )}
               </div>
 
