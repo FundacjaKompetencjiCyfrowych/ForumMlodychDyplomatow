@@ -72,7 +72,7 @@ export default defineType({
     defineField({
       name: "mainImage",
       title: "Grafika główna",
-      type: "img",
+      type: "gradientImg",
       group: "content",
       description:
         "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach",

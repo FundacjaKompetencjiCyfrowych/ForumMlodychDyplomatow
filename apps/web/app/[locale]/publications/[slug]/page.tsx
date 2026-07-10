@@ -13,6 +13,8 @@ import { PublicationAuthor } from "@/components/Publications/PublicationAuthor";
 import type { Locale } from "next-intl";
 import { getInitials } from "./helpers";
 import { setRequestLocale } from "next-intl/server";
+import { formatLink } from "../../../../lib/links";
+import type { BreadcrumbsFragment } from "../../../../sanity/queries/breadcrumbs";
 
 type Params = {
   locale: Locale;
@@ -106,10 +108,21 @@ export default async function PublicationDetailPage({ params }: { params: Promis
     : undefined;
 
   const breadcrumbs = [
-    { label: t.home, href: `/${locale}` },
-    { label: t.publications, href: `/${locale}/publications` },
-    { label: publication.title || t.noTitle },
-  ];
+    formatLink({ slug: `/`, type: "page", text: t.home }),
+    formatLink({
+      text: t.publications,
+      homepage: true,
+      type: "publication",
+      slug: `/`,
+    }),
+  ].map(
+    (i, index) =>
+      ({
+        _key: `breadcrumb-${index}`,
+        _type: "breadcrumb",
+        link: i,
+      }) as BreadcrumbsFragment
+  );
 
   return (
     <div className="min-h-screen">
@@ -123,16 +136,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
         date={formattedDate}
         isoDate={isoDate}
         pdfUrl={publication.pdfFile?.url}
-        image={
-          publication.mainImage?.asset?.url
-            ? {
-                src: publication.mainImage.asset.url,
-                alt: publication.mainImage.asset.altText || publication.title || "Zdjęcie główne",
-                caption: publication.mainImage.asset.description ?? undefined,
-                blurDataURL: publication.mainImage.asset.metadata?.lqip ?? undefined,
-              }
-            : null
-        }
+        image={publication.mainImage}
         locale={locale}
       />
       <PublicationBody content={publication.text || []} locale={locale} />

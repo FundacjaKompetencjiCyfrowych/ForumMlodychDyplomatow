@@ -765,7 +765,7 @@ export type Publication = {
   excerpt?: string;
   slug?: Slug;
   date?: string;
-  mainImage?: Img;
+  mainImage?: GradientImg;
   author?: PersonReference;
   pdfFile?: {
     asset?: SanityFileAssetReference;

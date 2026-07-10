@@ -1,7 +1,7 @@
 import type { InferFragmentType } from "groqd";
 import type { Locale } from "next-intl";
 import { q } from "../groqd";
-import { imgFragment } from "./imgFragment";
+import { gradientImgFragment, imgFragment } from "./imgFragment";
 import { intlArrayTextQuery } from "./intl";
 
 export type PublicationsListQueryParams = {
@@ -64,7 +64,7 @@ export const publicationDetailFragment = q
     date: true,
     excerpt: true,
     slug: "slug.current",
-    mainImage: sub.field("mainImage").project(imgFragment),
+    mainImage: sub.field("mainImage").project(gradientImgFragment),
     author: sub
       .field("author")
       .deref()

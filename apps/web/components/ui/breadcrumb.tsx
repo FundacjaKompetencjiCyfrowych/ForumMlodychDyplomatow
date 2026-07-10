@@ -6,6 +6,8 @@ import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
 import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
 import { Link } from "./link";
 import { Container } from "./container";
+import { trim } from "../../lib/text";
+import Typography from "./typography";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -54,16 +56,20 @@ function BreadcrumbLink({
   );
 }
 
-function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
+function BreadcrumbPage({ className, children, ...props }: React.ComponentProps<"span">) {
   return (
-    <span
+    <Typography
+      as="span"
+      variant="body-m"
       data-slot="breadcrumb-page"
       role="link"
       aria-disabled="true"
       aria-current="page"
       className={cn("font-normal text-foreground", className)}
       {...props}
-    />
+    >
+      {children}
+    </Typography>
   );
 }
 
@@ -125,13 +131,15 @@ export const Breadcrumbs = ({
                     <Link
                       size="inline"
                       variant="link"
-                      className="text-gray-500"
+                      className="font-normal text-gray-500"
                       link={breadcrumb.link}
-                    />
+                    >
+                      {trim(breadcrumb.link.text, 50)}
+                    </Link>
                   </BreadcrumbLink>
                 ) : (
-                  <BreadcrumbPage className="font-semibold text-gray-500">
-                    {breadcrumb.text}
+                  <BreadcrumbPage className="text-gray-500">
+                    {trim(breadcrumb.text, 50)}
                   </BreadcrumbPage>
                 )}
               </BreadcrumbItem>
@@ -140,9 +148,7 @@ export const Breadcrumbs = ({
           ))}
           {currentPageName && (
             <BreadcrumbItem>
-              <BreadcrumbPage className="font-semibold text-gray-900">
-                {currentPageName}
-              </BreadcrumbPage>
+              <BreadcrumbPage className="text-gray-900">{trim(currentPageName, 50)}</BreadcrumbPage>
             </BreadcrumbItem>
           )}
         </BreadcrumbList>

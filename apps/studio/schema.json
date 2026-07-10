@@ -4295,7 +4295,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "img"
+          "name": "gradientImg"
         },
         "optional": true
       },

@@ -18,6 +18,7 @@ export type SanityImageProps = {
   className?: string;
   as?: ElementType;
   sizes?: Sizes;
+  priority?: boolean;
 } & Omit<ComponentProps<"img">, "sizes">;
 
 const minWidthMap = {
