@@ -21,7 +21,8 @@ export const divisionPreviewQuery = q
   .parameters<{ locale: Locale }>()
   .star.filterByType("division")
   .filterBy("locale == $locale")
-  .project(divisionPreviewFragment);
+  .project(divisionPreviewFragment)
+  .order("name asc");
 
 export type DivisionPreview = InferResultItem<typeof divisionPreviewQuery>;
 

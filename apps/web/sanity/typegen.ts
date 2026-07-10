@@ -272,23 +272,11 @@ export type EventsSection = {
   link?: Link;
 };
 
-export type DivisionReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "division";
-};
-
 export type DivisionsSection = {
   _type: "divisionsSection";
   heading?: string;
   subheading?: string;
   description?: string;
-  divisions?: Array<
-    {
-      _key: string;
-    } & DivisionReference
-  >;
 };
 
 export type AboutUsSection = {
@@ -413,6 +401,13 @@ export type PageReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "page";
+};
+
+export type DivisionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "division";
 };
 
 export type PublicationReference = {
@@ -1113,7 +1108,6 @@ export type AllSanitySchemaTypes =
   | JoinUsSection
   | HeroSection
   | EventsSection
-  | DivisionReference
   | DivisionsSection
   | AboutUsSection
   | Breadcrumbs
@@ -1121,6 +1115,7 @@ export type AllSanitySchemaTypes =
   | PageBuilder
   | LinkButton
   | PageReference
+  | DivisionReference
   | PublicationReference
   | Link
   | PostsSection
