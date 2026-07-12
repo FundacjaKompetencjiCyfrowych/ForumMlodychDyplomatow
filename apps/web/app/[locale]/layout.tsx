@@ -16,6 +16,8 @@ import Header from "../../components/Header/Header";
 import { intlQuery } from "../../sanity/queries/intl";
 import "./globals.css";
 import { navigationQuery } from "../../sanity/queries/navigation";
+import { seoOrgQuery } from "../../sanity/queries/seo";
+import { createJsonLdOrganization } from "../../lib/seo";
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
 
@@ -76,18 +78,22 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
 
   setRequestLocale(locale ?? "pl"); // Enables static rendering, this should be done in every page/layout
-  const { data: translations } = await runQuery(intlQuery, {
-    parameters: { locale },
-  });
-  const { data: navigation } = await runQuery(navigationQuery, {
-    parameters: { locale },
-  });
+  const [{ data: translations }, { data: navigation }, { data: orgSeo }] = await Promise.all([
+    runQuery(intlQuery, { parameters: { locale } }),
+    runQuery(navigationQuery, { parameters: { locale } }),
+    runQuery(seoOrgQuery, { stega: false }),
+  ]);
 
+  const orgJsonLd = createJsonLdOrganization(orgSeo);
   return (
     <html lang={locale}>
       <body
         className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} ${lora.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
         <NuqsAdapter
           defaultOptions={{
             scroll: false,

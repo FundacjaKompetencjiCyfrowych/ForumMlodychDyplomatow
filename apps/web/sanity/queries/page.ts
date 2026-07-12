@@ -1,7 +1,7 @@
 import { type InferResultType } from "groqd";
 import { q } from "../groqd";
 import { pageBuilderQueryFragment } from "./pageBuilder";
-import { seoFragment } from "./seo";
+import { defaultSeoSettingsQuery, seoFragment } from "./seo";
 import { LANGUAGE_FIELD } from "../../../studio/config";
 import type { Locale } from "next-intl";
 import { breadcrumbsFragment } from "./breadcrumbs";
@@ -38,10 +38,10 @@ export const pagesMetadataQuery = q
   .filterBy(`${LANGUAGE_FIELD} == $locale`)
   .slice(0)
   .project((sub) => ({
-    name: sub.field("name"),
+    title: sub.field("name"),
     slug: sub.field("slug.current"),
     seo: sub.field("seo").project(seoFragment),
-    defaultSeo: q.star.filterByType("settings").slice(0).field("seo").project(seoFragment),
+    default: defaultSeoSettingsQuery,
   }));
 
 export const pagesLanguageSlugQuery = q

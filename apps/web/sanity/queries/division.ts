@@ -2,7 +2,7 @@ import type { Locale } from "next-intl";
 import { q } from "../groqd";
 import type { InferResultItem } from "groqd";
 import { imgFragment } from "./imgFragment";
-import { seoFragment } from "./seo";
+import { defaultSeoSettingsQuery, seoFragment } from "./seo";
 import { pageBuilderQueryFragment } from "./pageBuilder";
 
 export type DivisionQueryParams = {
@@ -53,4 +53,17 @@ export const divisionsSlugQuery = q.star
   .project((sub) => ({
     slug: sub.field("slug.current"),
     locale: sub.field("locale"),
+  }));
+
+export const divisionsMetadataQuery = q
+  .parameters<DivisionQueryParams>()
+  .star.filterByType("division")
+  .filterBy("slug.current == $slug")
+  .filterBy("locale == $locale")
+  .slice(0)
+  .project((sub) => ({
+    title: sub.field("name"),
+    slug: sub.field("slug.current"),
+    seo: sub.field("seo").project(seoFragment),
+    default: defaultSeoSettingsQuery,
   }));

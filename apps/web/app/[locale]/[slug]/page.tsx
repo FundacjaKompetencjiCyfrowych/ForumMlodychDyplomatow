@@ -9,6 +9,7 @@ import { notFound, redirect } from "next/navigation";
 import { tryGettingLocaleSlug } from "../../../lib/links";
 import { setRequestLocale } from "next-intl/server";
 import { Breadcrumbs } from "../../../components/ui/breadcrumb";
+import { createSeo } from "../../../lib/seo";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
@@ -31,10 +32,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     perspective: "published",
   });
 
-  return {
-    title: page?.seo?.title ?? page?.defaultSeo?.title ?? page?.name ?? undefined,
-    description: page?.seo?.description ?? page?.defaultSeo?.description ?? undefined,
-  } satisfies Metadata;
+  return createSeo(page);
 }
 
 export default async function Page(props: Props) {

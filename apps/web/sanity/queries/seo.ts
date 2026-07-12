@@ -24,3 +24,15 @@ export const defaultSeoSettingsQuery = q.star
     siteName: sub.field("siteName"),
   }));
 export type DefaultSeoSettings = InferResultType<typeof defaultSeoSettingsQuery>;
+
+export const seoOrgQuery = q.star
+  .filterByType("settings")
+  .slice(0)
+  .project((sub) => ({
+    name: sub.field("organization.name"),
+    logo: sub.field("logo.asset").deref().field("url"),
+    url: sub.field("baseUrl"),
+    socials: sub.field("organization.socials[]"),
+    email: sub.field("organization.email"),
+    phone: sub.field("organization.phone"),
+  }));

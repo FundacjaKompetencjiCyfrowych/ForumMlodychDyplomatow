@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { DefaultSeoSettings, SeoFragment } from "../sanity/queries/seo";
-import type { Article } from "schema-dts";
+import type { Article, Organization } from "schema-dts";
 type SeoInput = {
   title?: string | null;
   description?: string | null;
@@ -26,6 +26,7 @@ export const createSeo = (page: SeoInput | null): Metadata => {
     title,
     description,
     authors: page?.author ? [{ name: page?.author }] : undefined,
+
     openGraph: {
       title,
       description,
@@ -40,6 +41,7 @@ export const createSeo = (page: SeoInput | null): Metadata => {
       url: page?.default?.baseUrl ? `${page.default.baseUrl}/${page.slug}` : undefined,
       publishedTime: page?.published ?? undefined,
     },
+
     twitter: {
       card: "summary_large_image",
       title,
@@ -70,5 +72,30 @@ export const createJsonLdArticle = (page: SeoInput | null): Article & { "@contex
             : undefined,
         }
       : undefined,
+  };
+};
+
+export const createJsonLdOrganization = (
+  org: {
+    name?: string | null;
+    url?: string | null;
+    logo?: string | null;
+    socials?: string[] | null;
+    email?: string | null;
+    phone?: string | null;
+  } | null
+): Organization & { "@context": string } => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: org?.name ?? undefined,
+    url: org?.url ?? undefined,
+    logo: org?.logo ? { "@type": "ImageObject", url: org.logo } : undefined,
+    sameAs: org?.socials ?? undefined,
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: org?.email ?? undefined,
+      telephone: org?.phone ?? undefined,
+    },
   };
 };

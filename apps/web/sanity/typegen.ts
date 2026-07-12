@@ -525,6 +525,12 @@ export type Settings = {
   siteName?: string;
   logo?: Img;
   baseUrl?: string;
+  organization?: {
+    name?: string;
+    socials?: Array<string>;
+    email?: string;
+    phone?: string;
+  };
   seo?: Seo;
 };
 

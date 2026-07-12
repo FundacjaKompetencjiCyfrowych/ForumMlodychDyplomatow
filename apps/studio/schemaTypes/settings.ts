@@ -1,5 +1,4 @@
 import { defineType, defineField, ALL_FIELDS_GROUP } from "sanity";
-import { languageField } from "../plugins/intl";
 
 export default defineType({
   name: "settings",
@@ -37,6 +36,38 @@ export default defineType({
       type: "url",
       description: "Używane do SEO, początek url strony, np https://diplomacy.pl",
       group: "seo",
+    }),
+    defineField({
+      name: "organization",
+      type: "object",
+      title: "Organizacja",
+      group: "seo",
+      description:
+        "Informacje o organizacji, używane do SEO i łączenia różnych postów z tą samą organizacją",
+      fields: [
+        defineField({
+          name: "name",
+          type: "string",
+          title: "Nazwa organizacji",
+        }),
+        defineField({
+          name: "socials",
+          type: "array",
+          title: "Linki do social media",
+          description: "Pomagają łączyć posty na social media z tą samą organizacją",
+          of: [{ type: "string" }],
+        }),
+        defineField({
+          name: "email",
+          type: "string",
+          title: "Email organizacji",
+        }),
+        defineField({
+          name: "phone",
+          type: "string",
+          title: "Telefon organizacji",
+        }),
+      ],
     }),
     defineField({
       name: "seo",
