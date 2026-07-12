@@ -1,15 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { cn } from "@/lib/utils";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselControls,
-  CarouselNext,
-  CarouselPrevious,
-} from "./carousel";
 import AutoScroll from "embla-carousel-auto-scroll";
+import * as React from "react";
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "./carousel";
 type ResponsiveCarouselProps = {
   children: React.ReactNode;
   /** Extra classes on the outer wrapper */

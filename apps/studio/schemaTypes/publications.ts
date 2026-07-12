@@ -69,6 +69,7 @@ export default defineType({
       initialValue: () => new Date().toISOString(),
       validation: (Rule) => Rule.required().error("Pole wymagane"),
     }),
+
     defineField({
       name: "mainImage",
       title: "Grafika główna",

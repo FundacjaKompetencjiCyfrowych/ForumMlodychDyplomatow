@@ -522,6 +522,9 @@ export type Settings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  siteName?: string;
+  logo?: Img;
+  baseUrl?: string;
   seo?: Seo;
 };
 

@@ -1,9 +1,8 @@
-import Typography from "../ui/typography";
-import { SanityImage } from "@/sanity/image/SanityImage";
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
 import { getHeading } from "../../lib/heading";
 import GradientImage from "../../sanity/image/GradientImage";
 import { Container } from "../ui/container";
+import Typography from "../ui/typography";
 
 export interface UniversalHeroProps extends PageBuilderSectionProps<"universalHeroSection"> {}
 
