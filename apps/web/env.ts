@@ -40,10 +40,8 @@ export const envSchema = z.object({
   // Contact form email delivery (Resend)
   RESEND_API_KEY: z.string().min(1).optional(),
   CONTACT_FROM_EMAIL: z.email().optional(),
-  // Rate limiting for the contact endpoint (Upstash). Optional — if unset,
-  // rate limiting is skipped (honeypot + timing check still apply).
-  UPSTASH_REDIS_REST_URL: z.url().optional(),
-  UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional(),
+  // Rate limiting for the contact endpoint is handled by a Vercel WAF rule
+  // (@vercel/firewall), configured in the dashboard — no env vars required.
 });
 
 declare global {

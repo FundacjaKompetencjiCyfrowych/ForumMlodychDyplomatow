@@ -1,3 +1,4 @@
+import { checkRateLimit } from "@vercel/firewall";
 import { type NextRequest, NextResponse } from "next/server";
 import { stegaClean } from "next-sanity";
 import { Resend } from "resend";
@@ -12,8 +13,8 @@ import { buildContactEmail } from "@/lib/contact-email";
  * - The destination address is NEVER taken from the request body. The browser sends
  *   only the section `_key`; we re-read `recipientEmail` from Sanity server-side, so the
  *   endpoint can't be abused as an open relay.
- * - Anti-spam: a honeypot field (`company`) plus a min-time check, plus optional per-IP
- *   rate limiting (Upstash). Bots that trip the honeypot get a fake `200`.
+ * - Anti-spam: a honeypot field (`company`) plus a min-time check, plus per-IP rate
+ *   limiting via Vercel WAF (`@vercel/firewall`). Bots that trip the honeypot get a fake `200`.
  * - The email is sent from `CONTACT_FROM_EMAIL`; the visitor's address is set as
  *   `replyTo` so replies reach them directly. For production deliverability, verify a
  *   sending domain in Resend and point `CONTACT_FROM_EMAIL` at an address on it.
@@ -46,39 +47,14 @@ function getResend(): Resend | null {
   return resend;
 }
 
-// Optional Upstash rate limiter (5 requests / 10 min per IP). Skipped if unconfigured.
-// Accepts credentials under either the native `UPSTASH_REDIS_REST_*` names or the
-// `KV_REST_API_*` names the Vercel Marketplace integration injects.
-type Limiter = { limit: (id: string) => Promise<{ success: boolean }> };
-let limiter: Limiter | null | undefined;
-async function getLimiter(): Promise<Limiter | null> {
-  if (limiter !== undefined) return limiter;
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
-  if (!url || !token) {
-    limiter = null;
-    return limiter;
-  }
-  const { Ratelimit } = await import("@upstash/ratelimit");
-  const { Redis } = await import("@upstash/redis");
-  limiter = new Ratelimit({
-    redis: new Redis({ url, token }),
-    limiter: Ratelimit.slidingWindow(5, "10 m"),
-    prefix: "ratelimit:contact",
-  });
-  return limiter;
-}
+// Rate limiting is enforced by a Vercel WAF rule (see NOTES-vercel-firewall-setup.md),
+// referenced by this ID. The limit/window live in the dashboard rule, not here.
+const RATE_LIMIT_ID = "contact-form";
 
 // Uniform error envelope. `error` is a stable machine-readable code (never a raw
 // message) so the client can branch without anything sensitive leaking.
 function fail(error: string, status: number) {
   return NextResponse.json({ ok: false, error }, { status });
-}
-
-function getClientIp(req: NextRequest): string {
-  const forwarded = req.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]!.trim();
-  return req.headers.get("x-real-ip") ?? "unknown";
 }
 
 async function resolveRecipient(sectionKey: string): Promise<string | null> {
@@ -104,13 +80,11 @@ export async function POST(req: NextRequest) {
       return fail("server_misconfigured", 500);
     }
 
-    // Rate limit by IP (best-effort; no-op if Upstash isn't configured).
-    const rl = await getLimiter();
-    if (rl) {
-      const { success } = await rl.limit(getClientIp(req));
-      if (!success) {
-        return fail("rate_limited", 429);
-      }
+    // Rate limit by IP via Vercel WAF. Fails open if the rule isn't configured
+    // (e.g. local dev or an unpublished rule) — only an actual limit hit blocks.
+    const { rateLimited } = await checkRateLimit(RATE_LIMIT_ID, { request: req });
+    if (rateLimited) {
+      return fail("rate_limited", 429);
     }
 
     let json: unknown;
