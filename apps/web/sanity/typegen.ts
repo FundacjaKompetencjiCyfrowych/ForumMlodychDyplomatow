@@ -699,6 +699,9 @@ export type Translations = {
     submit?: string;
     sending?: string;
     requiredError?: string;
+    successMessage?: string;
+    errorMessage?: string;
+    errorMessageWithEmail?: string;
     placeholders?: {
       firstName?: string;
       lastName?: string;
