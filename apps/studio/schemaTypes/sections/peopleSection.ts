@@ -17,6 +17,11 @@ export const peopleSection = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "subheading",
+      type: "string",
+      title: "Podtytuł",
+    }),
+    defineField({
       name: "link",
       type: "link",
       title: "Link",

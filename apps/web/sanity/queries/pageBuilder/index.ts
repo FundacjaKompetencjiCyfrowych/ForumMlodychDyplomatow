@@ -15,7 +15,6 @@ import { contactSectionFragment } from "./contactSectionFragment";
 import { universalHeroSectionFragment } from "./universalHeroSectionFragment";
 import { whatWeDoDivisionsSectionFragment } from "./whatWeDoDivisionsSectionFragment";
 import { joinUsDivisionsSectionFragment } from "./joinUsDivisionsSectionFragment";
-import { teamDivisionsSectionFragment } from "./teamDivisionsSectionFragment";
 import { eventsDivisionsSectionFragment } from "./eventsDivisionsSectionFragment";
 import { divisionsListSectionFragment } from "./divisionsListSectionFragment";
 import { headingSectionFragment } from "./headingSection";
@@ -46,7 +45,6 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       universalHeroSection: sub.project(universalHeroSectionFragment),
       whatWeDoDivisionsSection: sub.project(whatWeDoDivisionsSectionFragment),
       joinUsDivisionsSection: sub.project(joinUsDivisionsSectionFragment),
-      teamDivisionsSection: sub.project(teamDivisionsSectionFragment),
       eventsDivisionsSection: sub.project(eventsDivisionsSectionFragment),
       divisionsListSection: sub.project(divisionsListSectionFragment),
       headingSection: sub.project(headingSectionFragment),

@@ -15,24 +15,33 @@ const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSec
       background="slate"
       contentWidth="xl"
     >
-      <Typography variant="h2" as={getHeading(index)} className="mb-4 text-center desktop:mb-16">
-        {data.heading}
-      </Typography>
+      <div className="flex max-w-3xl flex-col items-center gap-6 desktop:gap-16">
+        <Typography variant="h2" as={getHeading(index)} className="mb-4 text-center desktop:mb-16">
+          {data.heading}
+        </Typography>
+        {data.subheading && (
+          <Typography variant="body-l" className="text-gray-600">
+            {data.subheading}
+          </Typography>
+        )}
+      </div>
       <Tabs
         defaultValue={groups[0]?.groupName ?? ""}
         className="flex w-full max-w-full gap-6 px-8 desktop:gap-8 desktop:px-0"
       >
-        <TabsList variant="line" className="gap-20">
-          {groups.map((group, index) => (
-            <TabsTrigger
-              key={`${group._key}-${index}`}
-              value={group.groupName ?? ""}
-              className="max-w-60 flex-none"
-            >
-              {group.groupName}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        {groups.length > 1 && (
+          <TabsList variant="line" className="gap-20">
+            {groups.map((group, index) => (
+              <TabsTrigger
+                key={`${group._key}-${index}`}
+                value={group.groupName ?? ""}
+                className="max-w-60 flex-none"
+              >
+                {group.groupName}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        )}
         {groups.map((group, index) => (
           <TabsContent key={`${group._key}-${index}`} value={group.groupName ?? ""}>
             <div className="flex w-full flex-row flex-wrap items-stretch justify-center gap-4 md:gap-8">

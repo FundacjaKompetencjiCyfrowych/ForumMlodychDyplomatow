@@ -9,6 +9,7 @@ export const peopleSectionFragment = q
   .fragment<PageBuilderSection<"peopleSection">>()
   .project((sub) => ({
     heading: sub.field("heading"),
+    subheading: sub.field("subheading"),
     link: sub.field("link").project(linkFragment),
 
     people: sub.field("people[]").project((sub) => ({

@@ -171,24 +171,6 @@ export type WhatWeDoDivisionsSection = {
   whatWeDo?: Array<string>;
 };
 
-export type PersonReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "person";
-};
-
-export type TeamDivisionsSection = {
-  _type: "teamDivisionsSection";
-  header?: string;
-  text?: string;
-  members?: Array<
-    {
-      _key: string;
-    } & PersonReference
-  >;
-};
-
 export type UniversalHeroSection = {
   _type: "universalHeroSection";
   header?: string;
@@ -223,9 +205,17 @@ export type PodcastSection = {
   link?: Link;
 };
 
+export type PersonReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "person";
+};
+
 export type PeopleSection = {
   _type: "peopleSection";
   heading?: string;
+  subheading?: string;
   link?: Link;
   people?: Array<{
     groupName?: string;
@@ -353,9 +343,6 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & UniversalHeroSection)
-  | ({
-      _key: string;
-    } & TeamDivisionsSection)
   | ({
       _key: string;
     } & WhatWeDoDivisionsSection)
@@ -907,23 +894,7 @@ export type Division = {
   name?: string;
   slug?: Slug;
   coverImage?: Img;
-  pageBuilder?: Array<
-    | ({
-        _key: string;
-      } & UniversalHeroSection)
-    | ({
-        _key: string;
-      } & WhatWeDoDivisionsSection)
-    | ({
-        _key: string;
-      } & JoinUsDivisionsSection)
-    | ({
-        _key: string;
-      } & TeamDivisionsSection)
-    | ({
-        _key: string;
-      } & EventsDivisionsSection)
-  >;
+  pageBuilder?: PageBuilder;
 };
 
 export type CategoryReference = {
@@ -1107,12 +1078,11 @@ export type AllSanitySchemaTypes =
   | EventsDivisionsSection
   | JoinUsDivisionsSection
   | WhatWeDoDivisionsSection
-  | PersonReference
-  | TeamDivisionsSection
   | UniversalHeroSection
   | ContactSection
   | SupportUsSection
   | PodcastSection
+  | PersonReference
   | PeopleSection
   | NewPublicationsSection
   | JoinUsSection

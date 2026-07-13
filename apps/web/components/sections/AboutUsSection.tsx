@@ -37,7 +37,7 @@ const AboutUsSection = ({
         <Typography as={getHeading(sectionIndex)} variant="h2" className="mb-10 desktop:mb-16">
           {data.heading}
         </Typography>
-        <div className="grid w-full [grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))] gap-16 md:gap-8">
+        <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-16 md:gap-8">
           {data.content?.map((item) => (
             <DescriptionCard
               key={item._key}

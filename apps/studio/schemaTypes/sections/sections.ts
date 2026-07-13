@@ -14,7 +14,6 @@ import { newPublicationsSection } from "./newPublicationsSection";
 import { peopleSection } from "./peopleSection";
 import { podcastSection } from "./podcastSection";
 import { supportUsSection } from "./supportUsSection";
-import { teamDivisionsSection } from "./teamDivisionsSection";
 import { whatWeDoDivisionsSection } from "./whatWeDoDivisionsSection";
 import { divisionsListSection } from "./divisionsListSection";
 import { documentsSection } from "./documentsSection";
@@ -36,7 +35,6 @@ export const sectionTypes = [
   "supportUsSection",
   "contactSection",
   "universalHeroSection",
-  "teamDivisionsSection",
   "whatWeDoDivisionsSection",
   "joinUsDivisionsSection",
   "eventsDivisionsSection",
@@ -64,7 +62,6 @@ export const sectionStructure = [
   supportUsSection,
   contactSection,
   universalHeroSection,
-  teamDivisionsSection,
   whatWeDoDivisionsSection,
   joinUsDivisionsSection,
   eventsDivisionsSection,

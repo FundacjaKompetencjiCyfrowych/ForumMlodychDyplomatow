@@ -20,7 +20,6 @@ import {
 import { ComponentType } from "react";
 import type { PageBuilderSectionProps, PageBuilderSectionType } from "../queries/pageBuilder";
 import { EventsListSection } from "../../components/sections/EventsListSection";
-import TeamDivisions from "@/components/sections/TeamDivisionsSection";
 import DocumentsSection from "../../components/sections/DocumentsSection";
 import DoubleHeroSection from "../../components/sections/DoubleHeroSection";
 import { BenefitsSection } from "../../components/sections/BenefitsSection";
@@ -55,7 +54,6 @@ export const components: ComponentsRegistry = {
   universalHeroSection: UniversalHero,
   whatWeDoDivisionsSection: WhatWeDoDivisions,
   joinUsDivisionsSection: JoinUsDivisions,
-  teamDivisionsSection: TeamDivisions,
   eventsDivisionsSection: EventsDivisions,
   divisionsListSection: DivisionsListSection,
   headingSection: HeadingSection,
