@@ -226,6 +226,7 @@ export type PodcastSection = {
 export type PeopleSection = {
   _type: "peopleSection";
   heading?: string;
+  link?: Link;
   people?: Array<{
     groupName?: string;
     members?: Array<

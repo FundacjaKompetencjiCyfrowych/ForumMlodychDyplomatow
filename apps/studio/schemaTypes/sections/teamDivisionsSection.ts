@@ -27,7 +27,7 @@ export const teamDivisionsSection = defineType({
       description: "Lista członków przedstawicielstwa",
       type: "array",
       of: [{ type: "reference", to: [{ type: "person" }] }],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(1).max(8),
     }),
   ],
 });

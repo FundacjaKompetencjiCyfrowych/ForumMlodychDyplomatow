@@ -2,12 +2,13 @@ import Typography from "../ui/typography";
 import { SanityImage } from "@/sanity/image/SanityImage";
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
 import { Link } from "../ui/link";
+import { Container } from "../ui/container";
 
 const JoinUsDivisions = ({ data }: PageBuilderSectionProps<"joinUsDivisionsSection">) => {
   const { header, features, button } = data;
 
   return (
-    <section className="w-full bg-(--color-brand-slate-50) px-6 py-18">
+    <Container className="w-full bg-(--color-brand-slate-50) px-6 py-18">
       <div className="mb-8 lg:mb-12">
         <Typography as="h2" variant="h2" className="mb-12 text-center text-brand-blue-900">
           {header}
@@ -41,7 +42,7 @@ const JoinUsDivisions = ({ data }: PageBuilderSectionProps<"joinUsDivisionsSecti
           <Link link={data.button!} variant="primary" size="m" />
         </div>
       )}
-    </section>
+    </Container>
   );
 };
 

@@ -1323,6 +1323,14 @@
           },
           "optional": true
         },
+        "link": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "link"
+          },
+          "optional": true
+        },
         "people": {
           "type": "objectAttribute",
           "value": {

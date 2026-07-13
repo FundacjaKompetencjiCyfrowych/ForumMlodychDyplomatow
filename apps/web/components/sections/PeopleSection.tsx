@@ -1,5 +1,4 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import { getTranslations } from "next-intl/server";
 import { getHeading } from "../../lib/heading";
 import { Container } from "../ui/container";
 import { Link } from "../ui/link";
@@ -8,9 +7,8 @@ import Typography from "../ui/typography";
 import { ChevronRight } from "lucide-react";
 import PersonCard from "../ui/person-card";
 
-const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"peopleSection">) => {
+const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSection">) => {
   const groups = data.people?.filter((group) => group.groupName && group.members) ?? [];
-  const t = await getTranslations({ locale, namespace: "people" });
   return (
     <Container
       className="flex flex-col items-center gap-8 desktop:gap-12"
@@ -37,18 +35,16 @@ const PeopleSection = async ({ index, data, locale }: PageBuilderSectionProps<"p
         </TabsList>
         {groups.map((group, index) => (
           <TabsContent key={`${group._key}-${index}`} value={group.groupName ?? ""}>
-            <div className="grid w-full grid-cols-2 gap-4 md:gap-8 lg:grid-cols-4">
+            <div className="flex w-full flex-row flex-wrap items-stretch justify-center gap-4 md:gap-8">
               {group.members?.map((member) => (
-                <PersonCard key={member._id} person={member} />
+                <PersonCard key={member._key} person={member.person} />
               ))}
             </div>
           </TabsContent>
         ))}
       </Tabs>
       <div className="mx-auto mt-16 hidden w-fit desktop:block">
-        <Link href="/people" variant="secondary" iconRight={<ChevronRight />}>
-          {t("seeAll")}
-        </Link>
+        {data.link && <Link link={data.link} variant="secondary" iconRight={<ChevronRight />} />}
       </div>
     </Container>
   );

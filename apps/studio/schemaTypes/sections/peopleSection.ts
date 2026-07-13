@@ -16,6 +16,13 @@ export const peopleSection = defineType({
       title: "Nagłówek",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "link",
+      type: "link",
+      title: "Link",
+      description: "Link do strony z wszystkimi ludźmi",
+      validation: (Rule) => Rule.required(),
+    }),
 
     defineField({
       name: "people",
@@ -39,7 +46,7 @@ export const peopleSection = defineType({
               type: "array",
               title: "Członkowie grupy",
               of: [{ type: "reference", to: { type: "person" } }],
-              validation: (Rule) => Rule.required().max(4),
+              validation: (Rule) => Rule.required().max(6),
             }),
           ],
         }),
