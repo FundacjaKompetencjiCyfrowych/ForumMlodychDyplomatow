@@ -15,7 +15,7 @@ const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSec
       background="slate"
       contentWidth="xl"
     >
-      <div className="flex max-w-3xl flex-col items-center gap-6 desktop:gap-16">
+      <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 desktop:gap-16">
         <Typography variant="h2" as={getHeading(index)} className="mb-4 text-center desktop:mb-16">
           {data.heading}
         </Typography>

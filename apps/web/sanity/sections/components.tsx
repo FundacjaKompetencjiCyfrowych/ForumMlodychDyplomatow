@@ -3,7 +3,7 @@ import {
   EventsSection,
   DivisionsSection,
   HeroSection,
-  JoinUsSection,
+  CardsWithLinkSection,
   NewPublicationsSection,
   PeopleSection,
   PodcastSection,
@@ -20,7 +20,7 @@ import { EventsListSection } from "../../components/sections/EventsListSection";
 import DocumentsSection from "../../components/sections/DocumentsSection";
 import DoubleHeroSection from "../../components/sections/DoubleHeroSection";
 import { BenefitsSection } from "../../components/sections/BenefitsSection";
-import { WhoWeWorkWithSection } from "../../components/sections/WhoWeWorkWithSection";
+import { IconCardSection } from "../../components/sections/IconCardSection";
 import { PatronitePerksSection } from "../../components/sections/PatronitePerksSection";
 
 export type ComponentsRegistry = {
@@ -41,7 +41,7 @@ export const components: ComponentsRegistry = {
   eventsSection: EventsSection,
   divisionsSection: DivisionsSection,
   heroSection: HeroSection,
-  joinUsSection: JoinUsSection,
+  cardsWithLinkSection: CardsWithLinkSection,
   newPublicationsSection: NewPublicationsSection,
   peopleSection: PeopleSection,
   eventsListSection: EventsListSection,
@@ -55,6 +55,6 @@ export const components: ComponentsRegistry = {
   documentsSection: DocumentsSection,
   doubleHeroSection: DoubleHeroSection,
   benefitsSection: BenefitsSection,
-  whoWeWorkWithSection: WhoWeWorkWithSection,
+  iconCardSection: IconCardSection,
   patronitePerksSection: PatronitePerksSection,
 };

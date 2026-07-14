@@ -5,7 +5,7 @@ import { aboutUsSectionFragment } from "./aboutUsSectionFragment";
 import { divisionsSectionFragment } from "./divisionsSectionFragment";
 import { eventsSectionFragment } from "./eventsSectionFragment";
 import { heroSectionFragment } from "./heroSectionFragment";
-import { joinUsSectionFragment } from "./joinUsSectionFragment";
+import { cardsWithLinkSectionFragment } from "./cardsWithLinkSectionFragment";
 import { newPublicationsSectionFragment } from "./newPublicationsSectionFragment";
 import { peopleSectionFragment } from "./peopleSectionFragment";
 import { podcastSectionFragment } from "./podcastSectionFragment";
@@ -20,7 +20,7 @@ import { eventsListSectionFragment } from "./eventsListSection";
 import { documentsSectionFragment } from "./documentsSectionFragment";
 import { doubleHeroSectionFragment } from "./doubleHeroSectionFragment";
 import { benefitsSectionFragment } from "./benefitsSectionFragment";
-import { whoWeWorkWithSectionFragment } from "./whoWeWorkWithSectionFragment";
+import { iconCardSectionFragment } from "./iconCardSectionFragment";
 import { patronitePerksSectionFragment } from "./patronitePerksSectionFragment";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
@@ -33,7 +33,7 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       contactSection: sub.project(contactSectionFragment),
       eventsSection: sub.project(eventsSectionFragment),
       heroSection: sub.project(heroSectionFragment),
-      joinUsSection: sub.project(joinUsSectionFragment),
+      cardsWithLinkSection: sub.project(cardsWithLinkSectionFragment),
       newPublicationsSection: sub.project(newPublicationsSectionFragment),
       peopleSection: sub.project(peopleSectionFragment),
       eventsListSection: sub.project(eventsListSectionFragment),
@@ -46,7 +46,7 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       documentsSection: sub.project(documentsSectionFragment),
       doubleHeroSection: sub.project(doubleHeroSectionFragment),
       benefitsSection: sub.project(benefitsSectionFragment),
-      whoWeWorkWithSection: sub.project(whoWeWorkWithSectionFragment),
+      iconCardSection: sub.project(iconCardSectionFragment),
       patronitePerksSection: sub.project(patronitePerksSectionFragment),
     },
     {

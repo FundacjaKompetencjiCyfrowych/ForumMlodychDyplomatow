@@ -5,10 +5,7 @@ import Typography from "../ui/typography";
 import { getHeading, getSubHeading } from "../../lib/heading";
 import { SanityImage } from "../../sanity/image/SanityImage";
 
-export const WhoWeWorkWithSection = ({
-  data,
-  index,
-}: PageBuilderSectionProps<"whoWeWorkWithSection">) => {
+export const IconCardSection = ({ data, index }: PageBuilderSectionProps<"iconCardSection">) => {
   return (
     <Container className="flex flex-col gap-4 bg-slate-50 desktop:gap-16">
       <div className="flex flex-col items-center gap-10">

@@ -3,8 +3,8 @@ import type { PageBuilderSection } from ".";
 import { imgFragment } from "../imgFragment";
 import { linkFragment } from "../linkFragment";
 
-export const joinUsSectionFragment = q
-  .fragment<PageBuilderSection<"joinUsSection">>()
+export const cardsWithLinkSectionFragment = q
+  .fragment<PageBuilderSection<"cardsWithLinkSection">>()
   .project((sub) => ({
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),

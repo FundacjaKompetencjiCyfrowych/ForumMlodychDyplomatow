@@ -14,7 +14,7 @@ const OfferCard = ({
   index,
 }: {
   index: number;
-  item: DeepGet<PageBuilderSectionProps<"joinUsSection">, "data.benefits">;
+  item: DeepGet<PageBuilderSectionProps<"cardsWithLinkSection">, "data.benefits">;
 }) => {
   return (
     <div className="flex min-w-full flex-col items-stretch gap-4 border border-slate-100 bg-white p-6 text-center desktop:min-w-auto">
@@ -32,7 +32,10 @@ const OfferCard = ({
   );
 };
 
-const JoinUsSection = ({ index: sectionIndex, data }: PageBuilderSectionProps<"joinUsSection">) => {
+const CardsWithLinkSection = ({
+  index: sectionIndex,
+  data,
+}: PageBuilderSectionProps<"cardsWithLinkSection">) => {
   return (
     <Container
       className="flex flex-col items-center gap-10 desktop:gap-16"
@@ -56,4 +59,4 @@ const JoinUsSection = ({ index: sectionIndex, data }: PageBuilderSectionProps<"j
   );
 };
 
-export default JoinUsSection;
+export default CardsWithLinkSection;

@@ -59,8 +59,8 @@ export type PatronitePerksSection = {
   cta?: Link;
 };
 
-export type WhoWeWorkWithSection = {
-  _type: "whoWeWorkWithSection";
+export type IconCardSection = {
+  _type: "iconCardSection";
   heading?: string;
   subheading?: string;
   items?: Array<{
@@ -211,8 +211,8 @@ export type NewPublicationsSection = {
   heading?: string;
 };
 
-export type JoinUsSection = {
-  _type: "joinUsSection";
+export type CardsWithLinkSection = {
+  _type: "cardsWithLinkSection";
   heading?: string;
   subheading?: string;
   benefits?: Array<{
@@ -301,7 +301,7 @@ export type PageBuilder = Array<
     } & HeroSection)
   | ({
       _key: string;
-    } & JoinUsSection)
+    } & CardsWithLinkSection)
   | ({
       _key: string;
     } & NewPublicationsSection)
@@ -340,7 +340,7 @@ export type PageBuilder = Array<
     } & BenefitsSection)
   | ({
       _key: string;
-    } & WhoWeWorkWithSection)
+    } & IconCardSection)
   | ({
       _key: string;
     } & PatronitePerksSection)
@@ -1035,7 +1035,7 @@ export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | FileDataFile
   | PatronitePerksSection
-  | WhoWeWorkWithSection
+  | IconCardSection
   | BenefitsSection
   | DoubleHeroSection
   | DocumentsSection
@@ -1050,7 +1050,7 @@ export type AllSanitySchemaTypes =
   | PersonReference
   | PeopleSection
   | NewPublicationsSection
-  | JoinUsSection
+  | CardsWithLinkSection
   | HeroSection
   | EventsSection
   | DivisionsSection
