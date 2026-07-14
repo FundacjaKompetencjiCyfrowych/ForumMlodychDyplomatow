@@ -365,7 +365,7 @@
     }
   },
   {
-    "name": "whoWeWorkWithSection",
+    "name": "iconCardSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -374,7 +374,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "whoWeWorkWithSection"
+            "value": "iconCardSection"
           }
         },
         "heading": {
@@ -1240,7 +1240,7 @@
     }
   },
   {
-    "name": "joinUsSection",
+    "name": "cardsWithLinkSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -1249,7 +1249,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "joinUsSection"
+            "value": "cardsWithLinkSection"
           }
         },
         "heading": {
@@ -1749,7 +1749,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "joinUsSection"
+              "name": "cardsWithLinkSection"
             }
           },
           {
@@ -1944,7 +1944,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "whoWeWorkWithSection"
+              "name": "iconCardSection"
             }
           },
           {

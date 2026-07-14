@@ -6,7 +6,7 @@ export const universalHeroSection = defineType({
   title: "Uniwersalne Hero",
   type: "object",
   preview: createSectionPreview("universalHeroSection", {
-    title: "Uniwersalne Hero",
+    title: "Hero - Uniwersalne",
     subtitle: "header",
   }),
   fields: [

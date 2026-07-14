@@ -15,11 +15,21 @@ import {
 } from "@sanity/icons";
 
 import { LANGUAGE_FIELD } from "../config";
+import { EditableJsonView } from "../components/JsonView";
 /**
  * Structure of the Sanity Studio
  * @see https://www.sanity.io/docs/studio/structure-tool
  */
 export const structure: StructureToolOptions = {
+  defaultDocumentNode:
+    process.env.NODE_ENV === "development"
+      ? (S, { schemaType }) => {
+          return S.document().views([
+            S.view.form(),
+            S.view.component(EditableJsonView).title("JSON Editor"),
+          ]);
+        }
+      : undefined,
   structure: (S) =>
     S.list()
       .id("content")

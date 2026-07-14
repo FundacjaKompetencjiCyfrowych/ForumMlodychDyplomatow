@@ -1,36 +1,37 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { createSectionPreview } from "./sectionPreview";
 
-export const joinUsSection = defineType({
-  name: "joinUsSection",
-  title: "Dołącz do nas",
+export const iconCardSection = defineType({
+  name: "iconCardSection",
+  title: "Z kim współpracujemy",
   type: "object",
-  preview: createSectionPreview("joinUsSection", {
-    title: "Dołącz do nas",
+  preview: createSectionPreview("iconCardSection", {
+    title: "Karty z ikonami",
     subtitle: "heading",
   }),
   fields: [
     defineField({
       name: "heading",
-      type: "string",
       title: "Nagłówek",
+      type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "subheading",
+      title: "Podnagłówek",
       type: "string",
-      title: "Podtytuł",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "benefits",
+      name: "items",
+      title: "Elementy",
       type: "array",
-      title: "Benefity",
-      description: "Krótkie opisy korzyści płynących z dołączenia do FMD.",
+      validation: (Rule) => Rule.required().min(1).max(4),
       of: [
         defineArrayMember({
-          name: "benefit",
+          name: "item",
+          title: "Element",
           type: "object",
-          title: "Benefit",
           preview: {
             select: {
               title: "title",
@@ -40,25 +41,21 @@ export const joinUsSection = defineType({
           fields: [
             defineField({
               name: "title",
-              type: "string",
               title: "Tytuł",
+              type: "string",
               validation: (Rule) => Rule.required(),
             }),
             defineField({
-              name: "description",
-              type: "text",
-              title: "Opis",
+              name: "subtitle",
+              title: "Podtytuł",
+              type: "string",
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: "icon",
-              type: "img",
               title: "Ikona",
-            }),
-            defineField({
-              name: "link",
-              type: "link",
-              title: "Link",
+              type: "img",
+              validation: (Rule) => Rule.required(),
             }),
           ],
         }),

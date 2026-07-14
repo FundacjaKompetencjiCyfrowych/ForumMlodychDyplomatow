@@ -7,7 +7,7 @@ import { universalHeroSection } from "./universalHeroSection";
 import { expertsListSection } from "./expertsListSection";
 import { headingSection } from "./headingSection";
 import { heroSection } from "./heroSection";
-import { joinUsSection } from "./joinUsSection";
+import { cardsWithLinkSection } from "./cardsWithLinkSection";
 import { newPublicationsSection } from "./newPublicationsSection";
 import { peopleSection } from "./peopleSection";
 import { podcastSection } from "./podcastSection";
@@ -16,7 +16,7 @@ import { divisionsListSection } from "./divisionsListSection";
 import { documentsSection } from "./documentsSection";
 import { doubleHeroSection } from "./doubleHeroSection";
 import { benefitsSection } from "./benefitsSection";
-import { whoWeWorkWithSection } from "./whoWeWorkWithSection";
+import { iconCardSection } from "./iconCardSection";
 import { patronitePerksSection } from "./patronitePerksSection";
 
 export const sectionTypes = [
@@ -25,7 +25,7 @@ export const sectionTypes = [
   "eventsSection",
   "headingSection",
   "heroSection",
-  "joinUsSection",
+  "cardsWithLinkSection",
   "newPublicationsSection",
   "peopleSection",
   "podcastSection",
@@ -38,7 +38,7 @@ export const sectionTypes = [
   "documentsSection",
   "doubleHeroSection",
   "benefitsSection",
-  "whoWeWorkWithSection",
+  "iconCardSection",
   "patronitePerksSection",
 ] as const;
 
@@ -49,7 +49,7 @@ export const sectionStructure = [
   divisionsSection,
   eventsSection,
   heroSection,
-  joinUsSection,
+  cardsWithLinkSection,
   newPublicationsSection,
   peopleSection,
   podcastSection,
@@ -63,6 +63,6 @@ export const sectionStructure = [
   documentsSection,
   doubleHeroSection,
   benefitsSection,
-  whoWeWorkWithSection,
+  iconCardSection,
   patronitePerksSection,
 ];
