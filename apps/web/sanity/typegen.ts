@@ -712,6 +712,11 @@ export type Translations = {
     divisionNotFound?: string;
     checkDetails?: string;
   };
+  notFound?: {
+    title?: string;
+    desc?: string;
+    button?: string;
+  };
   locale?: string;
 };
 

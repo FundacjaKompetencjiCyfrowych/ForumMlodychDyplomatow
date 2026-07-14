@@ -16,6 +16,7 @@ export const intlQuery = q
     global: true,
     contactForm: true,
     divisions: true,
+    notFound: true,
   }));
 /*
 Use
