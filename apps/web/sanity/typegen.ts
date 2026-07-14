@@ -148,29 +148,6 @@ export type DivisionsListSection = {
   text?: string;
 };
 
-export type EventsDivisionsSection = {
-  _type: "eventsDivisionsSection";
-  header?: string;
-};
-
-export type JoinUsDivisionsSection = {
-  _type: "joinUsDivisionsSection";
-  header?: string;
-  features?: Array<{
-    icon?: Img;
-    header?: string;
-    description?: string;
-    _key: string;
-  }>;
-  button?: Link;
-};
-
-export type WhatWeDoDivisionsSection = {
-  _type: "whatWeDoDivisionsSection";
-  title?: string;
-  whatWeDo?: Array<string>;
-};
-
 export type UniversalHeroSection = {
   _type: "universalHeroSection";
   header?: string;
@@ -343,15 +320,6 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & UniversalHeroSection)
-  | ({
-      _key: string;
-    } & WhatWeDoDivisionsSection)
-  | ({
-      _key: string;
-    } & JoinUsDivisionsSection)
-  | ({
-      _key: string;
-    } & EventsDivisionsSection)
   | ({
       _key: string;
     } & DivisionsListSection)
@@ -1075,9 +1043,6 @@ export type AllSanitySchemaTypes =
   | ExpertsListSection
   | HeadingSection
   | DivisionsListSection
-  | EventsDivisionsSection
-  | JoinUsDivisionsSection
-  | WhatWeDoDivisionsSection
   | UniversalHeroSection
   | ContactSection
   | SupportUsSection

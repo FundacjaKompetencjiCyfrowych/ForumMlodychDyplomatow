@@ -42,6 +42,9 @@ export default async function Page(props: Props) {
     parameters: {
       slug: params.slug,
       locale: params.locale,
+      divisionSlug: null,
+      // now required for eventsSection, sanity complains if this is not provided, even if null
+      // Even if this is awkward, it's nicer than modifying page builder for divisions page to inject divisionSlug into eventsSection
     },
   });
 

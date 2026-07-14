@@ -6,7 +6,7 @@ import { defaultSeoSettingsQuery, seoFragment } from "./seo";
 import { pageBuilderQueryFragment } from "./pageBuilder";
 
 export type DivisionQueryParams = {
-  slug: string;
+  divisionSlug: string;
   locale: string;
 };
 
@@ -36,7 +36,7 @@ export const singleDivisionFragment = q.fragmentForType<"division">().project((s
 export const singleDivisionQuery = q.star
   .parameters<DivisionQueryParams>()
   .filterByType("division")
-  .filterRaw("slug.current == $slug")
+  .filterRaw("slug.current == $divisionSlug")
   .slice(0)
   .project((sub) => ({
     _id: sub.field("_id"),
@@ -58,7 +58,7 @@ export const divisionsSlugQuery = q.star
 export const divisionsMetadataQuery = q
   .parameters<DivisionQueryParams>()
   .star.filterByType("division")
-  .filterBy("slug.current == $slug")
+  .filterBy("slug.current == $divisionSlug")
   .filterBy("locale == $locale")
   .slice(0)
   .project((sub) => ({

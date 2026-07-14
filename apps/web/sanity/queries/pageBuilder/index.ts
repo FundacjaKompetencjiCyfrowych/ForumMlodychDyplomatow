@@ -13,9 +13,6 @@ import { supportUsSectionFragment } from "./supportUsSectionFragment";
 import type { Locale } from "next-intl";
 import { contactSectionFragment } from "./contactSectionFragment";
 import { universalHeroSectionFragment } from "./universalHeroSectionFragment";
-import { whatWeDoDivisionsSectionFragment } from "./whatWeDoDivisionsSectionFragment";
-import { joinUsDivisionsSectionFragment } from "./joinUsDivisionsSectionFragment";
-import { eventsDivisionsSectionFragment } from "./eventsDivisionsSectionFragment";
 import { divisionsListSectionFragment } from "./divisionsListSectionFragment";
 import { headingSectionFragment } from "./headingSection";
 import { expertsListSectionFragment } from "./expertsListSection";
@@ -43,9 +40,6 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       podcastSection: sub.project(podcastSectionFragment),
       supportUsSection: sub.project(supportUsSectionFragment),
       universalHeroSection: sub.project(universalHeroSectionFragment),
-      whatWeDoDivisionsSection: sub.project(whatWeDoDivisionsSectionFragment),
-      joinUsDivisionsSection: sub.project(joinUsDivisionsSectionFragment),
-      eventsDivisionsSection: sub.project(eventsDivisionsSectionFragment),
       divisionsListSection: sub.project(divisionsListSectionFragment),
       headingSection: sub.project(headingSectionFragment),
       expertsListSection: sub.project(expertsListSectionFragment),

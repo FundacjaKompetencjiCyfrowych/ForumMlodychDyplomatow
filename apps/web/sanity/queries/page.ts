@@ -7,7 +7,7 @@ import type { Locale } from "next-intl";
 import { breadcrumbsFragment } from "./breadcrumbs";
 
 export const pageQuery = q
-  .parameters<{ slug: string; locale: string }>()
+  .parameters<{ slug: string; locale: string; divisionSlug: null }>()
   .star.filterByType("page")
   .filterBy("slug.current == $slug")
   .filterBy(`${LANGUAGE_FIELD} == $locale`)

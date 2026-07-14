@@ -28,7 +28,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const { data } = await runQuery(divisionsMetadataQuery, {
     parameters: {
       locale: params.locale,
-      slug: params.slug,
+      divisionSlug: params.slug,
     },
   });
   return createSeo(data);
@@ -41,7 +41,7 @@ export default async function DivisionSlugPage(props: Props) {
 
   const { data: division } = await runQuery(singleDivisionQuery, {
     parameters: {
-      slug: slug,
+      divisionSlug: slug,
       locale: locale,
     },
   });
@@ -56,15 +56,9 @@ export default async function DivisionSlugPage(props: Props) {
     );
   }
 
-  const sectionsWithSlug =
-    division?.pageBuilder?.map((section) => ({
-      ...section,
-      currentDivisionSlug: slug,
-    })) || [];
-
   return (
     <main className="min-h-screen">
-      <SanitySections value={sectionsWithSlug} locale={locale} />
+      <SanitySections value={division.pageBuilder} locale={locale} />
     </main>
   );
 }

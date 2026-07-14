@@ -13,7 +13,7 @@ const EventsSection = async ({ data, index, locale }: PageBuilderSectionProps<"e
     parameters: {
       locale,
       limit: 2,
-      divisionSlug: null,
+      divisionSlug: data.division ? [data.division] : null,
     },
   });
   return (
