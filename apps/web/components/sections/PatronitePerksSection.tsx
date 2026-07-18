@@ -42,6 +42,7 @@ export const PatronitePerksSection = ({
 }: PageBuilderSectionProps<"patronitePerksSection">) => {
   return (
     <Container
+      contentWidth="xl"
       background="red"
       className="flex flex-col items-center gap-10 text-white desktop:gap-16"
     >

@@ -115,16 +115,14 @@ export {
 export const Breadcrumbs = ({
   breadcrumbs,
   currentPageName,
-  contentWidth,
 }: {
   breadcrumbs: BreadcrumbsFragment[];
   currentPageName: string | null;
-  contentWidth?: React.ComponentProps<typeof Container>["contentWidth"];
 }) => {
   return (
     <Container
       as="div"
-      contentWidth={contentWidth}
+      contentWidth="max"
       className="flex min-h-14 items-center justify-start py-0 desktop:py-0"
     >
       <Breadcrumb className="flex items-center justify-start text-gray-500">

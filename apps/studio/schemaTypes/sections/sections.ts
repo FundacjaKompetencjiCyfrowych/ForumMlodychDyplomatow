@@ -5,7 +5,6 @@ import { eventsListSection } from "./eventsListSection";
 import { eventsSection } from "./eventsSection";
 import { universalHeroSection } from "./universalHeroSection";
 import { expertsListSection } from "./expertsListSection";
-import { headingSection } from "./headingSection";
 import { heroSection } from "./heroSection";
 import { cardsWithLinkSection } from "./cardsWithLinkSection";
 import { newPublicationsSection } from "./newPublicationsSection";
@@ -23,7 +22,6 @@ export const sectionTypes = [
   "aboutUsSection",
   "divisionsSection",
   "eventsSection",
-  "headingSection",
   "heroSection",
   "cardsWithLinkSection",
   "newPublicationsSection",
@@ -57,7 +55,6 @@ export const sectionStructure = [
   contactSection,
   universalHeroSection,
   divisionsListSection,
-  headingSection,
   expertsListSection,
   eventsListSection,
   documentsSection,

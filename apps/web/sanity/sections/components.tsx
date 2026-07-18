@@ -11,7 +11,6 @@ import {
   ContactSection,
   UniversalHero,
   DivisionsListSection,
-  HeadingSection,
   ExpertsListSection,
 } from "@/components/sections";
 import { ComponentType } from "react";
@@ -50,7 +49,6 @@ export const components: ComponentsRegistry = {
   contactSection: ContactSection,
   universalHeroSection: UniversalHero,
   divisionsListSection: DivisionsListSection,
-  headingSection: HeadingSection,
   expertsListSection: ExpertsListSection,
   documentsSection: DocumentsSection,
   doubleHeroSection: DoubleHeroSection,

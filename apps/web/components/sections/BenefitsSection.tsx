@@ -37,7 +37,11 @@ const BenefitCard = ({
 
 export const BenefitsSection = ({ data, index }: PageBuilderSectionProps<"benefitsSection">) => {
   return (
-    <Container background="blue" className="flex flex-col items-center gap-10 desktop:gap-16">
+    <Container
+      contentWidth="xl"
+      background="blue"
+      className="flex flex-col items-center gap-10 desktop:gap-16"
+    >
       <Typography variant="h3" as={getHeading(index)}>
         {data.heading}
       </Typography>

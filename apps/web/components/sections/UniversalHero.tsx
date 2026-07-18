@@ -12,7 +12,7 @@ const UniversalHero = ({ data, index }: UniversalHeroProps) => {
   if (!header) return null;
 
   return (
-    <Container>
+    <Container contentWidth="xl">
       <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-20">
         <div className="order-2 flex flex-col gap-4 p-4 lg:order-1 lg:gap-6">
           <Typography as={getHeading(index)} variant="h1">

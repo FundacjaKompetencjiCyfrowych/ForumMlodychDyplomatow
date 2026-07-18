@@ -135,13 +135,6 @@ export type ExpertsListSection = {
   dummy?: string;
 };
 
-export type HeadingSection = {
-  _type: "headingSection";
-  heading?: string;
-  subheading?: string;
-  image?: Img;
-};
-
 export type DivisionsListSection = {
   _type: "divisionsListSection";
   header?: string;
@@ -293,9 +286,6 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & EventsSection)
-  | ({
-      _key: string;
-    } & HeadingSection)
   | ({
       _key: string;
     } & HeroSection)
@@ -1041,7 +1031,6 @@ export type AllSanitySchemaTypes =
   | DocumentsSection
   | EventsListSection
   | ExpertsListSection
-  | HeadingSection
   | DivisionsListSection
   | UniversalHeroSection
   | ContactSection

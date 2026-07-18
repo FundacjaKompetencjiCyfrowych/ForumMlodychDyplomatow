@@ -6,7 +6,7 @@ import Typography from "../ui/typography";
 
 export const DocumentsSection = ({ data, locale }: PageBuilderSectionProps<"documentsSection">) => {
   return (
-    <Container className="flex flex-col gap-16 bg-brand-blue-50">
+    <Container contentWidth="xl" className="flex flex-col gap-16 bg-brand-blue-50">
       {data.groups?.map((group) => (
         <div key={group._key} className="flex flex-col gap-6">
           <Typography variant="h2">{group.title}</Typography>

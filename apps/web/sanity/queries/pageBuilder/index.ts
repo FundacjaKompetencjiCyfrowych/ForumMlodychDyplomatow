@@ -14,7 +14,6 @@ import type { Locale } from "next-intl";
 import { contactSectionFragment } from "./contactSectionFragment";
 import { universalHeroSectionFragment } from "./universalHeroSectionFragment";
 import { divisionsListSectionFragment } from "./divisionsListSectionFragment";
-import { headingSectionFragment } from "./headingSection";
 import { expertsListSectionFragment } from "./expertsListSection";
 import { eventsListSectionFragment } from "./eventsListSection";
 import { documentsSectionFragment } from "./documentsSectionFragment";
@@ -41,7 +40,6 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       supportUsSection: sub.project(supportUsSectionFragment),
       universalHeroSection: sub.project(universalHeroSectionFragment),
       divisionsListSection: sub.project(divisionsListSectionFragment),
-      headingSection: sub.project(headingSectionFragment),
       expertsListSection: sub.project(expertsListSectionFragment),
       documentsSection: sub.project(documentsSectionFragment),
       doubleHeroSection: sub.project(doubleHeroSectionFragment),

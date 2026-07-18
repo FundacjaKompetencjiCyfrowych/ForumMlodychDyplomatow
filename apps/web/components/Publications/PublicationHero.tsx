@@ -61,7 +61,7 @@ export const PublicationHero = ({
 
   return (
     <>
-      <Breadcrumbs contentWidth="xl" breadcrumbs={breadcrumbs} currentPageName={title} />
+      <Breadcrumbs breadcrumbs={breadcrumbs} currentPageName={title} />
       <Container contentWidth="xl" className="mx-auto w-full max-w-400 px-4 py-8 md:px-6">
         {/* Breadcrumbs */}
 
@@ -184,7 +184,6 @@ export const PublicationHero = ({
               {image ? (
                 <GradientImage
                   image={image}
-                  priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="h-full w-full object-cover"
                   wrapperClassName="h-full w-full"

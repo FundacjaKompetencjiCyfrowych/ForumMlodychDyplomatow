@@ -10,5 +10,4 @@ export { default as SupportUsSection } from "./SupportUsSection";
 export { default as ContactSection } from "./ContactSection";
 export { default as UniversalHero } from "./UniversalHero";
 export { default as DivisionsListSection } from "./DivisionsListSection";
-export { default as HeadingSection } from "./HeadingSection";
 export { default as ExpertsListSection } from "./ExpertsListSection";
