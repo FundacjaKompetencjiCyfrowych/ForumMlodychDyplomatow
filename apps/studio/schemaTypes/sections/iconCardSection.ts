@@ -3,7 +3,7 @@ import { createSectionPreview } from "./sectionPreview";
 
 export const iconCardSection = defineType({
   name: "iconCardSection",
-  title: "Z kim współpracujemy",
+  title: "Karty z ikonami",
   type: "object",
   preview: createSectionPreview("iconCardSection", {
     title: "Karty z ikonami",
