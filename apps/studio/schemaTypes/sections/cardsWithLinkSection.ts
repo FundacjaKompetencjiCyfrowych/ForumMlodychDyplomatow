@@ -22,15 +22,14 @@ export const cardsWithLinkSection = defineType({
       title: "Podtytuł",
     }),
     defineField({
-      name: "benefits",
+      name: "items",
       type: "array",
-      title: "Benefity",
-      description: "Krótkie opisy korzyści płynących z dołączenia do FMD.",
+      title: "Elementy",
       of: [
         defineArrayMember({
-          name: "benefit",
+          name: "item",
           type: "object",
-          title: "Benefit",
+          title: "Element",
           preview: {
             select: {
               title: "title",

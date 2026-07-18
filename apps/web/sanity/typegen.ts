@@ -208,12 +208,12 @@ export type CardsWithLinkSection = {
   _type: "cardsWithLinkSection";
   heading?: string;
   subheading?: string;
-  benefits?: Array<{
+  items?: Array<{
     title?: string;
     description?: string;
     icon?: Img;
     link?: Link;
-    _type: "benefit";
+    _type: "item";
     _key: string;
   }>;
 };

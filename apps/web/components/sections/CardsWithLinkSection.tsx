@@ -14,7 +14,7 @@ const OfferCard = ({
   index,
 }: {
   index: number;
-  item: DeepGet<PageBuilderSectionProps<"cardsWithLinkSection">, "data.benefits">;
+  item: DeepGet<PageBuilderSectionProps<"cardsWithLinkSection">, "data.items">;
 }) => {
   return (
     <div className="flex min-w-full flex-col items-stretch gap-4 border border-slate-100 bg-white p-6 text-center desktop:min-w-auto">
@@ -51,7 +51,7 @@ const CardsWithLinkSection = ({
         </Typography>
       </div>
       <ResponsiveCarousel className="w-full" contentClassName="desktop:gap-6 items-stretch">
-        {data.benefits?.map((item, index) => (
+        {data.items?.map((item, index) => (
           <OfferCard key={`${item._key}-${index}`} item={item} index={sectionIndex} />
         ))}
       </ResponsiveCarousel>

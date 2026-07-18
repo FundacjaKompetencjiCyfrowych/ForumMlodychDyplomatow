@@ -8,7 +8,7 @@ export const cardsWithLinkSectionFragment = q
   .project((sub) => ({
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
-    benefits: sub.field("benefits[]").project((sub) => ({
+    items: sub.field("items[]").project((sub) => ({
       _key: sub.field("_key"),
       title: sub.field("title"),
       description: sub.field("description"),
