@@ -40,7 +40,7 @@ export const BenefitsSection = ({ data, index }: PageBuilderSectionProps<"benefi
     <Container
       contentWidth="xl"
       background="blue"
-      className="flex flex-col items-center gap-10 desktop:gap-16"
+      contentClassName="flex flex-col items-center gap-10 desktop:gap-16"
     >
       <Typography variant="h3" as={getHeading(index)}>
         {data.heading}

@@ -44,7 +44,7 @@ export const PatronitePerksSection = ({
     <Container
       contentWidth="xl"
       background="red"
-      className="flex flex-col items-center gap-10 text-white desktop:gap-16"
+      contentClassName="flex flex-col items-center gap-10 text-white desktop:gap-16"
     >
       <div className="flex flex-col items-center gap-10">
         <Typography variant="h2" as={getHeading(index)}>
