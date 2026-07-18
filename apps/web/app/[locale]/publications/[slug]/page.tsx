@@ -134,9 +134,8 @@ export default async function PublicationDetailPage({ params }: { params: Promis
     formatLink({ slug: `/`, type: "page", text: t.home }),
     formatLink({
       text: t.publications,
-      homepage: true,
       type: "publication",
-      slug: `/`,
+      slug: `/publications`,
     }),
   ].map(
     (i, index) =>

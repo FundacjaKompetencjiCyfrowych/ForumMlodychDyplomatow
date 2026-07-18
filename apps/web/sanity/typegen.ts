@@ -369,7 +369,6 @@ export type Link = {
   text?: string;
   href?: string;
   page?: PageReference;
-  homepage?: boolean;
   division?: DivisionReference;
   publication?: PublicationReference;
   openInNewTab?: boolean;

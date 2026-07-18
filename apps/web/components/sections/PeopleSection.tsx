@@ -11,16 +11,16 @@ const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSec
   const groups = data.people?.filter((group) => group.groupName && group.members) ?? [];
   return (
     <Container
-      className="flex flex-col items-center gap-8 desktop:gap-12"
       background="slate"
       contentWidth="xl"
+      contentClassName="flex flex-col items-center gap-8 desktop:gap-12"
     >
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 desktop:gap-16">
-        <Typography variant="h2" as={getHeading(index)} className="mb-4 text-center desktop:mb-16">
+        <Typography variant="h2" as={getHeading(index)} className="text-center">
           {data.heading}
         </Typography>
         {data.subheading && (
-          <Typography variant="body-l" className="text-gray-600">
+          <Typography variant="body-l" className="text-center text-balance text-gray-600">
             {data.subheading}
           </Typography>
         )}

@@ -2112,13 +2112,6 @@
           },
           "optional": true
         },
-        "homepage": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        },
         "division": {
           "type": "objectAttribute",
           "value": {

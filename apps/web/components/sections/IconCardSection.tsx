@@ -7,7 +7,11 @@ import { SanityImage } from "../../sanity/image/SanityImage";
 
 export const IconCardSection = ({ data, index }: PageBuilderSectionProps<"iconCardSection">) => {
   return (
-    <Container contentWidth="xl" className="flex flex-col gap-4 bg-slate-50 desktop:gap-16">
+    <Container
+      contentWidth="xl"
+      className="bg-slate-50"
+      contentClassName="flex flex-col gap-4 desktop:gap-16"
+    >
       <div className="flex flex-col items-center gap-10">
         <Typography variant="h2" as={getHeading(index)}>
           {data.heading}

@@ -13,7 +13,6 @@ type Options = {
   slug: string | null;
   type: LinkType;
   text: string | null;
-  homepage?: boolean;
   _type?: string;
 };
 
@@ -25,7 +24,6 @@ export const formatLink = (options: Options) => {
     _type: options._type ?? "link",
     linkType: options.type,
     href: options.slug,
-    homepage: options.homepage ?? false,
     _key: `${options.type}-${options.slug}`,
     openInNewTab: options.openInNewTab ?? false,
     text: options.text,

@@ -19,10 +19,7 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
         ),
       },
       'linkType == "division"': {
-        href: sub.select({
-          "homepage==true": sub.value(""),
-          "homepage!=true": sub.field("division").deref().field("slug.current"),
-        }),
+        href: sub.field("division").deref().field("slug.current"),
         text: sub.select(
           {
             "defined(text)": sub.field("text"),
@@ -31,10 +28,7 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
         ),
       },
       'linkType == "publication"': {
-        href: sub.select({
-          "homepage==true": sub.value(""),
-          "homepage!=true": sub.field("publication").deref().field("slug.current"),
-        }),
+        href: sub.field("publication").deref().field("slug.current"),
         text: sub.select(
           {
             "defined(text)": sub.field("text"),
@@ -48,7 +42,6 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
     }
   ),
   openInNewTab: sub.field("openInNewTab"),
-  homepage: sub.field("homepage"),
 }));
 
 export const linkButtonFragment = q.fragment<LinkButton & { _key: string }>().project((sub) => ({
