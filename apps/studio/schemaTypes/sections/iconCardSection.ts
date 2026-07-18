@@ -20,7 +20,6 @@ export const iconCardSection = defineType({
       name: "subheading",
       title: "Podnagłówek",
       type: "string",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "items",

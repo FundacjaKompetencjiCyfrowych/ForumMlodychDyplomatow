@@ -12,9 +12,11 @@ export const IconCardSection = ({ data, index }: PageBuilderSectionProps<"iconCa
         <Typography variant="h2" as={getHeading(index)}>
           {data.heading}
         </Typography>
-        <Typography variant="body-xl" className="text-gray-800">
-          {data.subheading}
-        </Typography>
+        {data.subheading && (
+          <Typography variant="body-xl" className="text-gray-800">
+            {data.subheading}
+          </Typography>
+        )}
       </div>
       <div className="flex flex-col items-stretch justify-center gap-4 desktop:flex-row desktop:gap-10">
         {data.items?.map((item) => (
