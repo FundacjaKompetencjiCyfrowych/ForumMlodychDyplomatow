@@ -18,7 +18,9 @@ const OfferCard = ({
 }) => {
   return (
     <div className="flex min-w-full flex-col items-stretch gap-4 border border-slate-100 bg-white p-6 text-center desktop:min-w-auto">
-      {item.icon && <SanityImage image={item.icon} className="mx-auto h-18 w-18" />}
+      {item.icon && (
+        <SanityImage image={item.icon} className="mx-auto h-18 w-18 text-brand-blue-900" />
+      )}
       <Typography variant="title-l" as={getSubHeading(index)}>
         {item.title}
       </Typography>

@@ -52,7 +52,7 @@ export const pagesLanguageSlugQuery = q
   .project((sub) => ({
     slug: sub
       .field("translations[]")
-      .filterBy(`_key == $locale`)
+      .filterBy(`language == $locale`)
       .field("value")
       .deref()
       // Needs raw, since we don't have a strongly typed reference, but all translated pages have a slug field
