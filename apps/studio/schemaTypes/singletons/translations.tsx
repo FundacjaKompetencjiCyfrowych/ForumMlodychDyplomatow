@@ -387,6 +387,12 @@ export const translations = defineType({
           type: "string",
           validation: (Rule) => Rule.required(),
         }),
+        defineField({
+          name: "maxAmmount",
+          title: "Wybierz maksymalnie",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
       ],
     }),
     languageField,

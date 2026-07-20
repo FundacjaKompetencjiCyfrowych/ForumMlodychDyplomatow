@@ -15,17 +15,20 @@ export default defineType({
     defineField({
       name: "type",
       title: "Rodzaj",
-      type: "string",
+      type: "reference",
+      to: [{ type: "publicationType" }],
       group: "content",
-      description: "Rodzaj publikacji jaki chcesz opublikować",
+      description: "Wybierz rodzaj publikacji lub dodaj nowy",
       options: {
-        list: [
-          { title: "Krótkie opracowanie", value: "article" },
-          { title: "Analiza", value: "news" },
-          { title: "Magazyn", value: "guide" },
-          { title: "Publikacja", value: "review" },
-        ],
-        layout: "dropdown",
+        filter: ({ document }) => {
+          const currentLocale = document.locale;
+          if (!currentLocale) return { filter: "" };
+
+          return {
+            filter: "locale == $locale",
+            params: { locale: currentLocale },
+          };
+        },
       },
       validation: (Rule) => Rule.required().error("Pole wymagane"),
     }),

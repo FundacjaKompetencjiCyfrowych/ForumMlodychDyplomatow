@@ -94,13 +94,6 @@ export const PublicationCard = ({
               {excerpt}
             </Typography>
           )}
-
-          <div className="mt-auto">
-            <span className="flex items-center text-sm font-semibold text-brand-red">
-              {t("cardButton")}
-              <ChevronRight className="ml-1 h-4 w-4" />
-            </span>
-          </div>
         </div>
 
         {/* Stopka z autorem - zawsze na dole */}

@@ -19,33 +19,6 @@ type Params = {
   slug: string;
 };
 
-const pageTranslations = {
-  pl: {
-    home: "Strona główna",
-    publications: "Publikacje",
-    noTitle: "Brak tytułu",
-    defaultCategory: "Publikacja",
-    types: {
-      article: "Krótkie opracowanie",
-      news: "Analiza",
-      guide: "Magazyn",
-      review: "Publikacja",
-    } as Record<string, string>,
-  },
-  en: {
-    home: "Home",
-    publications: "Publications",
-    noTitle: "No title",
-    defaultCategory: "Publication",
-    types: {
-      article: "Brief",
-      news: "Analysis",
-      guide: "Magazine",
-      review: "Publication",
-    } as Record<string, string>,
-  },
-};
-
 export const revalidate = 3600; // 1 hour
 
 export const generateStaticParams = async () => {
@@ -73,16 +46,10 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       locale,
       currentId: publication._id,
       tagIds: currentTagIds,
-      pubType: publication.type || null,
+      pubType: publication.type?.title || null,
       limit: 3,
     },
   });
-
-  const t = pageTranslations[locale as keyof typeof pageTranslations] || pageTranslations.pl;
-
-  const categoryLabel = publication.type
-    ? t.types[publication.type] || publication.type
-    : t.defaultCategory;
 
   // Formatowanie daty głównego artykułu
   const formattedDate = publication.date
@@ -117,8 +84,8 @@ export default async function PublicationDetailPage({ params }: { params: Promis
   return (
     <div className="min-h-screen">
       <PublicationHero
-        category={categoryLabel}
-        title={publication.title || t.noTitle}
+        category={publication.type?.title ?? ""}
+        title={publication.title ?? ""}
         excerpt={publication.excerpt ?? undefined}
         tags={tags}
         author={authorData}

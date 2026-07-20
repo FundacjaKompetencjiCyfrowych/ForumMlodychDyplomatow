@@ -10,7 +10,7 @@ const getPublicationsAction = async (params: any) => {
   "use server";
 
   const tagsParam = params.filters?.tags?.length > 0 ? params.filters.tags : null;
-  const typeParam = params.filters?.pubType ? params.filters.pubType : null;
+  const pubTypeParam = params.filters?.pubType?.length > 0 ? params.filters.pubType : null;
   const searchParam = params.q ? params.q : null;
 
   const sortParam = params.filters?.sort === "asc" ? "asc" : "desc";
@@ -24,11 +24,11 @@ const getPublicationsAction = async (params: any) => {
     {
       parameters: {
         locale: params.locale,
-        type: typeParam,
+        pubType: pubTypeParam,
         tags: tagsParam,
         searchTerm: searchParam,
         limit: params.perPage,
-        offset: ((params.page ?? 1) - 1) * 9,
+        offset: ((params.page ?? 1) - 1) * params.perPage,
       },
     }
   );
@@ -44,17 +44,15 @@ const PublicationsFilter = ({
   const filters: Filter[] = [
     {
       slug: "pubType",
-      multiple: false,
+      multiple: true,
       options: [
         {
           label: data.filterPublications?.label ?? "Rodzaj publikacji",
-          subgroups: Object.entries(data.filterPublications?.filterFields ?? {}).map(
-            ([key, label]) => ({
-              label: label as string,
-              value: key,
-              type: "radio",
-            })
-          ),
+          subgroups:
+            data.publicationTypes?.map((pubType: any) => ({
+              label: pubType.title ?? "Brak nazwy",
+              value: pubType.slug ?? "",
+            })) ?? [],
         },
       ],
     },
@@ -68,7 +66,6 @@ const PublicationsFilter = ({
             category.tags?.map((tag: any) => ({
               label: tag.name ?? "Brak nazwy",
               value: tag.slug ?? "",
-              type: "chip",
             })) ?? [],
         })) ?? [],
     },

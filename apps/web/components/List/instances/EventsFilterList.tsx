@@ -35,6 +35,7 @@ export const EventsFilterList = ({ filters, queryAction, locale, perPage }: Prop
       locale={locale}
       perPage={perPage}
       listClassName="flex flex-col gap-4"
+      type="event"
     />
   );
 };

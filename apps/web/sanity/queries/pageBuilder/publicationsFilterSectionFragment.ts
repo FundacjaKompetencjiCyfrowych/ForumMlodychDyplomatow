@@ -9,6 +9,17 @@ export const publicationFilterSectionFragment = q
     filterHeading: sub.field("filterHeading"),
     publicationsPerPage: sub.field("publicationsPerPage"),
     searchbarPlaceholder: sub.field("searchbarPlaceholder"),
+
+    publicationTypes: sub.star
+      .filterByType("publicationType")
+      .filter("locale == $locale")
+      .order("title asc")
+      .project((pubTypeSub) => ({
+        _id: pubTypeSub.field("_id"),
+        title: pubTypeSub.field("title"),
+        slug: pubTypeSub.field("slug.current"),
+      })),
+
     categories: sub.star
       .filterByType("tagCategory")
       .filter("locale == $locale")
@@ -25,13 +36,8 @@ export const publicationFilterSectionFragment = q
             slug: tagSub.field("slug.current"),
           })),
       })),
+
     filterPublications: sub.project((fields) => ({
       label: fields.field("filterPublications.label"),
-      filterFields: fields.project((ff) => ({
-        article: ff.field("filterPublications.filterFields.article"),
-        news: ff.field("filterPublications.filterFields.news"),
-        guide: ff.field("filterPublications.filterFields.guide"),
-        review: ff.field("filterPublications.filterFields.review"),
-      })),
     })),
   }));

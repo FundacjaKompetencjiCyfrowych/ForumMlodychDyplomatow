@@ -13,10 +13,10 @@ export type PublicationsListQueryParams = {
 export type PublicationsSearchQueryParams = {
   locale: string;
   limit: number;
-  type: "article" | "news" | "guide" | "review" | null;
+  type?: string | null;
   offset: number;
   searchTerm?: string | null;
-  pubType?: string | null;
+  pubType?: string[] | null;
   authorId?: string | null;
   tags?: string[] | null;
 };
@@ -38,7 +38,13 @@ export const publicationPreviewFragment = q
     _id: true,
     _type: true,
     title: true,
-    type: true,
+    type: sub
+      .field("type")
+      .deref()
+      .project({
+        title: true,
+        slug: sub.field("slug.current"), // Pobieramy slug rodzaju
+      }),
     date: true,
     excerpt: true,
     slug: sub.field("slug.current"),
@@ -66,7 +72,13 @@ export const publicationDetailFragment = q
     _id: true,
     _type: true,
     title: true,
-    type: true,
+    type: sub
+      .field("type")
+      .deref()
+      .project({
+        title: true,
+        slug: sub.field("slug.current"), // Pobieramy slug rodzaju
+      }),
     date: true,
     excerpt: true,
     slug: "slug.current",
@@ -121,7 +133,9 @@ export const advancedPublicationsQuery = ({
         .filterByType("publication")
         .filterRaw("locale == $locale")
         .filterRaw("(!defined($tags) || length($tags) == 0 || tags[]->slug.current match $tags)")
-        .filterRaw("(!defined($type) || $type == '' || type == $type)")
+        .filterRaw(
+          "(!defined($pubType) || length($pubType) == 0 || type->slug.current in $pubType)"
+        )
         .filterRaw(
           "(!defined($searchTerm) || $searchTerm == '' || title match $searchTerm + '*' || author->name match $searchTerm + '*')"
         )
@@ -150,7 +164,7 @@ export const relatedPublicationsQuery = q
   .parameters<RelatedPublicationsQueryParams>()
   .star.filterByType("publication")
   .filterRaw(`locale == $locale && _id != $currentId`)
-  .filterRaw(`(count((tags[]._ref)[@ in $tagIds]) > 0 || type == $pubType)`)
+  .filterRaw(`(count((tags[]._ref)[@ in $tagIds]) > 0 || type->slug.current in $pubType)`)
   .order("date desc")
   .raw("[0...$limit]", "passthrough")
   .project(publicationPreviewFragment);
