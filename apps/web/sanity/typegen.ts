@@ -59,8 +59,8 @@ export type PatronitePerksSection = {
   cta?: Link;
 };
 
-export type WhoWeWorkWithSection = {
-  _type: "whoWeWorkWithSection";
+export type IconCardSection = {
+  _type: "iconCardSection";
   heading?: string;
   subheading?: string;
   items?: Array<{
@@ -135,65 +135,18 @@ export type ExpertsListSection = {
   dummy?: string;
 };
 
-export type HeadingSection = {
-  _type: "headingSection";
-  heading?: string;
-  subheading?: string;
-  image?: Img;
-};
-
 export type DivisionsListSection = {
   _type: "divisionsListSection";
   header?: string;
   text?: string;
 };
 
-export type EventsDivisionsSection = {
-  _type: "eventsDivisionsSection";
-  header?: string;
-};
-
-export type JoinUsDivisionsSection = {
-  _type: "joinUsDivisionsSection";
-  header?: string;
-  features?: Array<{
-    icon?: Img;
-    header?: string;
-    description?: string;
-    _key: string;
-  }>;
-  button?: Link;
-};
-
-export type WhatWeDoDivisionsSection = {
-  _type: "whatWeDoDivisionsSection";
-  title?: string;
-  whatWeDo?: Array<string>;
-};
-
-export type PersonReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "person";
-};
-
-export type TeamDivisionsSection = {
-  _type: "teamDivisionsSection";
-  header?: string;
-  text?: string;
-  members?: Array<
-    {
-      _key: string;
-    } & PersonReference
-  >;
-};
-
 export type UniversalHeroSection = {
   _type: "universalHeroSection";
   header?: string;
   description?: string;
-  image?: Img;
+  caption?: string;
+  image?: GradientImg;
 };
 
 export type ContactSection = {
@@ -222,9 +175,18 @@ export type PodcastSection = {
   link?: Link;
 };
 
+export type PersonReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "person";
+};
+
 export type PeopleSection = {
   _type: "peopleSection";
   heading?: string;
+  subheading?: string;
+  link?: Link;
   people?: Array<{
     groupName?: string;
     members?: Array<
@@ -242,16 +204,16 @@ export type NewPublicationsSection = {
   heading?: string;
 };
 
-export type JoinUsSection = {
-  _type: "joinUsSection";
+export type CardsWithLinkSection = {
+  _type: "cardsWithLinkSection";
   heading?: string;
   subheading?: string;
-  benefits?: Array<{
+  items?: Array<{
     title?: string;
     description?: string;
     icon?: Img;
     link?: Link;
-    _type: "benefit";
+    _type: "item";
     _key: string;
   }>;
 };
@@ -271,23 +233,11 @@ export type EventsSection = {
   link?: Link;
 };
 
-export type DivisionReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "division";
-};
-
 export type DivisionsSection = {
   _type: "divisionsSection";
   heading?: string;
   subheading?: string;
   description?: string;
-  divisions?: Array<
-    {
-      _key: string;
-    } & DivisionReference
-  >;
 };
 
 export type AboutUsSection = {
@@ -301,6 +251,17 @@ export type AboutUsSection = {
     _key: string;
   }>;
 };
+
+export type Breadcrumbs = Array<
+  | ({
+      _key: string;
+    } & Link)
+  | {
+      text?: string;
+      _type: "label";
+      _key: string;
+    }
+>;
 
 export type Socials = Array<{
   platform?:
@@ -327,13 +288,10 @@ export type PageBuilder = Array<
     } & EventsSection)
   | ({
       _key: string;
-    } & HeadingSection)
-  | ({
-      _key: string;
     } & HeroSection)
   | ({
       _key: string;
-    } & JoinUsSection)
+    } & CardsWithLinkSection)
   | ({
       _key: string;
     } & NewPublicationsSection)
@@ -354,18 +312,6 @@ export type PageBuilder = Array<
     } & UniversalHeroSection)
   | ({
       _key: string;
-    } & TeamDivisionsSection)
-  | ({
-      _key: string;
-    } & WhatWeDoDivisionsSection)
-  | ({
-      _key: string;
-    } & JoinUsDivisionsSection)
-  | ({
-      _key: string;
-    } & EventsDivisionsSection)
-  | ({
-      _key: string;
     } & DivisionsListSection)
   | ({
       _key: string;
@@ -384,7 +330,7 @@ export type PageBuilder = Array<
     } & BenefitsSection)
   | ({
       _key: string;
-    } & WhoWeWorkWithSection)
+    } & IconCardSection)
   | ({
       _key: string;
     } & PatronitePerksSection)
@@ -403,6 +349,13 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
+export type DivisionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "division";
+};
+
 export type PublicationReference = {
   _ref: string;
   _type: "reference";
@@ -416,7 +369,6 @@ export type Link = {
   text?: string;
   href?: string;
   page?: PageReference;
-  homepage?: boolean;
   division?: DivisionReference;
   publication?: PublicationReference;
   openInNewTab?: boolean;
@@ -515,6 +467,15 @@ export type Settings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  siteName?: string;
+  logo?: Img;
+  baseUrl?: string;
+  organization?: {
+    name?: string;
+    socials?: Array<string>;
+    email?: string;
+    phone?: string;
+  };
   seo?: Seo;
 };
 
@@ -756,7 +717,7 @@ export type Publication = {
   excerpt?: string;
   slug?: Slug;
   date?: string;
-  mainImage?: Img;
+  mainImage?: GradientImg;
   author?: PersonReference;
   pdfFile?: {
     asset?: SanityFileAssetReference;
@@ -893,23 +854,7 @@ export type Division = {
   name?: string;
   slug?: Slug;
   coverImage?: Img;
-  pageBuilder?: Array<
-    | ({
-        _key: string;
-      } & UniversalHeroSection)
-    | ({
-        _key: string;
-      } & WhatWeDoDivisionsSection)
-    | ({
-        _key: string;
-      } & JoinUsDivisionsSection)
-    | ({
-        _key: string;
-      } & TeamDivisionsSection)
-    | ({
-        _key: string;
-      } & EventsDivisionsSection)
-  >;
+  pageBuilder?: PageBuilder;
 };
 
 export type CategoryReference = {
@@ -964,6 +909,7 @@ export type Page = {
   _rev: string;
   name?: string;
   slug?: Slug;
+  breadcrumbs?: Breadcrumbs;
   pageBuilder?: PageBuilder;
   locale?: string;
   seo?: Seo;
@@ -1081,35 +1027,31 @@ export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | FileDataFile
   | PatronitePerksSection
-  | WhoWeWorkWithSection
+  | IconCardSection
   | BenefitsSection
   | DoubleHeroSection
   | DocumentsSection
   | EventsListSection
   | ExpertsListSection
-  | HeadingSection
   | DivisionsListSection
-  | EventsDivisionsSection
-  | JoinUsDivisionsSection
-  | WhatWeDoDivisionsSection
-  | PersonReference
-  | TeamDivisionsSection
   | UniversalHeroSection
   | ContactSection
   | SupportUsSection
   | PodcastSection
+  | PersonReference
   | PeopleSection
   | NewPublicationsSection
-  | JoinUsSection
+  | CardsWithLinkSection
   | HeroSection
   | EventsSection
-  | DivisionReference
   | DivisionsSection
   | AboutUsSection
+  | Breadcrumbs
   | Socials
   | PageBuilder
   | LinkButton
   | PageReference
+  | DivisionReference
   | PublicationReference
   | Link
   | PostsSection

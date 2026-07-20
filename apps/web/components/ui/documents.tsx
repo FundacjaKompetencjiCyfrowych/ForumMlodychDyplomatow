@@ -13,7 +13,7 @@ import Typography from "./typography";
 
 const FileCard = ({ children, className }: { className?: string; children: React.ReactNode }) => {
   return (
-    <div className={cn("w-full border-b border-gray-300 bg-white px-6 py-6", className)}>
+    <div className={cn("w-full border-b border-gray-300 bg-white px-6 py-7", className)}>
       {children}
     </div>
   );
@@ -42,7 +42,12 @@ export const DocumentItem = ({
       </Typography>
       <div className="flex w-full flex-row items-center justify-between gap-10 desktop:w-auto desktop:justify-end">
         <div className="flex shrink-0 flex-row gap-2">
-          <Typography as="time" variant="body-s" dateTime={updatedAt.toISOString()}>
+          <Typography
+            as="time"
+            variant="caption"
+            dateTime={updatedAt.toISOString()}
+            className="text-gray-600"
+          >
             {updatedAt.toLocaleDateString(locale, {
               year: "numeric",
               month: "numeric",
@@ -50,10 +55,14 @@ export const DocumentItem = ({
             })}
           </Typography>
           {file.size && <Separator orientation="vertical" />}
-          {file.size && <Typography variant="body-s">{formatFileSize(file.size)}</Typography>}
+          {file.size && (
+            <Typography variant="caption" className="text-gray-600">
+              {formatFileSize(file.size)}
+            </Typography>
+          )}
         </div>
         <a className="shrink-0" href={file.url} target="_blank" rel="noopener noreferrer">
-          <DownloadIcon />
+          <DownloadIcon size={16} className="text-(--color-brand-red)" />
         </a>
       </div>
     </FileCard>

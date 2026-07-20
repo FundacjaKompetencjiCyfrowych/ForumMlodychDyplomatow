@@ -3,6 +3,7 @@ import {
   singlePublicationQuery,
   relatedPublicationsQuery,
   publicationsStaticParams,
+  publicationMetadataQuery,
 } from "@/sanity/queries/publications";
 import { runQuery } from "../../../../sanity/groqd";
 import { PublicationHero } from "@/components/Publications/PublicationHero";
@@ -13,6 +14,10 @@ import { PublicationAuthor } from "@/components/Publications/PublicationAuthor";
 import type { Locale } from "next-intl";
 import { getInitials } from "./helpers";
 import { setRequestLocale } from "next-intl/server";
+import { formatLink } from "../../../../lib/links";
+import type { BreadcrumbsFragment } from "../../../../sanity/queries/breadcrumbs";
+import type { Metadata } from "next";
+import { createJsonLdArticle, createSeo } from "../../../../lib/seo";
 
 type Params = {
   locale: Locale;
@@ -55,11 +60,31 @@ export const generateStaticParams = async () => {
   });
   return data;
 };
+
+export async function generateMetadata(props: { params: Promise<Params> }): Promise<Metadata> {
+  const parameters = await props.params;
+
+  const { data: page } = await runQuery(publicationMetadataQuery, {
+    parameters,
+    stega: false,
+    perspective: "published",
+  });
+
+  return createSeo({
+    ...page,
+    slug: `publications/${parameters.slug}`,
+  });
+}
+
 export default async function PublicationDetailPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
   setRequestLocale(locale ?? "pl");
   const { data: publication } = await runQuery(singlePublicationQuery, {
     parameters: { locale, slug },
+  });
+  const { data: seo } = await runQuery(publicationMetadataQuery, {
+    parameters: { locale, slug },
+    stega: false,
   });
 
   if (!publication) {
@@ -106,13 +131,28 @@ export default async function PublicationDetailPage({ params }: { params: Promis
     : undefined;
 
   const breadcrumbs = [
-    { label: t.home, href: `/${locale}` },
-    { label: t.publications, href: `/${locale}/publications` },
-    { label: publication.title || t.noTitle },
-  ];
-
+    formatLink({ slug: `/`, type: "page", text: t.home }),
+    formatLink({
+      text: t.publications,
+      type: "publication",
+      slug: `/publications`,
+    }),
+  ].map(
+    (i, index) =>
+      ({
+        _key: `breadcrumb-${index}`,
+        _type: "breadcrumb",
+        link: i,
+      }) as BreadcrumbsFragment
+  );
+  const jsonLd = createJsonLdArticle(seo);
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <PublicationHero
         breadcrumbs={breadcrumbs}
         category={categoryLabel}
@@ -123,16 +163,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
         date={formattedDate}
         isoDate={isoDate}
         pdfUrl={publication.pdfFile?.url}
-        image={
-          publication.mainImage?.asset?.url
-            ? {
-                src: publication.mainImage.asset.url,
-                alt: publication.mainImage.asset.altText || publication.title || "Zdjęcie główne",
-                caption: publication.mainImage.asset.description ?? undefined,
-                blurDataURL: publication.mainImage.asset.metadata?.lqip ?? undefined,
-              }
-            : null
-        }
+        image={publication.mainImage}
         locale={locale}
       />
       <PublicationBody content={publication.text || []} locale={locale} />

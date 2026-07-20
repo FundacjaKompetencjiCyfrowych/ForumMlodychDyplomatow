@@ -5,19 +5,22 @@ import Typography from "../ui/typography";
 import { getHeading, getSubHeading } from "../../lib/heading";
 import { SanityImage } from "../../sanity/image/SanityImage";
 
-export const WhoWeWorkWithSection = ({
-  data,
-  index,
-}: PageBuilderSectionProps<"whoWeWorkWithSection">) => {
+export const IconCardSection = ({ data, index }: PageBuilderSectionProps<"iconCardSection">) => {
   return (
-    <Container className="flex flex-col gap-4 bg-slate-50 desktop:gap-16">
+    <Container
+      contentWidth="xl"
+      className="bg-slate-50"
+      contentClassName="flex flex-col gap-4 desktop:gap-16"
+    >
       <div className="flex flex-col items-center gap-10">
         <Typography variant="h2" as={getHeading(index)}>
           {data.heading}
         </Typography>
-        <Typography variant="body-xl" className="text-gray-800">
-          {data.subheading}
-        </Typography>
+        {data.subheading && (
+          <Typography variant="body-xl" className="text-gray-800">
+            {data.subheading}
+          </Typography>
+        )}
       </div>
       <div className="flex flex-col items-stretch justify-center gap-4 desktop:flex-row desktop:gap-10">
         {data.items?.map((item) => (

@@ -1,8 +1,13 @@
-import * as React from "react";
 import { Slot } from "radix-ui";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
+import { trim } from "../../lib/text";
+import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
+import { Container } from "./container";
+import { Link } from "./link";
+import Typography from "./typography";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -51,16 +56,20 @@ function BreadcrumbLink({
   );
 }
 
-function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
+function BreadcrumbPage({ className, children, ...props }: React.ComponentProps<"span">) {
   return (
-    <span
+    <Typography
+      as="span"
+      variant="body-m"
       data-slot="breadcrumb-page"
       role="link"
       aria-disabled="true"
       aria-current="page"
       className={cn("font-normal text-foreground", className)}
       {...props}
-    />
+    >
+      {children}
+    </Typography>
   );
 }
 
@@ -95,31 +104,59 @@ function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<"span"
 
 export {
   Breadcrumb,
-  BreadcrumbList,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbEllipsis,
 };
 
-export type BreadcrumbType = {
-  label: string;
-  href: string;
-};
-export const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: BreadcrumbType[] }) => {
+export const Breadcrumbs = ({
+  breadcrumbs,
+  currentPageName,
+}: {
+  breadcrumbs: BreadcrumbsFragment[];
+  currentPageName: string | null;
+}) => {
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
-        {breadcrumbs.map((breadcrumb, index) => (
-          <React.Fragment key={`${breadcrumb.href}-${index}`}>
+    <Container
+      as="div"
+      contentWidth="max"
+      className="flex min-h-14 items-center justify-start px-4 py-4 desktop:px-22 desktop:py-0"
+    >
+      <Breadcrumb className="flex items-center justify-start text-gray-500">
+        <BreadcrumbList>
+          {breadcrumbs.map((breadcrumb) => (
+            <React.Fragment key={`${breadcrumb._key}`}>
+              <BreadcrumbItem>
+                {breadcrumb._type === "breadcrumb" ? (
+                  <BreadcrumbLink asChild>
+                    <Link
+                      size="inline"
+                      variant="link"
+                      className="font-normal text-gray-500"
+                      link={breadcrumb.link}
+                    >
+                      {trim(breadcrumb.link.text, 50)}
+                    </Link>
+                  </BreadcrumbLink>
+                ) : (
+                  <BreadcrumbPage className="text-gray-500">
+                    {trim(breadcrumb.text, 50)}
+                  </BreadcrumbPage>
+                )}
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+            </React.Fragment>
+          ))}
+          {currentPageName && (
             <BreadcrumbItem>
-              <BreadcrumbLink href={breadcrumb.href}>{breadcrumb.label}</BreadcrumbLink>
-              {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+              <BreadcrumbPage className="text-gray-900">{trim(currentPageName, 50)}</BreadcrumbPage>
             </BreadcrumbItem>
-          </React.Fragment>
-        ))}
-      </BreadcrumbList>
-    </Breadcrumb>
+          )}
+        </BreadcrumbList>
+      </Breadcrumb>
+    </Container>
   );
 };

@@ -2,51 +2,41 @@ import { aboutUsSection } from "./aboutUsSection";
 import { contactSection } from "./contactSection";
 import { divisionsSection } from "./divisionsSection";
 import { eventsListSection } from "./eventsListSection";
-import { eventsDivisionsSection } from "./eventsDivisionsSection";
 import { eventsSection } from "./eventsSection";
 import { universalHeroSection } from "./universalHeroSection";
 import { expertsListSection } from "./expertsListSection";
-import { headingSection } from "./headingSection";
 import { heroSection } from "./heroSection";
-import { joinUsDivisionsSection } from "./joinUsDivisionsSection";
-import { joinUsSection } from "./joinUsSection";
+import { cardsWithLinkSection } from "./cardsWithLinkSection";
 import { newPublicationsSection } from "./newPublicationsSection";
 import { peopleSection } from "./peopleSection";
 import { podcastSection } from "./podcastSection";
 import { supportUsSection } from "./supportUsSection";
-import { teamDivisionsSection } from "./teamDivisionsSection";
-import { whatWeDoDivisionsSection } from "./whatWeDoDivisionsSection";
 import { divisionsListSection } from "./divisionsListSection";
 import { documentsSection } from "./documentsSection";
 import { doubleHeroSection } from "./doubleHeroSection";
 import { benefitsSection } from "./benefitsSection";
-import { whoWeWorkWithSection } from "./whoWeWorkWithSection";
+import { iconCardSection } from "./iconCardSection";
 import { patronitePerksSection } from "./patronitePerksSection";
 
 export const sectionTypes = [
   "aboutUsSection",
   "divisionsSection",
   "eventsSection",
-  "headingSection",
   "heroSection",
-  "joinUsSection",
+  "cardsWithLinkSection",
   "newPublicationsSection",
   "peopleSection",
   "podcastSection",
   "supportUsSection",
   "contactSection",
   "universalHeroSection",
-  "teamDivisionsSection",
-  "whatWeDoDivisionsSection",
-  "joinUsDivisionsSection",
-  "eventsDivisionsSection",
   "divisionsListSection",
   "expertsListSection",
   "eventsListSection",
   "documentsSection",
   "doubleHeroSection",
   "benefitsSection",
-  "whoWeWorkWithSection",
+  "iconCardSection",
   "patronitePerksSection",
 ] as const;
 
@@ -57,24 +47,19 @@ export const sectionStructure = [
   divisionsSection,
   eventsSection,
   heroSection,
-  joinUsSection,
+  cardsWithLinkSection,
   newPublicationsSection,
   peopleSection,
   podcastSection,
   supportUsSection,
   contactSection,
   universalHeroSection,
-  teamDivisionsSection,
-  whatWeDoDivisionsSection,
-  joinUsDivisionsSection,
-  eventsDivisionsSection,
   divisionsListSection,
-  headingSection,
   expertsListSection,
   eventsListSection,
   documentsSection,
   doubleHeroSection,
   benefitsSection,
-  whoWeWorkWithSection,
+  iconCardSection,
   patronitePerksSection,
 ];

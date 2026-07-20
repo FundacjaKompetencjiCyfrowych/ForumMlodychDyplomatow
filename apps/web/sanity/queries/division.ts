@@ -2,11 +2,11 @@ import type { Locale } from "next-intl";
 import { q } from "../groqd";
 import type { InferResultItem } from "groqd";
 import { imgFragment } from "./imgFragment";
-import { seoFragment } from "./seo";
+import { defaultSeoSettingsQuery, seoFragment } from "./seo";
 import { pageBuilderQueryFragment } from "./pageBuilder";
 
 export type DivisionQueryParams = {
-  slug: string;
+  divisionSlug: string;
   locale: string;
 };
 
@@ -21,7 +21,8 @@ export const divisionPreviewQuery = q
   .parameters<{ locale: Locale }>()
   .star.filterByType("division")
   .filterBy("locale == $locale")
-  .project(divisionPreviewFragment);
+  .project(divisionPreviewFragment)
+  .order("name asc");
 
 export type DivisionPreview = InferResultItem<typeof divisionPreviewQuery>;
 
@@ -35,7 +36,7 @@ export const singleDivisionFragment = q.fragmentForType<"division">().project((s
 export const singleDivisionQuery = q.star
   .parameters<DivisionQueryParams>()
   .filterByType("division")
-  .filterRaw("slug.current == $slug")
+  .filterRaw("slug.current == $divisionSlug")
   .slice(0)
   .project((sub) => ({
     _id: sub.field("_id"),
@@ -52,4 +53,17 @@ export const divisionsSlugQuery = q.star
   .project((sub) => ({
     slug: sub.field("slug.current"),
     locale: sub.field("locale"),
+  }));
+
+export const divisionsMetadataQuery = q
+  .parameters<DivisionQueryParams>()
+  .star.filterByType("division")
+  .filterBy("slug.current == $divisionSlug")
+  .filterBy("locale == $locale")
+  .slice(0)
+  .project((sub) => ({
+    title: sub.field("name"),
+    slug: sub.field("slug.current"),
+    seo: sub.field("seo").project(seoFragment),
+    default: defaultSeoSettingsQuery,
   }));

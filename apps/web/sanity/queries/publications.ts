@@ -1,8 +1,9 @@
 import type { InferFragmentType } from "groqd";
 import type { Locale } from "next-intl";
 import { q } from "../groqd";
-import { imgFragment } from "./imgFragment";
+import { gradientImgFragment, imgFragment } from "./imgFragment";
 import { intlArrayTextQuery } from "./intl";
+import { defaultSeoSettingsQuery } from "./seo";
 
 export type PublicationsListQueryParams = {
   locale: string;
@@ -64,7 +65,7 @@ export const publicationDetailFragment = q
     date: true,
     excerpt: true,
     slug: "slug.current",
-    mainImage: sub.field("mainImage").project(imgFragment),
+    mainImage: sub.field("mainImage").project(gradientImgFragment),
     author: sub
       .field("author")
       .deref()
@@ -131,3 +132,21 @@ export const publicationsStaticParams = q.star.filterByType("publication").proje
   slug: "slug.current",
   locale: "locale",
 });
+
+export const publicationMetadataQuery = q
+  .parameters<{ slug: string; locale: Locale }>()
+  .star.filterByType("publication")
+  .filterBy("locale == $locale")
+  .filterBy("slug.current == $slug")
+  .slice(0)
+  .project((sub) => ({
+    title: sub.coalesce(sub.field("seo.title"), sub.field("title")),
+    description: sub.coalesce(sub.field("seo.description"), sub.field("excerpt")),
+    image: sub.coalesce(
+      sub.field("seo.ogImage.asset").deref().field("url"),
+      sub.field("mainImage.asset").deref().field("url")
+    ),
+    published: sub.field("date"),
+    author: sub.field("author").deref().field("name"),
+    default: defaultSeoSettingsQuery,
+  }));

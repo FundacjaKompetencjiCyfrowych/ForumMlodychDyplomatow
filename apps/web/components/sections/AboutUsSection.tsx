@@ -33,11 +33,11 @@ const AboutUsSection = ({
 }: PageBuilderSectionProps<"aboutUsSection">) => {
   return (
     <Container background="blue" size="base" contentWidth="xl">
-      <div className="flex w-full flex-col items-center px-6 desktop:mb-16 desktop:px-0">
+      <div className="flex w-full flex-col items-center desktop:mb-16 desktop:px-0">
         <Typography as={getHeading(sectionIndex)} variant="h2" className="mb-10 desktop:mb-16">
           {data.heading}
         </Typography>
-        <div className="grid w-full [grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))] gap-16 md:gap-8">
+        <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-16 md:gap-8">
           {data.content?.map((item) => (
             <DescriptionCard
               key={item._key}

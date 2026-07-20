@@ -13,7 +13,7 @@ type Props = {
 async function EventList({ events, locale, isArchive }: Props) {
   const t = await getTranslations({ locale, namespace: "events" });
   return (
-    <div className="flex justify-center gap-4">
+    <div className="mx-auto flex max-w-3xl flex-col justify-center gap-4">
       {events && events.length > 0 ? (
         events.map((e) => (
           <EventPreview
