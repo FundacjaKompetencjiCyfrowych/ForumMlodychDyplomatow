@@ -14,7 +14,7 @@ const UniversalHero = ({ data, index }: UniversalHeroProps) => {
   return (
     <Container contentWidth="xl">
       <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-20">
-        <div className="order-2 flex flex-col gap-4 p-4 lg:order-1 lg:gap-6">
+        <div className="order-2 flex flex-col gap-4 py-4 text-center lg:order-1 lg:gap-6 desktop:text-left">
           <Typography as={getHeading(index)} variant="h1">
             {header}
           </Typography>
@@ -30,7 +30,7 @@ const UniversalHero = ({ data, index }: UniversalHeroProps) => {
           )}
         </div>
 
-        <div className="relative order-1 aspect-4/3 w-full overflow-hidden lg:order-2">
+        <div className="relative order-1 hidden aspect-4/3 w-full overflow-hidden lg:order-2 desktop:block">
           {coverImage ? (
             <GradientImage image={coverImage} className="h-full w-full object-cover" />
           ) : (

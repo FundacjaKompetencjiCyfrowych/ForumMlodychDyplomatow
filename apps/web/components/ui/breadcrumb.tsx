@@ -123,7 +123,7 @@ export const Breadcrumbs = ({
     <Container
       as="div"
       contentWidth="max"
-      className="flex min-h-14 items-center justify-start py-0 desktop:py-0"
+      className="flex min-h-14 items-center justify-start px-4 py-4 desktop:px-22 desktop:py-0"
     >
       <Breadcrumb className="flex items-center justify-start text-gray-500">
         <BreadcrumbList>

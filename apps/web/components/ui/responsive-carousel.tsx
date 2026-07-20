@@ -49,7 +49,7 @@ export function ResponsiveCarousel({
               className={cn(
                 // Mobile: full-width slide, centred with side padding + 1px vertical
                 // padding so borders aren't clipped by the embla overflow container.
-                "flex min-w-full items-stretch justify-stretch px-4 py-px",
+                "flex min-w-full items-stretch justify-stretch py-px desktop:px-4",
                 // Desktop: flexible equal-width column, no extra padding
                 "desktop:min-w-0 desktop:flex-1 desktop:px-0",
                 mobileItemClassName,

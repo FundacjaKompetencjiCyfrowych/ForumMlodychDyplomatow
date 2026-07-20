@@ -27,7 +27,7 @@ const PeopleSection = async ({ index, data }: PageBuilderSectionProps<"peopleSec
       </div>
       <Tabs
         defaultValue={groups[0]?.groupName ?? ""}
-        className="flex w-full max-w-full gap-6 px-8 desktop:gap-8 desktop:px-0"
+        className="flex w-full max-w-full gap-6 desktop:gap-8 desktop:px-0"
       >
         {groups.length > 1 && (
           <TabsList variant="line" className="gap-20">

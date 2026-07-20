@@ -5,7 +5,7 @@ import SocialIcons from "./social-icons";
 
 export const PersonCard = ({ person }: { person: PersonCardType }) => {
   return (
-    <div className="flex min-w-38 grow-0 basis-1 flex-col items-center rounded-sm bg-white desktop:min-w-56">
+    <div className="flex min-w-50 grow-0 basis-1 flex-col items-center rounded-sm bg-white desktop:min-w-56">
       <SanityImage
         image={person.img}
         className="aspect-square w-full max-w-60 object-cover"
