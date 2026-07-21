@@ -207,6 +207,18 @@ export const translations = defineType({
           validation: (Rule) => Rule.required(),
         }),
         defineField({
+          name: "invalidEmail",
+          title: "Komunikat błędu — niepoprawny e-mail",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "tooLong",
+          title: "Komunikat błędu — tekst za długi",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
           name: "successMessage",
           title: "Komunikat po wysłaniu (sukces)",
           type: "string",

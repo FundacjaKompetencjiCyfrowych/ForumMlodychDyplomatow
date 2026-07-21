@@ -5,6 +5,7 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { client } from "@/sanity/client";
 import { buildContactEmail } from "@/lib/contact-email";
+import { contactFieldsSchema } from "@/lib/contact-schema";
 
 /**
  * Contact form submission endpoint.
@@ -20,13 +21,9 @@ import { buildContactEmail } from "@/lib/contact-email";
  *   sending domain in Resend and point `CONTACT_FROM_EMAIL` at an address on it.
  */
 
-const bodySchema = z.object({
-  firstName: z.string().trim().min(1).max(100),
-  lastName: z.string().trim().min(1).max(100),
-  email: z.email().max(254),
-  phone: z.string().trim().max(50).optional().or(z.literal("")),
-  subject: z.string().trim().min(1).max(200),
-  message: z.string().trim().min(1).max(5000),
+// Field constraints live in `contactFieldsSchema` so the browser validates against
+// exactly what this endpoint accepts; only the transport fields are added here.
+const bodySchema = contactFieldsSchema.extend({
   sectionKey: z.string().trim().min(1).max(100),
   // Honeypot — must stay empty. Bots tend to fill every field.
   company: z.string().optional(),

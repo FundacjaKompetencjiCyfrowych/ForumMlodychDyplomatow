@@ -2,16 +2,27 @@ import type React from "react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { z } from "zod";
+import {
+  contactFieldsSchema,
+  type ContactErrorKey,
+  type ContactFieldName,
+} from "@/lib/contact-schema";
 
-type Errors = Record<string, boolean>;
+/** Per-field translation key for the current validation failure, if any. */
+type Errors = Partial<Record<ContactFieldName, ContactErrorKey>>;
 
-const NO_ERRORS: Errors = {
-  firstName: false,
-  lastName: false,
-  email: false,
-  subject: false,
-  message: false,
-};
+const NO_ERRORS: Errors = {};
+
+// Focus order on a failed submit — matches the visual order of the fields.
+const FIELD_ORDER: ContactFieldName[] = [
+  "firstName",
+  "lastName",
+  "email",
+  "phone",
+  "subject",
+  "message",
+];
 
 type UseContactFormArgs = {
   /** _key of the contactSection — resolves the destination address server-side. */
@@ -33,28 +44,33 @@ export const useContactForm = ({ sectionKey, contactEmail }: UseContactFormArgs)
     e.preventDefault();
     const form = e.currentTarget;
 
-    if (!form.checkValidity()) {
-      setErrors({
-        firstName: !form.firstName.value.trim(),
-        lastName: !form.lastName.value.trim(),
-        email: !form.email.value.trim(),
-        subject: !form.subject.value.trim(),
-        message: !form.message.value.trim(),
-      });
+    const formData = new FormData(form);
+    const result = contactFieldsSchema.safeParse(Object.fromEntries(formData));
+
+    if (!result.success) {
+      const fieldErrors = z.flattenError(result.error).fieldErrors;
+      const next: Errors = {};
+      for (const field of FIELD_ORDER) {
+        const key = fieldErrors[field]?.[0];
+        if (key) next[field] = key as ContactErrorKey;
+      }
+      setErrors(next);
+
+      // Send focus to the first problem so the failure is discoverable without
+      // hunting — especially for keyboard and screen-reader users.
+      const firstInvalid = FIELD_ORDER.find((field) => next[field]);
+      if (firstInvalid) {
+        const control = form.elements.namedItem(firstInvalid);
+        if (control instanceof HTMLElement) control.focus();
+      }
       return;
     }
 
     setErrors(NO_ERRORS);
     setIsSubmitting(true);
 
-    const formData = new FormData(form);
     const payload = {
-      firstName: String(formData.get("firstName") ?? ""),
-      lastName: String(formData.get("lastName") ?? ""),
-      email: String(formData.get("email") ?? ""),
-      phone: String(formData.get("phone") ?? ""),
-      subject: String(formData.get("subject") ?? ""),
-      message: String(formData.get("message") ?? ""),
+      ...result.data, // already trimmed by the schema
       company: String(formData.get("company") ?? ""), // honeypot
       sectionKey,
       startedAt: startedAtRef.current,

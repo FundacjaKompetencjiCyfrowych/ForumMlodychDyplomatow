@@ -22,49 +22,52 @@ export const ContactForm = ({ sectionKey, contactEmail }: ContactFormProps) => {
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
       <HoneypotInput />
 
-      <ContactField
-        name="firstName"
-        label={t("firstName")}
-        placeholder={t("placeholders.firstName")}
-        required
-        hasError={errors.firstName}
-      />
-      <ContactField
-        name="lastName"
-        label={t("lastName")}
-        placeholder={t("placeholders.lastName")}
-        required
-        hasError={errors.lastName}
-      />
+      <div className="flex flex-col gap-6 sm:flex-row [&>div]:flex-1">
+        <ContactField
+          name="firstName"
+          label={t("firstName")}
+          placeholder={t("placeholders.firstName")}
+          required
+          error={errors.firstName}
+        />
+        <ContactField
+          name="lastName"
+          label={t("lastName")}
+          placeholder={t("placeholders.lastName")}
+          required
+          error={errors.lastName}
+        />
+      </div>
       <ContactField
         name="email"
         label={t("email")}
         placeholder={t("placeholders.email")}
         type="email"
         required
-        hasError={errors.email}
+        error={errors.email}
       />
       <ContactField
         name="phone"
         label={t("phone")}
         placeholder={t("placeholders.phone")}
         type="tel"
+        error={errors.phone}
       />
       <ContactField
         name="subject"
         label={t("subject")}
         placeholder={t("placeholders.subject")}
         required
-        hasError={errors.subject}
+        error={errors.subject}
       />
       <ContactField
         name="message"
-        label={t("message")}
+        label={""}
         placeholder={t("placeholders.message")}
         multiline
         rows={5}
         required
-        hasError={errors.message}
+        error={errors.message}
       />
 
       <Button type="submit" variant="primary" disabled={isSubmitting} className="lg:max-w-70">

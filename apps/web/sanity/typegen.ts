@@ -660,6 +660,8 @@ export type Translations = {
     submit?: string;
     sending?: string;
     requiredError?: string;
+    invalidEmail?: string;
+    tooLong?: string;
     successMessage?: string;
     errorMessage?: string;
     errorMessageWithEmail?: string;
