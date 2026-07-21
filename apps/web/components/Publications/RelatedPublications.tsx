@@ -4,7 +4,7 @@ import type { publicationPreviewFragment } from "../../sanity/queries/publicatio
 import { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/components/ui/link";
-import { ChevronDown } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { PublicationCard } from "@/components/ui/publication-card";
 
 export interface RelatedPublicationsProps {
@@ -24,17 +24,17 @@ export const RelatedPublications = async ({
 
   return (
     <section className="mx-auto w-full bg-brand-slate-50 px-6 pt-10 pb-16 md:px-6">
-      <div className="mx-auto mb-8 flex max-w-370 flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="mx-auto mb-8 flex max-w-(--width-content-xl) flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <Typography as="h2" variant="h2" className="text-black">
           {t("singlePublicationPage.relatedPublicationTitle")}
         </Typography>
 
         <Link href="/publications" variant="secondary" size="l" className="text-brand-red">
-          {t("singlePublicationPage.allPublications")} <ChevronDown />
+          {t("singlePublicationPage.allPublications")} <ChevronRight />
         </Link>
       </div>
 
-      <div className="mx-auto grid max-w-370 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-(--width-content-xl) grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {publications.slice(0, 4).map((pub) => (
           <PublicationCard key={pub._id} publication={pub} layout="vertical" className="h-full" />
         ))}

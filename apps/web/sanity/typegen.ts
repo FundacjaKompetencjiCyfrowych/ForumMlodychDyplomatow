@@ -764,6 +764,7 @@ export type Translations = {
       noHeadings?: string;
       relatedPublicationTitle?: string;
       allPublications?: string;
+      bibliography?: string;
     };
   };
   filterComponent?: {

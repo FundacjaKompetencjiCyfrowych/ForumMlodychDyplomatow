@@ -4255,6 +4255,13 @@
                       "type": "string"
                     },
                     "optional": true
+                  },
+                  "bibliography": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
                   }
                 }
               },

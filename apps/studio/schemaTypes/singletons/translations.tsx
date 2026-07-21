@@ -299,6 +299,12 @@ export const translations = defineType({
               type: "string",
               validation: (Rule) => Rule.required(),
             }),
+            defineField({
+              name: "bibliography",
+              title: "Bibliografia",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
           ],
         }),
       ],

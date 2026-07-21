@@ -132,7 +132,9 @@ export const advancedPublicationsQuery = ({
       items: sub.star
         .filterByType("publication")
         .filterRaw("locale == $locale")
-        .filterRaw("(!defined($tags) || length($tags) == 0 || tags[]->slug.current match $tags)")
+        .filterRaw(
+          "(!defined($tags) || length($tags) == 0 || count((tags[]->slug.current)[@ in $tags]) == length($tags))"
+        )
         .filterRaw(
           "(!defined($pubType) || length($pubType) == 0 || type->slug.current in $pubType)"
         )
