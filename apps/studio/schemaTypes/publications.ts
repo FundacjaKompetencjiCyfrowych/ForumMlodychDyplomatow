@@ -72,10 +72,11 @@ export default defineType({
       initialValue: () => new Date().toISOString(),
       validation: (Rule) => Rule.required().error("Pole wymagane"),
     }),
+
     defineField({
       name: "mainImage",
       title: "Grafika główna",
-      type: "img",
+      type: "gradientImg",
       group: "content",
       description:
         "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach. Zalecany format obrazu 4:3",

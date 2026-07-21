@@ -3,12 +3,12 @@ import type { PageBuilderSection } from ".";
 import { imgFragment } from "../imgFragment";
 import { linkFragment } from "../linkFragment";
 
-export const joinUsSectionFragment = q
-  .fragment<PageBuilderSection<"joinUsSection">>()
+export const cardsWithLinkSectionFragment = q
+  .fragment<PageBuilderSection<"cardsWithLinkSection">>()
   .project((sub) => ({
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),
-    benefits: sub.field("benefits[]").project((sub) => ({
+    items: sub.field("items[]").project((sub) => ({
       _key: sub.field("_key"),
       title: sub.field("title"),
       description: sub.field("description"),

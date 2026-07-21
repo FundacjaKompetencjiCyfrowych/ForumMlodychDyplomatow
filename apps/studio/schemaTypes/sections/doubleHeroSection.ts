@@ -6,7 +6,7 @@ export const doubleHeroSection = defineType({
   title: "Podwójny Hero",
   type: "object",
   preview: createSectionPreview("doubleHeroSection", {
-    title: "Podwójny Hero",
+    title: "Hero - podwójny",
     subtitle: "heading",
   }),
   fields: [

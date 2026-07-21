@@ -1,8 +1,14 @@
 import { runQuery } from "@/sanity/groqd";
-import { singleDivisionQuery, divisionsSlugQuery } from "@/sanity/queries/division"; // Upewnij się co do nazwy pliku
+import {
+  singleDivisionQuery,
+  divisionsSlugQuery,
+  divisionsMetadataQuery,
+} from "@/sanity/queries/division"; // Upewnij się co do nazwy pliku
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import type { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import { createSeo } from "../../../../lib/seo";
+import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
@@ -17,6 +23,16 @@ export async function generateStaticParams() {
     locale: division.locale,
   }));
 }
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+  const { data } = await runQuery(divisionsMetadataQuery, {
+    parameters: {
+      locale: params.locale,
+      divisionSlug: params.slug,
+    },
+  });
+  return createSeo(data);
+}
 
 export default async function DivisionSlugPage(props: Props) {
   const params = await props.params;
@@ -25,7 +41,7 @@ export default async function DivisionSlugPage(props: Props) {
 
   const { data: division } = await runQuery(singleDivisionQuery, {
     parameters: {
-      slug: slug,
+      divisionSlug: slug,
       locale: locale,
     },
   });
@@ -40,15 +56,9 @@ export default async function DivisionSlugPage(props: Props) {
     );
   }
 
-  const sectionsWithSlug =
-    division?.pageBuilder?.map((section) => ({
-      ...section,
-      currentDivisionSlug: slug,
-    })) || [];
-
   return (
     <main className="min-h-screen">
-      <SanitySections value={sectionsWithSlug} locale={locale} />
+      <SanitySections value={division.pageBuilder} locale={locale} />
     </main>
   );
 }

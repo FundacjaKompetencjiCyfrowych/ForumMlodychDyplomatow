@@ -8,6 +8,8 @@ import { getTranslations } from "next-intl/server";
 import type { Locale } from "next-intl";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 import { ChevronDown, Globe } from "lucide-react";
+import { Container } from "../ui/container";
+import { trim } from "../../lib/text";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -243,7 +245,7 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
         .map((block) => {
           const text = getBlockText(block);
           return {
-            title: text,
+            title: trim(text, 40),
             id: slugify(text),
             style: block.style,
           };
@@ -372,6 +374,6 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
           </Collapsible>
         </div>
       </div>
-    </section>
+    </Container>
   );
 };

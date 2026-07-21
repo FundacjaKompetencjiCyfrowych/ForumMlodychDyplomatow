@@ -1,16 +1,14 @@
 import type { PageBuilderSectionProps } from "@/sanity/queries/pageBuilder";
-import React, { Suspense } from "react";
-import { Container } from "../ui/container";
-import { getHeading } from "../../lib/heading";
-import Typography from "../ui/typography";
-import { Skeleton } from "../ui/skeleton";
 import { getLocale } from "next-intl/server";
-import { latestPublicationsQuery } from "../../sanity/queries/publications";
+import { Suspense } from "react";
+import { getHeading } from "../../lib/heading";
 import { runQuery } from "../../sanity/groqd";
-import { ResponsiveCarousel } from "../ui/responsive-carousel";
-// import { Button } from "../ui/button";
-// import { Link } from "../ui/link";
 import { PublicationCard } from "../ui/publication-card";
+import { latestPublicationsQuery } from "../../sanity/queries/publications";
+import { Container } from "../ui/container";
+import { ResponsiveCarousel } from "../ui/responsive-carousel";
+import { Skeleton } from "../ui/skeleton";
+import Typography from "../ui/typography";
 
 const NewPublicationsList = async () => {
   const locale = await getLocale();

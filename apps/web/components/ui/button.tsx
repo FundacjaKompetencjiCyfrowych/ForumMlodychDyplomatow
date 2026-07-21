@@ -10,7 +10,7 @@ const buttonVariants = cva(
     "border border-transparent bg-clip-padding text-[1rem] font-medium whitespace-nowrap",
     "transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
     "active:not-aria-[haspopup]:translate-y-px",
-    "disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive",
+    "disabled:pointer-events-none disabled:bg-transparent aria-invalid:border-destructive",
     "aria-invalid:ring-3 aria-invalid:ring-destructive/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
@@ -20,7 +20,7 @@ const buttonVariants = cva(
         primary:
           "bg-brand-red-900 font-semibold text-white hover:bg-brand-red-700 active:bg-brand-red-800 disabled:bg-brand-red-50 disabled:text-gray-400",
         secondary:
-          "border border-brand-red-900 bg-transparent font-semibold text-brand-red-900 hover:border-brand-red-700 hover:text-brand-red-700 active:border-brand-red-800 active:text-brand-red-800 disabled:border-brand-red-200 disabled:text-red-200",
+          "border border-brand-red-900 bg-transparent font-semibold text-brand-red-900 hover:border-brand-red-700 hover:text-brand-red-700 active:border-brand-red-800 active:text-brand-red-800 disabled:border-gray-400 disabled:text-gray-400",
         primaryLight:
           "bg-white text-red-900 hover:bg-red-50 hover:text-red-700 active:bg-red-100 active:text-red-800 disabled:bg-gray-300 disabled:text-gray-400",
         secondaryLight:

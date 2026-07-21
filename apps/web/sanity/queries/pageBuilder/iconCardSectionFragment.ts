@@ -2,8 +2,8 @@ import type { PageBuilderSection } from ".";
 import { q } from "../../groqd";
 import { imgFragment } from "../imgFragment";
 
-export const whoWeWorkWithSectionFragment = q
-  .fragment<PageBuilderSection<"whoWeWorkWithSection">>()
+export const iconCardSectionFragment = q
+  .fragment<PageBuilderSection<"iconCardSection">>()
   .project((sub) => ({
     heading: sub.field("heading"),
     subheading: sub.field("subheading"),

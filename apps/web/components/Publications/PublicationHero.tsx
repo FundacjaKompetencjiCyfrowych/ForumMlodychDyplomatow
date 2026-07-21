@@ -1,15 +1,22 @@
 import React from "react";
-import { Share2, Download, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Typography } from "@/components/ui/typography";
 import GradientImage from "@/sanity/image/GradientImage";
 import { ImgFragment } from "@/sanity/queries/imgFragment";
 import { Tag } from "../ui/tag";
 import { getTranslations } from "next-intl/server";
 import { Locale } from "next-intl";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Typography } from "@/components/ui/typography";
+import { Download, Image as ImageIcon, Share2 } from "lucide-react";
+import React from "react";
+import GradientImage from "../../sanity/image/GradientImage";
+import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
+import type { GradientImgFragment } from "../../sanity/queries/imgFragment";
+import { Breadcrumbs } from "../ui/breadcrumb";
+import { Container } from "../ui/container";
 
 export interface PublicationHeroProps {
+  breadcrumbs: BreadcrumbsFragment[];
   category: string;
   title: string;
   excerpt?: string;
@@ -26,7 +33,7 @@ export interface PublicationHeroProps {
   };
   date?: string;
   isoDate?: string;
-  image?: ImgFragment | null;
+  image?: GradientImgFragment | null;
   pdfUrl?: string | null;
   locale?: Locale;
 }
@@ -46,26 +53,52 @@ export const PublicationHero = async ({
   const t = await getTranslations({ locale, namespace: "publications" });
 
   return (
-    <section className="mx-auto w-full max-w-(--width-content-xl) px-5 py-10 md:px-6">
-      <div className="flex flex-col items-center gap-8 lg:grid lg:grid-cols-12 lg:gap-16">
-        {/* Lewa kolumna: Treść */}
-        <div className="order-2 flex w-full flex-col gap-6 lg:order-1 lg:col-span-7 xl:col-span-6">
-          <div className="flex items-center gap-3">
-            <div className="h-0.5 w-6 bg-brand-red"></div>
-            <Typography as="span" variant="body-s" className="tracking-widest text-brand-red">
-              {tags[0].name || category}
-            </Typography>
-          </div>
+    <>
+      <Breadcrumbs breadcrumbs={breadcrumbs} currentPageName={title} />
+      <Container contentWidth="xl" className="mx-auto w-full max-w-400 px-4 py-8 md:px-6">
+        {/* Breadcrumbs */}
 
-          <Typography as="h1" variant="h3" className="text-foreground">
-            {title}
-          </Typography>
+        <div className="flex flex-col items-center gap-8 lg:grid lg:grid-cols-12 lg:gap-16">
+          {/* Lewa kolumna: Treść */}
+          <div className="order-2 flex w-full flex-col gap-6 lg:order-1 lg:col-span-7 xl:col-span-6">
+            <div className="flex items-center gap-3">
+              <div className="h-0.5 w-6 bg-brand-red"></div>
+              <Typography as="span" variant="body-s" className="tracking-widest text-brand-red">
+                {tags[0] || category}
+              </Typography>
+            </div>
 
-          {excerpt && (
-            <Typography as="p" variant="body-m" className="text-foreground/80">
-              {excerpt}
+            <Typography as="h1" variant="h3" className="text-foreground">
+              {title}
             </Typography>
-          )}
+
+            {excerpt && (
+              <Typography as="p" variant="body-m" className="text-foreground/80">
+                {excerpt}
+              </Typography>
+            )}
+
+            {/* Tagi */}
+            {tags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-3">
+                {tags.map((tag, index) => (
+                  <React.Fragment key={index}>
+                    <Typography as="span" variant="body-m" className="text-muted-foreground">
+                      {tag}
+                    </Typography>
+                    {index < tags.length - 1 && (
+                      <Typography
+                        as="span"
+                        variant="body-m"
+                        className="text-muted-foreground opacity-50"
+                      >
+                        •
+                      </Typography>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
 
           {/* Tagi */}
           {tags.length > 0 && (
@@ -99,7 +132,16 @@ export const PublicationHero = async ({
                     <Typography variant="caption" className="text-brand-gray-600" asChild>
                       <time dateTime={isoDate}>{date}</time>
                     </Typography>
-                  )}
+                    {author.role && (
+                      <Typography
+                        as="span"
+                        variant="body-s"
+                        className="mt-0.5 text-muted-foreground"
+                      >
+                        {author.role}
+                      </Typography>
+                    )}
+                  </div>
                 </div>
               </div>
             ) : (
@@ -130,9 +172,22 @@ export const PublicationHero = async ({
                   {t("singlePublicationPage.downloadPdf")}
                 </a>
               </Button>
-            )}
+
+              {pdfUrl && (
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="gap-2 rounded-md border-border px-5 text-foreground hover:bg-muted"
+                >
+                  {/* W przypadku bezpośrednich plików do pobrania bezpieczniej zostawić natywny tag <a> z target="_blank" zamiast routerowego Linku */}
+                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+                    <Download className="h-4 w-4" />
+                    {t.downloadPdf}
+                  </a>
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
 
         {/* Prawa kolumna: Obraz */}
         <div className="order-1 flex w-full flex-col gap-3 lg:order-2 lg:col-span-5 xl:col-span-6">
@@ -149,7 +204,6 @@ export const PublicationHero = async ({
             )}
           </div>
 
-          {/* Teraz caption bierzemy z obiektu Sanity */}
           {(image?.asset?.altText || image?.asset?.description) && (
             <div className="mt-1 hidden items-start gap-3 border-l-2 border-brand-red px-2 md:flex">
               <Typography variant="body-s" className="leading-snug text-brand-gray-600">
@@ -158,7 +212,7 @@ export const PublicationHero = async ({
             </div>
           )}
         </div>
-      </div>
-    </section>
+      </Container>
+    </>
   );
 };

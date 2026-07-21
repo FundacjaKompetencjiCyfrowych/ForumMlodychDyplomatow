@@ -6,7 +6,7 @@ export const universalHeroSection = defineType({
   title: "Uniwersalne Hero",
   type: "object",
   preview: createSectionPreview("universalHeroSection", {
-    title: "Uniwersalne Hero",
+    title: "Hero - Uniwersalne",
     subtitle: "header",
   }),
   fields: [
@@ -23,9 +23,14 @@ export const universalHeroSection = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "caption",
+      title: "Podpis",
+      type: "text",
+    }),
+    defineField({
       name: "image",
       title: "Zdjęcie Hero",
-      type: "img",
+      type: "gradientImg",
       validation: (Rule) => Rule.required(),
     }),
   ],
