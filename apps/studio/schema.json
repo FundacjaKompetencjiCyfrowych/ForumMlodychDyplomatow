@@ -3765,6 +3765,36 @@
     }
   },
   {
+    "type": "type",
+    "name": "publicationType.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "publicationType"
+    }
+  },
+  {
     "name": "internationalizedArrayReferenceValue",
     "type": "type",
     "value": {
@@ -3817,6 +3847,10 @@
               {
                 "type": "inline",
                 "name": "translations.reference"
+              },
+              {
+                "type": "inline",
+                "name": "publicationType.reference"
               }
             ]
           },
@@ -4221,6 +4255,13 @@
                       "type": "string"
                     },
                     "optional": true
+                  },
+                  "bibliography": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
                   }
                 }
               },
@@ -4320,6 +4361,13 @@
               "optional": true
             },
             "loading": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "maxAmmount": {
               "type": "objectAttribute",
               "value": {
                 "type": "string"
@@ -4533,25 +4581,8 @@
       "type": {
         "type": "objectAttribute",
         "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "article"
-            },
-            {
-              "type": "string",
-              "value": "news"
-            },
-            {
-              "type": "string",
-              "value": "guide"
-            },
-            {
-              "type": "string",
-              "value": "review"
-            }
-          ]
+          "type": "inline",
+          "name": "publicationType.reference"
         },
         "optional": true
       },
@@ -4999,6 +5030,73 @@
           },
           "optional": true
         }
+      }
+    }
+  },
+  {
+    "name": "publicationType",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "publicationType"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "locale": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "seo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "seo"
+        },
+        "optional": true
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": true
       }
     }
   },

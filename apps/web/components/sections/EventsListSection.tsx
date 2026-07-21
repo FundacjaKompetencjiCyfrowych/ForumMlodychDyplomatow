@@ -5,6 +5,7 @@ import type { PaginationQueryFunction, PaginationResult } from "../../sanity/que
 import { type Filter, type FilterParams } from "../List/FilterList";
 import { EventsFilterList } from "../List/instances/EventsFilterList";
 import { Container } from "../ui/container";
+
 const getEventsAction: PaginationQueryFunction<
   EventPreview,
   FilterParams<{ location: string[]; type: "archive" | "upcoming" }>
@@ -28,6 +29,7 @@ const getEventsAction: PaginationQueryFunction<
   );
   return res.data as PaginationResult<EventPreview>;
 };
+
 export const EventsListSection = async ({
   data,
   locale,
@@ -36,6 +38,7 @@ export const EventsListSection = async ({
     {
       slug: "location",
       multiple: true,
+      maxSelection: 2,
       options: [
         {
           label: "Online",
@@ -48,8 +51,9 @@ export const EventsListSection = async ({
       ],
     },
   ];
+
   return (
-    <Container className="flex flex-col gap-8">
+    <Container className="flex flex-col gap-8" contentWidth="max">
       <EventsFilterList
         filters={filters}
         queryAction={getEventsAction}

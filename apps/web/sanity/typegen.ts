@@ -678,6 +678,13 @@ export type TranslationsReference = {
   [internalGroqTypeReferenceTo]?: "translations";
 };
 
+export type PublicationTypeReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publicationType";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
@@ -689,7 +696,8 @@ export type InternationalizedArrayReferenceValue = {
     | PublicationReference
     | TagReference
     | TagCategoryReference
-    | TranslationsReference;
+    | TranslationsReference
+    | PublicationTypeReference;
   language?: string;
 };
 
@@ -756,6 +764,7 @@ export type Translations = {
       noHeadings?: string;
       relatedPublicationTitle?: string;
       allPublications?: string;
+      bibliography?: string;
     };
   };
   filterComponent?: {
@@ -772,6 +781,7 @@ export type Translations = {
     emptyStatePublicationsDesc?: string;
     showAllPublications?: string;
     loading?: string;
+    maxAmmount?: string;
   };
   locale?: string;
 };
@@ -809,7 +819,7 @@ export type Publication = {
   _rev: string;
   locale?: string;
   seo?: Seo;
-  type?: "article" | "news" | "guide" | "review";
+  type?: PublicationTypeReference;
   title?: string;
   excerpt?: string;
   slug?: Slug;
@@ -881,6 +891,18 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
+};
+
+export type PublicationType = {
+  _id: string;
+  _type: "publicationType";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  title?: string;
+  slug?: Slug;
 };
 
 export type Navigation = {
@@ -1200,6 +1222,7 @@ export type AllSanitySchemaTypes =
   | TagReference
   | TagCategoryReference
   | TranslationsReference
+  | PublicationTypeReference
   | InternationalizedArrayReferenceValue
   | Translations
   | Tag
@@ -1207,6 +1230,7 @@ export type AllSanitySchemaTypes =
   | Publication
   | SanityImageCrop
   | SanityImageHotspot
+  | PublicationType
   | Navigation
   | Event
   | Division

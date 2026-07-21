@@ -6,7 +6,8 @@ import { Link } from "@/components/ui/link";
 import imageUrlBuilder from "@sanity/image-url";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "next-intl";
-import { ArrowUp } from "lucide-react";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
+import { ChevronDown, Globe } from "lucide-react";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -60,9 +61,6 @@ const getBlockText = (block: any) => {
   return block.children?.map((child: any) => child.text).join("") || "";
 };
 
-const truncateText = (text: string, maxLength = 30) =>
-  text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
-
 // 1. FUNKCJA DO EKSTRAKCJI PRZYPISÓW Z PORTABLE TEXT
 const extractFootnotes = (content: any[]) => {
   const footnotes: any[] = [];
@@ -82,7 +80,6 @@ const extractFootnotes = (content: any[]) => {
   });
   return footnotes;
 };
-
 // 2. FABRYKA KOMPONENTÓW (musi wiedzieć o przypisach, aby renderować poprawne numery)
 const getPortableTextComponents = (footnotes: any[]): PortableTextComponents => ({
   block: {
@@ -143,6 +140,33 @@ const getPortableTextComponents = (footnotes: any[]): PortableTextComponents => 
       </blockquote>
     ),
   },
+
+  list: {
+    bullet: ({ children }) => (
+      <ul className="mb-6 ml-6 list-disc space-y-2 text-brand-gray-900">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="mb-6 ml-6 list-decimal space-y-2 text-brand-gray-900">{children}</ol>
+    ),
+  },
+
+  listItem: {
+    bullet: ({ children }) => (
+      <li>
+        <Typography as="span" variant="body-l">
+          {children}
+        </Typography>
+      </li>
+    ),
+    number: ({ children }) => (
+      <li>
+        <Typography as="span" variant="body-l">
+          {children}
+        </Typography>
+      </li>
+    ),
+  },
+
   types: {
     image: ({ value }) => {
       if (!value?.asset?._ref && !value?.asset?.url) return null;
@@ -230,7 +254,7 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
   const components = getPortableTextComponents(footnotes);
 
   return (
-    <section className="mx-auto w-full px-4 py-8 sm:px-12">
+    <section className="mx-auto w-full max-w-(--width-content-xl) px-4 py-8 sm:px-12">
       <div className="relative flex flex-col-reverse items-start justify-center gap-8 md:flex-row">
         {/* Lewa kolumna: Treść główna + Bibliografia */}
         <div className="flex w-full max-w-170 flex-col gap-12 lg:col-span-7 xl:col-span-6">
@@ -240,85 +264,112 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
 
           {/* 3. KOMPONENT BIBLIOGRAFII Renderowany pod głównym tekstem */}
           {footnotes.length > 0 && (
-            <div className="mt-8 border-t border-gray-200 pt-8">
-              <Typography variant="h4" className="mb-4 text-brand-gray-900">
-                {/* Zależnie od tego, czy masz ten klucz w tlumaczeniach, możesz go dodać: t("singlePublicationPage.bibliography") */}
-                Bibliografia / Przypisy
-              </Typography>
-              <ol className="flex flex-col gap-3">
-                {footnotes.map((note, index) => (
-                  <li
-                    key={note._key}
-                    id={`footnote-${note._key}`}
-                    className="flex scroll-mt-[20vh] gap-2 text-sm text-brand-gray-700"
-                  >
-                    <span className="font-semibold text-brand-red">[{index + 1}]</span>
-                    <div>
-                      <span>{note.source}</span>
-                      {note.url && (
-                        <a
-                          href={note.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="ml-2 break-all text-brand-red hover:underline"
-                        >
-                          [Link]
-                        </a>
-                      )}
-                      {/* Przycisk powrotu do tekstu */}
-                      <a
-                        href={`#ref-${note._key}`}
-                        className="ml-2 text-gray-400 hover:text-brand-gray-900"
-                        title="Wróć do tekstu"
+            <div className="mt-4">
+              <Collapsible className="w-full">
+                <CollapsibleTrigger className="group flex w-full items-center justify-between text-left outline-none">
+                  <Typography variant="h4" className="text-brand-gray-900">
+                    {t("singlePublicationPage.bibliography")}
+                  </Typography>
+                  <ChevronDown className="size-6 text-brand-gray-900 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </CollapsibleTrigger>
+
+                <CollapsibleContent className="mt-4">
+                  <ol className="flex flex-col gap-3">
+                    {footnotes.map((note, index) => (
+                      <li
+                        key={note._key}
+                        id={`footnote-${note._key}`}
+                        className="flex scroll-mt-[20vh] gap-2 text-sm text-brand-gray-700"
                       >
-                        <ArrowUp />
-                      </a>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+                        <a href={`#ref-${note._key}`} className="" title="Wróć do tekstu">
+                          <Typography variant="body-l" className="text-brand-red">
+                            [{index + 1}]
+                          </Typography>
+                        </a>
+                        <div>
+                          <Typography variant="body-l" as="span">
+                            {note.source}
+                          </Typography>
+                          {note.url && (
+                            <Typography variant="body-l" as="span">
+                              {" | link:"}
+                              <a
+                                href={note.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="ml-1 break-all hover:underline"
+                              >
+                                {note.url}
+                              </a>
+                            </Typography>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
           )}
         </div>
 
         {/* Prawa kolumna: Pływający Spis Treści (TOC) */}
         <div className="top-24 block w-full md:sticky md:max-w-70">
-          <Typography variant="h4" className="p-2.5 pl-0 text-brand-gray-900">
-            {t("singlePublicationPage.inThisArticle")}
-          </Typography>
+          <Collapsible defaultOpen className="w-full">
+            <CollapsibleTrigger className="group flex w-full items-center justify-between pb-3 text-left outline-none">
+              <div className="flex items-center gap-2 text-brand-gray-900">
+                <Globe className="size-5" />
+                <Typography variant="h4">{t("singlePublicationPage.inThisArticle")}</Typography>
+              </div>
+              <div className="flex items-center gap-2 text-brand-gray-600">
+                <ChevronDown className="size-5 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </div>
+            </CollapsibleTrigger>
 
-          <hr className="mb-2 h-px w-full shrink-0 border-none bg-border/60" />
+            <hr className="mb-4 h-px w-full shrink-0 border-none bg-border/60" />
 
-          {toc.length > 0 ? (
-            <ul className="flex flex-col">
-              {toc.map((item, index) => {
-                const number = String(index + 1).padStart(2, "0");
-                const displayTitle = truncateText(item.title, 30);
-                return (
-                  <li key={index} className="group flex items-center">
-                    <Typography as="span" variant="body-m" className="p-2.5 text-brand-red">
-                      {number}
-                    </Typography>
+            <CollapsibleContent>
+              {toc.length > 0 ? (
+                <ul className="flex flex-col gap-1">
+                  {toc.map((item, index) => {
+                    const number = String(index + 1).padStart(2, "0");
 
-                    <Link href={`#${item.id}`} variant="none" size="inline">
-                      <Typography
-                        as="span"
-                        variant="body-m"
-                        className="text-wrap text-brand-red"
-                        title={item.title}
-                      >
-                        {displayTitle}
-                      </Typography>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <Typography variant="body-m" className="text-brand-red italic">
-              {t("singlePublicationPage.noHeadings")}
-            </Typography>
-          )}
+                    return (
+                      <li key={index} className="group flex w-full items-center text-left">
+                        <Typography
+                          as="span"
+                          variant="body-m"
+                          className="shrink-0 py-2 pr-3 text-brand-red"
+                        >
+                          {number}
+                        </Typography>
+
+                        <Link
+                          href={`#${item.id}`}
+                          variant="none"
+                          size="inline"
+                          className="block min-w-0 flex-1 text-left"
+                        >
+                          <Typography
+                            as="span"
+                            variant="body-m"
+                            className="block truncate text-left text-brand-gray-500 transition-colors hover:text-brand-gray-900"
+                            title={item.title}
+                          >
+                            {item.title}
+                          </Typography>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <Typography variant="body-m" className="text-left text-brand-red italic">
+                  {t("singlePublicationPage.noHeadings")}
+                </Typography>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       </div>
     </section>

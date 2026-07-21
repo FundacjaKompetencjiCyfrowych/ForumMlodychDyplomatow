@@ -12,12 +12,7 @@ import FilterListPagination from "./FilterListPagination";
 import FilterListTabs from "./FilterListTabs";
 import { FilterListContext, TransitionContainer } from "./FilterListTransition";
 
-import {
-  FilterButtonVariant,
-  FilterListGroupItem,
-  FilterListItem,
-  FilterRadioItem,
-} from "./FilterListItem";
+import { FilterListGroupItem, FilterCheckboxItem } from "./FilterListItem";
 import { Button } from "../ui/button";
 
 // --- GŁÓWNE TYPY DLA FILTER LIST ---
@@ -29,7 +24,9 @@ export type FilterParams<
   filters?: T;
   locale: Locale;
 };
+
 type TabsType = { slug: string; values: { label: string; value: string; default?: boolean }[] };
+
 type Props<
   T,
   TParams extends Record<string, string | number | string[]> = Record<
@@ -46,20 +43,21 @@ type Props<
   listClassName?: string;
   type?: string;
 };
+
 type FilterOption = {
   label: string;
   value: string;
-  type?: FilterButtonVariant;
   default?: undefined;
   subgroups?: undefined;
 };
+
 type FilterDefaultOption = {
   label: string;
   value?: undefined;
   default: true;
-  type?: undefined;
   subgroups?: undefined;
 };
+
 type FilterSubgroupOption = {
   label: string;
   value?: undefined;
@@ -67,7 +65,6 @@ type FilterSubgroupOption = {
   subgroups: {
     label: string;
     value: string;
-    type: FilterButtonVariant;
   }[];
 };
 
@@ -76,6 +73,7 @@ export type Filter = {
   label?: string;
   defaultValue?: string;
   multiple?: boolean;
+  maxSelection?: number;
   options: Array<FilterOption | FilterDefaultOption | FilterSubgroupOption>;
 };
 
@@ -107,6 +105,36 @@ const createFilterListParams = (filters: Filter[], tabs?: TabsType) => {
   };
 };
 
+// --- FUNKCJE POMOCNICZE (WYCIĄGNIĘTE POZA KOMPONENT) ---
+
+const computeActiveFilters = (
+  filters: Filter[],
+  params: Record<string, string | string[] | number | null>
+) => {
+  const active: { label: string; value: string; slug: string }[] = [];
+
+  filters.forEach((filter) => {
+    const val = params[filter.slug];
+    if (!val) return; // Pomijamy iterację, jeśli filtr nie ma przypisanych parametrów w URL
+
+    const activeValues = new Set(Array.isArray(val) ? val : [val]);
+
+    filter.options.forEach((opt) => {
+      if (opt.subgroups) {
+        opt.subgroups.forEach((sub) => {
+          if (sub.value && activeValues.has(sub.value)) {
+            active.push({ value: sub.value, label: sub.label, slug: filter.slug });
+          }
+        });
+      } else if (opt.value && activeValues.has(opt.value)) {
+        active.push({ value: opt.value, label: opt.label, slug: filter.slug });
+      }
+    });
+  });
+
+  return active;
+};
+
 // --- GŁÓWNY KOMPONENT ---
 
 export const FilterList = <
@@ -136,40 +164,10 @@ export const FilterList = <
   const [params, setParams] = useQueryStates(paramsParser);
   const [data, setData] = useState<PaginationResult<T> | null>(null);
 
-  const allOptionsFlat = useMemo(() => {
-    const flat: { value: string; label: string; slug: string }[] = [];
-    filters.forEach((filter) => {
-      filter.options.forEach((opt) => {
-        if (opt.subgroups) {
-          opt.subgroups.forEach((sub) => {
-            if (sub.value) flat.push({ value: sub.value, label: sub.label, slug: filter.slug });
-          });
-        } else if (opt.value) {
-          flat.push({ value: opt.value, label: opt.label, slug: filter.slug });
-        }
-      });
-    });
-    return flat;
-  }, [filters]);
+  // Zoptymalizowane wyliczenie aktywnych filtrów w jednym przejściu
+  const activeFilters = useMemo(() => computeActiveFilters(filters, params), [filters, params]);
 
-  const activeFilters = useMemo(() => {
-    const active: { label: string; value: string; slug: string }[] = [];
-    filters.forEach((f) => {
-      const val = params[f.slug as keyof typeof params];
-      if (Array.isArray(val)) {
-        val.forEach((v) => {
-          const match = allOptionsFlat.find((o) => o.value === v);
-          if (match) active.push(match);
-        });
-      } else if (typeof val === "string" && val) {
-        const match = allOptionsFlat.find((o) => o.value === val);
-        if (match) active.push(match);
-      }
-    });
-    return active;
-  }, [params, allOptionsFlat, filters]);
-
-  const getActiveCountForGroup = (slug: string, subgroups: any[]) => {
+  const getActiveCountForGroup = (slug: string, subgroups: { label: string; value: string }[]) => {
     const current = params[slug as keyof typeof params];
     if (!current) return 0;
     if (Array.isArray(current)) {
@@ -181,19 +179,19 @@ export const FilterList = <
   const handleRemoveFilter = (slug: string, value: string) => {
     const currentVal = params[slug as keyof typeof params];
     if (Array.isArray(currentVal)) {
-      setParams({ [slug]: currentVal.filter((v) => v !== value) } as any);
+      setParams({ [slug]: currentVal.filter((v) => v !== value) } as Partial<typeof params>);
     } else {
-      setParams({ [slug]: null } as any);
+      setParams({ [slug]: null } as Partial<typeof params>);
     }
-    setParams({ page: 1 } as any);
+    setParams({ page: 1 } as Partial<typeof params>);
   };
 
   const handleResetFilters = () => {
-    const resetObj: Record<string, any> = { q: null, page: 1 };
+    const resetObj: Record<string, string | number | null> = { q: null, page: 1 };
     filters.forEach((f) => {
       resetObj[f.slug] = null;
     });
-    setParams(resetObj);
+    setParams(resetObj as Partial<typeof params>);
   };
 
   useEffect(() => {
@@ -225,59 +223,85 @@ export const FilterList = <
 
   const renderFiltersList = () => (
     <>
-      {filters.map((filter) => (
-        <div key={filter.slug} className="flex w-full flex-col items-start">
-          {filter.label && type !== "publications" && (
-            <Typography variant="body-m" className="mb-2 font-semibold">
-              {filter.label}
-            </Typography>
-          )}
-          {filter.options.map((option) => {
-            if (option.subgroups) {
-              return (
-                <FilterListGroupItem
-                  key={option.label}
-                  label={option.label}
-                  slug={filter.slug}
-                  subgroups={option.subgroups}
-                  type={type}
-                  activeCount={getActiveCountForGroup(filter.slug, option.subgroups)}
-                />
-              );
-            }
-
-            const isRadio = (option as FilterOption).type === "radio";
-            return isRadio ? (
-              <FilterRadioItem
-                key={option.value}
-                label={option.label}
-                slug={filter.slug}
-                value={option.value ?? ""}
-              />
-            ) : (
-              <FilterListItem
-                key={option.value ?? "default"}
-                label={option.label}
-                slug={filter.slug}
-                value={option.value}
-                isDefault={option.default}
-                type={(option as FilterOption).type as "toggle" | "chip" | undefined}
-              />
-            );
-          })}
+      {/* SPECJALNY NAGŁÓWEK DLA TYPU EXPERTS */}
+      {type === "experts" && (
+        <div className="mb-4 w-full border-b-2 border-brand-red-800 p-2 text-brand-red">
+          <Typography variant="body-s">{t("category")}</Typography>
         </div>
-      ))}
+      )}
+
+      {filters.map((filter) => {
+        const currentSelection = params[filter.slug as keyof typeof params];
+        const isMaxReached =
+          filter.maxSelection !== undefined &&
+          Array.isArray(currentSelection) &&
+          currentSelection.length >= filter.maxSelection;
+
+        return (
+          <div key={filter.slug} className="flex w-full flex-col items-start">
+            {/* Etykieta grupy filtrów (ukrywana dla experts, by nie duplikować z nagłówkiem "Filtry") */}
+            {filter.label && type !== "publications" && type !== "experts" && (
+              <Typography variant="body-m" className="mb-2 font-semibold">
+                {filter.label}
+              </Typography>
+            )}
+
+            {/* INFORMACJA O MAKSYMALNEJ LICZBIE OPCJI */}
+            {filter.maxSelection !== undefined && (
+              <Typography variant="body-m" className="mb-4 text-brand-gray-400">
+                {t("maxAmmount") + " " + filter.maxSelection}
+              </Typography>
+            )}
+
+            <div className="flex w-full flex-col">
+              {filter.options.map((option) => {
+                if (option.subgroups) {
+                  return (
+                    <FilterListGroupItem
+                      key={option.label}
+                      label={option.label}
+                      slug={filter.slug}
+                      subgroups={option.subgroups}
+                      type={type}
+                      activeCount={getActiveCountForGroup(filter.slug, option.subgroups)}
+                      maxSelection={filter.maxSelection}
+                    />
+                  );
+                }
+
+                // Wolnostojący wariant
+                const isChecked = Array.isArray(currentSelection)
+                  ? currentSelection.includes(option.value ?? "")
+                  : currentSelection === option.value;
+
+                const isDisabled = isMaxReached && !isChecked;
+
+                return (
+                  <div key={option.value ?? "default"} className="w-full py-1">
+                    <FilterCheckboxItem
+                      label={option.label}
+                      slug={filter.slug}
+                      value={option.value ?? ""}
+                      isDisabled={isDisabled}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </>
   );
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.style.overflow = "unset";
+      document.body.classList.remove("overflow-hidden");
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.classList.remove("overflow-hidden");
     };
   }, [isMobileMenuOpen]);
 
@@ -309,19 +333,23 @@ export const FilterList = <
               <div className="mb-6 flex flex-wrap items-center gap-2">
                 {activeFilters.map((f, i) => (
                   <Button
+                    variant="none"
+                    size="inline"
                     key={`mobile-${f.slug}-${f.value}-${i}`}
                     onClick={() => handleRemoveFilter(f.slug, f.value)}
-                    className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm transition-colors hover:bg-red-50 hover:text-brand-red-700"
+                    className="flex items-center gap-1 rounded-full border border-brand-slate-200 bg-brand-slate-50 px-2.5 text-brand-gray-900 transition-colors hover:text-brand-red-700"
                   >
-                    {f.label}
-                    <X className="size-3.5" />
+                    <Typography variant="body-s">{f.label}</Typography>
+                    <X className="size-3" />
                   </Button>
                 ))}
                 <Button
+                  variant="none"
+                  size="inline"
                   onClick={handleResetFilters}
-                  className="ml-2 text-sm font-semibold text-brand-red-900"
+                  className="ml-2 rounded-full font-semibold text-brand-red-900 hover:text-brand-red-700"
                 >
-                  {t("reset")}
+                  <Typography variant="body-m">{t("reset")}</Typography>
                 </Button>
               </div>
             )}
@@ -341,7 +369,7 @@ export const FilterList = <
 
         {/* PRAWA KOLUMNA */}
         <div className="flex grow flex-col gap-4">
-          {/* PASEK WYSZUKIWANIA I TRIGGER MOBILNY (TERAZ DLA WSZYSTKICH TYPÓW) */}
+          {/* PASEK WYSZUKIWANIA I TRIGGER MOBILNY */}
           <div className="flex flex-col gap-4">
             <div className="flex w-full flex-row items-center gap-4">
               <FilterListInput
@@ -367,50 +395,54 @@ export const FilterList = <
             </div>
           </div>
 
-          {/* BELKA Z FILTRAMI TYLKO DLA PUBLICATIONS (DESKTOP) */}
-          {type === "publications" && (
-            <div className="hidden flex-col items-start justify-between gap-4 border-b border-gray-100 py-2 pb-4 text-sm text-gray-500 md:flex-row md:items-center desktop:flex">
-              <div className="flex flex-wrap items-center gap-2">
-                <span>
-                  {t("results")}: {data?.total ?? 0}
-                </span>
+          {/* BELKA Z FILTRAMI */}
+          <div className="hidden flex-col items-start justify-between gap-4 border-b border-gray-100 py-2 pb-4 text-sm text-gray-500 md:flex-row md:items-center desktop:flex">
+            <div className="flex flex-wrap items-center gap-2">
+              <span>
+                {t("results")}: {data?.total ?? 0}
+              </span>
 
-                {activeFilters.map((f, i) => (
-                  <Button
-                    key={`${f.slug}-${f.value}-${i}`}
-                    onClick={() => handleRemoveFilter(f.slug, f.value)}
-                    className="flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 transition-colors hover:bg-red-50 hover:text-brand-red-700"
-                  >
-                    {f.label}
-                    <X className="size-3" />
-                  </Button>
-                ))}
+              {activeFilters.map((f, i) => (
+                <Button
+                  variant="none"
+                  size="inline"
+                  key={`${f.slug}-${f.value}-${i}`}
+                  onClick={() => handleRemoveFilter(f.slug, f.value)}
+                  className="flex items-center gap-1 rounded-full border border-brand-slate-200 bg-brand-slate-50 px-2.5 text-brand-gray-900 transition-colors hover:text-brand-red-700"
+                >
+                  <Typography variant="body-s">{f.label}</Typography>
+                  <X className="size-3" />
+                </Button>
+              ))}
 
-                {(activeFilters.length > 0 || params.q) && (
-                  <Button
-                    onClick={handleResetFilters}
-                    className="ml-2 font-semibold text-brand-red-900 hover:text-brand-red-700"
-                  >
-                    {t("reset")}
-                  </Button>
-                )}
-              </div>
+              {(activeFilters.length > 0 || params.q) && (
+                <Button
+                  variant="none"
+                  size="inline"
+                  onClick={handleResetFilters}
+                  className="ml-2 rounded-full font-semibold text-brand-red-900 hover:text-brand-red-700"
+                >
+                  <Typography variant="body-m">{t("reset")}</Typography>
+                </Button>
+              )}
+            </div>
 
+            {type === "publications" && (
               <div className="flex items-center gap-2">
                 <span>{t("sortBy")}:</span>
                 <select
                   className="cursor-pointer bg-transparent font-semibold text-gray-900 outline-none"
                   value={params.sort as string}
                   onChange={(e) => {
-                    setParams({ sort: e.target.value, page: 1 } as any);
+                    setParams({ sort: e.target.value, page: 1 } as Partial<typeof params>);
                   }}
                 >
                   <option value="desc">{t("sortNewest")}</option>
                   <option value="asc">{t("sortOldest")}</option>
                 </select>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* DLA INNYCH TYPÓW (STARY WIDOK NA DESKTOPIE) */}
           {type !== "publications" && (
@@ -428,7 +460,7 @@ export const FilterList = <
             {data === null ? (
               <Typography>{t("loading")}</Typography>
             ) : data.items.length === 0 && type === "publications" ? (
-              <div className="col-span-2 mt-4 flex w-full flex-col items-center justify-between rounded-lg border border-brand-slate-100 bg-white p-8 md:flex-row">
+              <div className="col-span-2 mt-4 flex w-full flex-col items-start justify-between rounded-lg border border-brand-slate-100 bg-white p-8 md:flex-row lg:items-center">
                 <div className="mb-4 md:mb-0">
                   <Typography variant="body-m" className="font-bold text-gray-900">
                     {t("emptyStatePublicationsTitle")}

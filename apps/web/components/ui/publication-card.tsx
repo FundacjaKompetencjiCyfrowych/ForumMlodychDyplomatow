@@ -43,7 +43,7 @@ export const PublicationCard = ({
       className={cn(
         "group flex w-full overflow-hidden rounded-md border border-border/60 bg-white transition-all",
         "h-full flex-col", // h-full wymusza wysokość karty
-        "desktop:data-[orientation=horizontal]:h-110 desktop:data-[orientation=horizontal]:flex-row",
+        "desktop:data-[orientation=horizontal]:h-110 desktop:data-[orientation=horizontal]:flex-row desktop:data-[orientation=horizontal]:items-start",
         className
       )}
     >
@@ -94,13 +94,13 @@ export const PublicationCard = ({
               {excerpt}
             </Typography>
           )}
+        </div>
 
-          <div className="mt-auto">
-            <span className="flex items-center text-sm font-semibold text-brand-red">
-              {t("cardButton")}
-              <ChevronRight className="ml-1 h-4 w-4" />
-            </span>
-          </div>
+        <div className="mt-auto">
+          <span className="flex items-center text-sm font-semibold text-brand-red">
+            {t("cardButton")}
+            <ChevronRight className="ml-1 h-4 w-4" />
+          </span>
         </div>
 
         {/* Stopka z autorem - zawsze na dole */}

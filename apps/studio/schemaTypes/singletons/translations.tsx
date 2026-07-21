@@ -299,6 +299,12 @@ export const translations = defineType({
               type: "string",
               validation: (Rule) => Rule.required(),
             }),
+            defineField({
+              name: "bibliography",
+              title: "Bibliografia",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
           ],
         }),
       ],
@@ -384,6 +390,12 @@ export const translations = defineType({
         defineField({
           name: "loading",
           title: "Ładowanie",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "maxAmmount",
+          title: "Wybierz maksymalnie",
           type: "string",
           validation: (Rule) => Rule.required(),
         }),

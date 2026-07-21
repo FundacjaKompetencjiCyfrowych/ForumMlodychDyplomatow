@@ -7,7 +7,7 @@ export default defineType({
   name: "tag",
   title: "Tag",
   type: "document",
-  description: "Tymczasowy dokument na tagi publikacji",
+  description: "Dokument na tagi publikacji",
   groups: pageGroups,
   fields: [
     languageField,
