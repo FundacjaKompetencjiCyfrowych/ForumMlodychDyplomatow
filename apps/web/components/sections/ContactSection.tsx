@@ -14,12 +14,12 @@ const ContactSection = async ({ index, data }: any) => {
         <div>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col">
-              <Typography as={getHeading(index)} variant="h1">
+              <Typography as={getHeading(index)} variant="h1" className="mobile:mb-8 mb-12">
                 {data.heading}
               </Typography>
 
               {data.subtitle && (
-                <Typography as="p" variant="title-m" className="font-semibold lg:text-xl">
+                <Typography as="p" variant="body-xl" className="font-semibold lg:text-xl">
                   {data.subtitle}
                 </Typography>
               )}

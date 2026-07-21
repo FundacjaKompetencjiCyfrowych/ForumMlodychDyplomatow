@@ -662,7 +662,9 @@ export type Translations = {
     requiredError?: string;
     invalidEmail?: string;
     tooLong?: string;
+    successTitle?: string;
     successMessage?: string;
+    successClose?: string;
     errorMessage?: string;
     errorMessageWithEmail?: string;
     placeholders?: {

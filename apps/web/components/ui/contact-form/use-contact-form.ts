@@ -39,6 +39,8 @@ export const useContactForm = ({ sectionKey, contactEmail }: UseContactFormArgs)
   const startedAtRef = useRef<number>(Date.now());
   // Error state drives border styling (border-brand-red) on required fields.
   const [errors, setErrors] = useState<Errors>(NO_ERRORS);
+  // Drives the success popup; only errors use a toast.
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,7 +87,7 @@ export const useContactForm = ({ sectionKey, contactEmail }: UseContactFormArgs)
 
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
-      toast.success(t("successMessage"));
+      setShowSuccess(true);
       form.reset();
       startedAtRef.current = Date.now();
     } catch {
@@ -98,5 +100,11 @@ export const useContactForm = ({ sectionKey, contactEmail }: UseContactFormArgs)
     }
   };
 
-  return { isSubmitting, errors, handleSubmit };
+  return {
+    isSubmitting,
+    errors,
+    handleSubmit,
+    showSuccess,
+    closeSuccess: () => setShowSuccess(false),
+  };
 };

@@ -5,7 +5,7 @@ import { ContactFieldError } from "./contact-field-error";
 /** Shared border/focus styling for a text input or textarea, with error state. */
 export const fieldClassName = (hasError: boolean, multiline = false) =>
   cn(
-    "w-full rounded-none border bg-white text-sm transition-colors outline-none placeholder:text-slate-400",
+    "w-full rounded-none border bg-white text-sm text-black transition-colors outline-none placeholder:text-slate-400",
     multiline ? "min-h-30 resize-y px-4 py-3" : "px-4 py-2.5",
     hasError
       ? "border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red"
