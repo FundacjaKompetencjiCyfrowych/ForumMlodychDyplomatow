@@ -6,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/components/ui/link";
 import { ChevronRight } from "lucide-react";
 import { PublicationCard } from "@/components/ui/publication-card";
+import { Container } from "@/components/ui/container";
 
 export interface RelatedPublicationsProps {
   publications: InferFragmentType<typeof publicationPreviewFragment>[];
@@ -23,8 +24,13 @@ export const RelatedPublications = async ({
   const t = await getTranslations({ locale, namespace: "publications" });
 
   return (
-    <section className="mx-auto w-full bg-brand-slate-50 px-6 pt-10 pb-16 md:px-6">
-      <div className="mx-auto mb-8 flex max-w-(--width-content-max) flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+    <Container
+      background="slate"
+      size="none"
+      className="px-6 pt-10 pb-16 md:px-6"
+      contentWidth="max"
+    >
+      <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <Typography as="h2" variant="h2" className="text-black">
           {t("singlePublicationPage.relatedPublicationTitle")}
         </Typography>
@@ -39,6 +45,6 @@ export const RelatedPublications = async ({
           <PublicationCard key={pub._id} publication={pub} layout="vertical" className="h-full" />
         ))}
       </div>
-    </section>
+    </Container>
   );
 };
