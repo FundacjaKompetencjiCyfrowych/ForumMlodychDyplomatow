@@ -256,7 +256,7 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
   const components = getPortableTextComponents(footnotes);
 
   return (
-    <section className="mx-auto w-full max-w-(--width-content-xl) px-4 py-8 sm:px-12">
+    <Container contentWidth="max">
       <div className="relative flex flex-col-reverse items-start justify-center gap-8 md:flex-row">
         {/* Lewa kolumna: Treść główna + Bibliografia */}
         <div className="flex w-full max-w-170 flex-col gap-12 lg:col-span-7 xl:col-span-6">

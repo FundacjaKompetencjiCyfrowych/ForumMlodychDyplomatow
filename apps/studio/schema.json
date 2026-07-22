@@ -4043,6 +4043,20 @@
               "value": {
                 "type": "object",
                 "attributes": {
+                  "breadcrumbHome": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "breadcrumbsPublication": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
                   "share": {
                     "type": "objectAttribute",
                     "value": {

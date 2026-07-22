@@ -1,15 +1,12 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import GradientImage from "@/sanity/image/GradientImage";
-import { ImgFragment } from "@/sanity/queries/imgFragment";
 import { Tag } from "../ui/tag";
 import { getTranslations } from "next-intl/server";
 import { Locale } from "next-intl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
 import { Download, Image as ImageIcon, Share2 } from "lucide-react";
-import React from "react";
-import GradientImage from "../../sanity/image/GradientImage";
 import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
 import type { GradientImgFragment } from "../../sanity/queries/imgFragment";
 import { Breadcrumbs } from "../ui/breadcrumb";
@@ -39,6 +36,7 @@ export interface PublicationHeroProps {
 }
 
 export const PublicationHero = async ({
+  breadcrumbs,
   category,
   title,
   excerpt,
@@ -55,16 +53,14 @@ export const PublicationHero = async ({
   return (
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} currentPageName={title} />
-      <Container contentWidth="xl" className="mx-auto w-full max-w-400 px-4 py-8 md:px-6">
-        {/* Breadcrumbs */}
-
+      <Container contentWidth="max" className="mx-auto w-full max-w-400 px-4 py-8 md:px-6">
         <div className="flex flex-col items-center gap-8 lg:grid lg:grid-cols-12 lg:gap-16">
           {/* Lewa kolumna: Treść */}
           <div className="order-2 flex w-full flex-col gap-6 lg:order-1 lg:col-span-7 xl:col-span-6">
             <div className="flex items-center gap-3">
               <div className="h-0.5 w-6 bg-brand-red"></div>
               <Typography as="span" variant="body-s" className="tracking-widest text-brand-red">
-                {tags[0] || category}
+                {tags[0]?.name || category}
               </Typography>
             </div>
 
@@ -83,55 +79,36 @@ export const PublicationHero = async ({
               <div className="flex flex-wrap items-center gap-3">
                 {tags.map((tag, index) => (
                   <React.Fragment key={index}>
-                    <Typography as="span" variant="body-m" className="text-muted-foreground">
-                      {tag}
-                    </Typography>
-                    {index < tags.length - 1 && (
-                      <Typography
-                        as="span"
-                        variant="body-m"
-                        className="text-muted-foreground opacity-50"
-                      >
-                        •
-                      </Typography>
-                    )}
+                    <Tag variant="hero" href={tag.slug}>
+                      <p>{tag.name}</p>
+                    </Tag>
+                    {index < tags.length - 1 && <div className="size-0.5 bg-brand-gray-600" />}
                   </React.Fragment>
                 ))}
               </div>
             )}
 
-          {/* Tagi */}
-          {tags.length > 0 && (
-            <div className="flex flex-wrap items-center gap-3">
-              {tags.map((tag, index) => (
-                <React.Fragment key={index}>
-                  <Tag variant="hero" href={tag.slug}>
-                    <p>{tag.name}</p>
-                  </Tag>
-                  {index < tags.length - 1 && <div className="size-0.5 bg-brand-gray-600" />}
-                </React.Fragment>
-              ))}
-            </div>
-          )}
-
-          {/* Sekcja Autora i Daty */}
-          <div className="flex w-fit flex-col justify-between gap-4 py-1 sm:flex-row sm:items-center">
-            {author ? (
-              <div className="flex items-center gap-4">
-                <Avatar className="h-10 w-10 bg-slate-100">
-                  {author.imageUrl && <AvatarImage src={author.imageUrl} alt={author.name} />}
-                  <AvatarFallback className="text-sm font-medium text-slate-500">
-                    {author.initials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
-                  <Typography as="span" variant="body-s" className="text-brand-gray-600">
-                    {author.name}
-                  </Typography>
-                  {date && (
-                    <Typography variant="caption" className="text-brand-gray-600" asChild>
-                      <time dateTime={isoDate}>{date}</time>
+            {/* Sekcja Autora i Daty */}
+            <div className="flex w-fit flex-col justify-between gap-4 py-1 sm:flex-row sm:items-center">
+              {author ? (
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-10 w-10 bg-slate-100">
+                    {author.imageUrl && <AvatarImage src={author.imageUrl} alt={author.name} />}
+                    <AvatarFallback className="text-sm font-medium text-slate-500">
+                      {author.initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <Typography as="span" variant="body-s" className="text-brand-gray-600">
+                      {author.name}
                     </Typography>
+
+                    {date && (
+                      <Typography variant="caption" className="text-brand-gray-600" asChild>
+                        <time dateTime={isoDate}>{date}</time>
+                      </Typography>
+                    )}
+
                     {author.role && (
                       <Typography
                         as="span"
@@ -143,74 +120,61 @@ export const PublicationHero = async ({
                     )}
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div />
-            )}
-          </div>
+              ) : (
+                <div />
+              )}
+            </div>
 
-          {/* Przyciski Akcji */}
-          <div className="mt-2 flex w-full flex-col items-center gap-4 md:flex-row">
-            <Button
-              variant="primary"
-              size="l"
-              className="w-full md:w-fit"
-              iconLeft={<Share2 className="h-4 w-4" />}
-            >
-              {t("singlePublicationPage.share")}
-            </Button>
-
-            {pdfUrl && (
+            {/* Przyciski Akcji */}
+            <div className="mt-2 flex w-full flex-col items-center gap-4 md:flex-row">
               <Button
-                asChild
-                variant="secondary"
+                variant="primary"
                 size="l"
                 className="w-full md:w-fit"
-                iconRight={<Download className="h-4 w-4" />}
+                iconLeft={<Share2 className="h-4 w-4" />}
               >
-                <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                  {t("singlePublicationPage.downloadPdf")}
-                </a>
+                {t("singlePublicationPage.share")}
               </Button>
 
               {pdfUrl && (
                 <Button
                   asChild
-                  variant="ghost"
-                  className="gap-2 rounded-md border-border px-5 text-foreground hover:bg-muted"
+                  variant="secondary"
+                  size="l"
+                  className="w-full md:w-fit"
+                  iconRight={<Download className="h-4 w-4" />}
                 >
-                  {/* W przypadku bezpośrednich plików do pobrania bezpieczniej zostawić natywny tag <a> z target="_blank" zamiast routerowego Linku */}
                   <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                    <Download className="h-4 w-4" />
-                    {t.downloadPdf}
+                    {t("singlePublicationPage.downloadPdf")}
                   </a>
                 </Button>
               )}
             </div>
-          </div>
+          </div>{" "}
+          {/* KONIEC: Lewa kolumna */}
+          {/* Prawa kolumna: Obraz */}
+          <div className="order-1 flex w-full flex-col gap-3 lg:order-2 lg:col-span-5 xl:col-span-6">
+            <div className="relative flex w-full items-center justify-center overflow-hidden">
+              {image ? (
+                <GradientImage image={image} desktopSize="xl" />
+              ) : (
+                <div className="flex flex-col items-center gap-2 text-brand-gray-600/50">
+                  <ImageIcon className="h-12 w-12" />
+                  <Typography as="span" variant="body-s" className="font-medium">
+                    {t("singlePublicationPage.noImage")}
+                  </Typography>
+                </div>
+              )}
+            </div>
 
-        {/* Prawa kolumna: Obraz */}
-        <div className="order-1 flex w-full flex-col gap-3 lg:order-2 lg:col-span-5 xl:col-span-6">
-          <div className="relative flex w-full items-center justify-center overflow-hidden">
-            {image ? (
-              <GradientImage image={image} desktopSize="xl" />
-            ) : (
-              <div className="flex flex-col items-center gap-2 text-brand-gray-600/50">
-                <ImageIcon className="h-12 w-12" />
-                <Typography as="span" variant="body-s" className="font-medium">
-                  {t("singlePublicationPage.noImage")}
+            {(image?.asset?.altText || image?.asset?.description) && (
+              <div className="mt-1 hidden items-start gap-3 border-l-2 border-brand-red px-2 md:flex">
+                <Typography variant="body-s" className="leading-snug text-brand-gray-600">
+                  {image.asset.altText || image.asset.description}
                 </Typography>
               </div>
             )}
           </div>
-
-          {(image?.asset?.altText || image?.asset?.description) && (
-            <div className="mt-1 hidden items-start gap-3 border-l-2 border-brand-red px-2 md:flex">
-              <Typography variant="body-s" className="leading-snug text-brand-gray-600">
-                {image.asset.altText || image.asset.description}
-              </Typography>
-            </div>
-          )}
         </div>
       </Container>
     </>

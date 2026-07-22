@@ -721,6 +721,8 @@ export type Translations = {
   publications?: {
     cardButton?: string;
     singlePublicationPage?: {
+      breadcrumbHome?: string;
+      breadcrumbsPublication?: string;
       share?: string;
       downloadPdf?: string;
       noImage?: string;

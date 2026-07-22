@@ -13,7 +13,7 @@ import { PublicationPdf } from "@/components/Publications/PublicationPdf";
 import { PublicationAuthor } from "@/components/Publications/PublicationAuthor";
 import type { Locale } from "next-intl";
 import { getInitials } from "./helpers";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { formatLink } from "../../../../lib/links";
 import type { BreadcrumbsFragment } from "../../../../sanity/queries/breadcrumbs";
 import type { Metadata } from "next";
@@ -51,6 +51,7 @@ export async function generateMetadata(props: { params: Promise<Params> }): Prom
 
 export default async function PublicationDetailPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: "publications.singlePublicationPage" });
   setRequestLocale(locale ?? "pl");
   const { data: publication } = await runQuery(singlePublicationQuery, {
     parameters: { locale, slug },
@@ -106,6 +107,23 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       }
     : undefined;
 
+  const breadcrumbs = [
+    formatLink({ slug: `/`, type: "page", text: t("breadcrumbHome") }),
+    formatLink({
+      text: t("breadcrumbsPublication"),
+      type: "publication",
+      slug: `/publications`,
+    }),
+  ].map(
+    (i, index) =>
+      ({
+        _key: `breadcrumb-${index}`,
+        _type: "breadcrumb",
+        link: i,
+      }) as BreadcrumbsFragment
+  );
+  const jsonLd = createJsonLdArticle(seo);
+
   return (
     <div className="min-h-screen">
       <script
@@ -114,6 +132,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
       />
 
       <PublicationHero
+        breadcrumbs={breadcrumbs}
         category={publication.type?.title ?? ""}
         title={publication.title ?? ""}
         excerpt={publication.excerpt ?? undefined}

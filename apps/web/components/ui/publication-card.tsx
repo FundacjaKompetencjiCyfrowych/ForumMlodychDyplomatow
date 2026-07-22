@@ -32,7 +32,6 @@ export const PublicationCard = ({
       link={{
         linkType: "publication",
         href: slug,
-        homepage: false,
         _key: `publication-${slug}`,
         openInNewTab: false,
         text: null,

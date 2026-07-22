@@ -24,7 +24,7 @@ export const RelatedPublications = async ({
 
   return (
     <section className="mx-auto w-full bg-brand-slate-50 px-6 pt-10 pb-16 md:px-6">
-      <div className="mx-auto mb-8 flex max-w-(--width-content-xl) flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="mx-auto mb-8 flex max-w-(--width-content-max) flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <Typography as="h2" variant="h2" className="text-black">
           {t("singlePublicationPage.relatedPublicationTitle")}
         </Typography>

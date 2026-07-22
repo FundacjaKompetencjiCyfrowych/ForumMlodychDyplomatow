@@ -277,6 +277,18 @@ export const translations = defineType({
           type: "object",
           fields: [
             defineField({
+              name: "breadcrumbHome",
+              title: "Breadcrumb strona główna",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "breadcrumbsPublication",
+              title: "Breadcrumb Publikacje",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
               name: "share",
               title: "Udostępnij",
               type: "string",
