@@ -4,6 +4,10 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Typography } from "@/components/ui/typography";
 import { Link } from "@/components/ui/link";
 import imageUrlBuilder from "@sanity/image-url";
+import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
+import { ChevronDown, Globe } from "lucide-react";
 import { Container } from "../ui/container";
 import { trim } from "../../lib/text";
 
@@ -33,7 +37,7 @@ export interface PublicationBodyProps {
     imageUrl?: string;
   };
   date?: string;
-  locale?: string;
+  locale?: Locale;
 }
 
 const slugify = (text: string) => {
@@ -59,21 +63,30 @@ const getBlockText = (block: any) => {
   return block.children?.map((child: any) => child.text).join("") || "";
 };
 
-const translations = {
-  pl: {
-    inThisArticle: "W tym artykule",
-    noHeadings: "Brak nagłówków w tekście.",
-  },
-  en: {
-    inThisArticle: "In this article",
-    noHeadings: "No headings in the text.",
-  },
-};
+// 1. FUNKCJA DO EKSTRAKCJI PRZYPISÓW Z PORTABLE TEXT
+const extractFootnotes = (content: any[]) => {
+  const footnotes: any[] = [];
+  if (!Array.isArray(content)) return footnotes;
 
-const portableTextComponents: PortableTextComponents = {
+  content.forEach((block) => {
+    if (block._type === "block" && block.markDefs) {
+      block.markDefs.forEach((def: any) => {
+        if (def._type === "footnote") {
+          // Zapobiega duplikatom, jeśli ten sam przypis obejmuje kilka węzłów tekstowych
+          if (!footnotes.find((f) => f._key === def._key)) {
+            footnotes.push(def);
+          }
+        }
+      });
+    }
+  });
+  return footnotes;
+};
+// 2. FABRYKA KOMPONENTÓW (musi wiedzieć o przypisach, aby renderować poprawne numery)
+const getPortableTextComponents = (footnotes: any[]): PortableTextComponents => ({
   block: {
     normal: ({ children }) => (
-      <Typography as="p" variant="body-l" className="mb-6 text-foreground/90">
+      <Typography as="p" variant="body-l" className="mb-6 text-brand-gray-900">
         {children}
       </Typography>
     ),
@@ -82,8 +95,8 @@ const portableTextComponents: PortableTextComponents = {
       return (
         <Typography
           as="h1"
-          variant="h2"
-          className="mt-12 mb-6 scroll-mt-[20vh] pt-4 text-foreground"
+          variant="h3"
+          className="my-4 scroll-mt-[20vh] pt-4 text-brand-gray-900"
           asChild
         >
           <h1 id={id}>{children}</h1>
@@ -95,8 +108,8 @@ const portableTextComponents: PortableTextComponents = {
       return (
         <Typography
           as="h2"
-          variant="h3"
-          className="mt-10 mb-5 scroll-mt-[20vh] pt-4 text-foreground"
+          variant="h4"
+          className="my-4 scroll-mt-[20vh] pt-4 text-brand-gray-900"
           asChild
         >
           <h2 id={id}>{children}</h2>
@@ -104,31 +117,58 @@ const portableTextComponents: PortableTextComponents = {
       );
     },
     h3: ({ children }) => (
-      <Typography as="h3" variant="h4" className="mt-8 mb-4 text-foreground">
+      <Typography as="h3" variant="h4" className="mt-4 mb-4 text-brand-gray-900">
         {children}
       </Typography>
     ),
     h4: ({ children }) => (
-      <Typography as="h4" variant="h4" className="mt-6 mb-3 text-foreground">
+      <Typography as="h4" variant="h4" className="mt-4 mb-3 text-brand-gray-900">
         {children}
       </Typography>
     ),
     h5: ({ children }) => (
-      <Typography as="h5" variant="h4" className="mt-6 mb-2 text-foreground">
+      <Typography as="h5" variant="h4" className="mt-4 mb-2 text-brand-gray-900">
         {children}
       </Typography>
     ),
     h6: ({ children }) => (
-      <Typography as="h6" variant="h4" className="mt-6 mb-2 text-foreground">
+      <Typography as="h6" variant="h4" className="mt-4 mb-2 text-brand-gray-900">
         {children}
       </Typography>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="my-8 rounded-r-lg border-l-[3px] border-brand-blue bg-muted/30 py-2 pl-5 text-foreground/80 italic">
+      <blockquote className="my-6 rounded-r-lg border-l-[3px] border-brand-red px-2 py-0.5 text-brand-red">
         <Typography variant="body-l">{children}</Typography>
       </blockquote>
     ),
   },
+
+  list: {
+    bullet: ({ children }) => (
+      <ul className="mb-6 ml-6 list-disc space-y-2 text-brand-gray-900">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="mb-6 ml-6 list-decimal space-y-2 text-brand-gray-900">{children}</ol>
+    ),
+  },
+
+  listItem: {
+    bullet: ({ children }) => (
+      <li>
+        <Typography as="span" variant="body-l">
+          {children}
+        </Typography>
+      </li>
+    ),
+    number: ({ children }) => (
+      <li>
+        <Typography as="span" variant="body-l">
+          {children}
+        </Typography>
+      </li>
+    ),
+  },
+
   types: {
     image: ({ value }) => {
       if (!value?.asset?._ref && !value?.asset?.url) return null;
@@ -147,7 +187,7 @@ const portableTextComponents: PortableTextComponents = {
           </div>
           {value.caption && (
             <div className="mt-3 flex items-start gap-3 border-l-2 border-brand-red p-1">
-              <Typography variant="caption" className="leading-snug text-muted-foreground">
+              <Typography variant="caption" className="text-muted-brand leading-snug">
                 {value.caption}
               </Typography>
             </div>
@@ -157,7 +197,9 @@ const portableTextComponents: PortableTextComponents = {
     },
   },
   marks: {
-    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+    strong: ({ children }) => (
+      <strong className="font-semibold text-brand-gray-900">{children}</strong>
+    ),
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ children, value }) => {
       const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
@@ -166,17 +208,34 @@ const portableTextComponents: PortableTextComponents = {
           href={value?.href || "#"}
           target={target}
           variant="link"
-          className="hover:text-brand-400 border-none text-brand-blue no-underline underline-offset-4 transition-colors hover:border-transparent"
+          className="hover:text-brand-gray-900-400 text-brand-gray-900-blue border-none no-underline underline-offset-4 transition-colors hover:border-transparent"
         >
           {children}
         </Link>
       );
     },
+    // NOWY MARKER DLA PRZYPISÓW
+    footnote: ({ children, value }) => {
+      const index = footnotes.findIndex((f) => f._key === value._key) + 1;
+      return (
+        <span className="relative inline-block">
+          {children}
+          <sup
+            id={`ref-${value._key}`}
+            className="ml-0.5 scroll-mt-[20vh] font-semibold text-brand-red"
+          >
+            <a href={`#footnote-${value._key}`} className="hover:underline" title={value.source}>
+              [{index}]
+            </a>
+          </sup>
+        </span>
+      );
+    },
   },
-};
+});
 
-export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps) => {
-  const t = translations[locale as keyof typeof translations] || translations.pl;
+export const PublicationBody = async ({ content, locale = "pl" }: PublicationBodyProps) => {
+  const t = await getTranslations({ locale, namespace: "publications" });
 
   const toc = Array.isArray(content)
     ? content
@@ -193,56 +252,126 @@ export const PublicationBody = ({ content, locale = "pl" }: PublicationBodyProps
         })
     : [];
 
+  const footnotes = extractFootnotes(content);
+  const components = getPortableTextComponents(footnotes);
+
   return (
-    <Container contentWidth="xl">
-      <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row">
-        {/* Lewa kolumna: Treść główna */}
-        <div className="w-full lg:col-span-7 xl:col-span-6">
+    <Container contentWidth="max">
+      <div className="relative flex flex-col-reverse items-start justify-center gap-8 md:flex-row">
+        {/* Lewa kolumna: Treść główna + Bibliografia */}
+        <div className="flex w-full max-w-170 flex-col gap-12 lg:col-span-7 xl:col-span-6">
           <div className="prose-custom max-w-none">
-            <PortableText value={content} components={portableTextComponents} />
+            <PortableText value={content} components={components} />
           </div>
+
+          {/* 3. KOMPONENT BIBLIOGRAFII Renderowany pod głównym tekstem */}
+          {footnotes.length > 0 && (
+            <div className="mt-4">
+              <Collapsible className="w-full">
+                <CollapsibleTrigger className="group flex w-full items-center justify-between text-left outline-none">
+                  <Typography variant="h4" className="text-brand-gray-900">
+                    {t("singlePublicationPage.bibliography")}
+                  </Typography>
+                  <ChevronDown className="size-6 text-brand-gray-900 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </CollapsibleTrigger>
+
+                <CollapsibleContent className="mt-4">
+                  <ol className="flex flex-col gap-3">
+                    {footnotes.map((note, index) => (
+                      <li
+                        key={note._key}
+                        id={`footnote-${note._key}`}
+                        className="flex scroll-mt-[20vh] gap-2 text-sm text-brand-gray-700"
+                      >
+                        <a href={`#ref-${note._key}`} className="" title="Wróć do tekstu">
+                          <Typography variant="body-l" className="text-brand-red">
+                            [{index + 1}]
+                          </Typography>
+                        </a>
+                        <div>
+                          <Typography variant="body-l" as="span">
+                            {note.source}
+                          </Typography>
+                          {note.url && (
+                            <Typography variant="body-l" as="span">
+                              {" | link:"}
+                              <a
+                                href={note.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="ml-1 break-all hover:underline"
+                              >
+                                {note.url}
+                              </a>
+                            </Typography>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
+          )}
         </div>
 
         {/* Prawa kolumna: Pływający Spis Treści (TOC) */}
-        <div className="min-w-content sticky top-24 hidden lg:block">
-          <Typography variant="h4" className="mb-4 font-normal text-muted-foreground">
-            {t.inThisArticle}
-          </Typography>
+        <div className="top-24 block w-full md:sticky md:max-w-70">
+          <Collapsible defaultOpen className="w-full">
+            <CollapsibleTrigger className="group flex w-full items-center justify-between pb-3 text-left outline-none">
+              <div className="flex items-center gap-2 text-brand-gray-900">
+                <Globe className="size-5" />
+                <Typography variant="h4">{t("singlePublicationPage.inThisArticle")}</Typography>
+              </div>
+              <div className="flex items-center gap-2 text-brand-gray-600">
+                <ChevronDown className="size-5 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </div>
+            </CollapsibleTrigger>
 
-          <hr className="mb-6 h-px w-full shrink-0 border-none bg-border/60" />
+            <hr className="mb-4 h-px w-full shrink-0 border-none bg-border/60" />
 
-          {toc.length > 0 ? (
-            <ul className="flex flex-col gap-5">
-              {toc.map((item, index) => {
-                const number = String(index + 1).padStart(2, "0");
-                return (
-                  <li key={index} className="group flex items-start gap-4">
-                    <Typography
-                      as="span"
-                      variant="body-m"
-                      className="mt-0.5 shrink-0 font-semibold text-brand-red"
-                    >
-                      {number}
-                    </Typography>
+            <CollapsibleContent>
+              {toc.length > 0 ? (
+                <ul className="flex flex-col gap-1">
+                  {toc.map((item, index) => {
+                    const number = String(index + 1).padStart(2, "0");
 
-                    <Link
-                      href={`#${item.id}`}
-                      variant="link"
-                      className="block h-auto border-none p-0! text-left text-muted-foreground no-underline transition-colors hover:border-transparent hover:text-foreground active:border-transparent"
-                    >
-                      <Typography as="span" variant="body-m">
-                        {item.title}
-                      </Typography>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <Typography variant="body-m" className="text-muted-foreground italic">
-              {t.noHeadings}
-            </Typography>
-          )}
+                    return (
+                      <li key={index} className="group flex w-full items-center text-left">
+                        <Typography
+                          as="span"
+                          variant="body-m"
+                          className="shrink-0 py-2 pr-3 text-brand-red"
+                        >
+                          {number}
+                        </Typography>
+
+                        <Link
+                          href={`#${item.id}`}
+                          variant="none"
+                          size="inline"
+                          className="block min-w-0 flex-1 text-left"
+                        >
+                          <Typography
+                            as="span"
+                            variant="body-m"
+                            className="block truncate text-left text-brand-gray-500 transition-colors hover:text-brand-gray-900"
+                            title={item.title}
+                          >
+                            {item.title}
+                          </Typography>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <Typography variant="body-m" className="text-left text-brand-red italic">
+                  {t("singlePublicationPage.noHeadings")}
+                </Typography>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       </div>
     </Container>

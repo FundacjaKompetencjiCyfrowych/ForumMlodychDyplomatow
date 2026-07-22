@@ -17,6 +17,7 @@ const containerStyles = cva("w-full", {
     size: {
       base: "px-5 pt-14 pb-12 desktop:px-22 desktop:pt-24 desktop:pb-24",
       stretch: "px-0 pt-12 pb-14 desktop:pt-24",
+      none: "",
     },
     background: {
       default: "bg-transparent text-gray-900",

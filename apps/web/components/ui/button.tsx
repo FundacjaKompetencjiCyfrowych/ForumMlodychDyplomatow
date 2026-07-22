@@ -40,7 +40,9 @@ const buttonVariants = cva(
         ghost: "typography-p1 border-0 bg-transparent text-gray-900 hover:bg-gray-100",
         dot: "h-2 w-2 rounded-full border-0 bg-slate-300 p-0! hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800",
         toggle:
-          "flex gap-1 border-2 border-transparent bg-transparent p-8 text-gray-900 hover:text-brand-red-800 data-[state=on]:border-b-brand-red-800 data-[state=on]:text-brand-red",
+          "flex w-full gap-1 border-2 border-transparent bg-transparent p-8 text-gray-900 hover:text-brand-red-800 data-[state=on]:border-b-brand-red-800 data-[state=on]:text-brand-red",
+        chip: "data-[state=on]:border-b-brand flex h-fit shrink gap-1 rounded-full border border-brand-blue bg-transparent px-4 text-brand-blue hover:bg-brand-blue-50 data-[state=on]:bg-brand-blue data-[state=on]:text-brand-blue-50",
+        none: "",
       },
       size: {
         s: "h-8 gap-1 px-4 text-[0.75rem]",

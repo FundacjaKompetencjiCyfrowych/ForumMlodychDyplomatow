@@ -32,6 +32,11 @@ export type Gradient = {
   }>;
 };
 
+export type FilterPublications = {
+  label?: string;
+  filterFields?: FilterFields;
+};
+
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -43,6 +48,29 @@ export type FileDataFile = {
   asset?: SanityFileAssetReference;
   media?: unknown; // Unable to locate the referenced type "media" in schema
   _type: "file";
+};
+
+export type FilterFields = {
+  article?: string;
+  news?: string;
+  guide?: string;
+  review?: string;
+};
+
+export type HeroPublicationsSection = {
+  _type: "heroPublicationsSection";
+  heading?: string;
+  subheading?: string;
+  publicationCounter?: string;
+  badges?: Array<string>;
+};
+
+export type PublicationFilterSection = {
+  _type: "publicationFilterSection";
+  filterHeading?: string;
+  searchbarPlaceholder?: string;
+  publicationsPerPage?: number;
+  filterPublications?: FilterPublications;
 };
 
 export type PatronitePerksSection = {
@@ -334,6 +362,12 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & PatronitePerksSection)
+  | ({
+      _key: string;
+    } & PublicationFilterSection)
+  | ({
+      _key: string;
+    } & HeroPublicationsSection)
 >;
 
 export type LinkButton = {
@@ -605,6 +639,13 @@ export type TranslationsReference = {
   [internalGroqTypeReferenceTo]?: "translations";
 };
 
+export type PublicationTypeReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publicationType";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
@@ -616,7 +657,8 @@ export type InternationalizedArrayReferenceValue = {
     | PublicationReference
     | TagReference
     | TagCategoryReference
-    | TranslationsReference;
+    | TranslationsReference
+    | PublicationTypeReference;
   language?: string;
 };
 
@@ -680,6 +722,38 @@ export type Translations = {
     divisionNotFound?: string;
     checkDetails?: string;
   };
+  publications?: {
+    cardButton?: string;
+    singlePublicationPage?: {
+      breadcrumbHome?: string;
+      breadcrumbsPublication?: string;
+      share?: string;
+      copied?: string;
+      downloadPdf?: string;
+      noImage?: string;
+      inThisArticle?: string;
+      noHeadings?: string;
+      relatedPublicationTitle?: string;
+      allPublications?: string;
+      bibliography?: string;
+    };
+  };
+  filterComponent?: {
+    search?: string;
+    category?: string;
+    publicationsSearch?: string;
+    results?: string;
+    reset?: string;
+    sortBy?: string;
+    sortNewest?: string;
+    sortOldest?: string;
+    emptyState?: string;
+    emptyStatePublicationsTitle?: string;
+    emptyStatePublicationsDesc?: string;
+    showAllPublications?: string;
+    loading?: string;
+    maxAmmount?: string;
+  };
   locale?: string;
 };
 
@@ -716,7 +790,7 @@ export type Publication = {
   _rev: string;
   locale?: string;
   seo?: Seo;
-  type?: "article" | "news" | "guide" | "review";
+  type?: PublicationTypeReference;
   title?: string;
   excerpt?: string;
   slug?: Slug;
@@ -747,8 +821,9 @@ export type Publication = {
           | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
-          href?: string;
-          _type: "link";
+          source?: string;
+          url?: string;
+          _type: "footnote";
           _key: string;
         }>;
         level?: number;
@@ -787,6 +862,18 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
+};
+
+export type PublicationType = {
+  _id: string;
+  _type: "publicationType";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  seo?: Seo;
+  title?: string;
+  slug?: Slug;
 };
 
 export type Navigation = {
@@ -1028,8 +1115,12 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | Robots
   | Gradient
+  | FilterPublications
   | SanityFileAssetReference
   | FileDataFile
+  | FilterFields
+  | HeroPublicationsSection
+  | PublicationFilterSection
   | PatronitePerksSection
   | IconCardSection
   | BenefitsSection
@@ -1083,6 +1174,7 @@ export type AllSanitySchemaTypes =
   | TagReference
   | TagCategoryReference
   | TranslationsReference
+  | PublicationTypeReference
   | InternationalizedArrayReferenceValue
   | Translations
   | Tag
@@ -1090,6 +1182,7 @@ export type AllSanitySchemaTypes =
   | Publication
   | SanityImageCrop
   | SanityImageHotspot
+  | PublicationType
   | Navigation
   | Event
   | Division

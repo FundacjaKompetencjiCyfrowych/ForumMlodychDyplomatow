@@ -11,3 +11,5 @@ export { default as ContactSection } from "./ContactSection";
 export { default as UniversalHero } from "./UniversalHero";
 export { default as DivisionsListSection } from "./DivisionsListSection";
 export { default as ExpertsListSection } from "./ExpertsListSection";
+export { default as PublicationsFilter } from "./PublicationsFilter";
+export { default as HeroPublications } from "./HeroPublications";

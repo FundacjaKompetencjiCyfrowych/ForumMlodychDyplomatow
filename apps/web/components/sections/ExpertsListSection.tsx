@@ -57,7 +57,7 @@ const ExpertsListSection = async ({
     },
   ];
   return (
-    <Container className="flex flex-col gap-8">
+    <Container className="flex flex-col gap-8" contentWidth="max">
       <ExpertsFilterList filters={filters} queryAction={queryPeople} locale={locale} perPage={12} />
     </Container>
   );

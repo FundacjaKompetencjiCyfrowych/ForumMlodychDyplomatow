@@ -21,6 +21,7 @@ export const ExpertsFilterList = ({ filters, queryAction, locale, perPage }: Pro
     queryAction={queryAction}
     locale={locale}
     perPage={perPage}
+    type="experts"
     listClassName="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] desktop:grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] "
   />
 );

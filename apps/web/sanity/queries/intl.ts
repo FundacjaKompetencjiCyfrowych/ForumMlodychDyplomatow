@@ -16,6 +16,8 @@ export const intlQuery = q
     global: true,
     contactForm: true,
     divisions: true,
+    publications: true,
+    filterComponent: true,
   }));
 /*
 Use
