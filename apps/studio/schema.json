@@ -4064,6 +4064,13 @@
                     },
                     "optional": true
                   },
+                  "copied": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
                   "downloadPdf": {
                     "type": "objectAttribute",
                     "value": {

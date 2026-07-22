@@ -724,6 +724,7 @@ export type Translations = {
       breadcrumbHome?: string;
       breadcrumbsPublication?: string;
       share?: string;
+      copied?: string;
       downloadPdf?: string;
       noImage?: string;
       inThisArticle?: string;

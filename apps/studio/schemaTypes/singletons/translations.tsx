@@ -295,6 +295,12 @@ export const translations = defineType({
               validation: (Rule) => Rule.required(),
             }),
             defineField({
+              name: "copied",
+              title: "Skopiowano",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
               name: "downloadPdf",
               title: "Pobierz PDF",
               type: "string",

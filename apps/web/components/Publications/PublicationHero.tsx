@@ -6,11 +6,12 @@ import { getTranslations } from "next-intl/server";
 import { Locale } from "next-intl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
-import { Download, Image as ImageIcon, Share2 } from "lucide-react";
+import { Download, Image as ImageIcon } from "lucide-react";
 import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
 import type { GradientImgFragment } from "../../sanity/queries/imgFragment";
 import { Breadcrumbs } from "../ui/breadcrumb";
 import { Container } from "../ui/container";
+import { ShareButton } from "../ui/share-button";
 
 export interface PublicationHeroProps {
   breadcrumbs: BreadcrumbsFragment[];
@@ -77,12 +78,13 @@ export const PublicationHero = async ({
             {/* Tagi */}
             {tags.length > 0 && (
               <div className="flex flex-wrap items-center gap-3">
-                {tags.map((tag, index) => (
+                {/* Limit zeby nie psulo designu przy duzej ilosci tagow, nad autorem wyswietlaja sie wszystkie */}
+                {tags.slice(0, 8).map((tag, index, arr) => (
                   <React.Fragment key={index}>
                     <Tag variant="hero" href={tag.slug}>
                       <p>{tag.name}</p>
                     </Tag>
-                    {index < tags.length - 1 && <div className="size-0.5 bg-brand-gray-600" />}
+                    {index < arr.length - 1 && <div className="size-0.5 bg-brand-gray-600" />}
                   </React.Fragment>
                 ))}
               </div>
@@ -127,14 +129,11 @@ export const PublicationHero = async ({
 
             {/* Przyciski Akcji */}
             <div className="mt-2 flex w-full flex-col items-center gap-4 md:flex-row">
-              <Button
-                variant="primary"
-                size="l"
-                className="w-full md:w-fit"
-                iconLeft={<Share2 className="h-4 w-4" />}
-              >
-                {t("singlePublicationPage.share")}
-              </Button>
+              <ShareButton
+                title={title}
+                label={t("singlePublicationPage.share")}
+                copiedLabel="Skopiowano!"
+              />
 
               {pdfUrl && (
                 <Button
