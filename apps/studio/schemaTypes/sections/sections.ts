@@ -19,6 +19,7 @@ import { iconCardSection } from "./iconCardSection";
 import { patronitePerksSection } from "./patronitePerksSection";
 import { publicationsFilterSection } from "./publicationsFilterSection";
 import { heroPublicationsSection } from "./heroPublicationsSection";
+import { richTextSection } from "./richTextSection";
 
 export const sectionTypes = [
   "aboutUsSection",
@@ -42,6 +43,7 @@ export const sectionTypes = [
   "patronitePerksSection",
   "publicationFilterSection",
   "heroPublicationsSection",
+  "richTextSection",
 ] as const;
 
 export const sections = sectionTypes.map((type) => ({ type }));
@@ -68,4 +70,5 @@ export const sectionStructure = [
   patronitePerksSection,
   publicationsFilterSection,
   heroPublicationsSection,
+  richTextSection,
 ];
