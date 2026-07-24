@@ -5,7 +5,7 @@
  */
 export const PLACEHOLDERS = {
   person: "/static/images/person_placeholder.webp",
-  default: "/static/image/default_placeholder.webp",
+  default: "/placeholder.svg",
 } as const;
 
 export type PlaceholderVariant = keyof typeof PLACEHOLDERS;
