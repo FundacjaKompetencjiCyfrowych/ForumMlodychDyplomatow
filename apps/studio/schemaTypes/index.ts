@@ -5,9 +5,7 @@ import event from "./event";
 import { img, gradientImg } from "./img";
 import { link, linkButton } from "./link";
 import { pageBuilder } from "./pageBuilderType";
-import home from "./pages/home";
 import { page } from "./pages/page";
-import post from "./pages/post";
 import person from "./person";
 import { personGroup } from "./personGroup";
 import publications from "./publications";
@@ -25,7 +23,6 @@ import tag from "./tag";
 import tagCategory from "./tagCategory";
 
 export const schemaTypes = [
-  post,
   event,
   person,
   personGroup,
@@ -35,7 +32,6 @@ export const schemaTypes = [
   tagCategory,
   category,
   settings,
-  home,
   seo,
   richText,
   img,

@@ -87,6 +87,15 @@ export default async function RootLayout({
   const orgJsonLd = createJsonLdOrganization(orgSeo);
   return (
     <html lang={locale}>
+      <head>
+        {navigation?.header?.logo?.asset && (
+          <link
+            rel="icon"
+            href={navigation.header.logo.asset.url!}
+            type={navigation.header.logo.asset.mimeType!}
+          />
+        )}
+      </head>
       <body
         className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} ${lora.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
@@ -108,7 +117,11 @@ export default async function RootLayout({
               </main>
               <Toaster />
               <SanityPreview />
-              <Footer footer={navigation!.footer} navigation={navigation!.navigation} />
+              <Footer
+                footer={navigation!.footer}
+                navigation={navigation!.navigation}
+                header={navigation!.header}
+              />
             </NextIntlClientProvider>
           </SvgCacheProvider>
         </NuqsAdapter>

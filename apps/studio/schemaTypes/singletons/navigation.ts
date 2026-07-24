@@ -21,6 +21,21 @@ export default defineType({
   ],
   fields: [
     defineField({
+      name: "logo",
+      title: "Logo",
+      type: "img",
+      group: "header",
+      description: "Logo wyświetlane w nagłówku i w faviconie strony.",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "logoText",
+      title: "Tekst logo",
+      type: "string",
+      group: "header",
+      description: "Tekst wyświetlany obok logo w nagłówku.",
+    }),
+    defineField({
       name: "button",
       title: "Przycisk",
       type: "link",

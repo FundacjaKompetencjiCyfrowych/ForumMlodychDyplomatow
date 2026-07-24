@@ -16,6 +16,7 @@ export const imgFragment = q.fragmentForType<"img">().project((sub) => ({
         lqip: sub.field("lqip"),
         dimensions: sub.field("dimensions"),
       })),
+      mimeType: sub.field("mimeType"),
       extension: sub.field("extension"),
       // Values added by Sanity media plugin (can be set in asset dashboard):
       altText: sub.field("altText"),
