@@ -1,12 +1,12 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { createSectionPreview } from "./sectionPreview";
 
-export const whoWeWorkWithSection = defineType({
-  name: "whoWeWorkWithSection",
-  title: "Z kim współpracujemy",
+export const iconCardSection = defineType({
+  name: "iconCardSection",
+  title: "Karty z ikonami",
   type: "object",
-  preview: createSectionPreview("whoWeWorkWithSection", {
-    title: "Z kim współpracujemy",
+  preview: createSectionPreview("iconCardSection", {
+    title: "Karty z ikonami",
     subtitle: "heading",
   }),
   fields: [
@@ -20,7 +20,6 @@ export const whoWeWorkWithSection = defineType({
       name: "subheading",
       title: "Podnagłówek",
       type: "string",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "items",

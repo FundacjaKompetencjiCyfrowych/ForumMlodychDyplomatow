@@ -18,7 +18,7 @@ const DivisionsListSection = async ({
   });
 
   return (
-    <section className="bg-brand-blue-50 px-8 py-16 desktop:py-24">
+    <section className="bg-brand-blue-50 py-16 desktop:py-24">
       <div className="mx-auto mb-12 max-w-4xl text-center lg:mb-16">
         <Typography as={getHeading(index)} variant="h2" className="mb-4 text-brand-gray-900">
           {header}

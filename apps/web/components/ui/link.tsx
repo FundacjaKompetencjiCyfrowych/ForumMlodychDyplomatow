@@ -75,9 +75,6 @@ export const Link = ({
     if (cleanLink.linkType === "href") {
       return cleanLink.href || "#";
     }
-    if (cleanLink.homepage) {
-      return `${locale}${slugsByType[cleanLink.linkType]}`;
-    }
     if (cleanLink.linkType === "page" && cleanLink.href === "home") {
       return `${locale}/`;
     }

@@ -5,7 +5,7 @@ import { aboutUsSectionFragment } from "./aboutUsSectionFragment";
 import { divisionsSectionFragment } from "./divisionsSectionFragment";
 import { eventsSectionFragment } from "./eventsSectionFragment";
 import { heroSectionFragment } from "./heroSectionFragment";
-import { joinUsSectionFragment } from "./joinUsSectionFragment";
+import { cardsWithLinkSectionFragment } from "./cardsWithLinkSectionFragment";
 import { newPublicationsSectionFragment } from "./newPublicationsSectionFragment";
 import { peopleSectionFragment } from "./peopleSectionFragment";
 import { podcastSectionFragment } from "./podcastSectionFragment";
@@ -13,19 +13,16 @@ import { supportUsSectionFragment } from "./supportUsSectionFragment";
 import type { Locale } from "next-intl";
 import { contactSectionFragment } from "./contactSectionFragment";
 import { universalHeroSectionFragment } from "./universalHeroSectionFragment";
-import { whatWeDoDivisionsSectionFragment } from "./whatWeDoDivisionsSectionFragment";
-import { joinUsDivisionsSectionFragment } from "./joinUsDivisionsSectionFragment";
-import { teamDivisionsSectionFragment } from "./teamDivisionsSectionFragment";
-import { eventsDivisionsSectionFragment } from "./eventsDivisionsSectionFragment";
 import { divisionsListSectionFragment } from "./divisionsListSectionFragment";
-import { headingSectionFragment } from "./headingSection";
 import { expertsListSectionFragment } from "./expertsListSection";
 import { eventsListSectionFragment } from "./eventsListSection";
 import { documentsSectionFragment } from "./documentsSectionFragment";
 import { doubleHeroSectionFragment } from "./doubleHeroSectionFragment";
 import { benefitsSectionFragment } from "./benefitsSectionFragment";
-import { whoWeWorkWithSectionFragment } from "./whoWeWorkWithSectionFragment";
+import { iconCardSectionFragment } from "./iconCardSectionFragment";
 import { patronitePerksSectionFragment } from "./patronitePerksSectionFragment";
+import { publicationFilterSectionFragment } from "./publicationsFilterSectionFragment";
+import { heroPublicationsSectionFragment } from "./heroPublicationsSectionFragment";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -37,25 +34,22 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       contactSection: sub.project(contactSectionFragment),
       eventsSection: sub.project(eventsSectionFragment),
       heroSection: sub.project(heroSectionFragment),
-      joinUsSection: sub.project(joinUsSectionFragment),
+      cardsWithLinkSection: sub.project(cardsWithLinkSectionFragment),
       newPublicationsSection: sub.project(newPublicationsSectionFragment),
       peopleSection: sub.project(peopleSectionFragment),
       eventsListSection: sub.project(eventsListSectionFragment),
       podcastSection: sub.project(podcastSectionFragment),
       supportUsSection: sub.project(supportUsSectionFragment),
       universalHeroSection: sub.project(universalHeroSectionFragment),
-      whatWeDoDivisionsSection: sub.project(whatWeDoDivisionsSectionFragment),
-      joinUsDivisionsSection: sub.project(joinUsDivisionsSectionFragment),
-      teamDivisionsSection: sub.project(teamDivisionsSectionFragment),
-      eventsDivisionsSection: sub.project(eventsDivisionsSectionFragment),
       divisionsListSection: sub.project(divisionsListSectionFragment),
-      headingSection: sub.project(headingSectionFragment),
       expertsListSection: sub.project(expertsListSectionFragment),
       documentsSection: sub.project(documentsSectionFragment),
       doubleHeroSection: sub.project(doubleHeroSectionFragment),
       benefitsSection: sub.project(benefitsSectionFragment),
-      whoWeWorkWithSection: sub.project(whoWeWorkWithSectionFragment),
+      iconCardSection: sub.project(iconCardSectionFragment),
       patronitePerksSection: sub.project(patronitePerksSectionFragment),
+      publicationFilterSection: sub.project(publicationFilterSectionFragment),
+      heroPublicationsSection: sub.project(heroPublicationsSectionFragment),
     },
     {
       isExhaustive: true,

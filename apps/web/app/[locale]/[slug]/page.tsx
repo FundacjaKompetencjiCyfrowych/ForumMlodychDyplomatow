@@ -8,6 +8,8 @@ import type { Locale } from "next-intl";
 import { notFound, redirect } from "next/navigation";
 import { tryGettingLocaleSlug } from "../../../lib/links";
 import { setRequestLocale } from "next-intl/server";
+import { Breadcrumbs } from "../../../components/ui/breadcrumb";
+import { createSeo } from "../../../lib/seo";
 
 type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
@@ -30,10 +32,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     perspective: "published",
   });
 
-  return {
-    title: page?.seo?.title ?? page?.defaultSeo?.title ?? page?.name ?? undefined,
-    description: page?.seo?.description ?? page?.defaultSeo?.description ?? undefined,
-  } satisfies Metadata;
+  return createSeo(page);
 }
 
 export default async function Page(props: Props) {
@@ -43,6 +42,9 @@ export default async function Page(props: Props) {
     parameters: {
       slug: params.slug,
       locale: params.locale,
+      divisionSlug: null,
+      // now required for eventsSection, sanity complains if this is not provided, even if null
+      // Even if this is awkward, it's nicer than modifying page builder for divisions page to inject divisionSlug into eventsSection
     },
   });
 
@@ -59,6 +61,11 @@ export default async function Page(props: Props) {
   const locale = params.locale;
   return (
     <div id="main-content" className="">
+      <div className="">
+        {page?.breadcrumbs && (
+          <Breadcrumbs breadcrumbs={page.breadcrumbs} currentPageName={page.name} />
+        )}
+      </div>
       <SanitySections value={page?.pageBuilder} locale={locale} />
     </div>
   );

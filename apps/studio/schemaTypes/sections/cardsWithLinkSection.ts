@@ -1,12 +1,12 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { createSectionPreview } from "./sectionPreview";
 
-export const joinUsSection = defineType({
-  name: "joinUsSection",
-  title: "Dołącz do nas",
+export const cardsWithLinkSection = defineType({
+  name: "cardsWithLinkSection",
+  title: "Karty z Linkami",
   type: "object",
-  preview: createSectionPreview("joinUsSection", {
-    title: "Dołącz do nas",
+  preview: createSectionPreview("cardsWithLinkSection", {
+    title: "Karty z Linkami",
     subtitle: "heading",
   }),
   fields: [
@@ -22,15 +22,14 @@ export const joinUsSection = defineType({
       title: "Podtytuł",
     }),
     defineField({
-      name: "benefits",
+      name: "items",
       type: "array",
-      title: "Benefity",
-      description: "Krótkie opisy korzyści płynących z dołączenia do FMD.",
+      title: "Elementy",
       of: [
         defineArrayMember({
-          name: "benefit",
+          name: "item",
           type: "object",
-          title: "Benefit",
+          title: "Element",
           preview: {
             select: {
               title: "title",

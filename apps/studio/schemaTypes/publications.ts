@@ -15,17 +15,20 @@ export default defineType({
     defineField({
       name: "type",
       title: "Rodzaj",
-      type: "string",
+      type: "reference",
+      to: [{ type: "publicationType" }],
       group: "content",
-      description: "Rodzaj publikacji jaki chcesz opublikować",
+      description: "Wybierz rodzaj publikacji lub dodaj nowy",
       options: {
-        list: [
-          { title: "Krótkie opracowanie", value: "article" },
-          { title: "Analiza", value: "news" },
-          { title: "Magazyn", value: "guide" },
-          { title: "Publikacja", value: "review" },
-        ],
-        layout: "dropdown",
+        filter: ({ document }) => {
+          const currentLocale = document.locale;
+          if (!currentLocale) return { filter: "" };
+
+          return {
+            filter: "locale == $locale",
+            params: { locale: currentLocale },
+          };
+        },
       },
       validation: (Rule) => Rule.required().error("Pole wymagane"),
     }),
@@ -69,13 +72,14 @@ export default defineType({
       initialValue: () => new Date().toISOString(),
       validation: (Rule) => Rule.required().error("Pole wymagane"),
     }),
+
     defineField({
       name: "mainImage",
       title: "Grafika główna",
-      type: "img",
+      type: "gradientImg",
       group: "content",
       description:
-        "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach",
+        "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach. Zalecany format obrazu 4:3",
     }),
     defineField({
       name: "author",
@@ -102,7 +106,31 @@ export default defineType({
       type: "array",
       group: "content",
       of: [
-        { type: "block" },
+        {
+          type: "block",
+          marks: {
+            annotations: [
+              {
+                name: "footnote",
+                type: "object",
+                title: "Przypis / Źródło",
+                fields: [
+                  defineField({
+                    name: "source",
+                    title: "Treść przypisu lub źródło bibliograficzne",
+                    type: "text",
+                    validation: (Rule) => Rule.required(),
+                  }),
+                  defineField({
+                    name: "url",
+                    title: "Link zewnętrzny (opcjonalnie)",
+                    type: "url",
+                  }),
+                ],
+              },
+            ],
+          },
+        },
         {
           type: "image",
           options: { hotspot: true },

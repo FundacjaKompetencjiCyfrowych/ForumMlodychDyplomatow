@@ -7,7 +7,7 @@ import Typography from "../ui/typography";
 
 const DoubleHeroSection = ({ data, index }: PageBuilderSectionProps<"doubleHeroSection">) => {
   return (
-    <Container className="flex flex-col">
+    <Container contentWidth="xl" className="flex flex-col">
       <div className="flex md:flex-col lg:flex-row lg:items-stretch lg:justify-stretch desktop:gap-16">
         <div className="hidden min-w-60 basis-1/2 desktop:block">
           <GradientImage

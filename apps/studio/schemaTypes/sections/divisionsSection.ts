@@ -26,12 +26,5 @@ export const divisionsSection = defineType({
       type: "text",
       title: "Opis",
     }),
-    defineField({
-      name: "divisions",
-      type: "array",
-      title: "Przedstawicielstwa",
-      description: "Lista używana do utrzymania odpowiedniej kolejności",
-      of: [{ type: "reference", to: [{ type: "division" }] }],
-    }),
   ],
 });

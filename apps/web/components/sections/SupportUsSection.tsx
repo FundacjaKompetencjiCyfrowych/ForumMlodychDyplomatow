@@ -11,7 +11,7 @@ const SupportUsSection = ({ data, index }: PageBuilderSectionProps<"supportUsSec
       background="blue"
       size="stretch"
       className="flex flex-col pt-0 pb-8 desktop:flex-row desktop:py-0"
-      contentWidth="max"
+      contentWidth="none"
       contentClassName="sm:flex"
     >
       <GradientImage
