@@ -16,7 +16,7 @@ export default async function NotFound() {
             width={550}
             height={400}
             alt="404 Not found"
-            src="/static/img/404.png"
+            src="/static/image/404.png"
             priority
             className="h-auto w-full"
           />
