@@ -10,7 +10,7 @@ const buttonVariants = cva(
     "border border-transparent bg-clip-padding text-[1rem] font-medium whitespace-nowrap",
     "transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
     "active:not-aria-[haspopup]:translate-y-px",
-    "disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive",
+    "disabled:pointer-events-none disabled:bg-transparent aria-invalid:border-destructive",
     "aria-invalid:ring-3 aria-invalid:ring-destructive/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
@@ -20,7 +20,7 @@ const buttonVariants = cva(
         primary:
           "bg-brand-red-900 font-semibold text-white hover:bg-brand-red-700 active:bg-brand-red-800 disabled:bg-brand-red-50 disabled:text-gray-400",
         secondary:
-          "border border-brand-red-900 bg-transparent font-semibold text-brand-red-900 hover:border-brand-red-700 hover:text-brand-red-700 active:border-brand-red-800 active:text-brand-red-800 disabled:border-brand-red-200 disabled:text-red-200",
+          "border border-brand-red-900 bg-transparent font-semibold text-brand-red-900 hover:border-brand-red-700 hover:text-brand-red-700 active:border-brand-red-800 active:text-brand-red-800 disabled:border-gray-400 disabled:text-gray-400",
         primaryLight:
           "bg-white text-red-900 hover:bg-red-50 hover:text-red-700 active:bg-red-100 active:text-red-800 disabled:bg-gray-300 disabled:text-gray-400",
         secondaryLight:
@@ -40,7 +40,9 @@ const buttonVariants = cva(
         ghost: "typography-p1 border-0 bg-transparent text-gray-900 hover:bg-gray-100",
         dot: "h-2 w-2 rounded-full border-0 bg-slate-300 p-0! hover:bg-slate-400 data-active:bg-gray-800 data-active:hover:bg-gray-800",
         toggle:
-          "flex gap-1 border-2 border-transparent bg-transparent p-8 text-gray-900 hover:text-brand-red-800 data-[state=on]:border-b-brand-red-800 data-[state=on]:text-brand-red",
+          "flex w-full gap-1 border-2 border-transparent bg-transparent p-8 text-gray-900 hover:text-brand-red-800 data-[state=on]:border-b-brand-red-800 data-[state=on]:text-brand-red",
+        chip: "data-[state=on]:border-b-brand flex h-fit shrink gap-1 rounded-full border border-brand-blue bg-transparent px-4 text-brand-blue hover:bg-brand-blue-50 data-[state=on]:bg-brand-blue data-[state=on]:text-brand-blue-50",
+        none: "",
       },
       size: {
         s: "h-8 gap-1 px-4 text-[0.75rem]",

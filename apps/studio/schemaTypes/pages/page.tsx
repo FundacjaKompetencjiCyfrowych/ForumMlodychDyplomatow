@@ -45,7 +45,12 @@ export const page = defineType({
         isUnique: uniqueByLanguage,
       },
     }),
-    // TODO breadcrumbs
+    defineField({
+      name: "breadcrumbs",
+      type: "breadcrumbs",
+      title: "Breadcrumbs",
+      group: "content",
+    }),
     defineField({
       name: "pageBuilder",
       title: "Page builder",

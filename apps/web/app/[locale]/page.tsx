@@ -4,6 +4,7 @@ import { runQuery } from "../../sanity/groqd";
 import { pagesMetadataQuery } from "../../sanity/queries/page";
 import type { Locale } from "next-intl";
 import { routing } from "../../i18n/routing";
+import { createSeo } from "../../lib/seo";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -27,10 +28,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     perspective: "published",
   });
 
-  return {
-    title: page?.seo?.title,
-    description: page?.seo?.description,
-  } satisfies Metadata;
+  return createSeo(page);
 }
 export default async function Page(props: Props) {
   return (

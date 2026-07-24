@@ -10,6 +10,7 @@ export const personCardFragment = q
   .fragmentForType<"person">()
   .project((sub) => ({
     _id: true,
+
     name: true,
     title: intlArrayQuery(sub.field("title[]")),
     img: sub.field("img").project(imgFragment),
@@ -40,7 +41,6 @@ export const peoplePaginatedQuery = ({ page = 1, perPage = 10 }: PaginationParam
     .project((sub) => ({
       items: sub.star
         .filterByType("person")
-        .filterBy("locale == $locale")
         .filterRaw("$groups == null || group in $groups")
         .filterRaw("$name == null || name match $name")
         // typescript cast, since groqd doesn't support "defined(order)" syntax, but it's valid in sanity

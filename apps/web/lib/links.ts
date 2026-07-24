@@ -13,20 +13,21 @@ type Options = {
   slug: string | null;
   type: LinkType;
   text: string | null;
+  _type?: string;
 };
 
-export const formatLink = (options: Options): ResultLinkType => {
+export const formatLink = (options: Options) => {
   if (!options.slug) {
     throw new Error("Slug is required to format a link");
   }
   return {
+    _type: options._type ?? "link",
     linkType: options.type,
     href: options.slug,
-    homepage: false,
     _key: `${options.type}-${options.slug}`,
     openInNewTab: options.openInNewTab ?? false,
     text: options.text,
-  };
+  } satisfies ResultLinkType & { _type: string };
 };
 
 export const tryGettingLocaleSlug = async (locale: Locale, slug: string) => {

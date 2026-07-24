@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 import { languageField, uniqueByLanguage } from "../plugins/intl";
 import { seoField } from "../utils/fields";
 import { pageGroups } from "../utils/groups";
@@ -44,19 +44,8 @@ export default defineType({
     defineField({
       name: "pageBuilder",
       title: "Budowniczy strony",
-      type: "array",
+      type: "pageBuilder",
       group: "content",
-      options: {
-        layout: "grid",
-      },
-      of: [
-        // Nowe sekcje dedykowane dla oddziałów
-        defineArrayMember({ type: "universalHeroSection" }),
-        defineArrayMember({ type: "whatWeDoDivisionsSection" }),
-        defineArrayMember({ type: "joinUsDivisionsSection" }),
-        defineArrayMember({ type: "teamDivisionsSection" }),
-        defineArrayMember({ type: "eventsDivisionsSection" }),
-      ],
     }),
   ],
   preview: {

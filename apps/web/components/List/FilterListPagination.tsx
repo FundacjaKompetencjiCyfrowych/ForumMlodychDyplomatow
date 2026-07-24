@@ -25,7 +25,12 @@ const FilterListPagination = (props: Props) => {
   const paginationNumbers = getPaginationNumbers(page + 1, totalPages);
   return (
     <div className="flex flex-row gap-4">
-      <Button variant="page" onClick={() => setPage((prev) => prev - 1)} disabled={page === 0}>
+      <Button
+        variant="page"
+        className="hidden desktop:block"
+        onClick={() => setPage((prev) => prev - 1)}
+        disabled={page === 0}
+      >
         <ChevronLeft />
       </Button>
       {paginationNumbers.map((num, i) =>
@@ -46,6 +51,7 @@ const FilterListPagination = (props: Props) => {
       )}
       <Button
         variant="page"
+        className="hidden desktop:block"
         onClick={() => setPage((prev) => prev + 1)}
         disabled={page === totalPages - 1}
       >

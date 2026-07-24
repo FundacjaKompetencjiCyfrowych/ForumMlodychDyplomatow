@@ -3,8 +3,10 @@ import type { PageBuilderSection } from ".";
 import { linkFragment } from "../linkFragment";
 
 export const eventsSectionFragment = q
+  .parameters<{ divisionSlug?: string }>()
   .fragment<PageBuilderSection<"eventsSection">>()
   .project((sub) => ({
     heading: sub.field("heading"),
     link: sub.field("link").project(linkFragment),
+    division: sub.raw("$divisionSlug").as<string>(),
   }));

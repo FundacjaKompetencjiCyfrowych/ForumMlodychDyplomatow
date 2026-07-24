@@ -134,8 +134,8 @@ export type NewPublicationsSection = {
   heading?: string;
 };
 
-export type JoinUsSection = {
-  _type: "joinUsSection";
+export type CardsWithLinkSection = {
+  _type: "cardsWithLinkSection";
   heading?: string;
   subheading?: string;
   benefits?: Array<{
@@ -211,7 +211,7 @@ export type PageBuilder = Array<
     } & HeroSection)
   | ({
       _key: string;
-    } & JoinUsSection)
+    } & CardsWithLinkSection)
   | ({
       _key: string;
     } & NewPublicationsSection)
@@ -880,7 +880,7 @@ export type AllSanitySchemaTypes =
   | PodcastSection
   | PeopleSection
   | NewPublicationsSection
-  | JoinUsSection
+  | CardsWithLinkSection
   | HeroSection
   | EventsSection
   | DivisionReference

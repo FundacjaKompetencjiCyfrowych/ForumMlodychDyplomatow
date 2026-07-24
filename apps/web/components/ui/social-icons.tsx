@@ -9,22 +9,30 @@ import {
   BsYoutube,
 } from "react-icons/bs";
 import type { socialsFragment } from "../../sanity/queries/socialsFragment";
+import { cn } from "../../lib/utils";
 type Socials = Array<InferFragmentType<typeof socialsFragment>> | null | undefined;
 type Props = {
   socials: Socials;
+  className?: string;
 };
+const iconClassName = "desktop:size-6 size-10";
 const icons = {
-  facebook: <BsFacebook />,
-  instagram: <BsInstagram />,
-  linkedin: <BsLinkedin />,
-  spotify: <BsSpotify />,
-  twitter: <BsTwitterX />,
-  youtube: <BsYoutube />,
+  facebook: <BsFacebook className={iconClassName} />,
+  instagram: <BsInstagram className={iconClassName} />,
+  linkedin: <BsLinkedin className={iconClassName} />,
+  spotify: <BsSpotify className={iconClassName} />,
+  twitter: <BsTwitterX className={iconClassName} />,
+  youtube: <BsYoutube className={iconClassName} />,
 } satisfies Record<Exclude<NonNullable<Socials>[number]["platform"], null>, React.ReactNode>;
-export const SocialIcons = ({ socials }: Props) => {
+export const SocialIcons = ({ socials, className }: Props) => {
   if (socials == null || socials.length === 0) return null;
   return (
-    <div className="flex h-16 flex-row gap-1 text-[1.5rem] text-brand-red-900">
+    <div
+      className={cn(
+        "flex h-10 flex-row gap-1 text-[1.5rem] text-brand-red-900 desktop:h-6",
+        className
+      )}
+    >
       {socials.map((social) => {
         if (social.platform === null || social.url === null) return null;
         const Icon = icons[social.platform];

@@ -1,12 +1,13 @@
 import { type InferResultType } from "groqd";
 import { q } from "../groqd";
 import { pageBuilderQueryFragment } from "./pageBuilder";
-import { seoFragment } from "./seo";
+import { defaultSeoSettingsQuery, seoFragment } from "./seo";
 import { LANGUAGE_FIELD } from "../../../studio/config";
 import type { Locale } from "next-intl";
+import { breadcrumbsFragment } from "./breadcrumbs";
 
 export const pageQuery = q
-  .parameters<{ slug: string; locale: string }>()
+  .parameters<{ slug: string; locale: string; divisionSlug: null }>()
   .star.filterByType("page")
   .filterBy("slug.current == $slug")
   .filterBy(`${LANGUAGE_FIELD} == $locale`)
@@ -16,6 +17,7 @@ export const pageQuery = q
     _type: sub.field("_type"),
     name: sub.field("name"),
     slug: sub.field("slug.current"),
+    breadcrumbs: sub.field("breadcrumbs[]").project(breadcrumbsFragment),
     pageBuilder: sub.field("pageBuilder[]").project(pageBuilderQueryFragment).notNull(),
   }));
 
@@ -36,10 +38,10 @@ export const pagesMetadataQuery = q
   .filterBy(`${LANGUAGE_FIELD} == $locale`)
   .slice(0)
   .project((sub) => ({
-    name: sub.field("name"),
+    title: sub.field("name"),
     slug: sub.field("slug.current"),
     seo: sub.field("seo").project(seoFragment),
-    defaultSeo: q.star.filterByType("settings").slice(0).field("seo").project(seoFragment),
+    default: defaultSeoSettingsQuery,
   }));
 
 export const pagesLanguageSlugQuery = q
@@ -50,7 +52,7 @@ export const pagesLanguageSlugQuery = q
   .project((sub) => ({
     slug: sub
       .field("translations[]")
-      .filterBy(`_key == $locale`)
+      .filterBy(`language == $locale`)
       .field("value")
       .deref()
       // Needs raw, since we don't have a strongly typed reference, but all translated pages have a slug field

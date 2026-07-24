@@ -15,18 +15,30 @@ import {
 } from "@sanity/icons";
 
 import { LANGUAGE_FIELD } from "../config";
+// import { EditableJsonView } from "../components/JsonView";
 /**
  * Structure of the Sanity Studio
  * @see https://www.sanity.io/docs/studio/structure-tool
  */
 export const structure: StructureToolOptions = {
+  // Leaving this here, as it's useful for debugging.
+  // If you need to edit the document JSON directly for some reason, uncomment it.
+  /* defaultDocumentNode:
+    process.env.NODE_ENV === "development"
+      ? (S, { schemaType }) => {
+          return S.document().views([
+            S.view.form(),
+            S.view.component(EditableJsonView).title("JSON Editor"),
+          ]);
+        }
+      : undefined, */
   structure: (S) =>
     S.list()
       .id("content")
-      .title("Content")
+      .title("Kolekcje")
       .items([
-        S.divider().title("Kolekcje"),
         Collection(S, { type: "page", title: "Strony", icon: HomeIcon }),
+        S.divider().title("Osoby"),
         S.listItem()
           .title("Osoby")
           .icon(UsersIcon)
@@ -37,6 +49,7 @@ export const structure: StructureToolOptions = {
           .child(
             S.document().documentId("personGroups").schemaType("personGroups").title("Grupy osób")
           ),
+        S.divider().title("Treści"),
         Collection(S, { type: "publication", title: "Publikacje", icon: ComposeIcon }),
         S.listItem()
           .title("Tagi wg kategorii")
@@ -91,6 +104,7 @@ export const structure: StructureToolOptions = {
                   .canHandleIntent((name, params) => name === "edit" && params?.id === categoryId);
               })
           ),
+        S.divider().title("Pozostałe"),
         Collection(S, { type: "event", title: "Wydarzenia", icon: CalendarIcon }),
         Collection(S, { type: "division", title: "Przedstawicielstwa", icon: EarthGlobeIcon }),
         S.divider().title("Ustawienia"),

@@ -9,33 +9,22 @@ import { LinkIcon } from "@sanity/icons";
 
 type Link = {
   linkType: "href" | "page" | "division" | "publication";
-  homepage?: boolean;
 };
 const linkPreviewSelect = {
   text: "text",
   linkType: "linkType",
   href: "href",
   page: "page.name",
-  homepage: "homepage",
   publication: "publication.title",
   division: "division.name",
 } as const;
-const linkTypeTitles = {
-  division: "PR",
-  page: "Strona",
-  publication: "Publikacja",
-  href: "Zewnętrzny URL",
-} satisfies Record<Link["linkType"], string>;
-const prepareLinkPreview = (
-  link: Partial<Record<Link["linkType"] | "linkType" | "text" | "homepage", any>>
-) => {
-  const { linkType, text, href, homepage, ...titles } = link;
+
+const prepareLinkPreview = (link: Partial<Record<Link["linkType"] | "linkType" | "text", any>>) => {
+  const { linkType, text, href, ...titles } = link;
   let title = text || titles[linkType as keyof typeof titles] || "Bez tytułu";
   let subtitle = "";
   if (linkType === "href") {
     subtitle = href || "Brak URL";
-  } else if (homepage) {
-    subtitle = `Link do strony głównej typu: ${linkTypeTitles[linkType as keyof typeof linkTypeTitles] || "N/A"}`;
   } else {
     subtitle = `Link do: ${titles[linkType as keyof typeof titles]}`;
   }
@@ -84,8 +73,6 @@ export const link = defineType({
           const parent = context.parent as Link;
           if (parent.linkType === "href" && !value) {
             return "Tekst jest wymagany dla linków URL";
-          } else if (parent.linkType !== "page" && parent.homepage && !value) {
-            return "Tekst jest wymagany dla linków do stron głównych";
           }
           return true;
         }),
@@ -115,13 +102,6 @@ export const link = defineType({
       hidden: ({ parent }) => parent?.linkType !== "page",
       validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
-    defineField({
-      name: "homepage",
-      title: "Strona główna",
-      type: "boolean",
-      initialValue: false,
-      hidden: ({ parent }) => parent?.linkType === "page" || parent?.linkType === "href",
-    }),
 
     defineField({
       name: "division",
@@ -129,7 +109,7 @@ export const link = defineType({
       type: "reference",
       to: [{ type: "division" }],
       options: { filter: filterByLanguage },
-      hidden: ({ parent }) => parent?.linkType !== "division" || parent?.homepage,
+      hidden: ({ parent }) => parent?.linkType !== "division",
       validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({
@@ -138,7 +118,7 @@ export const link = defineType({
       type: "reference",
       to: [{ type: "publication" }],
       options: { filter: filterByLanguage },
-      hidden: ({ parent }) => parent?.linkType !== "publication" || parent?.homepage,
+      hidden: ({ parent }) => parent?.linkType !== "publication",
       validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
     }),
     defineField({

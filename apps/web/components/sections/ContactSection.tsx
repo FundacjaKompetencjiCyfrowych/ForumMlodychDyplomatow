@@ -9,23 +9,20 @@ const ContactSection = async ({ index, data }: any) => {
   const t = await getTranslations();
 
   return (
-    <Container className="py-16" contentWidth="xl">
+    <Container className="bg-(--color-brand-blue-900) py-16 text-white" contentWidth="xl">
       <div className="mx-auto grid grid-cols-1 gap-24 lg:grid-cols-2">
         <div>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col">
-              <Typography as={getHeading(index)} variant="h1">
+              <Typography as={getHeading(index)} variant="h1" className="mobile:mb-8 mb-12">
                 {data.heading}
               </Typography>
 
               {data.subtitle && (
-                <Typography as="p" variant="title-m" className="font-semibold lg:text-xl">
+                <Typography as="p" variant="body-xl" className="font-semibold lg:text-xl">
                   {data.subtitle}
                 </Typography>
               )}
-              <Typography as="p" variant="body-m" className="text-gray-600">
-                {t("contactForm.starsign")}
-              </Typography>
             </div>
 
             <div className="flex flex-col gap-2">
@@ -34,7 +31,7 @@ const ContactSection = async ({ index, data }: any) => {
                   <Mail className="h-5 w-5" strokeWidth={1.5} />
                   <a
                     href={`mailto:${data.contactEmail}`}
-                    className="text-brand-gray-900 underline underline-offset-4 transition-colors hover:text-brand-blue"
+                    className="underline underline-offset-4 transition-colors hover:text-brand-blue"
                   >
                     {data.contactEmail}
                   </a>
@@ -44,7 +41,7 @@ const ContactSection = async ({ index, data }: any) => {
               {data.contactAddress && (
                 <div className="text- flex items-start gap-3">
                   <MapPin className="mt-0.5 h-5 w-5 shrink-0" strokeWidth={1.5} />
-                  <Typography as="span" variant="body-m" className="text-brand-gray-900">
+                  <Typography as="span" variant="body-m">
                     {data.contactAddress}
                   </Typography>
                 </div>
@@ -54,7 +51,12 @@ const ContactSection = async ({ index, data }: any) => {
         </div>
 
         {/* Kliencki formularz */}
-        <ContactForm />
+        <div>
+          <Typography as="p" variant="body-m" className="mb-6">
+            {t("contactForm.starsign")}
+          </Typography>
+          <ContactForm sectionKey={data._key} contactEmail={data.contactEmail} />
+        </div>
       </div>
     </Container>
   );
