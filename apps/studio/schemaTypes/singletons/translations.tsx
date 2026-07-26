@@ -463,6 +463,31 @@ export const translations = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "notFound",
+      title: "Strona 404 (nie znaleziono)",
+      type: "object",
+      fields: [
+        defineField({
+          name: "title",
+          title: "Header",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "desc",
+          title: "Paragraf",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "button",
+          title: "Przycisk",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
+    }),
     languageField,
   ],
 });
