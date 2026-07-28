@@ -1,7 +1,7 @@
 "use client";
 import { ChevronDown, Check } from "lucide-react";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 import { usePage } from "./FilterListPagination";
 import { cn } from "@/lib/utils";
@@ -85,26 +85,23 @@ export const FilterListGroupItem = ({
 
   return (
     <Collapsible className="w-full">
-      <CollapsibleTrigger asChild className="group">
-        <Button
-          variant="toggle"
-          className={cn(
-            "w-full justify-between text-start font-bold whitespace-normal",
-            type === "publications" && "p-2"
+      <CollapsibleTrigger
+        className={cn(
+          "group",
+          buttonVariants({ variant: "toggle" }),
+          "w-full justify-between text-start font-bold whitespace-normal",
+          type === "publications" && "p-2"
+        )}
+      >
+        <span className="flex items-center gap-2">
+          {label}
+          {activeCount > 0 && (
+            <span className="flex size-5 items-center justify-center rounded-full bg-brand-red-900 text-[10px] font-bold text-white desktop:hidden">
+              {activeCount}
+            </span>
           )}
-          iconRight={
-            <ChevronDown className="shrink-0 transition-transform group-data-[state=open]:rotate-180" />
-          }
-        >
-          <span className="flex items-center gap-2">
-            {label}
-            {activeCount > 0 && (
-              <span className="flex size-5 items-center justify-center rounded-full bg-brand-red-900 text-[10px] font-bold text-white desktop:hidden">
-                {activeCount}
-              </span>
-            )}
-          </span>
-        </Button>
+        </span>
+        <ChevronDown className="shrink-0 transition-transform group-data-[state=open]:rotate-180" />
       </CollapsibleTrigger>
       <CollapsibleContent className="flex w-full flex-col gap-3 pl-4">
         {subgroups?.map((g) => {
