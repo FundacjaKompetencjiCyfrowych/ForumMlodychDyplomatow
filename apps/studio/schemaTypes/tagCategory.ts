@@ -1,6 +1,5 @@
 import { defineField, defineType } from "sanity";
 import { languageField } from "../plugins/intl";
-import { seoField } from "../utils/fields";
 import { pageGroups } from "../utils/groups";
 
 export default defineType({
@@ -10,7 +9,6 @@ export default defineType({
   description: "Kategorie Tagów",
   groups: pageGroups,
   fields: [
-    seoField,
     languageField,
     defineField({
       name: "title",
@@ -25,7 +23,6 @@ export default defineType({
       type: "text",
       group: "content",
       description: "Opcjonalny opis grupy tagów",
-      validation: (Rule) => Rule.required(),
     }),
   ],
 });

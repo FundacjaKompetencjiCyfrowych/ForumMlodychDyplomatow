@@ -1,6 +1,5 @@
 import { defineField, defineType } from "sanity";
 import { languageField } from "../plugins/intl";
-import { seoField } from "../utils/fields";
 import { pageGroups } from "../utils/groups";
 
 export default defineType({
@@ -11,7 +10,6 @@ export default defineType({
   groups: pageGroups,
   fields: [
     languageField,
-    seoField,
     defineField({
       name: "name",
       title: "Nazwa",
