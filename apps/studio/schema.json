@@ -5134,19 +5134,34 @@
         },
         "optional": true
       },
-      "img": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "img"
-        },
-        "optional": true
-      },
       "title": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "secondaryGroup": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "secondaryTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "img": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "img"
         },
         "optional": true
       },
