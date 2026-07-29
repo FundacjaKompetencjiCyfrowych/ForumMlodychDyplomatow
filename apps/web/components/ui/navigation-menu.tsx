@@ -81,7 +81,7 @@ function NavigationMenuTrigger({
       className={cn(navigationMenuTriggerStyle({ className }))}
       {...props}
     >
-      {children}{" "}
+      <span>{children} </span>
       <ChevronDownIcon
         className="relative top-px ml-1 size-3 transition duration-300 in-data-open:rotate-180"
         aria-hidden="true"
