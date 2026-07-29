@@ -38,6 +38,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 export default async function Page(props: Props) {
   const params = await props.params;
   setRequestLocale(params.locale ?? "pl");
+
   const { data: page } = await runQuery(pageQuery, {
     parameters: {
       slug: params.slug,

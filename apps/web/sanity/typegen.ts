@@ -435,26 +435,6 @@ export type Link = {
   isExternal?: boolean;
 };
 
-export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-  breadcrumbs?: Breadcrumbs;
-  pageBuilder?: PageBuilder;
-  locale?: string;
-  seo?: Seo;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
 export type PostsSection = {
   _type: "postsSection";
   displayNumber?: number;
@@ -526,6 +506,7 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   siteName?: string;
+  shortSiteName?: string;
   logo?: Img;
   baseUrl?: string;
   organization?: {
@@ -573,6 +554,12 @@ export type PersonGroups = {
     _type: "group";
     _key: string;
   }>;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type InternationalizedArrayString = Array<
@@ -660,6 +647,7 @@ export type PublicationTypeReference = {
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
+    | PageReference
     | EventReference
     | DivisionReference
     | NavigationReference
@@ -978,6 +966,20 @@ export type Division = {
   pageBuilder?: PageBuilder;
 };
 
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  breadcrumbs?: Breadcrumbs;
+  pageBuilder?: PageBuilder;
+  locale?: string;
+  seo?: Seo;
+};
+
 export type MediaTag = {
   _id: string;
   _type: "media.tag";
@@ -1122,8 +1124,6 @@ export type AllSanitySchemaTypes =
   | DivisionReference
   | PublicationReference
   | Link
-  | Page
-  | Slug
   | PostsSection
   | LeadSection
   | SanityImageAssetReference
@@ -1135,6 +1135,7 @@ export type AllSanitySchemaTypes =
   | Category
   | IconPicker
   | PersonGroups
+  | Slug
   | InternationalizedArrayString
   | InternationalizedArrayTextValue
   | InternationalizedArrayStringValue
@@ -1159,6 +1160,7 @@ export type AllSanitySchemaTypes =
   | Navigation
   | Event
   | Division
+  | Page
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette

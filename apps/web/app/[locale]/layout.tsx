@@ -1,48 +1,44 @@
 import { routing } from "@/i18n/routing";
-import { q, runQuery } from "@/sanity/groqd";
-import { sanityFetch, SanityLive } from "@/sanity/live";
+import { runQuery } from "@/sanity/groqd";
+import { SanityLive } from "@/sanity/live";
 import { mapMetadata } from "@/sanity/metadata/mapMetadata";
 import { SanityPreview } from "@/sanity/preview/SanityPreview";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Inter, Libre_Baskerville, Oswald, Lora } from "next/font/google";
+import { Inter, Libre_Baskerville, Lora, Oswald } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SvgCacheProvider from "react-inlinesvg/provider";
 import { Toaster } from "sonner";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { intlQuery } from "../../sanity/queries/intl";
-import "./globals.css";
-import { navigationQuery } from "../../sanity/queries/navigation";
-import { seoOrgQuery } from "../../sanity/queries/seo";
 import { createJsonLdOrganization } from "../../lib/seo";
+import { intlQuery } from "../../sanity/queries/intl";
+import { navigationQuery } from "../../sanity/queries/navigation";
+import { globalMetadataQuery, seoOrgQuery } from "../../sanity/queries/seo";
+import "./globals.css";
+
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = q.star
-    .filterByType("settings")
-    .slice(0)
-    .project((sub) => ({ seo: sub.field("seo") }));
-  const { data } = await sanityFetch({
-    query: seo.query,
-    params: { page: "settings" },
+  const { data } = await runQuery(globalMetadataQuery, {
+    parameters: {},
     stega: false, // always set `stega: false` in Next's `generate` functions
   });
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_ORIGIN),
-    ...mapMetadata(seo.parse(data)),
+    ...mapMetadata(data?.seo),
     icons: {
-      icon: [
-        { url: "/favicon.ico", sizes: "any" },
-        { url: "/static/favicon/icon0.svg", type: "image/svg+xml" },
-        { url: "/static/favicon/icon1.png", type: "image/png" },
-      ],
-      apple: [{ url: "/static/favicon/apple-icon.png" }],
+      icon: data?.logo?.url
+        ? [{ url: data?.logo?.url, type: data?.logo?.mimeType!, sizes: "any" }]
+        : [],
+      apple: data?.logo?.url
+        ? [{ url: data?.logo?.url, type: data?.logo?.mimeType!, sizes: "any" }]
+        : [],
     },
-    manifest: "/static/favicon/manifest.json",
+    manifest: "/api/manifest.json",
   };
 }
 
@@ -96,15 +92,6 @@ export default async function RootLayout({
   const orgJsonLd = createJsonLdOrganization(orgSeo);
   return (
     <html lang={locale}>
-      <head>
-        {navigation?.header?.logo?.asset && (
-          <link
-            rel="icon"
-            href={navigation.header.logo.asset.url!}
-            type={navigation.header.logo.asset.mimeType!}
-          />
-        )}
-      </head>
       <body
         className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} ${lora.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >

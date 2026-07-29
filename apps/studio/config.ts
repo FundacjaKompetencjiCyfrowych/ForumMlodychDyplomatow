@@ -23,6 +23,7 @@ type DocumentConfig = {
 export const DOCUMENTS: DocumentConfig[] = [
   // { _type: "home", id: "home", intl: true, singleton: true, root: true },
   { _type: "settings", id: "settings" },
+  { _type: "page", intl: true },
   { _type: "event", intl: true },
   { _type: "division", intl: true },
   { _type: "person" },
