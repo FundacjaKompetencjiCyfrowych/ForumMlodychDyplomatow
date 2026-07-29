@@ -34,6 +34,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_ORIGIN),
     ...mapMetadata(seo.parse(data)),
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/static/favicon/icon0.svg", type: "image/svg+xml" },
+        { url: "/static/favicon/icon1.png", type: "image/png" },
+      ],
+      apple: [{ url: "/static/favicon/apple-icon.png" }],
+    },
+    manifest: "/static/favicon/manifest.json",
   };
 }
 

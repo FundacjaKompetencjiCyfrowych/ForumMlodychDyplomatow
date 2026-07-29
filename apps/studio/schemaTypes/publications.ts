@@ -80,6 +80,7 @@ export default defineType({
       group: "content",
       description:
         "Obraz widoczny na górze artykułu oraz w kafelkach z linkiem do artykułu na innych stronach. Zalecany format obrazu 4:3",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "author",
@@ -155,6 +156,7 @@ export default defineType({
       type: "array",
       group: "content",
       of: [{ type: "reference", to: [{ type: "tag" }] }],
+      validation: (Rule) => Rule.required(),
     }),
   ],
 });
