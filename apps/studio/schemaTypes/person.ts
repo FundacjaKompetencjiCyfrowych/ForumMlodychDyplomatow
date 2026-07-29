@@ -23,17 +23,32 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-
-    defineField({
-      name: "img",
-      title: "Obraz",
-      type: "img",
-    }),
     defineField({
       name: "title",
       title: "Tytuł",
       type: "internationalizedArrayString",
       description: "Krótkie określenie roli autora, np. 'Przewodniczący FMD'",
+    }),
+
+    defineField({
+      name: "secondaryGroup",
+      type: "string",
+      title: "Dodatkowa Grupa",
+      components: {
+        input: GroupPicker,
+      },
+    }),
+    defineField({
+      name: "secondaryTitle",
+      title: "Dodatkowy Tytuł",
+      type: "internationalizedArrayString",
+      description:
+        "Krótkie określenie dodatkowej roli autora, wyświetlane na liście przy filtrowaniu po dodatkowej grupie, np. 'Członek FMD'",
+    }),
+    defineField({
+      name: "img",
+      title: "Obraz",
+      type: "img",
     }),
     defineField({
       name: "bio",

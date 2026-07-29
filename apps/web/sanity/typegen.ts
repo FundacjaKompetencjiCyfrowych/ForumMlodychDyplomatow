@@ -722,11 +722,6 @@ export type Translations = {
     divisionNotFound?: string;
     checkDetails?: string;
   };
-  notFound?: {
-    title?: string;
-    desc?: string;
-    button?: string;
-  };
   publications?: {
     cardButton?: string;
     singlePublicationPage?: {
@@ -758,6 +753,11 @@ export type Translations = {
     showAllPublications?: string;
     loading?: string;
     maxAmmount?: string;
+  };
+  notFound?: {
+    title?: string;
+    desc?: string;
+    button?: string;
   };
   locale?: string;
 };
@@ -990,8 +990,10 @@ export type Person = {
   locale?: string;
   name?: string;
   group?: string;
-  img?: Img;
   title?: InternationalizedArrayString;
+  secondaryGroup?: string;
+  secondaryTitle?: InternationalizedArrayString;
+  img?: Img;
   bio?: InternationalizedArrayText;
   socials?: Socials;
   order?: number;
