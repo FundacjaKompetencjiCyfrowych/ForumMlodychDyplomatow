@@ -13,18 +13,18 @@ const UniversalHero = ({ data, index }: UniversalHeroProps) => {
 
   return (
     <Container contentWidth="xl">
-      <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-20">
+      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div className="order-2 flex flex-col gap-4 py-4 text-center lg:order-1 lg:gap-6 desktop:text-left">
-          <Typography as={getHeading(index)} variant="h1">
+          <Typography as={getHeading(index)} variant="h1" className="text-brand-gray-900">
             {header}
           </Typography>
           {description && (
-            <Typography as="p" variant="body-xl" className="max-w-xl text-[#374151]">
+            <Typography as="p" variant="body-xl" className="max-w-xl text-brand-gray-600">
               {description}
             </Typography>
           )}
           {caption && (
-            <Typography as="p" variant="body-m" className="max-w-xl text-[#6B7280]">
+            <Typography as="p" variant="body-m" className="max-w-xl text-brand-gray-600">
               {caption}
             </Typography>
           )}

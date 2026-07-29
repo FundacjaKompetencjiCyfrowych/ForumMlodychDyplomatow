@@ -25,6 +25,7 @@ export default defineType({
       type: "text",
       group: "content",
       description: "Opcjonalny opis grupy tagów",
+      validation: (Rule) => Rule.required(),
     }),
   ],
 });

@@ -71,9 +71,7 @@ export const PublicationCard = ({
           <div className="flex flex-wrap items-center gap-2">
             {/* limit zeby nie psulo designu, wszystkie tagi wyswietlaja sie na utorem artykulu */}
             {tags?.slice(0, 8).map((tag) => (
-              <Tag key={tag.slug?.current} href={tag.slug?.current ?? "#"}>
-                {tag.name}
-              </Tag>
+              <Tag key={tag.slug?.current}>{tag.name}</Tag>
             ))}
           </div>
 
