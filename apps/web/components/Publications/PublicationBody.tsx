@@ -120,22 +120,22 @@ export const PublicationBody = async ({ content, locale = "pl" }: PublicationBod
                           </Typography>
                         </a>
                         <div>
-                          <Typography variant="body-l" as="span">
+                          <Typography variant="body-l" as="p" className="wrap-break-word">
                             {note.source}
+                            {note.url && (
+                              <>
+                                {" | link: "}
+                                <a
+                                  href={note.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="break-all hover:underline"
+                                >
+                                  {note.url}
+                                </a>
+                              </>
+                            )}
                           </Typography>
-                          {note.url && (
-                            <Typography variant="body-l" as="span">
-                              {" | link:"}
-                              <a
-                                href={note.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 break-all hover:underline"
-                              >
-                                {note.url}
-                              </a>
-                            </Typography>
-                          )}
                         </div>
                       </li>
                     ))}

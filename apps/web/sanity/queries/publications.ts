@@ -50,12 +50,13 @@ export const publicationPreviewFragment = q
     excerpt: true,
     slug: sub.field("slug.current"),
     mainImage: sub.field("mainImage").project(imgFragment),
-    author: sub
-      .field("author")
+    authors: sub
+      .field("authors[]")
       .deref()
       .project((sub) => ({
         name: true,
         img: sub.field("img").project(imgFragment),
+        bio: intlArrayTextQuery(sub.field("bio[]")),
       })),
     tags: sub.field("tags[]").deref().project({
       _id: true,
@@ -84,8 +85,8 @@ export const publicationDetailFragment = q
     excerpt: true,
     slug: "slug.current",
     mainImage: sub.field("mainImage").project(gradientImgFragment),
-    author: sub
-      .field("author")
+    authors: sub
+      .field("authors[]")
       .deref()
       .project((sub) => ({
         name: true,
@@ -191,6 +192,9 @@ export const publicationMetadataQuery = q
       sub.field("mainImage.asset").deref().field("url")
     ),
     published: sub.field("date"),
-    author: sub.field("author").deref().field("name"),
+    authors: sub.field("authors[]").deref().project({
+      name: true,
+    }),
+
     default: defaultSeoSettingsQuery,
   }));
