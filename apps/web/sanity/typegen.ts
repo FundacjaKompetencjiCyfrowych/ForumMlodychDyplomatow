@@ -57,6 +57,29 @@ export type FilterFields = {
   review?: string;
 };
 
+export type RichTextSection = {
+  _type: "richTextSection";
+  heading?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
 export type HeroPublicationsSection = {
   _type: "heroPublicationsSection";
   heading?: string;
@@ -368,6 +391,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & HeroPublicationsSection)
+  | ({
+      _key: string;
+    } & RichTextSection)
 >;
 
 export type LinkButton = {
@@ -473,28 +499,6 @@ export type Seo = {
   robots?: Robots;
 };
 
-export type Home = {
-  _id: string;
-  _type: "home";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  locale?: string;
-  seo?: Seo;
-  documentName?: string;
-  sections?: Array<
-    | ({
-        _key: string;
-      } & Img)
-    | ({
-        _key: string;
-      } & LeadSection)
-    | ({
-        _key: string;
-      } & PostsSection)
-  >;
-};
-
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -502,6 +506,7 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   siteName?: string;
+  shortSiteName?: string;
   logo?: Img;
   baseUrl?: string;
   organization?: {
@@ -597,13 +602,6 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
-export type PostReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "post";
-};
-
 export type EventReference = {
   _ref: string;
   _type: "reference";
@@ -650,7 +648,6 @@ export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
   value?:
     | PageReference
-    | PostReference
     | EventReference
     | DivisionReference
     | NavigationReference
@@ -769,7 +766,6 @@ export type Tag = {
   _updatedAt: string;
   _rev: string;
   locale?: string;
-  seo?: Seo;
   name?: string;
   slug?: Slug;
   category?: TagCategoryReference;
@@ -781,7 +777,6 @@ export type TagCategory = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  seo?: Seo;
   locale?: string;
   title?: string;
   description?: string;
@@ -869,6 +864,24 @@ export type SanityImageHotspot = {
   width?: number;
 };
 
+export type Person = {
+  _id: string;
+  _type: "person";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  name?: string;
+  group?: string;
+  title?: InternationalizedArrayString;
+  secondaryGroup?: string;
+  secondaryTitle?: InternationalizedArrayString;
+  img?: Img;
+  bio?: InternationalizedArrayText;
+  socials?: Socials;
+  order?: number;
+};
+
 export type PublicationType = {
   _id: string;
   _type: "publicationType";
@@ -876,7 +889,6 @@ export type PublicationType = {
   _updatedAt: string;
   _rev: string;
   locale?: string;
-  seo?: Seo;
   title?: string;
   slug?: Slug;
 };
@@ -887,6 +899,8 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  logo?: Img;
+  logoText?: string;
   button?: Link;
   navigation?: Array<
     | {
@@ -926,7 +940,6 @@ export type Event = {
   _updatedAt: string;
   _rev: string;
   locale?: string;
-  seo?: Seo;
   name?: string;
   type?: string;
   startDate?: string;
@@ -951,52 +964,6 @@ export type Division = {
   slug?: Slug;
   coverImage?: Img;
   pageBuilder?: PageBuilder;
-};
-
-export type CategoryReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "category";
-};
-
-export type Post = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  locale?: string;
-  seo?: Seo;
-  title?: string;
-  slug?: Slug;
-  author?: PersonReference;
-  image?: Img;
-  categories?: Array<
-    {
-      _key: string;
-    } & CategoryReference
-  >;
-  publishedAt?: string;
-  body?: RichText;
-};
-
-export type Person = {
-  _id: string;
-  _type: "person";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  locale?: string;
-  name?: string;
-  group?: string;
-  title?: InternationalizedArrayString;
-  secondaryGroup?: string;
-  secondaryTitle?: InternationalizedArrayString;
-  img?: Img;
-  bio?: InternationalizedArrayText;
-  socials?: Socials;
-  order?: number;
 };
 
 export type Page = {
@@ -1126,6 +1093,7 @@ export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | FileDataFile
   | FilterFields
+  | RichTextSection
   | HeroPublicationsSection
   | PublicationFilterSection
   | PatronitePerksSection
@@ -1163,7 +1131,6 @@ export type AllSanitySchemaTypes =
   | Img
   | RichText
   | Seo
-  | Home
   | Settings
   | Category
   | IconPicker
@@ -1175,7 +1142,6 @@ export type AllSanitySchemaTypes =
   | InternationalizedArrayText
   | TranslationMetadata
   | InternationalizedArrayReference
-  | PostReference
   | EventReference
   | NavigationReference
   | TagReference
@@ -1189,13 +1155,11 @@ export type AllSanitySchemaTypes =
   | Publication
   | SanityImageCrop
   | SanityImageHotspot
+  | Person
   | PublicationType
   | Navigation
   | Event
   | Division
-  | CategoryReference
-  | Post
-  | Person
   | Page
   | MediaTag
   | SanityImagePaletteSwatch

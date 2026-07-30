@@ -23,6 +23,7 @@ import DoubleHeroSection from "../../components/sections/DoubleHeroSection";
 import { BenefitsSection } from "../../components/sections/BenefitsSection";
 import { IconCardSection } from "../../components/sections/IconCardSection";
 import { PatronitePerksSection } from "../../components/sections/PatronitePerksSection";
+import { RichTextSection } from "../../components/sections/RichTextSection";
 
 export type ComponentsRegistry = {
   [K in PageBuilderSectionType]: ComponentType<PageBuilderSectionProps<K>>;
@@ -59,4 +60,5 @@ export const components: ComponentsRegistry = {
   patronitePerksSection: PatronitePerksSection,
   publicationFilterSection: PublicationsFilter,
   heroPublicationsSection: HeroPublications,
+  richTextSection: RichTextSection,
 };

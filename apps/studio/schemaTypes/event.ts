@@ -1,7 +1,5 @@
 import { defineField, defineType } from "sanity";
 import { languageField } from "../plugins/intl";
-import { pageGroups } from "../utils/groups";
-import { seoField } from "../utils/fields";
 
 const formatEventDate = (date?: string) => {
   if (!date) return "Bez daty";
@@ -21,15 +19,12 @@ export default defineType({
   type: "document",
   description:
     "Wydarzenia wykorzystywane do prezentacji nadchodzących i archiwalnych aktywności organizacji.",
-  groups: pageGroups,
   fields: [
     languageField,
-    seoField,
     defineField({
       name: "name",
       title: "Nazwa wydarzenia",
       type: "string",
-      group: "content",
       description: "Pełna nazwa widoczna na liście wydarzeń i stronie szczegółowej.",
       validation: (Rule) => Rule.required().min(3).max(120),
     }),
@@ -37,7 +32,6 @@ export default defineType({
       name: "type",
       title: "Typ wydarzenia",
       type: "string",
-      group: "content",
       description: "Kategoria lub format wydarzenia, np. konferencja, warsztat, webinar.",
       validation: (Rule) => Rule.max(60),
     }),
@@ -45,7 +39,6 @@ export default defineType({
       name: "startDate",
       title: "Data rozpoczęcia",
       type: "datetime",
-      group: "content",
       description:
         "Termin rozpoczęcia wydarzenia. Na jego podstawie można rozdzielać wydarzenia przyszłe i archiwalne.",
       validation: (Rule) => Rule.required(),
@@ -54,7 +47,6 @@ export default defineType({
       name: "endDate",
       title: "Data zakończenia",
       type: "datetime",
-      group: "content",
       description: "Opcjonalna data zakończenia wydarzenia, jeśli trwa dłużej niż jeden termin.",
       validation: (Rule) =>
         Rule.custom((value, context) => {
@@ -73,14 +65,12 @@ export default defineType({
       name: "isOnline",
       title: "Wydarzenie online",
       type: "boolean",
-      group: "content",
       description: "Zaznacz, jeśli wydarzenie odbywa się online.",
     }),
     defineField({
       name: "division",
       title: "Przedstawicielstwo",
       type: "reference",
-      group: "content",
       description: "Powiązanie wydarzenia z lokalną reprezentacją organizacji.",
       to: {
         type: "division",
@@ -90,7 +80,6 @@ export default defineType({
       name: "venue",
       title: "Miejsce",
       type: "string",
-      group: "content",
       description:
         "Nazwa obiektu, instytucji lub platformy online, na której odbywa się wydarzenie.",
       validation: (Rule) => Rule.max(120),
@@ -100,7 +89,6 @@ export default defineType({
       title: "Adres",
       type: "text",
       rows: 3,
-      group: "content",
       description: "Adres wydarzenia lub informacja organizacyjna dla wydarzeń online.",
       validation: (Rule) => Rule.max(300),
     }),
@@ -109,22 +97,13 @@ export default defineType({
       title: "Krótki opis",
       type: "text",
       rows: 3,
-      group: "content",
       description: "Zwięzły opis do listingów",
       validation: (Rule) => Rule.max(220),
     }),
-    // defineField({
-    //   name: "image",
-    //   title: "Grafika główna",
-    //   type: "img",
-    //   group: "content",
-    //   description: "Obraz reprezentujący wydarzenie w listach i na stronie szczegółowej.",
-    // }),
     defineField({
       name: "registrationUrl",
       title: "Link do rejestracji",
       type: "url",
-      group: "content",
       description: "Link do formularza zapisów lub strony z dodatkowymi informacjami.",
       validation: (Rule) => Rule.uri({ allowRelative: false, scheme: ["http", "https"] }),
     }),

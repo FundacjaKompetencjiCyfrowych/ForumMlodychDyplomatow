@@ -23,6 +23,7 @@ import { iconCardSectionFragment } from "./iconCardSectionFragment";
 import { patronitePerksSectionFragment } from "./patronitePerksSectionFragment";
 import { publicationFilterSectionFragment } from "./publicationsFilterSectionFragment";
 import { heroPublicationsSectionFragment } from "./heroPublicationsSectionFragment";
+import { richTextSectionFragment } from "./richTextSection";
 
 export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().project((sub) => ({
   _key: sub.field("_key"),
@@ -50,6 +51,7 @@ export const pageBuilderQueryFragment = q.fragment<PageBuilder[number]>().projec
       patronitePerksSection: sub.project(patronitePerksSectionFragment),
       publicationFilterSection: sub.project(publicationFilterSectionFragment),
       heroPublicationsSection: sub.project(heroPublicationsSectionFragment),
+      richTextSection: sub.project(richTextSectionFragment),
     },
     {
       isExhaustive: true,

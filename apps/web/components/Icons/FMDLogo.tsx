@@ -2,6 +2,8 @@ import React from "react";
 import { Typography } from "../ui/typography";
 import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import type { ImgFragment } from "../../sanity/queries/imgFragment";
+import { SanityImage } from "../../sanity/image/SanityImage";
 
 type LogoIconProps = {
   size: "s" | "m" | "l";
@@ -43,15 +45,19 @@ export const FMDLogoIcon = ({ size = "m", className }: LogoIconProps) => {
 };
 type LogoProps = {
   size?: "s" | "m";
+  logo?: ImgFragment | null;
+  text?: string | null;
 };
 
-export const FMDLogo = ({ size = "m" }: LogoProps) => {
+export const FMDLogo = ({ size = "m", logo, text }: LogoProps) => {
   return (
-    <div className="flex items-baseline gap-1">
-      <FMDLogoIcon size={size} />
-      <Typography variant={`logo-${size}`} as="span">
-        Forum Młodych Dyplomatów
-      </Typography>
+    <div className="flex items-center gap-1">
+      {logo && <SanityImage image={logo} className="size-8" svgNoColor />}
+      {text && (
+        <Typography variant={`logo-${size}`} as="span">
+          {text}
+        </Typography>
+      )}
     </div>
   );
 };

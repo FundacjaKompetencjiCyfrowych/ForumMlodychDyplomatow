@@ -36,3 +36,19 @@ export const seoOrgQuery = q.star
     email: sub.field("organization.email"),
     phone: sub.field("organization.phone"),
   }));
+
+export const globalMetadataQuery = q.star
+  .filterByType("settings")
+  .slice(0)
+  .project((sub) => ({
+    siteName: sub.field("siteName"),
+    shortName: sub.field("shortSiteName"),
+    seo: sub.field("seo").project(seoFragment),
+    logo: sub
+      .field("logo.asset")
+      .deref()
+      .project((sub) => ({
+        url: sub.field("url"),
+        mimeType: sub.field("mimeType"),
+      })),
+  }));

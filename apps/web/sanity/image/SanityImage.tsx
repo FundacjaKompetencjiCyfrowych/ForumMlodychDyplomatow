@@ -18,6 +18,7 @@ export type SanityImageProps = {
   className?: string;
   as?: ElementType;
   sizes?: Sizes;
+  svgNoColor?: boolean;
 } & Omit<ComponentProps<"img">, "sizes">;
 
 const minWidthMap = {
@@ -47,7 +48,7 @@ const getSizes = (sizes: Sizes): string | undefined => {
  * Component for rendering Sanity images
  * @see https://www.sanity.io/plugins/sanity-image
  */
-export function SanityImage({ image, preview, sizes, ...props }: SanityImageProps) {
+export function SanityImage({ image, preview, sizes, svgNoColor, ...props }: SanityImageProps) {
   if (!image?.asset) {
     console.warn("Missing Sanity image object in SanityImage component");
     return null;
@@ -59,7 +60,9 @@ export function SanityImage({ image, preview, sizes, ...props }: SanityImageProp
     throw new Error("Image preview can only be used in client components");
   }
   if (image.asset.extension === "svg" && typeof image.asset.url === "string") {
-    return <ClientSvg id={id} src={image.asset.url} className={props.className} />;
+    return (
+      <ClientSvg id={id} src={image.asset.url} className={props.className} noColor={svgNoColor} />
+    );
   }
   const sizesValue = getSizes(sizes);
   if (image.asset.metadata?.lqip)

@@ -1,5 +1,9 @@
 import React from "react";
-import type { NavigationFooter, NavigationLinks } from "../../sanity/queries/navigation";
+import type {
+  NavigationFooter,
+  NavigationHeader,
+  NavigationLinks,
+} from "../../sanity/queries/navigation";
 import { LocaleButtons } from "../Header/LocaleButtons";
 import { FMDLogo } from "../Icons/FMDLogo";
 import { Link } from "../ui/link";
@@ -10,13 +14,15 @@ import Typography from "../ui/typography";
 const Footer = async ({
   navigation,
   footer,
+  header,
 }: {
   navigation: NavigationLinks;
   footer: NavigationFooter;
+  header: NavigationHeader;
 }) => {
   return (
     <footer className="mx-auto flex w-full max-w-(--width-content-max) flex-col gap-4 px-6 py-8 text-gray-600">
-      <FMDLogo />
+      <FMDLogo logo={header.logo} text={header.logoText} />
       <div className="grid grid-cols-1 gap-4 desktop:grid-cols-[1fr_1fr_auto] desktop:flex-row">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-start justify-between gap-4">

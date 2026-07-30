@@ -3,6 +3,7 @@ import { q } from "../groqd";
 import type { Locale } from "./intl";
 import { linkFragment } from "./linkFragment";
 import { socialsFragment } from "./socialsFragment";
+import { imgFragment } from "./imgFragment";
 
 export const navigationQuery = q
   .parameters<{ locale: Locale }>()
@@ -26,6 +27,8 @@ export const navigationQuery = q
     })),
     header: sub.project({
       button: sub.field("button").project(linkFragment),
+      logo: sub.field("logo").project(imgFragment),
+      logoText: sub.field("logoText"),
     }),
     footer: sub.project({
       contactInfo: sub.field("contactInfo").project((sub) => ({

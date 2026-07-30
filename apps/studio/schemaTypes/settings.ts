@@ -24,6 +24,13 @@ export default defineType({
       group: "seo",
     }),
     defineField({
+      name: "shortSiteName",
+      title: "Krótka nazwa strony",
+      type: "string",
+      description: "Używane do SEO, np. FMD",
+      group: "seo",
+    }),
+    defineField({
       name: "logo",
       title: "Logo",
       type: "img",

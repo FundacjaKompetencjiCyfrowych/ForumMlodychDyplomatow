@@ -29,7 +29,7 @@ const Header = async ({
       <div className="relative isolate z-80 mx-auto grid h-(--header-height-mobile) w-full max-w-(--width-content-max) grid-cols-2 items-center px-6 lg:grid-cols-3 2xl:px-0 desktop:h-(--header-height-desktop)">
         <div className="flex flex-col items-start">
           <Link href="/" className="justify-self-start px-0 text-2xl font-bold no-underline">
-            <FMDLogo />
+            <FMDLogo logo={header.logo} text={header.logoText} />
           </Link>
           <SkipToContent locale={locale} />
         </div>

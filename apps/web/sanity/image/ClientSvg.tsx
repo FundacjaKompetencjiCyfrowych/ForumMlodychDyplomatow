@@ -2,7 +2,7 @@
 import React, { type ComponentProps } from "react";
 import SVG from "react-inlinesvg";
 
-type Props = ComponentProps<typeof SVG>;
+type Props = ComponentProps<typeof SVG> & { noColor?: boolean };
 const convertToCurrentColor = (code: string) =>
   code
     .replace(/fill="(?!transparent|none).*?"/g, 'fill="currentColor"')
@@ -15,12 +15,16 @@ const compose =
   (code: string) =>
     fns.reduce((acc, fn) => fn(acc), code);
 
-const ClientSvg = ({ preProcessor, ...props }: Props) => {
+const ClientSvg = ({ preProcessor, noColor, ...props }: Props) => {
   return (
     <SVG
       {...props}
       preProcessor={
-        preProcessor ? compose(preProcessor, convertToCurrentColor) : convertToCurrentColor
+        preProcessor
+          ? compose(preProcessor, noColor ? (t) => t : convertToCurrentColor)
+          : noColor
+            ? undefined
+            : convertToCurrentColor
       }
     />
   );
