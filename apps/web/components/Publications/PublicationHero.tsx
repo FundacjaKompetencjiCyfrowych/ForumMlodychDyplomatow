@@ -4,9 +4,8 @@ import GradientImage from "@/sanity/image/GradientImage";
 import { Tag } from "../ui/tag";
 import { getTranslations } from "next-intl/server";
 import { Locale } from "next-intl";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
-import { Download, Image as ImageIcon, ChevronDown } from "lucide-react";
+import { Download, Image as ImageIcon } from "lucide-react";
 import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
 import type { GradientImgFragment } from "../../sanity/queries/imgFragment";
 import { Breadcrumbs } from "../ui/breadcrumb";
@@ -14,8 +13,8 @@ import { Container } from "../ui/container";
 import { ShareButton } from "../ui/share-button";
 import { getAuthorDisplayData } from "../../app/[locale]/publications/[slug]/helpers";
 
-// Importujemy elementy z Twojego UI kita
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import Author from "./Author";
+import { GroupAuthorsList } from "./GroupAuthorList";
 
 export interface PublicationHeroProps {
   breadcrumbs: BreadcrumbsFragment[];
@@ -102,79 +101,11 @@ export const PublicationHero = async ({
             <div className="flex w-fit flex-col justify-between gap-4 py-1 sm:flex-row sm:items-start">
               {authors && authors.length > 0 ? (
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-start gap-4">
-                    <Avatar className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden">
-                      {authorData.displayImageUrl ? (
-                        <AvatarImage
-                          src={authorData.displayImageUrl}
-                          alt={authorData.displayName ?? "Autor"}
-                        />
-                      ) : (
-                        <AvatarFallback className="text-sm font-medium text-slate-500">
-                          {authorData.displayInitials}
-                        </AvatarFallback>
-                      )}
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <Typography as="span" variant="body-s" className="text-brand-gray-600">
-                        {authorData.displayName}
-                      </Typography>
+                  <Author authors={authors} date={date} isoDate={isoDate} title={false} />
 
-                      {date && (
-                        <Typography variant="caption" className="text-brand-gray-600" asChild>
-                          <time dateTime={isoDate}>{date}</time>
-                        </Typography>
-                      )}
-
-                      {authorData.displayRole && (
-                        <Typography
-                          as="span"
-                          variant="body-s"
-                          className="mt-0.5 text-muted-foreground"
-                        >
-                          {authorData.displayRole}
-                        </Typography>
-                      )}
-                    </div>
-                  </div>
+                  {/* MAGIA! Zamiast 35 linijek kodu masz teraz jedno proste wywołanie: */}
                   {authorData.isGroup && (
-                    <Collapsible className="mt-3 w-full">
-                      <CollapsibleTrigger className="group flex cursor-pointer items-center gap-1 text-sm font-semibold text-brand-red transition-colors hover:text-brand-red/80">
-                        {t("showAuthors")}
-                        <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
-                      </CollapsibleTrigger>
-
-                      <CollapsibleContent className="CollapsibleContent">
-                        <ul className="mt-4 flex flex-col gap-4">
-                          {authors.map((author, index) => (
-                            <li key={index} className="flex items-center gap-3">
-                              <Avatar className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden">
-                                {author.imageUrl ? (
-                                  <AvatarImage src={author.imageUrl} alt={author.name} />
-                                ) : (
-                                  <AvatarFallback className="text-[0.6rem] font-medium text-slate-700">
-                                    {author.initials}
-                                  </AvatarFallback>
-                                )}
-                              </Avatar>
-                              <div className="flex flex-col justify-center">
-                                <Typography
-                                  variant="body-s"
-                                  className="leading-tight font-medium text-brand-gray-900"
-                                >
-                                  {author.name}
-                                </Typography>
-                                {author.role && (
-                                  <Typography variant="caption" className="text-brand-gray-600">
-                                    {author.role}
-                                  </Typography>
-                                )}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </CollapsibleContent>
-                    </Collapsible>
+                    <GroupAuthorsList authors={authors} showAuthorsText={t("showAuthors")} />
                   )}
                 </div>
               ) : (
@@ -187,7 +118,7 @@ export const PublicationHero = async ({
               <ShareButton
                 title={title}
                 label={t("singlePublicationPage.share")}
-                copiedLabel="Skopiowano!"
+                copiedLabel={t("singlePublicationPage.copied")}
               />
 
               {pdfUrl && (

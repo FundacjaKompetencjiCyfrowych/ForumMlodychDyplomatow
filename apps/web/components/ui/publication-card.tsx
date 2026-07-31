@@ -5,10 +5,8 @@ import { Link } from "./link";
 import { SanityImage } from "../../sanity/image/SanityImage";
 import { Tag } from "./tag";
 import { ChevronRight } from "lucide-react";
-import Image from "next/image";
-import type { ComponentProps } from "react";
-import { getAuthorDisplayData } from "../../app/[locale]/publications/[slug]/helpers";
-import { getLocale, getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+import Author from "../Publications/Author";
 
 export interface PublicationCardProps {
   publication: PublicationCardType;
@@ -16,26 +14,13 @@ export interface PublicationCardProps {
   className?: string;
 }
 
-type SanityImageExpectedProp = ComponentProps<typeof SanityImage>["image"];
-
-export const PublicationCard = async ({
+export const PublicationCard = ({
   publication,
   layout = "vertical",
   className,
 }: PublicationCardProps) => {
   const { title, excerpt, authors, date, tags = [], mainImage: image, slug } = publication;
-  const locale = await getLocale();
-  const t = await getTranslations({ locale, namespace: "publications" });
-  const formattedDate = new Date(date ?? "").toLocaleDateString("pl-PL", {
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-  });
-
-  const authorData = await getAuthorDisplayData(authors, {
-    groupName: t("groupName"),
-    groupInitials: t("groupInitials"),
-  });
+  const t = useTranslations("publications");
 
   return (
     <Link
@@ -113,42 +98,7 @@ export const PublicationCard = async ({
 
         {/* Stopka z autorem */}
         <div className="mt-6 flex w-full flex-col border-t border-slate-100 pt-5">
-          <div className="flex items-center gap-3">
-            {authors && authors.length > 0 && (
-              <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-200/60">
-                {authorData.displaySanityImage ? (
-                  <SanityImage
-                    image={authorData.displaySanityImage as SanityImageExpectedProp}
-                    alt={authorData.displayName ?? ""}
-                    className="h-full w-full rounded-full object-cover"
-                  />
-                ) : authorData.displayImageUrl ? (
-                  <Image
-                    src={authorData.displayImageUrl}
-                    alt={authorData.displayName ?? "FMD"}
-                    fill
-                    className="rounded-full object-cover"
-                  />
-                ) : (
-                  <span className="text-[0.65rem] font-semibold text-slate-700">
-                    {authorData.displayInitials}
-                  </span>
-                )}
-              </div>
-            )}
-            <div className="flex flex-col">
-              {authors && authors.length > 0 && (
-                <Typography as="span" variant="caption" className="font-semibold text-foreground">
-                  {authorData.displayName}
-                </Typography>
-              )}
-              {date && (
-                <Typography variant="caption" className="text-muted-foreground">
-                  {formattedDate}
-                </Typography>
-              )}
-            </div>
-          </div>
+          <Author authors={authors} date={date} title={true} />
         </div>
       </div>
     </Link>
