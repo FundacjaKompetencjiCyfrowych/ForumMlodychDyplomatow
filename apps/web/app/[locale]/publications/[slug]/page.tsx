@@ -98,14 +98,15 @@ export default async function PublicationDetailPage({ params }: { params: Promis
     [];
 
   const authorsData = publication.authors
-    ?.filter((author: any) => Boolean(author?.name))
-    .map((author: any) => ({
-      name: author.name,
-      initials: getInitials(author.name),
-      role: "Ekspert FMD",
-      imageUrl: author.img?.asset?.url ?? undefined,
-      bio: author.bio ?? "",
-    }));
+  ?.filter((author) => Boolean(author?.name))
+  .map((author) => ({
+    name: author.name || "",
+    initials: getInitials(author.name || ""),
+    role: "Ekspert FMD",
+    imageUrl: author.img?.asset?.url ?? undefined,
+    bio: author.bio ?? "",
+  }));
+
 
   const breadcrumbs = [
     formatLink({ slug: `/`, type: "page", text: t("breadcrumbHome") }),
