@@ -103,7 +103,6 @@ export const PublicationHero = async ({
                 <div className="flex flex-col gap-2">
                   <Author authors={authors} date={date} isoDate={isoDate} title={false} />
 
-                  {/* MAGIA! Zamiast 35 linijek kodu masz teraz jedno proste wywołanie: */}
                   {authorData.isGroup && (
                     <GroupAuthorsList authors={authors} showAuthorsText={t("showAuthors")} />
                   )}
@@ -136,7 +135,6 @@ export const PublicationHero = async ({
               )}
             </div>
           </div>{" "}
-          {/* KONIEC: Lewa kolumna */}
           {/* Prawa kolumna: Obraz */}
           <div className="order-1 flex w-full flex-col gap-3 lg:order-2 lg:col-span-5 xl:col-span-6">
             <div className="relative flex w-full items-center justify-center overflow-hidden">
