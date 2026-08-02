@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { globalMetadataQuery } from "../sanity/queries/seo";
 import { runQuery } from "../sanity/groqd";
-import { PLACEHOLDERS } from "@/sanity/image/palceholders";
+import { PLACEHOLDERS } from "@/sanity/image/placeholders";
 
 export const getGlobalLogo = cache(async () => {
   try {
