@@ -3,10 +3,10 @@ import { cn } from "@/lib/utils";
 import type { PublicationCard as PublicationCardType } from "../../sanity/queries/publications";
 import { Link } from "./link";
 import { SanityImage } from "../../sanity/image/SanityImage";
-import { getInitials } from "../../app/[locale]/publications/[slug]/helpers";
 import { Tag } from "./tag";
 import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Author from "../Publications/Author";
 
 export interface PublicationCardProps {
   publication: PublicationCardType;
@@ -19,13 +19,8 @@ export const PublicationCard = ({
   layout = "vertical",
   className,
 }: PublicationCardProps) => {
-  const { title, excerpt, author, date, tags = [], mainImage: image, slug } = publication;
+  const { title, excerpt, authors, date, tags = [], mainImage: image, slug } = publication;
   const t = useTranslations("publications");
-  const formattedDate = new Date(date ?? "").toLocaleDateString("pl-PL", {
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-  });
 
   return (
     <Link
@@ -101,37 +96,9 @@ export const PublicationCard = ({
           </span>
         </div>
 
-        {/* Stopka z autorem - zawsze na dole */}
+        {/* Stopka z autorem */}
         <div className="mt-6 flex w-full flex-col border-t border-slate-100 pt-5">
-          <div className="flex items-center gap-3">
-            {author && (
-              <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-200/60">
-                {author.img ? (
-                  <SanityImage
-                    image={author.img}
-                    alt={author.name ?? ""}
-                    className="rounded-full object-cover"
-                  />
-                ) : (
-                  <span className="text-[0.65rem] font-semibold text-slate-700">
-                    {getInitials(author.name ?? "")}
-                  </span>
-                )}
-              </div>
-            )}
-            <div className="flex flex-col">
-              {author && (
-                <Typography as="span" variant="caption" className="font-semibold text-foreground">
-                  {author.name}
-                </Typography>
-              )}
-              {date && (
-                <Typography variant="caption" className="text-muted-foreground">
-                  {formattedDate}
-                </Typography>
-              )}
-            </div>
-          </div>
+          <Author authors={authors} date={date} title={true} />
         </div>
       </div>
     </Link>

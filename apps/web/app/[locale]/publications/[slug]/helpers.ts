@@ -1,8 +1,11 @@
 import type { InferFragmentType } from "groqd";
 import type { Locale } from "next-intl";
 import type { publicationPreviewFragment } from "../../../../sanity/queries/publications";
+import { getGlobalLogo } from "@/lib/getGlobalLogo";
 
-// Helper do generowania inicjałów
+type PublicationPreviewType = InferFragmentType<typeof publicationPreviewFragment>;
+type AuthorImgType = NonNullable<PublicationPreviewType["authors"]>[number]["img"];
+
 export const getInitials = (name: string) => {
   if (!name) return "";
   return name
@@ -12,6 +15,38 @@ export const getInitials = (name: string) => {
     .substring(0, 2)
     .toUpperCase();
 };
+
+export type AuthorInput = {
+  name?: string | null;
+  initials?: string | null;
+  role?: string | null;
+  imageUrl?: string | null;
+  img?: AuthorImgType | null;
+  bio?: string | null;
+};
+
+export const getAuthorDisplayData = async (
+  authors: AuthorInput[] | null | undefined,
+  translations: { groupName: string; groupInitials: string }
+) => {
+  const isGroup = authors && authors.length > 1;
+  const firstAuthor = authors?.[0];
+
+  const defaultLogo = isGroup ? await getGlobalLogo() : null;
+
+  return {
+    isGroup,
+    displayName: isGroup ? translations.groupName : (firstAuthor?.name ?? ""),
+    displayRole: isGroup ? "" : (firstAuthor?.role ?? ""),
+    displayBio: isGroup ? "" : (firstAuthor?.bio ?? ""),
+    displayImageUrl: isGroup ? defaultLogo : (firstAuthor?.imageUrl ?? undefined),
+    displaySanityImage: isGroup ? null : (firstAuthor?.img ?? null),
+    displayInitials: isGroup
+      ? translations.groupInitials
+      : (firstAuthor?.initials ?? getInitials(firstAuthor?.name ?? "")),
+  };
+};
+
 export const formatPublicationForCard = (
   pub: InferFragmentType<typeof publicationPreviewFragment>,
   locale: Locale,
@@ -29,12 +64,12 @@ export const formatPublicationForCard = (
     : undefined,
   isoDate: pub.date,
   tags: pub.tags?.map((tag: any) => tag.name).filter(Boolean) || [],
-  author: pub.author?.name
-    ? {
-        name: pub.author.name,
-        initials: getInitials(pub.author.name),
-      }
-    : undefined,
+  authors:
+    pub.authors?.map((a: any) => ({
+      name: a.name,
+      initials: getInitials(a.name ?? ""),
+      img: a.img,
+    })) || [],
   image: pub.mainImage?.asset?.url
     ? {
         src: pub.mainImage.asset.url,

@@ -296,6 +296,24 @@ export const translations = defineType({
           validation: (Rule) => Rule.required(),
         }),
         defineField({
+          name: "groupName",
+          title: "Publikacja grupowa",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "groupInitials",
+          title: "Inicjały FMD",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "showAuthors",
+          title: "Pokaż autorów",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
           name: "singlePublicationPage",
           title: "Strona pojedynczej publikacji",
           type: "object",

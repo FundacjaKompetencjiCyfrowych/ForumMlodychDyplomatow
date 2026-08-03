@@ -83,13 +83,14 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "author",
-      title: "Autor",
-      type: "reference",
-      to: [{ type: "person" }],
+      name: "authors",
+      title: "Autorzy",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "person" }] }],
       group: "content",
-      description: "Wybierz autora publikacji z listy",
-      validation: (Rule) => Rule.required().error("Pole wymagane"),
+      description:
+        "Wybierz autorów. Jeśli dodasz więcej niż jednego, publikacja zostanie oznaczona jako 'Publikacja grupowa'.",
+      validation: (Rule) => Rule.required().min(1).error("Dodaj przynajmniej jednego autora"),
     }),
     defineField({
       name: "pdfFile",

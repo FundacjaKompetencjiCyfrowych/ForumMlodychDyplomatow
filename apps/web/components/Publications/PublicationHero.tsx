@@ -4,7 +4,6 @@ import GradientImage from "@/sanity/image/GradientImage";
 import { Tag } from "../ui/tag";
 import { getTranslations } from "next-intl/server";
 import { Locale } from "next-intl";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
 import { Download, Image as ImageIcon } from "lucide-react";
 import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
@@ -12,6 +11,10 @@ import type { GradientImgFragment } from "../../sanity/queries/imgFragment";
 import { Breadcrumbs } from "../ui/breadcrumb";
 import { Container } from "../ui/container";
 import { ShareButton } from "../ui/share-button";
+import { getAuthorDisplayData } from "../../app/[locale]/publications/[slug]/helpers";
+
+import Author from "./Author";
+import { GroupAuthorsList } from "./GroupAuthorList";
 
 export interface PublicationHeroProps {
   breadcrumbs: BreadcrumbsFragment[];
@@ -22,13 +25,13 @@ export interface PublicationHeroProps {
     name: string;
     slug: string;
   }[];
-  author?: {
+  authors?: {
     name: string;
     initials: string;
     role?: string;
     imageUrl?: string;
-    bio: string;
-  };
+    bio?: string;
+  }[];
   date?: string;
   isoDate?: string;
   image?: GradientImgFragment | null;
@@ -42,7 +45,7 @@ export const PublicationHero = async ({
   title,
   excerpt,
   tags = [],
-  author,
+  authors,
   date,
   isoDate,
   image,
@@ -50,6 +53,11 @@ export const PublicationHero = async ({
   locale = "pl",
 }: PublicationHeroProps) => {
   const t = await getTranslations({ locale, namespace: "publications" });
+
+  const authorData = await getAuthorDisplayData(authors, {
+    groupName: t("groupName"),
+    groupInitials: t("groupInitials"),
+  });
 
   return (
     <>
@@ -78,7 +86,6 @@ export const PublicationHero = async ({
             {/* Tagi */}
             {tags.length > 0 && (
               <div className="flex flex-wrap items-center gap-3">
-                {/* Limit zeby nie psulo designu przy duzej ilosci tagow, nad autorem wyswietlaja sie wszystkie */}
                 {tags.slice(0, 8).map((tag, index, arr) => (
                   <React.Fragment key={index}>
                     <Tag variant="hero" href={tag.slug}>
@@ -91,36 +98,14 @@ export const PublicationHero = async ({
             )}
 
             {/* Sekcja Autora i Daty */}
-            <div className="flex w-fit flex-col justify-between gap-4 py-1 sm:flex-row sm:items-center">
-              {author ? (
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-10 w-10 bg-slate-100">
-                    {author.imageUrl && <AvatarImage src={author.imageUrl} alt={author.name} />}
-                    <AvatarFallback className="text-sm font-medium text-slate-500">
-                      {author.initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col">
-                    <Typography as="span" variant="body-s" className="text-brand-gray-600">
-                      {author.name}
-                    </Typography>
+            <div className="flex w-fit flex-col justify-between gap-4 py-1 sm:flex-row sm:items-start">
+              {authors && authors.length > 0 ? (
+                <div className="flex flex-col gap-2">
+                  <Author authors={authors} date={date} isoDate={isoDate} title={false} />
 
-                    {date && (
-                      <Typography variant="caption" className="text-brand-gray-600" asChild>
-                        <time dateTime={isoDate}>{date}</time>
-                      </Typography>
-                    )}
-
-                    {author.role && (
-                      <Typography
-                        as="span"
-                        variant="body-s"
-                        className="mt-0.5 text-muted-foreground"
-                      >
-                        {author.role}
-                      </Typography>
-                    )}
-                  </div>
+                  {authorData.isGroup && (
+                    <GroupAuthorsList authors={authors} showAuthorsText={t("showAuthors")} />
+                  )}
                 </div>
               ) : (
                 <div />
@@ -132,7 +117,7 @@ export const PublicationHero = async ({
               <ShareButton
                 title={title}
                 label={t("singlePublicationPage.share")}
-                copiedLabel="Skopiowano!"
+                copiedLabel={t("singlePublicationPage.copied")}
               />
 
               {pdfUrl && (
@@ -150,7 +135,6 @@ export const PublicationHero = async ({
               )}
             </div>
           </div>{" "}
-          {/* KONIEC: Lewa kolumna */}
           {/* Prawa kolumna: Obraz */}
           <div className="order-1 flex w-full flex-col gap-3 lg:order-2 lg:col-span-5 xl:col-span-6">
             <div className="relative flex w-full items-center justify-center overflow-hidden">

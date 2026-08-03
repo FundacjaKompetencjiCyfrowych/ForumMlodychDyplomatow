@@ -568,6 +568,30 @@ export type InternationalizedArrayString = Array<
   } & InternationalizedArrayStringValue
 >;
 
+export type Person = {
+  _id: string;
+  _type: "person";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  locale?: string;
+  name?: string;
+  group?: string;
+  title?: InternationalizedArrayString;
+  secondaryGroup?: string;
+  secondaryTitle?: InternationalizedArrayString;
+  img?: Img;
+  bio?: InternationalizedArrayText;
+  socials?: Socials;
+  order?: number;
+};
+
+export type InternationalizedArrayText = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayTextValue
+>;
+
 export type InternationalizedArrayTextValue = {
   _type: "internationalizedArrayTextValue";
   value?: string;
@@ -579,12 +603,6 @@ export type InternationalizedArrayStringValue = {
   value?: string;
   language?: string;
 };
-
-export type InternationalizedArrayText = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayTextValue
->;
 
 export type TranslationMetadata = {
   _id: string;
@@ -721,6 +739,9 @@ export type Translations = {
   };
   publications?: {
     cardButton?: string;
+    groupName?: string;
+    groupInitials?: string;
+    showAuthors?: string;
     singlePublicationPage?: {
       breadcrumbHome?: string;
       breadcrumbsPublication?: string;
@@ -796,7 +817,11 @@ export type Publication = {
   slug?: Slug;
   date?: string;
   mainImage?: GradientImg;
-  author?: PersonReference;
+  authors?: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
   pdfFile?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
@@ -862,24 +887,6 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
-};
-
-export type Person = {
-  _id: string;
-  _type: "person";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  locale?: string;
-  name?: string;
-  group?: string;
-  title?: InternationalizedArrayString;
-  secondaryGroup?: string;
-  secondaryTitle?: InternationalizedArrayString;
-  img?: Img;
-  bio?: InternationalizedArrayText;
-  socials?: Socials;
-  order?: number;
 };
 
 export type PublicationType = {
@@ -1137,9 +1144,10 @@ export type AllSanitySchemaTypes =
   | PersonGroups
   | Slug
   | InternationalizedArrayString
+  | Person
+  | InternationalizedArrayText
   | InternationalizedArrayTextValue
   | InternationalizedArrayStringValue
-  | InternationalizedArrayText
   | TranslationMetadata
   | InternationalizedArrayReference
   | EventReference
@@ -1155,7 +1163,6 @@ export type AllSanitySchemaTypes =
   | Publication
   | SanityImageCrop
   | SanityImageHotspot
-  | Person
   | PublicationType
   | Navigation
   | Event

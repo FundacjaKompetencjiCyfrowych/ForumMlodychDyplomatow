@@ -90,22 +90,22 @@ export default async function PublicationDetailPage({ params }: { params: Promis
 
   const tags =
     publication.tags
-      ?.map((tag: any) => ({
+      ?.map((tag) => ({
         name: tag?.name,
-        slug: tag?.slug.current,
+        slug: tag?.slug?.current,
       }))
       .filter((tag): tag is { name: string; slug: string } => Boolean(tag?.name && tag?.slug)) ||
     [];
 
-  const authorData = publication.author?.name
-    ? {
-        name: publication.author.name,
-        initials: getInitials(publication.author.name),
-        role: "Ekspert FMD",
-        imageUrl: publication.author?.img?.asset?.url ?? undefined,
-        bio: publication.author.bio ?? "",
-      }
-    : undefined;
+  const authorsData = publication.authors
+    ?.filter((author) => Boolean(author?.name))
+    .map((author) => ({
+      name: author.name || "",
+      initials: getInitials(author.name || ""),
+      role: "Ekspert FMD",
+      imageUrl: author.img?.asset?.url ?? undefined,
+      bio: author.bio ?? "",
+    }));
 
   const breadcrumbs = [
     formatLink({ slug: `/`, type: "page", text: t("breadcrumbHome") }),
@@ -130,25 +130,31 @@ export default async function PublicationDetailPage({ params }: { params: Promis
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
       <PublicationHero
         breadcrumbs={breadcrumbs}
         category={publication.type?.title ?? ""}
         title={publication.title ?? ""}
         excerpt={publication.excerpt ?? undefined}
         tags={tags}
-        author={authorData}
+        authors={authorsData}
         date={formattedDate}
         isoDate={isoDate}
         pdfUrl={publication.pdfFile?.url}
         image={publication.mainImage}
         locale={locale}
       />
+
       <PublicationBody content={publication.text || []} locale={locale} />
 
       <PublicationPdf pdfUrl={publication.pdfFile?.url} />
 
-      <PublicationAuthor author={authorData} date={formattedDate} isoDate={isoDate} tags={tags} />
+      <PublicationAuthor
+        authors={authorsData}
+        date={formattedDate}
+        isoDate={isoDate}
+        tags={tags}
+        locale={locale}
+      />
 
       <RelatedPublications publications={rawRelatedPublications} locale={locale} />
     </div>
