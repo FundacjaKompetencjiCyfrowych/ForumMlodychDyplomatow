@@ -2541,6 +2541,27 @@
             "type": "boolean"
           },
           "optional": true
+        },
+        "trackAnalytics": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "analyticsLinkName": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "analyticsAdditionalData": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
         }
       }
     }

@@ -433,6 +433,9 @@ export type Link = {
   publication?: PublicationReference;
   openInNewTab?: boolean;
   isExternal?: boolean;
+  trackAnalytics?: boolean;
+  analyticsLinkName?: string;
+  analyticsAdditionalData?: string;
 };
 
 export type PostsSection = {

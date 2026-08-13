@@ -30,6 +30,7 @@ export const PublicationCard = ({
         _key: `publication-${slug}`,
         openInNewTab: false,
         text: null,
+        analytics: null,
       }}
       variant="none"
       size="inline"

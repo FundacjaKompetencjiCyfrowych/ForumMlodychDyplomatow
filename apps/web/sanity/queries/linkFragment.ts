@@ -42,6 +42,15 @@ export const linkFragment = q.fragment<Link & { _key: string }>().project((sub) 
     }
   ),
   openInNewTab: sub.field("openInNewTab"),
+  analytics: sub.select(
+    {
+      "trackAnalytics == true": sub.project({
+        linkName: sub.field("analyticsLinkName"),
+        additionalData: sub.field("analyticsAdditionalData"),
+      }),
+    },
+    null
+  ),
 }));
 
 export const linkButtonFragment = q.fragment<LinkButton & { _key: string }>().project((sub) => ({

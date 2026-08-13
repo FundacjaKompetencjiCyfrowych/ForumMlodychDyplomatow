@@ -112,6 +112,10 @@ const EventPreview = ({ event, isArchive, className, locale }: Props) => {
           ) : (
             <Link
               href={event.registrationUrl}
+              analytics={{
+                linkName: "Wydarzenie",
+                additionalData: event.name,
+              }}
               openInNewTab
               variant="secondary"
               className="w-full desktop:w-fit"

@@ -17,7 +17,9 @@ import { createJsonLdOrganization } from "../../lib/seo";
 import { intlQuery } from "../../sanity/queries/intl";
 import { navigationQuery } from "../../sanity/queries/navigation";
 import { globalMetadataQuery, seoOrgQuery } from "../../sanity/queries/seo";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
+import { GTMPageView } from "../../components/Analytics/GTMPageView";
 
 /** This is the base metadata for the entire project, it will cascade down to subpages
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function */
@@ -92,9 +94,12 @@ export default async function RootLayout({
   const orgJsonLd = createJsonLdOrganization(orgSeo);
   return (
     <html lang={locale}>
+      <GoogleTagManager gtmId="GTM-PGV92Q9X" />
       <body
         className={`${libreBaskerville.variable} ${inter.variable} ${oswald.variable} ${lora.variable} relative bg-white font-inter text-gray-900 antialiased`}
       >
+        <GoogleAnalytics gaId="G-NL0CLE4K1B" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
@@ -107,6 +112,7 @@ export default async function RootLayout({
         >
           <SvgCacheProvider>
             <NextIntlClientProvider messages={translations as any}>
+              <GTMPageView />
               <Header header={navigation!.header} navigation={navigation!.navigation} />
               <main id="main-content" className="w-full" tabIndex={-1}>
                 {children}

@@ -1,18 +1,18 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import GradientImage from "@/sanity/image/GradientImage";
-import { Tag } from "../ui/tag";
-import { getTranslations } from "next-intl/server";
-import { Locale } from "next-intl";
 import { Typography } from "@/components/ui/typography";
+import GradientImage from "@/sanity/image/GradientImage";
 import { Download, Image as ImageIcon } from "lucide-react";
+import { Locale } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import React from "react";
+import { getAuthorDisplayData } from "../../app/[locale]/publications/[slug]/helpers";
 import type { BreadcrumbsFragment } from "../../sanity/queries/breadcrumbs";
 import type { GradientImgFragment } from "../../sanity/queries/imgFragment";
 import { Breadcrumbs } from "../ui/breadcrumb";
 import { Container } from "../ui/container";
 import { ShareButton } from "../ui/share-button";
-import { getAuthorDisplayData } from "../../app/[locale]/publications/[slug]/helpers";
+import { Tag } from "../ui/tag";
 
+import { Link } from "../ui/link";
 import Author from "./Author";
 import { GroupAuthorsList } from "./GroupAuthorList";
 
@@ -121,17 +121,21 @@ export const PublicationHero = async ({
               />
 
               {pdfUrl && (
-                <Button
-                  asChild
+                <Link
+                  analytics={{
+                    linkName: "Pobranie publikacji",
+                    additionalData: title,
+                  }}
+                  href={pdfUrl}
+                  openInNewTab
                   variant="secondary"
-                  size="l"
-                  className="w-full md:w-fit"
                   iconRight={<Download className="h-4 w-4" />}
+                  className="w-full md:w-fit"
+                  size="l"
+                  rel="noopener noreferrer"
                 >
-                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                    {t("singlePublicationPage.downloadPdf")}
-                  </a>
-                </Button>
+                  {t("singlePublicationPage.downloadPdf")}
+                </Link>
               )}
             </div>
           </div>{" "}

@@ -14,6 +14,10 @@ type Options = {
   type: LinkType;
   text: string | null;
   _type?: string;
+  analytics?: {
+    linkName: string | null;
+    additionalData: string | null;
+  };
 };
 
 export const formatLink = (options: Options) => {
@@ -27,6 +31,7 @@ export const formatLink = (options: Options) => {
     _key: `${options.type}-${options.slug}`,
     openInNewTab: options.openInNewTab ?? false,
     text: options.text,
+    analytics: options.analytics ?? null,
   } satisfies ResultLinkType & { _type: string };
 };
 

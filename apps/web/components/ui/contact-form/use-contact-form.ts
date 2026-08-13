@@ -8,7 +8,7 @@ import {
   type ContactErrorKey,
   type ContactFieldName,
 } from "@/lib/contact-schema";
-
+import { sendGTMEvent } from "@next/third-parties/google";
 /** Per-field translation key for the current validation failure, if any. */
 type Errors = Partial<Record<ContactFieldName, ContactErrorKey>>;
 
@@ -42,7 +42,7 @@ export const useContactForm = ({ sectionKey, contactEmail }: UseContactFormArgs)
   // Drives the success popup; only errors use a toast.
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
 
@@ -88,6 +88,7 @@ export const useContactForm = ({ sectionKey, contactEmail }: UseContactFormArgs)
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
       setShowSuccess(true);
+      sendGTMEvent({ event: "fmd_contact_form_sent", subject: result.data.subject });
       form.reset();
       startedAtRef.current = Date.now();
     } catch {

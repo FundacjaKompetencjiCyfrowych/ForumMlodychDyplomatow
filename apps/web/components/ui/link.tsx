@@ -37,6 +37,7 @@ export type LinkProps = Omit<React.ComponentProps<typeof BaseLink>, "href"> &
     openInNewTab?: boolean | null;
     noExternalIcon?: boolean;
     currentPathname?: string;
+    analytics?: LinkType["analytics"] | null;
   } & LinkOrHref;
 export const Link = ({
   children,
@@ -47,6 +48,7 @@ export const Link = ({
   openInNewTab = false,
   iconRight = null,
   link,
+  analytics,
   href,
   searchParams,
   currentPathname,
@@ -85,11 +87,15 @@ export const Link = ({
     isExternal && !noExternalIcon ? <ExternalLink className="size-[1em]" /> : iconRight;
   const fullHref = getHref();
   const isCurrent = currentPathname && typeof fullHref === "string" && currentPathname === fullHref;
+  const fullAnalytics = analytics ?? link?.analytics;
   return (
     <BaseLink
       href={fullHref}
       target={link?.openInNewTab || openInNewTab ? "_blank" : undefined}
       data-current={isCurrent ? true : undefined}
+      data-event-name={fullAnalytics ? "fmd_link_click" : undefined}
+      data-link-name={fullAnalytics ? fullAnalytics?.linkName : undefined}
+      data-additional-data={fullAnalytics ? fullAnalytics?.additionalData : undefined}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >

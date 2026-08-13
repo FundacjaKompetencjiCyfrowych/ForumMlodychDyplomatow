@@ -134,6 +134,28 @@ export const link = defineType({
       initialValue: false,
       hidden: ({ parent }) => parent?.linkType !== "href",
     }),
+    defineField({
+      name: "trackAnalytics",
+      title: "Śledź w Google Analytics",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "analyticsLinkName",
+      title: "Nazwa Linku Analytics",
+      type: "string",
+      description: "Nazwa linku, która będzie wysyłana do Google Analytics",
+      hidden: ({ parent }) => !parent?.trackAnalytics,
+      validation: (Rule, ctx) => (ctx?.hidden ? Rule.skip() : Rule.required()),
+    }),
+    defineField({
+      name: "analyticsAdditionalData",
+      title: "Dodatkowe dane Analytics",
+      type: "string",
+      description:
+        "Dodatkowe dane, które będą wysyłane do Google Analytics, opcjonalne. Np. źródło linku (cta, header, nazwa strony)",
+      hidden: ({ parent }) => !parent?.trackAnalytics,
+    }),
   ],
   preview: {
     select: linkPreviewSelect,
