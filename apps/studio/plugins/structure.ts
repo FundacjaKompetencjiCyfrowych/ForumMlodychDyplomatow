@@ -1,4 +1,4 @@
-import { StructureToolOptions } from "sanity/structure";
+import { StructureToolOptions, type StructureBuilder } from "sanity/structure";
 import { SingleLanguageSingleton as Singleton, TranslationMetadata as Translations } from "./intl";
 import { SingleLanguageList as Collection } from "./intl";
 import {
@@ -16,6 +16,13 @@ import {
 
 import { LANGUAGE_FIELD } from "../config";
 import { EditableJsonView } from "../components/JsonView";
+
+const engItem = (S: StructureBuilder, { type, title }: { type: string; title: string }) =>
+  S.listItem()
+    .title(title)
+    .child(
+      S.documentList().schemaType(type).filter(`_type=="${type}" && locale=="en"`).title(title)
+    );
 /**
  * Structure of the Sanity Studio
  * @see https://www.sanity.io/docs/studio/structure-tool
@@ -119,5 +126,19 @@ export const structure: StructureToolOptions = {
           title: "Tłumaczenia",
           icon: TranslateIcon,
         }),
+        S.listItem()
+          .title("Dokumenty Angielskie")
+          .child(
+            S.list()
+              .title("Dokumenty Angielskie")
+              .items([
+                engItem(S, { type: "page", title: "Strony" }),
+                engItem(S, { type: "publication", title: "Publikacje" }),
+                engItem(S, { type: "event", title: "Wydarzenia" }),
+                engItem(S, { type: "division", title: "Przedstawicielstwa" }),
+                engItem(S, { type: "tag", title: "Tagi" }),
+                engItem(S, { type: "tagCategory", title: "Kategorie tagów" }),
+              ])
+          ),
       ]),
 };
