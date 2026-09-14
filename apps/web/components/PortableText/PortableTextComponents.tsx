@@ -7,7 +7,7 @@ import { Link } from "../ui/link";
 export const basePortableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <Typography as="p" variant="body-l" className="mb-6 wrap-normal text-brand-gray-900">
+      <Typography as="p" variant="body-l" className="mb-6 wrap-anywhere text-brand-gray-900">
         {children}
       </Typography>
     ),
