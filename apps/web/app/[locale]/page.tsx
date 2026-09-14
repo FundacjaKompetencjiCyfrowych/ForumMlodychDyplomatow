@@ -11,9 +11,7 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 export function generateStaticParams() {
-  return routing.locales
-    .map((locale) => (locale === "pl" ? undefined : { locale }))
-    .filter(Boolean);
+  return routing.locales.map((locale) => ({ locale }));
 }
 export const revalidate = 3600; // 1 hour
 export async function generateMetadata(props: Props): Promise<Metadata> {

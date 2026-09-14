@@ -27,10 +27,12 @@ export async function generateStaticParams() {
     perspective: "published",
   });
 
-  return pages.map((page) => ({
-    slug: page.slug,
-    locale: page.locale,
-  }));
+  return pages
+    .filter((page) => page.slug !== "home")
+    .map((page) => ({
+      slug: page.slug,
+      locale: page.locale == "pl" ? undefined : page.locale,
+    }));
 }
 
 /**
