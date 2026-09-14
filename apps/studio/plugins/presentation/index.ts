@@ -99,9 +99,10 @@ const locations = Object.fromEntries(
 
 export const presentationConfig: PresentationPluginOptions = {
   previewUrl: {
-    origin: PREVIEW_URL,
+    initial: PREVIEW_URL,
     previewMode: { enable: "/api/draft-mode/enable" },
   },
+  allowOrigins: [PREVIEW_URL],
   resolve: {
     mainDocuments: defineDocuments(mainDocumentRoutes),
     locations,

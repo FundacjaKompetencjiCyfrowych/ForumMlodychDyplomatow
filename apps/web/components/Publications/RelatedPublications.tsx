@@ -28,7 +28,7 @@ export const RelatedPublications = async ({
       background="slate"
       size="none"
       className="px-6 pt-10 pb-16 md:px-6"
-      contentWidth="max"
+      contentWidth="xl"
     >
       <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <Typography as="h2" variant="h2" className="text-black">
