@@ -14,7 +14,7 @@ type Props = {
   params: Promise<{ slug: string; locale: Locale }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>; // Dodaj to
 };
-
+export const revalidate = 3600; // 1 hour
 export async function generateStaticParams() {
   const { data } = await runQuery(divisionsSlugQuery, { stega: false, perspective: "published" });
 

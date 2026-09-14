@@ -11,7 +11,10 @@ const getEventsAction: PaginationQueryFunction<
   FilterParams<{ location: string[]; type: "archive" | "upcoming" }>
 > = async (params) => {
   "use server";
-
+  const location =
+    Array.isArray(params.filters?.location) && params.filters.location.length > 0
+      ? params.filters.location
+      : null;
   const res = await runQuery(
     eventsPaginatedQuery({
       page: params.page ?? 1,
@@ -20,8 +23,8 @@ const getEventsAction: PaginationQueryFunction<
     }),
     {
       parameters: {
+        location,
         locale: params.locale,
-        location: (params.filters?.location as string[] | null) ?? null,
         name: params.q ? `*${params.q}*` : null,
         type: params.filters?.type ?? "upcoming",
       },

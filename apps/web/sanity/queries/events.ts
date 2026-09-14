@@ -108,5 +108,8 @@ export const eventsPaginatedQuery = ({
       total: sub.count("items[]"),
       page: sub.value(page),
       perPage: sub.value(perPage),
-      items: sub.field("items[]").project(eventPreviewFragment(archive)),
+      items: sub
+        .field("items[]")
+        .project(eventPreviewFragment(archive))
+        .slice((page - 1) * perPage, page * perPage),
     }));

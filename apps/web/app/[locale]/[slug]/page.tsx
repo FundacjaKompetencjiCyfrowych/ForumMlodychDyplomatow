@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 // import { sanityFetch } from "../../sanity/live";
 import { runQuery } from "@/sanity/groqd";
-import { pageQuery, pagesMetadataQuery } from "@/sanity/queries/page";
+import { pageQuery, pagesMetadataQuery, pagesSlugQuery } from "@/sanity/queries/page";
 import { SanitySections } from "@/sanity/sections/SanitySections";
 import type { Locale } from "next-intl";
 import { notFound, redirect } from "next/navigation";
@@ -19,6 +19,20 @@ type Props = {
 // Opting into ISR instead of full-static due to searchParams being used on some pages.
 // It could be reworked later to make all the search params components be client-side
 export const revalidate = 3600; // 1 hour
+
+export async function generateStaticParams() {
+  const { data: pages } = await runQuery(pagesSlugQuery, {
+    parameters: {},
+    stega: false,
+    perspective: "published",
+  });
+
+  return pages.map((page) => ({
+    slug: page.slug,
+    locale: page.locale,
+  }));
+}
+
 /**
  * Generate metadata for the page.
  * Learn more: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function

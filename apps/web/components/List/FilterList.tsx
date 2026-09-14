@@ -454,13 +454,6 @@ export const FilterList = <
             )}
           </div>
 
-          {/* DLA INNYCH TYPÓW (STARY WIDOK NA DESKTOPIE) */}
-          {type !== "publications" && (
-            <Typography>
-              {t("results")}: {data?.total ?? 0}
-            </Typography>
-          )}
-
           {tabs && <FilterListTabs slug={tabs.slug} tabs={tabs.values} />}
 
           <TransitionContainer
